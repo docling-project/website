@@ -1,24 +1,24 @@
 export const CARD_DATA = [
   {
-    imageSrc: "/concept.png",
+    imageSrc: "/concept.webp",
     imageAlt: "concept",
     title: "Concepts →",
     details: "Learn Docling fundamentals",
   },
   {
-    imageSrc: "/example.png",
+    imageSrc: "/example.webp",
     imageAlt: "example",
     title: "Examples →",
     details: "Try out recipes for various use cases",
   },
   {
-    imageSrc: "/integration.png",
+    imageSrc: "/integration.webp",
     imageAlt: "integration",
     title: "Integrations →",
     details: "Integrations with popular frameworks and tools",
   },
   {
-    imageSrc: "/reference.png",
+    imageSrc: "/reference.webp",
     imageAlt: "reference",
     title: "Reference →",
     details: "See more API details",
@@ -26,26 +26,26 @@ export const CARD_DATA = [
 ];
 export const DOCLING_CARD_DATA = [
   {
-    imageSrc: "/parsing.png",
+    imageSrc: "/parsing.webp",
     imageAlt: "parse",
     title: "Advanced Document Parsing",
     details: "Extracts clean structure from messy PDFs, DOCs, HTML, and more.",
   },
   {
-    imageSrc: "/genAI.png",
+    imageSrc: "/genAI.webp",
     imageAlt: "genAI",
     title: "GenAI-Ready Integration",
     details:
       "Plugs into LangChain, LlamaIndex, and other popular AI frameworks.",
   },
   {
-    imageSrc: "/structure.png",
+    imageSrc: "/structure.webp",
     imageAlt: "structure",
     title: "Structured Output",
     details: "Delivers chunked, labeled data optimized for LLM pipelines.",
   },
   {
-    imageSrc: "/fast.png",
+    imageSrc: "/fast.webp",
     imageAlt: "fast",
     title: "Dev-Friendly, Fast, and Flexible",
     details: "Use via CLI, API, or as a drop-in module in your stack.",

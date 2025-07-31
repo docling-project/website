@@ -22,7 +22,7 @@ const Hero = () => {
           />
         </div>
         <StaticImage
-          src={"/hero.png"}
+          src={"/hero.webp"}
           alt={"Docling Hero Image"}
           width={1096}
           height={731}

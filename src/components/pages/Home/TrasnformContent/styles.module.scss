@@ -1,0 +1,32 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+.container {
+  padding-top: 52px;
+  padding-bottom: 52px;
+}
+.section {
+  display: flex;
+  gap: var(--spacer-8);
+  align-items: flex-start;
+  justify-content: center;
+  padding: 56px 0px;
+  color: var(--primary-body);
+  &_title {
+    font-size: 56px !important;
+    line-height: 52px !important;
+    letter-spacing: -1.12px !important;
+    max-width: 620px;
+  }
+  &_description {
+    font-size: 24px !important;
+    line-height: 32px !important;
+    letter-spacing: -0.12px !important;
+    max-width: 620px;
+    padding-top: 18px;
+  }
+  @include media-breakpoint-down(xl) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -1,0 +1,63 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.hero {
+  position: relative;
+  background: radial-gradient(
+      193.34% 155.87% at 50% -1.55%,
+      rgba(255, 254, 250, 0.7) 31.17%,
+      var(--interface-yellow-700) 100%
+    ),
+    var(--primary-white);
+  min-height: 925px;
+  width: 100%;
+  &_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 72px;
+    text-align: center;
+  }
+
+  &_title {
+    font-size: 4.25rem;
+    font-weight: 500;
+    color: var(--primary-body);
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    line-height: 140%;
+    letter-spacing: -1.36px;
+    max-width: 984px;
+  }
+  &_button_group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacer-4);
+    margin-top: var(--spacer-5);
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+    }
+  }
+  &_button {
+    background-color: transparent !important;
+  }
+  &_image {
+    position: absolute;
+    top: 30%;
+    @include media-breakpoint-down(xl) {
+      width: 100%;
+      height: auto;
+    }
+    @include media-breakpoint-down(md) {
+      top: 45%;
+    }
+    @include media-breakpoint-down(sm) {
+      top: 55%;
+    }
+  }
+  @include media-breakpoint-down(md) {
+    min-height: 700px;
+  }
+}

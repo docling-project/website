@@ -1,0 +1,25 @@
+.layout,
+main.layout {
+  display: flex;
+  flex-direction: column;
+}
+body:has(.layout) {
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+}
+
+.container-wide {
+  @include make-container(48px);
+  max-width: 1300px;
+  padding: 0px 40px;
+  @include media-breakpoint-down(xxll) {
+    max-width: 1180px;
+  }
+  @include media-breakpoint-down(xl) {
+    max-width: 100%;
+  }
+  @include media-breakpoint-down(mlg) {
+    max-width: 100%;
+    padding: 0px 16px;
+  }
+}

@@ -1,0 +1,71 @@
+// Colors
+
+$primary: (
+  black: #000000,
+  purple: #6b1c96,
+  white: #ffffff,
+  body: #28251b,
+  orange: #e64328,
+);
+
+$secondary: (
+  fuchsia: #a71181,
+);
+
+$_colors: (
+  dark-gray: (
+    500: #362742,
+  ),
+  light-gray: (
+    500: #c2cacf,
+  ),
+  purple: (
+    500: #4c146b,
+  ),
+  green: (
+    500: #008040,
+  ),
+  yellow: (
+    500: #916707,
+  ),
+  red: (
+    500: #d52424,
+  ),
+  blue: (
+    500: #1e71d4,
+  ),
+  orange: (
+    500: #e64328,
+  ),
+  pink: (
+    500: #f81f9c,
+  ),
+);
+
+:root {
+  // Creating the box shadows variants to be used eery
+  --box-shadow-100: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+  --box-shadow-200: 0px 8px 24px 0px rgba(26, 26, 48, 0.1);
+
+  @each $color, $value in $primary {
+    --primary-#{"" + $color}: #{$value};
+    --primary-#{"" + $color}-rgb: #{red($value)}, #{green($value)},
+      #{blue($value)};
+  }
+  @each $color, $value in $secondary {
+    --interface-#{"" + $color}: #{$value};
+    --interface-#{"" + $color}-rgb: #{red($value)}, #{green($value)},
+      #{blue($value)};
+  }
+  @each $colorname, $variants in $_colors {
+    @each $variant, $value in $variants {
+      $keyname: "--interface-" + $colorname + "-" + $variant;
+      $rgbkey: "--interface-" + $colorname + "-" + $variant + "-rgb";
+      #{$keyname}: #{$value};
+      #{$rgbkey}:
+        #{red($value)},
+        #{green($value)},
+        #{blue($value)};
+    }
+  }
+}

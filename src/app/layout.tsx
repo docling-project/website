@@ -1,4 +1,8 @@
+// Dependencies
 import type { Metadata } from "next";
+
+// Styles
+import "@/styles/index.scss";
 
 export const metadata: Metadata = {
   title: "Create Next App",

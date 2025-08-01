@@ -10,10 +10,14 @@
   border-radius: var(--spacer-2);
   color: var(--primary-body);
   background-color: var(--interface-yellow-300);
+  min-height: 480px;
   &:nth-child(1) {
     width: 826px;
     @include media-breakpoint-down(sm) {
       width: 100%;
+    }
+    @include media-breakpoint-down(xl) {
+      width: 480px;
     }
     img {
       @include media-breakpoint-down(sm) {
@@ -43,7 +47,8 @@
     img {
       position: absolute;
       top: 40%;
-      width: 480px;
+      object-fit: cover;
+      width: 100%;
       border-radius: 16px;
       @include media-breakpoint-down(sm) {
         width: 100%;
@@ -55,6 +60,10 @@
   }
   &:nth-child(4) {
     width: 826px;
+
+    @include media-breakpoint-down(xl) {
+      width: 480px;
+    }
     @include media-breakpoint-down(sm) {
       width: 100%;
     }

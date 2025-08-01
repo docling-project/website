@@ -1,4 +1,4 @@
-import React from "react";
+//Components
 import Hero from "../Hero";
 import TransformContent from "../TrasnformContent";
 import GetStarted from "../GetStarted";

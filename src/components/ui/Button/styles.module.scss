@@ -16,4 +16,7 @@
   &_icon {
     margin-right: 16px;
   }
+  &:hover {
+    background-color: var(--primary-white);
+  }
 }

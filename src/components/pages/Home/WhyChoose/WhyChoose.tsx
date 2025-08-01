@@ -1,8 +1,12 @@
-import React from "react";
+//Styles
 import styles from "./styles.module.scss";
+
+//Components
 import Display from "@/components/ui/Display";
-import { DOCLING_CARD_DATA } from "@/utils/constants";
 import Card from "./Card";
+
+//Utilities
+import { DOCLING_CARD_DATA } from "@/utils/constants";
 
 const WhyChoose = () => {
   return (

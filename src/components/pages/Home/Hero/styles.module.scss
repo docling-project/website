@@ -21,12 +21,12 @@
   }
 
   &_title {
-    font-size: 4.25rem;
-    font-weight: 500;
+    font-size: 68px !important;
+    font-weight: 500 !important;
     color: var(--primary-body);
     text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    line-height: 140%;
-    letter-spacing: -1.36px;
+    line-height: 140% !important;
+    letter-spacing: -1.36px !important;
     max-width: 984px;
   }
   &_button_group {
@@ -42,6 +42,9 @@
   }
   &_button {
     background-color: transparent !important;
+    &:hover {
+      background-color: var(--interface-yellow-700) !important;
+    }
   }
   &_image {
     position: absolute;

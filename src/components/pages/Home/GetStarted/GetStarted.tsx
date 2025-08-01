@@ -1,8 +1,12 @@
-import React from "react";
-import styles from "./styles.module.scss";
+//Components
 import Display from "@/components/ui/Display";
 import Card from "@/components/ui/Card";
+
+// Utilities
 import { CARD_DATA } from "@/utils/constants";
+
+//Styles
+import styles from "./styles.module.scss";
 
 const GetStarted = () => {
   return (

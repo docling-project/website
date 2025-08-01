@@ -1,8 +1,10 @@
-import React from "react";
-import styles from "./styles.module.scss";
+//Components
 import StaticImage from "../StaticImage";
 import Display from "../Display";
 import Text from "../text";
+
+//Styles
+import styles from "./styles.module.scss";
 
 interface CardProps {
   imageSrc: string;

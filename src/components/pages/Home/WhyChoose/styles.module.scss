@@ -2,7 +2,6 @@
 @import "~bootstrap/scss/mixins";
 
 .choose {
-  padding-top: var(--spacer-8);
   padding-bottom: 111px;
   background-color: var(--primary-white);
   &_title {
@@ -10,6 +9,7 @@
     letter-spacing: -1.4px !important;
     text-align: center;
     padding-bottom: 52px;
+    color: var(--primary-body);
   }
 }
 .cardContainer {

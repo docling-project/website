@@ -1,10 +1,14 @@
-import React from "react";
-import styles from "./styles.module.scss";
+//Components
 import Display from "@/components/ui/Display";
 import Github from "@/components/icons/Github";
 import Button from "@/components/ui/Button";
 import StaticImage from "@/components/ui/StaticImage";
+
+// Utilities
 import { HERO_TEXT } from "@/utils/constants";
+
+//Styles
+import styles from "./styles.module.scss";
 
 const Hero = () => {
   return (
@@ -16,13 +20,13 @@ const Hero = () => {
         <div className={styles.hero_button_group}>
           <Button text={"Get Started"} />
           <Button
-            text={"Get Started"}
+            text={"Star on GitHub"}
             icon={<Github />}
             className={styles.hero_button}
           />
         </div>
         <StaticImage
-          src={"/hero.webp"}
+          src={"/images/hero.webp"}
           alt={"Docling Hero Image"}
           width={1096}
           height={731}

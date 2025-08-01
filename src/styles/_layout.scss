@@ -12,6 +12,17 @@ body:has(.layout) {
   @include make-container(48px);
 
   @include media-breakpoint-up(xxl) {
-    max-width: 1440px;
+    max-width: 1400px !important;
+    padding: 0px 40px;
+    @include media-breakpoint-down(xxll) {
+      max-width: 1180px;
+    }
+    @include media-breakpoint-down(xl) {
+      max-width: 100%;
+    }
+    @include media-breakpoint-down(mlg) {
+      max-width: 100%;
+      padding: 0px 16px;
+    }
   }
 }

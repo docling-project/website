@@ -1,6 +1,10 @@
 // Dependencies
 import type { Metadata } from "next";
 
+// Components
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+
 // Styles
 import "@/styles/index.scss";
 
@@ -16,7 +20,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

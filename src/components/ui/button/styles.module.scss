@@ -1,0 +1,96 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.button {
+  display: flex;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  transition: all 0.3s ease;
+  font-family: var(--font-body);
+  @include media-breakpoint-down(md) {
+    width: 100%;
+  }
+
+  &.border-button {
+    border: 2px solid rgba(152, 244, 254, 0.3);
+    background: transparent;
+    border-radius: 8px;
+    background-clip: border-box;
+    color: white;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  &.filled-button {
+    border-radius: 8px;
+    background: var(--interface-yellow-700);
+    background-size: 300% 100%;
+    background-position: 0% 50%;
+    border: none;
+    opacity: 1;
+    transition:
+      opacity 0.3s ease-in-out,
+      box-shadow 0.1s ease-in-out;
+    &:hover {
+      animation: waveGradient 5s ease-in-out infinite;
+    }
+  }
+
+  &.gradient-button {
+    border-radius: 8px;
+    background: linear-gradient(
+      to right,
+      rgb(134, 239, 172),
+      rgb(59, 130, 246),
+      rgb(134, 239, 172)
+    );
+    background-size: 300% 100%;
+    background-position: 0% 50%;
+    border: none;
+    opacity: 1;
+    box-shadow:
+      0px 0px 10px rgba(52, 211, 153, 0.5),
+      0px 0px 15px rgba(52, 211, 153, 0.6);
+    transition:
+      opacity 0.3s ease-in-out,
+      box-shadow 0.1s ease-in-out;
+    animation: boxShadowAnimation 1.5s infinite alternate;
+    &:hover {
+      animation: waveGradient 5s ease-in-out infinite;
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  @keyframes boxShadowAnimation {
+    0% {
+      box-shadow:
+        0px 0px 10px rgba(52, 211, 153, 0.5),
+        0px 0px 15px rgba(52, 211, 153, 0.6);
+    }
+    100% {
+      box-shadow:
+        0px 0px 15px rgba(52, 211, 153, 0.6),
+        0px 0px 20px rgba(52, 211, 153, 0.7);
+    }
+  }
+  @keyframes waveGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}

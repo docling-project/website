@@ -7,14 +7,14 @@ import Link from "next/link";
 // Components
 import Display from "@/components/ui/Display";
 import Logo from "@/components/icons/logo/Logo";
-import Button from "@/components/ui/button";
 import Social from "@/components/social";
+import Button from "@/components/ui/Button";
 
 // Utils
 import { LIST } from "@/utils/constants";
 
-// Types
-import { ButtonTypes } from "@/components/ui/button/types";
+// // Types
+// import { ButtonTypes } from "@/components/ui/Button/types";
 
 // Styles
 import styles from "./styles.module.scss";
@@ -85,9 +85,7 @@ const Header = () => {
             <Social />
             <div className={styles.verticalColumn}></div>
             <div>
-              <Button variant={ButtonTypes.FILLED} onClick={() => {}}>
-                Get Started
-              </Button>
+              <Button text={"Get Started"} onClick={() => {}} />
             </div>
           </div>
           <div

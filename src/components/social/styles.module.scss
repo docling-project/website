@@ -1,0 +1,15 @@
+@import "~bootstrap/scss/mixins";
+@import "/src/styles/variables";
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  h6 {
+    font-weight: 500;
+    color: var(--primary-black);
+  }
+  @include media-breakpoint-down(lg) {
+    gap: 8px;
+  }
+}

@@ -14,8 +14,7 @@
 
   &:nth-child(1) {
     width: 826px;
-
-    @include media-breakpoint-down(xxl) {
+    @media (max-width: 1383px) {
       width: 480px;
     }
     @media (max-width: 1038px) {
@@ -75,7 +74,7 @@
   &:nth-child(4) {
     width: 826px;
 
-    @include media-breakpoint-down(xxl) {
+    @media (max-width: 1383px) {
       width: 480px;
     }
     @media (max-width: 1038px) {

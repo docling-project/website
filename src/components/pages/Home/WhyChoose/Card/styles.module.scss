@@ -14,17 +14,12 @@
 
   &:nth-child(1) {
     width: 826px;
-    @include media-breakpoint-down(sm) {
-      width: 100%;
-    }
+
     @include media-breakpoint-down(xxl) {
       width: 480px;
     }
     @media (max-width: 1038px) {
       width: 420px;
-    }
-    @include media-breakpoint-down(xxl) {
-      width: 480px;
     }
     @include media-breakpoint-down(lg) {
       width: 100%;
@@ -42,9 +37,6 @@
       width: 420px;
     }
     @include media-breakpoint-down(lg) {
-      width: 100%;
-    }
-    @include media-breakpoint-down(sm) {
       width: 100%;
     }
     img {

@@ -11,13 +11,23 @@
   color: var(--primary-body);
   background-color: var(--interface-yellow-300);
   min-height: 480px;
+
   &:nth-child(1) {
     width: 826px;
     @include media-breakpoint-down(sm) {
       width: 100%;
     }
-    @include media-breakpoint-down(xl) {
+    @include media-breakpoint-down(xxl) {
       width: 480px;
+    }
+    @media (max-width: 1038px) {
+      width: 420px;
+    }
+    @include media-breakpoint-down(xxl) {
+      width: 480px;
+    }
+    @include media-breakpoint-down(lg) {
+      width: 100%;
     }
     img {
       @include media-breakpoint-down(sm) {
@@ -28,6 +38,12 @@
   }
   &:nth-child(2) {
     width: 480px;
+    @media (max-width: 1038px) {
+      width: 420px;
+    }
+    @include media-breakpoint-down(lg) {
+      width: 100%;
+    }
     @include media-breakpoint-down(sm) {
       width: 100%;
     }
@@ -41,6 +57,12 @@
   &:nth-child(3) {
     width: 480px;
     height: 480px;
+    @media (max-width: 1038px) {
+      width: 420px;
+    }
+    @include media-breakpoint-down(lg) {
+      width: 100%;
+    }
     @include media-breakpoint-down(sm) {
       width: 100%;
     }
@@ -50,7 +72,7 @@
       object-fit: cover;
       width: 100%;
       border-radius: 16px;
-      @include media-breakpoint-down(sm) {
+      @media (max-width: 1038px) {
         width: 100%;
         position: relative;
         object-fit: contain;
@@ -61,8 +83,14 @@
   &:nth-child(4) {
     width: 826px;
 
-    @include media-breakpoint-down(xl) {
+    @include media-breakpoint-down(xxl) {
       width: 480px;
+    }
+    @media (max-width: 1038px) {
+      width: 420px;
+    }
+    @include media-breakpoint-down(lg) {
+      width: 100%;
     }
     @include media-breakpoint-down(sm) {
       width: 100%;
@@ -74,6 +102,7 @@
       }
     }
   }
+
   &_text {
     display: flex;
     flex-direction: column;

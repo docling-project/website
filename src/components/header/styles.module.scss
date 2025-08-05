@@ -3,7 +3,7 @@
 
 .header {
   background: var(--primary-offwhite);
-  padding: var(--spacer-3) var(--spacer-4);
+  padding: var(--spacer-3) 20px;
   color: var(--primary-black);
   @include media-breakpoint-down(xl) {
     padding: var(--spacer-3) var(--spacer-1);

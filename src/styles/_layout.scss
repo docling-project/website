@@ -10,7 +10,6 @@ body:has(.layout) {
 
 .container-wide {
   @include make-container(48px);
-
   @include media-breakpoint-up(xxl) {
     max-width: 1400px !important;
     padding: 0px 40px;
@@ -22,7 +21,7 @@ body:has(.layout) {
     }
     @include media-breakpoint-down(mlg) {
       max-width: 100%;
-      padding: 0px 16px;
+      padding: 0px 32px;
     }
   }
 }

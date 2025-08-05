@@ -9,24 +9,19 @@
   border-radius: var(--spacer-2);
   color: var(--primary-body);
   background-color: var(--primary-white);
-  width: 653px;
-  @include media-breakpoint-down(1385) {
-    flex-basis: 45%;
-    height: 450px;
+  width: 653px !important;
+  flex-basis: 49% !important;
+
+  @media (max-width: 1100px) {
+    width: 400px !important;
+    flex-basis: 48% !important;
+    padding: 16px;
+    height: 430px !important;
   }
 
-  @include media-breakpoint-down(1100) {
-    width: 450px;
-    padding: 24px;
-  }
-  @include media-breakpoint-down(lg) {
-    width: fit-content;
-    flex-basis: 40%;
-    padding: 16px;
-  }
   @include media-breakpoint-down(md) {
-    width: 100%;
-    flex-basis: 100%;
+    width: 100% !important;
+    flex-basis: 100% !important;
     padding: 38px;
   }
   &_text {
@@ -42,6 +37,9 @@
     @include media-breakpoint-down(1100) {
       font-size: 24px !important;
     }
+    @include media-breakpoint-down(lg) {
+      font-size: 20px !important;
+    }
   }
   &_detail {
     line-height: 32px !important;
@@ -49,6 +47,9 @@
     text-align: left;
     @include media-breakpoint-down(1100) {
       font-size: 26px !important;
+    }
+    @include media-breakpoint-down(lg) {
+      font-size: 20px !important;
     }
   }
   &_image {

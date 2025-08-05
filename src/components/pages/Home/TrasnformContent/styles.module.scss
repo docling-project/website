@@ -6,9 +6,8 @@
 }
 .section {
   display: flex;
-  gap: var(--spacer-8);
-  align-items: flex-start;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
   padding: 56px 0px;
   @include media-breakpoint-down(xl) {
     gap: var(--spacer-4);

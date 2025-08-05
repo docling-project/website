@@ -15,7 +15,12 @@
 .cardContainer {
   display: flex;
   justify-content: center;
+
   align-items: center;
   flex-wrap: wrap;
   gap: 30px;
+  @include media-breakpoint-down(xl) {
+    gap: var(--spacer-4);
+    padding: 0px;
+  }
 }

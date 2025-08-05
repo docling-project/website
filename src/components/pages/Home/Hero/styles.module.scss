@@ -16,7 +16,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    margin-top: 72px;
+    margin-top: 64px;
     text-align: center;
   }
 
@@ -28,6 +28,9 @@
     line-height: 140% !important;
     letter-spacing: -1.36px !important;
     max-width: 984px;
+    @include media-breakpoint-down(md) {
+      font-size: 48px !important;
+    }
   }
   &_button_group {
     display: flex;
@@ -49,6 +52,9 @@
   &_image {
     position: absolute;
     top: 30%;
+    @include media-breakpoint-down(864px) {
+      position: relative;
+    }
     @include media-breakpoint-down(xl) {
       width: 100%;
       height: auto;

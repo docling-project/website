@@ -194,3 +194,24 @@
   height: 32px;
   background-color: var(--interface-brown-500);
 }
+
+.small_button {
+  display: flex;
+  padding: 10px 20px !important;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--interface-yellow-700);
+  color: var(--primary-body);
+  border: none;
+  border-radius: 10px;
+  font-size: 16px !important;
+  font-weight: 600;
+  font-family: var(--font-body);
+  line-height: 24px;
+  &_icon {
+    margin-right: 16px;
+  }
+  &:hover {
+    background-color: var(--primary-white);
+  }
+}

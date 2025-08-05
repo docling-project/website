@@ -30,7 +30,7 @@ const Footer = () => {
           </div>
           <div className={styles.rightContainer}>
             <div className={styles.footerLinks}>
-              <Display size={200}>Concepts</Display>
+              <Display size={100}>Concepts</Display>
               <Display size={100} weight={Weight.Light}>
                 Lorem Ipsum
               </Display>
@@ -45,7 +45,7 @@ const Footer = () => {
               </Display>
             </div>
             <div className={styles.footerLinks}>
-              <Display size={200}>Resources</Display>
+              <Display size={100}>Resources</Display>
               <Display size={100} weight={Weight.Light}>
                 Help Center
               </Display>
@@ -60,7 +60,7 @@ const Footer = () => {
               </Display>
             </div>
             <div className={styles.footerLinks}>
-              <Display size={200}>Legal</Display>
+              <Display size={100}>Legal</Display>
               <Display size={100} weight={Weight.Light}>
                 Privacy Policy
               </Display>
@@ -72,7 +72,7 @@ const Footer = () => {
               </Display>
             </div>
             <div className={styles.footerLinks}>
-              <Display size={200}>Follow Us</Display>
+              <Display size={100}>Follow Us</Display>
               <Display size={100} weight={Weight.Light}>
                 Github
               </Display>

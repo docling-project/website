@@ -85,7 +85,11 @@ const Header = () => {
             <Social />
             <div className={styles.verticalColumn}></div>
             <div>
-              <Button text={"Get Started"} onClick={() => {}} />
+              <Button
+                text={"Get Started"}
+                className={styles.small_button}
+                onClick={() => {}}
+              />
             </div>
           </div>
           <div

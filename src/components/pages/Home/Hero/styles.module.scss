@@ -18,6 +18,9 @@
     justify-content: flex-start;
     margin-top: 64px;
     text-align: center;
+    @include media-breakpoint-down(md) {
+      margin-top: 24px !important;
+    }
   }
 
   &_title {
@@ -52,12 +55,13 @@
   &_image {
     position: absolute;
     top: 30%;
-    @include media-breakpoint-down(864px) {
+    @media (max-width: 864px) {
       position: relative;
     }
     @include media-breakpoint-down(xl) {
       width: 100%;
       height: auto;
+      top: 25%;
     }
     @include media-breakpoint-down(md) {
       top: 45%;

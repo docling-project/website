@@ -9,7 +9,26 @@
   border-radius: var(--spacer-2);
   color: var(--primary-body);
   background-color: var(--primary-white);
-  min-width: 653px;
+  width: 653px;
+  @include media-breakpoint-down(1385) {
+    flex-basis: 45%;
+    height: 450px;
+  }
+
+  @include media-breakpoint-down(1100) {
+    width: 450px;
+    padding: 24px;
+  }
+  @include media-breakpoint-down(lg) {
+    width: fit-content;
+    flex-basis: 40%;
+    padding: 16px;
+  }
+  @include media-breakpoint-down(md) {
+    width: 100%;
+    flex-basis: 100%;
+    padding: 38px;
+  }
   &_text {
     display: flex;
     flex-direction: column;
@@ -20,24 +39,31 @@
     font-size: 35px !important;
     letter-spacing: -0.875px !important;
     text-align: left;
+    @include media-breakpoint-down(1100) {
+      font-size: 24px !important;
+    }
   }
   &_detail {
     line-height: 32px !important;
     letter-spacing: -0.12px !important;
     text-align: left;
+    @include media-breakpoint-down(1100) {
+      font-size: 26px !important;
+    }
   }
   &_image {
     display: flex;
     justify-content: center;
     align-items: center;
     img {
+      @include media-breakpoint-down(lg) {
+        width: 100%;
+        // object-fit: contain;
+      }
       @include media-breakpoint-down(sm) {
         width: 100%;
         object-fit: contain;
       }
     }
-  }
-  @include media-breakpoint-down(xl) {
-    min-width: 100%;
   }
 }

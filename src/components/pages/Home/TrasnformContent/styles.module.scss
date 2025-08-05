@@ -10,7 +10,11 @@
   align-items: flex-start;
   justify-content: center;
   padding: 56px 0px;
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(xl) {
+    gap: var(--spacer-4);
+    padding: 0px;
+  }
+  @include media-breakpoint-down(lg) {
     gap: var(--spacer-2);
     padding: 0px;
   }
@@ -20,7 +24,7 @@
     line-height: 52px !important;
     letter-spacing: -1.12px !important;
     max-width: 620px;
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
       font-size: 36px !important;
     }
   }

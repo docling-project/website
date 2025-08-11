@@ -92,4 +92,23 @@ const SOCIALS = [
   { icon: <Twitter />, count: "4k", url: "https://x.com/langflow_ai" },
 ];
 
+export const STARTED_CARD = [
+  {
+    title: "Concept →",
+    text: "Learn Docling fundamentals",
+  },
+  {
+    title: "Examples →",
+    text: "Recipes for various use cases",
+  },
+  {
+    title: "Integrations →",
+    text: "Popular frameworks and tools",
+  },
+  {
+    title: "Reference →",
+    text: "See more API details",
+  },
+];
+
 export { LIST, SOCIALS };

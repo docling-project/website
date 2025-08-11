@@ -78,7 +78,6 @@ $default-sm-sizes: (
   color: inherit;
   display: block;
   font-family: var(--font-heading);
-  font-family: var(--font-body);
   margin-bottom: 0;
   $display: &;
 
@@ -112,6 +111,10 @@ $default-sm-sizes: (
 
   &--weight-600 {
     font-weight: 600;
+  }
+
+  &--weight-700 {
+    font-weight: 700;
   }
 
   // Default Sizes

@@ -13,9 +13,6 @@ import Button from "@/components/ui/Button";
 // Utils
 import { LIST } from "@/utils/constants";
 
-// // Types
-// import { ButtonTypes } from "@/components/ui/Button/types";
-
 // Styles
 import styles from "./styles.module.scss";
 

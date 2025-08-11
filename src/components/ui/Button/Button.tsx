@@ -1,5 +1,6 @@
-//Styles
+// Styles
 import styles from "./styles.module.scss";
+
 interface ButtonProps {
   text: string;
   onClick?: () => void;

@@ -1,0 +1,23 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.button {
+  display: flex;
+  padding: 14px 30px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--interface-yellow-700);
+  color: var(--primary-body);
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  line-height: 24px;
+  &_icon {
+    margin-right: 16px;
+  }
+  &:hover {
+    background-color: var(--primary-white);
+  }
+}

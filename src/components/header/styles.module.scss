@@ -1,0 +1,217 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.header {
+  background: var(--primary-offwhite);
+  padding: var(--spacer-3) 20px;
+  color: var(--primary-black);
+  @include media-breakpoint-down(xl) {
+    padding: var(--spacer-3) var(--spacer-1);
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  &_img {
+    object-fit: contain;
+  }
+}
+
+.nav {
+  display: flex;
+  margin-left: 40px;
+  gap: 38px;
+  a {
+    text-decoration: none;
+    color: var(--primary-white);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+  @include media-breakpoint-down(xl) {
+    gap: var(--spacer-3);
+    margin-left: 20px;
+  }
+  @include media-breakpoint-down(lg) {
+    gap: 8px;
+    margin-left: 12px;
+  }
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+}
+
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: var(--spacer-1);
+  h6 {
+    font-weight: 500;
+    color: var(--primary-black);
+  }
+}
+
+.rightContainer {
+  display: flex;
+  align-items: center;
+  gap: 38px;
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
+  @include media-breakpoint-down(lg) {
+    gap: 10px;
+  }
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-2);
+  @include media-breakpoint-down(lg) {
+    gap: var(--spacer-1);
+  }
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  &:hover {
+    opacity: 0.6;
+  }
+  h6 {
+    font-weight: 500;
+    color: var(--primary-black);
+  }
+  @include media-breakpoint-down(lg) {
+    gap: 2px;
+  }
+}
+
+.menuButton {
+  position: relative;
+  width: 30px;
+  height: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 1000;
+
+  span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--primary-black);
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &.active {
+    span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    span:nth-child(2) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    display: none;
+  }
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow: scroll;
+  width: 100%;
+  background: var(--primary-offwhite);
+  z-index: 900;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 40px;
+  transition: all 0.4s ease-in-out;
+}
+
+.drawerContent {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 600px;
+  gap: 20px;
+}
+
+.drawerSectionTitle {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.drawerItem {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding-bottom: 16px;
+  color: var(--primary-black);
+  cursor: pointer;
+
+  &:hover {
+    color: #f480ff;
+  }
+
+  &_heading {
+    font-size: 15px;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-1);
+  @include media-breakpoint-up(lg) {
+    gap: 4px;
+  }
+}
+
+.verticalColumn {
+  width: 1px;
+  height: 32px;
+  background-color: var(--interface-brown-500);
+}
+
+.small_button {
+  display: flex;
+  padding: 10px 20px !important;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--interface-yellow-700);
+  color: var(--primary-body);
+  border: none;
+  border-radius: 10px;
+  font-size: 16px !important;
+  font-weight: 600;
+  font-family: var(--font-body);
+  line-height: 24px;
+  &_icon {
+    margin-right: 16px;
+  }
+  &:hover {
+    background-color: var(--primary-white);
+  }
+}

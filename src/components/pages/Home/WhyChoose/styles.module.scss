@@ -1,0 +1,26 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.choose {
+  padding-bottom: 104px;
+  background-color: var(--primary-white);
+  &_title {
+    line-height: 52px !important;
+    letter-spacing: -1.4px !important;
+    text-align: center;
+    padding-bottom: 52px;
+    color: var(--primary-body);
+  }
+}
+.cardContainer {
+  display: flex;
+  justify-content: center;
+
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  @include media-breakpoint-down(xl) {
+    gap: var(--spacer-4);
+    padding: 0px;
+  }
+}

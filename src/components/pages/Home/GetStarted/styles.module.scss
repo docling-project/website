@@ -1,0 +1,23 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.getStarted {
+  padding-top: var(--spacer-8);
+  padding-bottom: 111px;
+  background-color: var(--interface-yellow-400);
+  &_title {
+    line-height: 52px !important;
+    letter-spacing: -1.4px !important;
+    text-align: center;
+    padding-bottom: 52px;
+  }
+}
+.cardContainer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  @include media-breakpoint-down(1100) {
+    gap: 20px;
+  }
+}

@@ -1,0 +1,16 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.getStarted {
+  margin-bottom: var(--spacer-5);
+  &_title {
+    padding-top: var(--spacer-1);
+    padding-bottom: var(--spacer-1);
+    line-height: 52px !important;
+    letter-spacing: -0.48px !important;
+  }
+  &_cards {
+    display: flex;
+    gap: 24px;
+  }
+}

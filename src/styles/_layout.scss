@@ -4,8 +4,8 @@ main.layout {
   flex-direction: column;
 }
 body:has(.layout) {
-  background-color: var(--primary-black);
-  color: var(--primary-white);
+  background-color: var(--primary-dark) !important;
+  color: var(--primary-body);
 }
 
 .container-wide {

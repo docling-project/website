@@ -1,0 +1,32 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.card {
+  min-width: 286px;
+  min-height: 197px;
+  border-radius: 8px;
+  background-color: var(--interface-yellow-400);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding-left: 21.72px;
+  color: var(--primary-body);
+  &_title {
+    font-size: 28px !important;
+    line-height: 32px !important;
+    letter-spacing: -0.7px !important;
+  }
+  &_text {
+    line-height: 120% !important;
+    letter-spacing: -0.09px !important;
+  }
+  &_icon_wrapper {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background-color: var(--interface-yellow-400);
+    padding: var(-spacer--2);
+    margin-bottom: 24px;
+  }
+}

@@ -1,9 +1,13 @@
 //Components
 // import Hero from "../Hero";
 import TransformContent from "../TrasnformContent";
-import GetStarted from "../GetStarted";
 import WhyChoose from "../WhyChoose";
 import DarkHero from "../DarkHero";
+// import TransformContent from "../TrasnformContent";
+// import GetStarted from "../GetStarted";
+// import WhyChoose from "../WhyChoose";
+import GetStarted from "../../Home-v2/GetStarted";
+import LiveAssistant from "../../Home-v2/LiveAssistant";
 
 const Template = () => {
   return (
@@ -13,6 +17,8 @@ const Template = () => {
       <TransformContent />
       <WhyChoose />
       <GetStarted />
+      <GetStarted />
+      <LiveAssistant />
     </>
   );
 };

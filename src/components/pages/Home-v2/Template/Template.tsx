@@ -1,13 +1,15 @@
 //Components
 import GetStarted from "../../Home-v2/GetStarted";
 import LiveAssistant from "../../Home-v2/LiveAssistant";
-import Transform from "../../Home-v2/Transform";
+import DarkHero from "../../Home/DarkHero";
+import TransformContent from "../../Home/TrasnformContent";
 import Features from "../Features/Features";
 
 const Template = () => {
   return (
     <>
-      <Transform />
+      <DarkHero />
+      <TransformContent />
       <Features />
       <GetStarted />
       <LiveAssistant />

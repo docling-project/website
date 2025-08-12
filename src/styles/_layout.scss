@@ -4,7 +4,7 @@ main.layout {
   flex-direction: column;
 }
 body:has(.layout) {
-  background-color: var(--primary-dark) !important;
+  background-color: var(--primary-dark);
   color: var(--primary-body);
 }
 

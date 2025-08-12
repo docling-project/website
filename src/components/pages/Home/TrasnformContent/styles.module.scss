@@ -5,7 +5,7 @@
   padding-top: 52px;
   padding-bottom: 52px;
   background: linear-gradient(0deg, #ffffff00 89.93%, #ffffff99 100%),
-    linear-gradient(180deg, #00000000 0%, #000000 100%), #0a071f;
+    linear-gradient(180deg, #00000000 0%, #02030c 100%), #0a071f;
 
   background-blend-mode: overlay, normal, normal;
 }
@@ -65,7 +65,8 @@
     background-color: transparent !important;
     color: var(--interface-yellow-200) !important;
     &:hover {
-      background-color: var(--interface-yellow-700) !important;
+      background-color: var(--interface-orange-600) !important;
+      border-radius: 100px !important;
     }
   }
 }
@@ -88,5 +89,47 @@
   }
   &:hover {
     background-color: var(--primary-white);
+  }
+}
+.transform {
+  &_cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 24px;
+    row-gap: 24px;
+    align-items: stretch;
+  }
+
+  &_card {
+    background: none;
+    padding-left: var(--spacer-0);
+    width: 100%;
+    min-width: 0;
+    min-height: 258px;
+    box-sizing: border-box;
+  }
+  &_card_title {
+    font-size: 30px !important;
+    line-height: 32px !important;
+    letter-spacing: -0.75px !important;
+    color: var(--primary-body) !important;
+    padding-bottom: 10px;
+  }
+  &_card_text {
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    line-height: 24px !important;
+    letter-spacing: -0.1px !important;
+  }
+  /* Optional responsive */
+  @include media-breakpoint-down(xl) {
+    &_cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    &_cards {
+      grid-template-columns: 1fr;
+    }
   }
 }

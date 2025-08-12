@@ -22,7 +22,7 @@ const GetStarted = () => {
           {STARTED_CARD.map((card, index) => (
             <Card_v2
               key={index}
-              title={card.title}
+              title={card.title + " →"}
               details={card.text}
               backgroundUrl={card.backgroundUrl}
             />

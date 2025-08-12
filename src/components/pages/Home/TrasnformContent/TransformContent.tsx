@@ -5,10 +5,11 @@ import Button from "@/components/ui/Button";
 import Github from "@/components/icons/Github";
 
 // Utilities
-import { TRANSFORM } from "@/utils/constants";
+import { TRANSFORM, TRANSFORM_CARD } from "@/utils/constants";
 
 //Styles
 import styles from "./styles.module.scss";
+import Card_v2 from "@/components/ui/Card-v2";
 
 const TransformContent = () => {
   return (
@@ -29,6 +30,19 @@ const TransformContent = () => {
           <Text className={styles.section_description} size={200} weight={400}>
             {TRANSFORM.description}
           </Text>
+        </div>
+        <div className={styles.transform_cards}>
+          {TRANSFORM_CARD.map((card, index) => (
+            <Card_v2
+              key={index}
+              title={card.title}
+              details={card.text}
+              icon={card.icon}
+              className={styles.transform_card}
+              titleClassName={styles.transform_card_title}
+              textClassName={styles.transform_card_text}
+            />
+          ))}
         </div>
       </div>
     </section>

@@ -23,11 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* <Header /> */}
-        <DarkHeader />
-        {children}
-        {/* <Footer /> */}
-        <DarkFooter />
+        <div className="layout">
+          <DarkHeader />
+          {children}
+          <DarkFooter />
+        </div>
       </body>
     </html>
   );

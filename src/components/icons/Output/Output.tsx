@@ -10,8 +10,9 @@ const Output = () => {
       fill="none"
     >
       <path
-        d="M5 16.6666L9.16667 12.4999L5 8.33325M5 31.6666L9.16667 27.4999L5 23.3333M16.6667 9.99992H35M16.6667 19.9999H35M16.6667 29.9999H35"
-        stroke="#28251B"
+        d="M5 16.6667L9.16667 12.5L5 8.33334M5 31.6667L9.16667 27.5L5 23.3333M16.6667 10H35M16.6667 20H35M16.6667 30H35"
+        stroke="#E9DBBD"
+        stroke-opacity="0.9"
         stroke-width="2.5"
         stroke-linecap="round"
         stroke-linejoin="round"

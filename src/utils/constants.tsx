@@ -1,4 +1,7 @@
+import Document from "@/components/icons/Document";
+import GenAi from "@/components/icons/GenAi";
 import Github from "@/components/icons/Github";
+import Output from "@/components/icons/Output";
 import Twitter from "@/components/icons/twitter";
 
 export const CARD_DATA = [
@@ -94,21 +97,72 @@ const SOCIALS = [
 
 export const STARTED_CARD = [
   {
-    title: "Concept →",
+    title: "Concepts",
     text: "Learn Docling fundamentals",
+    backgroundUrl: "/images/concepts_bg.webp",
   },
   {
-    title: "Examples →",
+    title: "Examples",
     text: "Recipes for various use cases",
+    backgroundUrl: "/images/examples_bg.webp",
   },
   {
-    title: "Integrations →",
+    title: "Integrations",
     text: "Popular frameworks and tools",
+    backgroundUrl: "/images/integrations_bg.webp",
   },
   {
-    title: "Reference →",
+    title: "Reference",
     text: "See more API details",
+    backgroundUrl: "/images/reference_bg.webp",
   },
+];
+export const TRANSFORM_CARD = [
+  {
+    title: "Advanced Document Parsing",
+    text: "Extracts clean structure from messy PDFs, DOCs, HTML, and more.",
+    icon: <Document />,
+  },
+  {
+    title: "GenAI-Ready Integration",
+    text: "Plugs into LangChain, LlamaIndex, and other popular AI frameworks.",
+    icon: <GenAi />,
+  },
+  {
+    title: "Structured Output",
+    text: "Delivers chunked, labeled data optimized for LLM pipelines.",
+    icon: <Output />,
+  },
+];
+export const FEATURES = [
+  {
+    title: "🗂️",
+    text: "Parse multiple document types: PDF, DOCX, PPTX, XLSX, HTML, audio, and images.",
+  },
+  {
+    title: "📑",
+    text: "Understand PDFs deeply: layout, tables, reading order, code, and formulas.",
+  },
+  {
+    title: "🧬",
+    text: "Unified DoclingDocument format for structured output.",
+  },
+  { title: "↪", text: "Export to Markdown, HTML, DocTags, or lossless JSON." },
+  {
+    title: "🔒",
+    text: "Run locally for sensitive or air-gapped environments.",
+  },
+  {
+    title: "🤖",
+    text: "Integrates easily with LangChain, LlamaIndex, Haystack, and more.",
+  },
+  { title: "🔍", text: "OCR support for scanned PDFs and images." },
+  { title: "👓", text: "Works with visual language models (SmolDocling)." },
+  {
+    title: "🎙",
+    text: "Supports audio via automatic speech recognition (ASR).",
+  },
+  { title: "💻", text: "Fast and easy to use with a simple CLI." },
 ];
 
 export { LIST, SOCIALS };

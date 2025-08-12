@@ -1,9 +1,9 @@
 //Components
 import Display from "@/components/ui/Display";
+import Card_v2 from "@/components/ui/Card-v2";
 
 //Styles
 import styles from "./styles.module.scss";
-import Card_v2 from "@/components/ui/Card-v2";
 
 //Utils
 import { STARTED_CARD } from "@/utils/constants";
@@ -20,7 +20,12 @@ const GetStarted = () => {
         </Display>
         <div className={styles.getStarted_cards}>
           {STARTED_CARD.map((card, index) => (
-            <Card_v2 key={index} title={card.title} details={card.text} />
+            <Card_v2
+              key={index}
+              title={card.title}
+              details={card.text}
+              backgroundUrl={card.backgroundUrl}
+            />
           ))}
         </div>
       </div>

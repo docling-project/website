@@ -13,3 +13,16 @@
     gap: 8px;
   }
 }
+
+.dark_social {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  h6 {
+    font-weight: 500;
+    color: var(--interface-yellow-200);
+  }
+  @include media-breakpoint-down(lg) {
+    gap: 8px;
+  }
+}

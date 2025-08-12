@@ -1,0 +1,42 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.getStarted {
+  margin-bottom: var(--spacer-5);
+  &_title {
+    padding-top: var(--spacer-1);
+    padding-bottom: var(--spacer-1);
+    line-height: 52px !important;
+    letter-spacing: -0.48px !important;
+  }
+  &_cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+  }
+
+  &_cards > * {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+    height: 100%;
+  }
+
+  @include media-breakpoint-down(xl) {
+    &_cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    &_cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    &_cards {
+      grid-template-columns: 1fr;
+    }
+  }
+}

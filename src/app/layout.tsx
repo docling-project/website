@@ -2,11 +2,13 @@
 import type { Metadata } from "next";
 
 // Components
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+// import Header from "@/components/header";
+// import Footer from "@/components/footer";
 
 // Styles
 import "@/styles/index.scss";
+import DarkHeader from "@/components/darkHeader";
+import DarkFooter from "@/components/darkFooter";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
-        <Footer />
+        <div className="layout">
+          <DarkHeader />
+          {children}
+          <DarkFooter />
+        </div>
       </body>
     </html>
   );

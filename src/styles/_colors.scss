@@ -4,7 +4,8 @@ $primary: (
   black: #000000,
   white: #ffffff,
   offwhite: #fffefa,
-  body: #28251b,
+  body: rgba(233, 219, 189, 0.9),
+  dark: #02030c,
 );
 
 $_colors: (
@@ -13,14 +14,21 @@ $_colors: (
   ),
 
   yellow: (
+    200: #e9dbbde5,
     700: #ffcd29,
     600: #ffd55f,
     500: #ffd765,
     400: #ffdb77,
     300: #fffca8,
+    800: #e9dbbde6,
   ),
   orange: (
     500: #c74406,
+    600: #fc7400,
+  ),
+  blue: (
+    700: #161230,
+    600: rgba(22, 18, 48, 0.4),
   ),
 );
 

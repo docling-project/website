@@ -1,14 +1,18 @@
 @import "/src/styles/variables";
 @import "~bootstrap/scss/mixins";
 .container {
+  width: 100% !important;
   padding-top: 52px;
   padding-bottom: 52px;
+  background: linear-gradient(0deg, #ffffff00 89.93%, #ffffff99 100%),
+    linear-gradient(180deg, #00000000 0%, #000000 100%), #0a071f;
+
+  background-blend-mode: overlay, normal, normal;
 }
 .section {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 56px 0px;
+  flex-direction: column;
+  padding: 76px 0px;
   @include media-breakpoint-down(xl) {
     gap: var(--spacer-4);
     padding: 0px;
@@ -19,20 +23,25 @@
   }
   color: var(--primary-body);
   &_title {
-    font-size: 56px !important;
-    line-height: 52px !important;
-    letter-spacing: -1.12px !important;
     max-width: 620px;
+    color: var(--interface-yellow-800);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 52px;
+    letter-spacing: -0.48px;
     @include media-breakpoint-down(lg) {
-      font-size: 36px !important;
+      font-size: 16px !important;
     }
   }
   &_description {
-    font-size: 24px !important;
-    line-height: 32px !important;
-    letter-spacing: -0.12px !important;
-    max-width: 620px;
     padding-top: 18px;
+    color: var(--interface-yellow-800);
+    font-size: 40px !important;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+    letter-spacing: -0.2px;
     @include media-breakpoint-down(md) {
       font-size: 16px !important;
     }
@@ -41,5 +50,43 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+  &_button_group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacer-4);
+    margin-top: var(--spacer-5);
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+    }
+  }
+  &_button {
+    background-color: transparent !important;
+    color: var(--interface-yellow-200) !important;
+    &:hover {
+      background-color: var(--interface-yellow-700) !important;
+    }
+  }
+}
+
+.dark_button {
+  display: flex;
+  padding: 14px 30px !important;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--interface-orange-600) !important;
+  color: var(--primary-black) !important;
+  border: none;
+  border-radius: 100px !important;
+  font-size: 20px !important;
+  font-weight: 500;
+  font-family: var(--font-body);
+  line-height: 24px;
+  &_icon {
+    margin-right: 16px;
+  }
+  &:hover {
+    background-color: var(--primary-white);
   }
 }

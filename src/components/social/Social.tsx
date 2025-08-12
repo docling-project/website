@@ -5,24 +5,39 @@ import Link from "next/link";
 import Display from "@/components/ui/Display";
 
 // Utils
-import { SOCIALS } from "@/utils/constants";
+import { DARK_SOCIALS, SOCIALS } from "@/utils/constants";
 
 // Styles
 import styles from "./styles.module.scss";
 
-const Social = () => {
+interface Props {
+  darkMode?: boolean;
+}
+
+const Social = ({ darkMode = false }: Props) => {
   return (
     <div className={styles.social}>
-      {SOCIALS?.map((s, index) => (
-        <div key={index}>
-          <Link href={s.url} target="_blank">
-            <div className={styles.social}>
-              {s.icon}
-              <Display size={100}>{s.count}</Display>
+      {!darkMode
+        ? SOCIALS?.map((s, index) => (
+            <div key={index}>
+              <Link href={s.url} target="_blank">
+                <div className={styles.social}>
+                  {s.icon}
+                  <Display size={100}>{s.count}</Display>
+                </div>
+              </Link>
             </div>
-          </Link>
-        </div>
-      ))}
+          ))
+        : DARK_SOCIALS?.map((s, index) => (
+            <div key={index}>
+              <Link href={s.url} target="_blank">
+                <div className={styles.dark_social}>
+                  {s.icon}
+                  <Display size={100}>{s.count}</Display>
+                </div>
+              </Link>
+            </div>
+          ))}
     </div>
   );
 };

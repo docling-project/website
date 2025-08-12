@@ -92,4 +92,18 @@ const SOCIALS = [
   { icon: <Twitter />, count: "4k", url: "https://x.com/langflow_ai" },
 ];
 
-export { LIST, SOCIALS };
+const DARK_SOCIALS = [
+  {
+    icon: <Github color="#E9DBBDE5" />,
+    count: "24k",
+    url: "https://github.com/langflow-ai/langflow",
+  },
+
+  {
+    icon: <Twitter color="#E9DBBDE5" />,
+    count: "4k",
+    url: "https://x.com/langflow_ai",
+  },
+];
+
+export { LIST, SOCIALS, DARK_SOCIALS };

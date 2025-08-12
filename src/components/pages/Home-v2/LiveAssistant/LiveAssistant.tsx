@@ -1,10 +1,10 @@
-//Styles
-import styles from "./styles.module.scss";
-
 //Components
 import Display from "@/components/ui/Display";
 import Text from "@/components/ui/text";
 import StaticImage from "@/components/ui/StaticImage";
+
+//Styles
+import styles from "./styles.module.scss";
 const LiveAssistant = () => {
   return (
     <section>
@@ -28,7 +28,7 @@ const LiveAssistant = () => {
         </div>
         <div>
           <StaticImage
-            src={"/images/parsing.webp"}
+            src={"/images/assistant.webp"}
             alt={"live image"}
             width={498}
             height={332}

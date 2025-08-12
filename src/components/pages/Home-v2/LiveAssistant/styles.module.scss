@@ -8,6 +8,11 @@
   justify-content: space-between;
   flex-direction: row;
   color: var(--primary-body);
+  @include media-breakpoint-down(xl) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
   &_title {
     line-height: 52px !important;
@@ -25,5 +30,6 @@
   }
   &_chat_now {
     font-weight: 600;
+    color: var(--interface-orange-400);
   }
 }

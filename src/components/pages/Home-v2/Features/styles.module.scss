@@ -1,0 +1,59 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.features {
+  margin-bottom: var(--spacer-5);
+  &_title {
+    padding-top: var(--spacer-1);
+    padding-bottom: var(--spacer-1);
+    line-height: 52px !important;
+    letter-spacing: -0.48px !important;
+  }
+  &_cards {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    column-gap: 24px;
+    row-gap: 32px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  &_card {
+    background-color: var(--interface-blue-600);
+    padding-left: 20px;
+    min-width: 224px;
+    min-height: 197px;
+  }
+  &_card_title {
+    font-size: 34px !important;
+    font-weight: 400 !important;
+    line-height: 120% !important;
+    letter-spacing: -0.17px !important;
+  }
+  &_card_text {
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    line-height: 120% !important;
+    letter-spacing: -0.09px !important;
+  }
+  @include media-breakpoint-down(xxl) {
+    &_cards {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  @include media-breakpoint-down(xl) {
+    &_cards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @include media-breakpoint-down(lg) {
+    &_cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    &_cards {
+      grid-template-columns: 1fr;
+    }
+  }
+}

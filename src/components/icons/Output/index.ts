@@ -1,1 +1,1 @@
-export { default } from "./GenAi";
+export { default } from "./Output";

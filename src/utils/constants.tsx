@@ -2,7 +2,6 @@ import Document from "@/components/icons/Document";
 import GenAi from "@/components/icons/GenAi";
 import Github from "@/components/icons/Github";
 import Output from "@/components/icons/Output";
-import Twitter from "@/components/icons/twitter";
 
 export const CARD_DATA = [
   {
@@ -91,8 +90,6 @@ const SOCIALS = [
     count: "24k",
     url: "https://github.com/docling-project/docling",
   },
-
-  { icon: <Twitter />, count: "4k", url: "https://x.com/langflow_ai" },
 ];
 
 const DARK_SOCIALS = [
@@ -100,12 +97,6 @@ const DARK_SOCIALS = [
     icon: <Github color="#E9DBBDE5" />,
     count: "24k",
     url: "https://github.com/docling-project/docling",
-  },
-
-  {
-    icon: <Twitter color="#E9DBBDE5" />,
-    count: "4k",
-    url: "https://x.com/langflow_ai",
   },
 ];
 

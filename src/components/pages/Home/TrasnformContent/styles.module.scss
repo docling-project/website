@@ -47,8 +47,15 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: var(--spacer-4);
+    gap: var(--spacer-1);
     margin-top: var(--spacer-5);
+    @media (max-width: 500px) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacer-3);
+      margin-bottom: var(--spacer-2);
+    }
   }
   &_button {
     background-color: transparent !important;

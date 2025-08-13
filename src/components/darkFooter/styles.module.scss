@@ -108,7 +108,7 @@
   font-weight: 400;
   color: var(--interface-yellow-200);
   padding-right: 77px;
-  font-family: var(--font-body);
+  font-family: var(--font-body) !important;
   @include media-breakpoint-down(lg) {
     min-width: 100%;
   }

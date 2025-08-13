@@ -2,7 +2,7 @@
 @import "~bootstrap/scss/mixins";
 
 .footer {
-  padding: 40px var(--spacer-4) 52px;
+  padding: 40px 0px 52px;
   border: 1px solid #000;
   background: linear-gradient(
       0deg,
@@ -18,7 +18,7 @@
 }
 .container {
   display: flex;
-  gap: 40px;
+  gap: 52px;
   justify-content: space-between;
   @include media-breakpoint-down(md) {
     flex-direction: column;
@@ -28,6 +28,7 @@
 }
 
 .leftContainer {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -77,7 +78,6 @@
 }
 
 .rightContainer {
-  max-width: 1008px;
   width: 100%;
   display: flex;
   align-items: start;
@@ -90,8 +90,9 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 20%;
+
   color: var(--interface-yellow-200);
+
   @include media-breakpoint-down(md) {
     flex-basis: 30%;
   }
@@ -101,9 +102,11 @@
 }
 
 .content {
-  font-size: 14px;
-  font-weight: 300;
+  font-size: 14px !important;
+  font-weight: 400;
   color: var(--interface-yellow-200);
+  padding-right: 77px;
+  font-family: var(--font-body);
   @include media-breakpoint-down(md) {
     min-width: 100%;
   }

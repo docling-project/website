@@ -5,14 +5,30 @@
   position: relative;
   background: linear-gradient(0deg, #02030c 0%, #02030c 100%),
     linear-gradient(0deg, #ffe185 0%, #ffe185 100%);
-  min-height: 410px;
   width: 100%;
+  min-height: 400px;
+
+  @media (max-width: 1240px) {
+    min-height: 320px;
+  }
+
+  @include media-breakpoint-down(md) {
+    min-height: fit-content;
+  }
+
   &_content {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     padding-top: 64px;
     text-align: center;
+
+    @media (max-width: 1000px) {
+      position: relative;
+      justify-content: center;
+      align-items: center;
+    }
     @include media-breakpoint-down(md) {
       margin-top: 24px !important;
     }
@@ -27,9 +43,23 @@
     letter-spacing: -1.36px !important;
     max-width: 679px;
     text-align: left;
-    padding-top: 24px;
+    padding-top: 76px;
     @include media-breakpoint-down(md) {
       font-size: 48px !important;
+      padding-top: 48px;
+    }
+
+    @media (max-width: 1240px) {
+      font-size: 50px !important;
+      max-width: 500px;
+    }
+    @media (max-width: 1000px) {
+      font-size: 40px !important;
+      max-width: 100%;
+    }
+    @media (max-width: 700px) {
+      font-size: 24px !important;
+      max-width: 100%;
     }
   }
   &_button_group {
@@ -50,30 +80,17 @@
   }
   &_image {
     position: absolute;
-    top: 28%;
-    right: 15%;
-    @media (max-width: 864px) {
+    top: 20%;
+    right: 5%;
+    @media (max-width: 1000px) {
       position: relative;
+      right: 0;
+      margin-top: var(--spacer-3);
     }
-    @media (max-width: 1300px) {
-      right: 10%;
+
+    @include media-breakpoint-down(sm) {
+      width: 100%;
+      object-fit: contain;
     }
-    @media (max-width: 1250px) {
-      right: 5%;
-    }
-    // @include media-breakpoint-down(xl) {
-    //   width: 100%;
-    //   height: auto;
-    //   top: 25%;
-    // }
-    // @include media-breakpoint-down(md) {
-    //   top: 45%;
-    // }
-    // @include media-breakpoint-down(sm) {
-    //   top: 55%;
-    // }
-  }
-  @include media-breakpoint-down(md) {
-    min-height: 700px;
   }
 }

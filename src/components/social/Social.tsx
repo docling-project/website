@@ -16,7 +16,7 @@ interface Props {
 
 const Social = ({ darkMode = false }: Props) => {
   return (
-    <div className={styles.social}>
+    <div className={styles.social_container}>
       {!darkMode
         ? SOCIALS?.map((s, index) => (
             <div key={index}>

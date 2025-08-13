@@ -20,6 +20,7 @@
     line-height: 32px !important;
     letter-spacing: -0.7px !important;
     color: var(--interface-orange-600);
+    padding-bottom: 5px;
   }
   &_text {
     line-height: 120% !important;
@@ -34,7 +35,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: var(--spacer-3);
   }
   &_background {
     position: absolute;

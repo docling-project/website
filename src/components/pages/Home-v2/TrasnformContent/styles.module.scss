@@ -2,11 +2,10 @@
 @import "~bootstrap/scss/mixins";
 .container {
   width: 100% !important;
-  padding-top: 52px;
+  padding-top: 12px;
   padding-bottom: 52px;
   background: linear-gradient(0deg, #ffffff00 89.93%, #ffffff99 100%),
     linear-gradient(180deg, #00000000 0%, #02030c 100%), #0a071f;
-
   background-blend-mode: overlay, normal, normal;
 }
 .section {
@@ -15,24 +14,21 @@
   padding: 76px 0px;
   @include media-breakpoint-down(xl) {
     gap: var(--spacer-4);
-    padding: 0px;
   }
   @include media-breakpoint-down(lg) {
     gap: var(--spacer-2);
-    padding: 0px;
+    padding: 30px 0px;
+    padding: var(--spacer-0);
   }
   color: var(--primary-body);
   &_title {
     max-width: 620px;
     color: var(--interface-yellow-800);
-    font-size: 24px;
+    font-size: 24px !important;
     font-style: normal;
     font-weight: 700;
     line-height: 52px;
     letter-spacing: -0.48px;
-    @include media-breakpoint-down(lg) {
-      font-size: 16px !important;
-    }
   }
   &_description {
     padding-top: 18px;
@@ -46,28 +42,26 @@
       font-size: 16px !important;
     }
   }
-  @include media-breakpoint-down(xl) {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+
   &_button_group {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: var(--spacer-4);
+    gap: var(--spacer-1);
     margin-top: var(--spacer-5);
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(lg) {
+      margin-bottom: var(--spacer-3);
+    }
+    @media (max-width: 500px) {
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacer-3);
     }
   }
   &_button {
     background-color: transparent !important;
     color: var(--interface-yellow-200) !important;
-    &:hover {
-      background-color: var(--interface-orange-600) !important;
-      border-radius: 100px !important;
-    }
   }
 }
 
@@ -95,8 +89,8 @@
   &_cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 24px;
-    row-gap: 24px;
+    column-gap: var(--spacer-3);
+    row-gap: var(--spacer-3);
     align-items: stretch;
   }
 
@@ -121,7 +115,6 @@
     line-height: 24px !important;
     letter-spacing: -0.1px !important;
   }
-  /* Optional responsive */
   @include media-breakpoint-down(xl) {
     &_cards {
       grid-template-columns: repeat(2, 1fr);

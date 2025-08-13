@@ -1,9 +1,9 @@
 //Components;
 import Hero from "../Hero";
-import TransformContent from "../TrasnformContent";
+import TransformContent from "../../Home-v2/TrasnformContent";
 import GetStarted from "../GetStarted";
 import WhyChoose from "../WhyChoose";
-import DarkHero from "../DarkHero";
+import DarkHero from "../../Home-v2/DarkHero";
 
 const Template = () => {
   return (

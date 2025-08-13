@@ -12,7 +12,21 @@ import DarkFooter from "@/components/darkFooter";
 
 export const metadata: Metadata = {
   title: "Docling - Open Source Document Processing for AI",
-  description: "Docling simplifies document processing with advanced PDF understanding, OCR support, and seamless AI integrations. Parse PDFs, DOCX, PPTX, images & more. Open source by IBM Research.",
+  description:
+    "Docling simplifies document processing with advanced PDF understanding, OCR support, and seamless AI integrations. Parse PDFs, DOCX, PPTX, images & more. Open source by IBM Research.",
+  openGraph: {
+    title: "Docling - Open Source Document Processing for AI",
+    description:
+      "Docling simplifies document processing with advanced PDF understanding, OCR support, and seamless AI integrations. Parse PDFs, DOCX, PPTX, images & more. Open source by IBM Research.",
+    images: [
+      {
+        url: "/images/DoclingMeta.webp",
+        width: 1200,
+        height: 630,
+        alt: "Docling Open Graph Image",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

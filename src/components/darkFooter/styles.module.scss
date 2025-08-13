@@ -3,7 +3,7 @@
 
 .footer {
   padding: 40px var(--spacer-4) 52px;
-  border: 1px solid #000;
+  border: 1px solid var(--primary-black);
   background: linear-gradient(
       0deg,
       rgba(255, 255, 255, 0) 89.93%,
@@ -18,7 +18,7 @@
 }
 .container {
   display: flex;
-  gap: 40px;
+  gap: 52px;
   justify-content: space-between;
   @include media-breakpoint-down(md) {
     flex-direction: column;
@@ -28,16 +28,15 @@
 }
 
 .leftContainer {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 20px;
   @include media-breakpoint-down(md) {
     width: 100% !important;
-    gap: 20px;
+    gap: 10px;
     justify-content: space-between;
-  }
-  @include media-breakpoint-down(lg) {
-    width: 200px;
   }
 }
 
@@ -77,7 +76,6 @@
 }
 
 .rightContainer {
-  max-width: 1008px;
   width: 100%;
   display: flex;
   align-items: start;
@@ -90,8 +88,13 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 20%;
+
   color: var(--interface-yellow-200);
+
+  h6 {
+    font-family: var(--font-open-sans);
+  }
+
   @include media-breakpoint-down(md) {
     flex-basis: 30%;
   }
@@ -101,10 +104,12 @@
 }
 
 .content {
-  font-size: 14px;
-  font-weight: 300;
+  font-size: 14px !important;
+  font-weight: 400;
   color: var(--interface-yellow-200);
-  @include media-breakpoint-down(md) {
+  padding-right: 77px;
+  font-family: var(--font-body) !important;
+  @include media-breakpoint-down(lg) {
     min-width: 100%;
   }
 }

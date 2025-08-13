@@ -1,12 +1,23 @@
 @import "~bootstrap/scss/mixins";
 @import "/src/styles/variables";
 
-.social {
+.social_container {
   display: flex;
   align-items: center;
   gap: 16px;
+
+  @include media-breakpoint-down(lg) {
+    gap: 8px;
+  }
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   h6 {
     font-weight: 500;
+    font-family: var(--font-body);
     color: var(--primary-black);
   }
   @include media-breakpoint-down(lg) {
@@ -17,10 +28,11 @@
 .dark_social {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 6px;
   h6 {
     font-weight: 500;
     color: var(--interface-yellow-200);
+    font-family: var(--font-body);
   }
   @include media-breakpoint-down(lg) {
     gap: 8px;

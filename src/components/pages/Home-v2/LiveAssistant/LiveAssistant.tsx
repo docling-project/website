@@ -5,6 +5,7 @@ import StaticImage from "@/components/ui/StaticImage";
 
 //Styles
 import styles from "./styles.module.scss";
+
 const LiveAssistant = () => {
   return (
     <section>
@@ -23,7 +24,14 @@ const LiveAssistant = () => {
             Want to harness the power of AI with live support on Docling? Try{" "}
             <span className={styles.live_chat_with}>Chat with Dosu,</span>{" "}
             powered by our friends at Dosu.{" "}
-            <span className={styles.live_chat_now}>Chat Now →</span>
+            <span
+              className={styles.live_chat_now}
+              style={{ cursor: "pointer" }}
+            >
+              <a href="https://app.dosu.dev/097760a8-135e-4789-8234-90c8837d7f1c/ask?utm_source=github">
+                Chat Now →
+              </a>
+            </span>
           </Text>
         </div>
         <div>

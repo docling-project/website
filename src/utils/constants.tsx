@@ -10,24 +10,28 @@ export const CARD_DATA = [
     imageAlt: "concept",
     title: "Concepts →",
     details: "Learn Docling fundamentals",
+    link: "https://docling-project.github.io/docling/concepts/",
   },
   {
     imageSrc: "/images/example.webp",
     imageAlt: "example",
     title: "Examples →",
     details: "Try out recipes for various use cases",
+    link: "https://docling-project.github.io/docling/examples/",
   },
   {
     imageSrc: "/images/integration.webp",
     imageAlt: "integration",
     title: "Integrations →",
     details: "Integrations with popular frameworks and tools",
+    link: "https://docling-project.github.io/docling/integrations/",
   },
   {
     imageSrc: "/images/reference.webp",
     imageAlt: "reference",
     title: "Reference →",
     details: "See more API details",
+    link: "https://docling-project.github.io/docling/reference/document_converter/",
   },
 ];
 export const DOCLING_CARD_DATA = [
@@ -69,19 +73,19 @@ export const TRANSFORM = {
 const LIST = [
   {
     title: "Concepts",
-    link: "http://docs.langflow.org/",
+    link: "https://docling-project.github.io/docling/concepts/",
   },
   {
     title: "Examples",
-    link: "",
+    link: "https://docling-project.github.io/docling/examples/",
   },
   {
     title: "Integrations",
-    link: "",
+    link: "https://docling-project.github.io/docling/integrations/",
   },
   {
     title: "Reference",
-    link: "",
+    link: "https://docling-project.github.io/docling/reference/document_converter/",
   },
 ];
 
@@ -89,7 +93,7 @@ const SOCIALS = [
   {
     icon: <Github />,
     count: "24k",
-    url: "https://github.com/langflow-ai/langflow",
+    url: "https://github.com/docling-project/docling",
   },
 
   { icon: <Twitter />, count: "4k", url: "https://x.com/langflow_ai" },
@@ -99,7 +103,7 @@ const DARK_SOCIALS = [
   {
     icon: <Github color="#E9DBBDE5" />,
     count: "24k",
-    url: "https://github.com/langflow-ai/langflow",
+    url: "https://github.com/docling-project/docling",
   },
 
   {

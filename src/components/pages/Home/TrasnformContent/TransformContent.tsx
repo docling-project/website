@@ -16,13 +16,16 @@ const TransformContent = () => {
     <section className={`${styles.container}`}>
       <div className="container-wide">
         <div className={styles.section_button_group}>
-          <Button text={"Get Started"} className={styles.dark_button} />
-          <Button
-            text={"Star on GitHub"}
-            icon={<Github color="#E9DBBDE5" size="23" />}
-            className={styles.section_button}
-            // onClick={() => {window.open('https://app.dosu.dev/097760a8-135e-4789-8234-90c8837d7f1c/ask?utm_source=github')}
-          />
+          <a href="https://docling-project.github.io/docling/installation/">
+            <Button text={"Get Started"} className={styles.dark_button} />
+          </a>
+          <a href="https://github.com/docling-project/docling">
+            <Button
+              text={"Star on GitHub"}
+              icon={<Github color="#E9DBBDE5" size="23" />}
+              className={styles.section_button}
+            />
+          </a>
         </div>
         <div className={`${styles.section} ${styles.transform_content}`}>
           <Display className={styles.section_title} size={300} weight={500}>

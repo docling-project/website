@@ -18,7 +18,6 @@ const GetStarted = () => {
         <div className={styles.cardContainer}>
           {CARD_DATA.map((card, index) => (
             <Card
-              onClick={() => {window.open(card.link);}}
               key={index}
               imageSrc={card.imageSrc}
               imageAlt={card.imageAlt}

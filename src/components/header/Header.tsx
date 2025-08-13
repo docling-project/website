@@ -85,7 +85,7 @@ const Header = () => {
               <Button
                 text={"Get Started"}
                 className={styles.small_button}
-                onClick={() => {}}
+                onClick={() => {window.open('https://docling-project.github.io/docling/installation/', '_blank');}}
               />
             </div>
           </div>

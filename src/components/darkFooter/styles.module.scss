@@ -35,7 +35,7 @@
   gap: 20px;
   @include media-breakpoint-down(md) {
     width: 100% !important;
-    gap: 10px;
+    gap: var(--spacer-2);
     justify-content: space-between;
   }
 }

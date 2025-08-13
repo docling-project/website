@@ -69,19 +69,19 @@ export const TRANSFORM = {
 const LIST = [
   {
     title: "Concepts",
-    link: "http://docs.langflow.org/",
+    link: "https://docling-project.github.io/docling/concepts/",
   },
   {
     title: "Examples",
-    link: "",
+    link: "https://docling-project.github.io/docling/examples/",
   },
   {
     title: "Integrations",
-    link: "",
+    link: "https://docling-project.github.io/docling/integrations/",
   },
   {
     title: "Reference",
-    link: "",
+    link: "https://docling-project.github.io/docling/reference/document_converter/",
   },
 ];
 
@@ -89,7 +89,7 @@ const SOCIALS = [
   {
     icon: <Github />,
     count: "24k",
-    url: "https://github.com/langflow-ai/langflow",
+    url: "https://github.com/docling-project/docling",
   },
 
   { icon: <Twitter />, count: "4k", url: "https://x.com/langflow_ai" },
@@ -99,7 +99,7 @@ const DARK_SOCIALS = [
   {
     icon: <Github color="#E9DBBDE5" />,
     count: "24k",
-    url: "https://github.com/langflow-ai/langflow",
+    url: "https://github.com/docling-project/docling",
   },
 
   {

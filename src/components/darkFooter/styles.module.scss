@@ -32,13 +32,11 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 20px;
   @include media-breakpoint-down(md) {
     width: 100% !important;
-    gap: 20px;
+    gap: 10px;
     justify-content: space-between;
-  }
-  @include media-breakpoint-down(lg) {
-    width: 200px;
   }
 }
 
@@ -93,6 +91,10 @@
 
   color: var(--interface-yellow-200);
 
+  h6 {
+    font-family: var(--font-open-sans);
+  }
+
   @include media-breakpoint-down(md) {
     flex-basis: 30%;
   }
@@ -107,7 +109,7 @@
   color: var(--interface-yellow-200);
   padding-right: 77px;
   font-family: var(--font-body);
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(lg) {
     min-width: 100%;
   }
 }

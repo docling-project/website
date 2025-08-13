@@ -12,7 +12,7 @@
   &_cards {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 24px;
+    gap: var(--spacer-4);
     align-items: stretch;
   }
 

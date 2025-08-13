@@ -21,7 +21,7 @@ const TransformContent = () => {
             text={"Star on GitHub"}
             icon={<Github color="#E9DBBDE5" size="23" />}
             className={styles.section_button}
-            onClick={() => {window.open('https://github.com/docling-project/docling');}}
+            // onClick={() => {window.open('https://app.dosu.dev/097760a8-135e-4789-8234-90c8837d7f1c/ask?utm_source=github')}
           />
         </div>
         <div className={`${styles.section} ${styles.transform_content}`}>

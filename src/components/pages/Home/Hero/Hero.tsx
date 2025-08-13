@@ -24,7 +24,7 @@ const Hero = () => {
             text={"Star on GitHub"}
             icon={<Github />}
             className={styles.hero_button}
-            onClick={() => {window.open('https://github.com/docling-project/docling');}}
+            // onClick={() => {window.open('https://github.com/docling-project/docling');}}
           />
         </div>
         <StaticImage

@@ -23,7 +23,12 @@ const LiveAssistant = () => {
             Want to harness the power of AI with live support on Docling? Try{" "}
             <span className={styles.live_chat_with}>Chat with Dosu,</span>{" "}
             powered by our friends at Dosu.{" "}
-            <span className={styles.live_chat_now} onClick={() => {window.open('https://app.dosu.dev/097760a8-135e-4789-8234-90c8837d7f1c/ask?utm_source=github', '_blank');}}>Chat Now →</span>
+            <span
+              className={styles.live_chat_now}
+              // onClick={() => {window.open('https://app.dosu.dev/097760a8-135e-4789-8234-90c8837d7f1c/ask?utm_source=github', '_blank')
+            >
+              Chat Now →
+            </span>
           </Text>
         </div>
         <div>

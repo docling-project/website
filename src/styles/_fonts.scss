@@ -6,6 +6,13 @@
 }
 
 @font-face {
+  font-family: "Open Sans";
+  font-display: swap;
+  src: url("./fonts/Open_Sans/OpenSans-VariableFont_wdth.ttf")
+    format("truetype");
+}
+
+@font-face {
   font-family: "IBM Plex Serif";
   font-weight: 300;
   font-display: swap;
@@ -43,10 +50,12 @@
 
 $font-body: "IBM Plex Sans", sans-serif;
 $font-heading: "IBM Plex Serif", sans-serif;
+$font-open-sans: "Open Sans", sans-serif;
 
 $font-all: (
   "font-body": $font-body,
   "font-heading": $font-heading,
+  "font-open-sans": $font-open-sans,
 );
 
 :root {

@@ -2,8 +2,8 @@
 @import "~bootstrap/scss/mixins";
 
 .footer {
-  padding: 40px 0px 52px;
-  border: 1px solid #000;
+  padding: 40px var(--spacer-4) 52px;
+  border: 1px solid var(--primary-black);
   background: linear-gradient(
       0deg,
       rgba(255, 255, 255, 0) 89.93%,

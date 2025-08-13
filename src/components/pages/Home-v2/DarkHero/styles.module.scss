@@ -92,5 +92,11 @@
       width: 100%;
       object-fit: contain;
     }
+    @media (max-width: 1250px) {
+      right: 5%;
+    }
+  }
+  @include media-breakpoint-down(md) {
+    min-height: 700px;
   }
 }

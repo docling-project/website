@@ -6,7 +6,6 @@
   padding-bottom: 52px;
   background: linear-gradient(0deg, #ffffff00 89.93%, #ffffff99 100%),
     linear-gradient(180deg, #00000000 0%, #02030c 100%), #0a071f;
-
   background-blend-mode: overlay, normal, normal;
 }
 .section {
@@ -19,6 +18,7 @@
   @include media-breakpoint-down(lg) {
     gap: var(--spacer-2);
     padding: 30px 0px;
+    padding: var(--spacer-0);
   }
   color: var(--primary-body);
   &_title {
@@ -80,8 +80,8 @@
   &_cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 24px;
-    row-gap: 24px;
+    column-gap: var(--spacer-3);
+    row-gap: var(--spacer-3);
     align-items: stretch;
   }
 
@@ -106,7 +106,6 @@
     line-height: 24px !important;
     letter-spacing: -0.1px !important;
   }
-  /* Optional responsive */
   @include media-breakpoint-down(xl) {
     &_cards {
       grid-template-columns: repeat(2, 1fr);

@@ -34,7 +34,7 @@ const LiveAssistant = () => {
             </span>
           </Text>
         </div>
-        <div>
+        <div className={styles.live_image}>
           <StaticImage
             src={"/images/assistant.webp"}
             alt={"live image"}

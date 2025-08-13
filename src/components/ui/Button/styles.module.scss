@@ -15,7 +15,7 @@
   font-family: var(--font-body);
   line-height: 24px;
   &_icon {
-    margin-right: 16px;
+    margin-right: var(--spacer-2);
   }
   &:hover {
     background-color: var(--primary-white);

@@ -21,6 +21,7 @@ const TransformContent = () => {
             text={"Star on GitHub"}
             icon={<Github color="#E9DBBDE5" size="23" />}
             className={styles.section_button}
+            onClick={() => {window.open('https://github.com/docling-project/docling');}}
           />
         </div>
         <div className={`${styles.section} ${styles.transform_content}`}>

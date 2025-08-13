@@ -96,7 +96,7 @@ const SOCIALS = [
     url: "https://github.com/docling-project/docling",
   },
 
-  { icon: <Twitter />, count: "4k", url: "https://x.com/langflow_ai" },
+  { icon: <Twitter />, count: "4k", url: "" },
 ];
 
 const DARK_SOCIALS = [
@@ -109,7 +109,7 @@ const DARK_SOCIALS = [
   {
     icon: <Twitter color="#E9DBBDE5" />,
     count: "4k",
-    url: "https://x.com/langflow_ai",
+    url: "",
   },
 ];
 

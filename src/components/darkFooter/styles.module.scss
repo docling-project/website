@@ -104,14 +104,18 @@
 
 .content {
   font-size: 14px !important;
-  font-weight: 400;
+  font-weight: 400 !important;
+  line-height: 20px !important;
   color: var(--interface-yellow-200);
-  padding-right: 77px;
-  font-family: var(--font-body) !important;
   max-width: 592px;
   @include media-breakpoint-down(lg) {
     min-width: 100%;
   }
+}
+.text {
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  line-height: 24px !important;
 }
 .link {
   text-decoration: none !important;

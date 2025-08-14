@@ -12,12 +12,14 @@ import { DARK_SOCIALS, SOCIALS } from "@/utils/constants";
 
 // Styles
 import styles from "./styles.module.scss";
+import Text from "../ui/text";
 
 interface Props {
   darkMode?: boolean;
+  isFooter?: boolean;
 }
 
-const Social = ({ darkMode = false }: Props) => {
+const Social = ({ darkMode = false, isFooter = false }: Props) => {
   const [counts, setCounts] = useState<{ [key: string]: string }>({
     github: "Loading...",
     twitter: "Loading...",
@@ -65,11 +67,13 @@ const Social = ({ darkMode = false }: Props) => {
               <Link href={s.url} target="_blank">
                 <div className={styles.dark_social}>
                   {s.icon}
-                  <Display size={100}>
+                  <Text className={styles.count} size={100}>
                     {s?.url?.toLowerCase()?.includes("github")
-                      ? counts.github
+                      ? isFooter
+                        ? `GitHub | ${counts.github} Stars`
+                        : counts.github
                       : s.count}
-                  </Display>
+                  </Text>
                 </div>
               </Link>
             </div>

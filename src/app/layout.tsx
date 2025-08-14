@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import "@/styles/index.scss";
 import DarkHeader from "@/components/darkHeader";
 import DarkFooter from "@/components/darkFooter";
+import AnnouncmentBar from "@/components/announcmentBar";
 
 export const metadata: Metadata = {
   title: "Docling - Open Source Document Processing for AI",
@@ -38,6 +39,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="layout">
+          <AnnouncmentBar />
           <DarkHeader />
           {children}
           <DarkFooter />

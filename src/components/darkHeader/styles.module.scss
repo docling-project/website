@@ -40,7 +40,7 @@
     align-items: center;
     gap: 12px;
     &:hover {
-      opacity: 0.6;
+      opacity: 1;
     }
   }
   @include media-breakpoint-down(xl) {
@@ -186,7 +186,15 @@
   }
 
   &_heading {
-    font-size: 15px;
+    font-size: 16px !important;
+    font-style: normal;
+    font-weight: 500 !important;
+    line-height: 20px !important;
+    color: var(--primary-body) !important;
+    &:hover {
+      color: var(--interface-orange-600) !important;
+      opacity: 1 !important;
+    }
   }
 }
 

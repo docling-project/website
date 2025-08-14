@@ -3,8 +3,8 @@ import Link from "next/link";
 
 // Components
 import Display from "@/components/ui/Display";
-import Social from "@/components/social";
 import Logo from "@/components/icons/logo";
+import Social from "../social";
 
 // Types
 import { Weight } from "@/components/ui/Display/types";
@@ -24,50 +24,32 @@ const DarkFooter = () => {
               </Link>
               <Display size={300}>Docling</Display>
             </div>
+            <div className={styles.footer_links}>
+              <Social darkMode />
+              <Display size={100} weight={Weight.Light}>
+                <Link
+                  className={styles.link}
+                  href="https://docling-project.github.io/docling/"
+                >
+                  Documentation
+                </Link>
+              </Display>
+              <Display size={100} weight={Weight.Light}>
+                <Link
+                  className={styles.link}
+                  href="https://discord.gg/wJuvux5Q"
+                >
+                  {" "}
+                  Community{" "}
+                </Link>
+              </Display>
+            </div>
+
             <Display size={100} className={styles.content}>
-              Docling is an open-source project hosted by the LF AI & Data
-              Foundation, originally developed by the AI for Knowledge team at
-              IBM Research Zurich.
+              Copyright © Docling a Series of LF Projects, LLC For web site
+              terms of use, trademark policy and general project policies please
+              see this <Link href={"https://lfprojects.org"}>this link</Link>
             </Display>
-            <Social darkMode />
-          </div>
-          <div className={styles.rightContainer}>
-            <div className={styles.footerLinks}>
-              <Display size={100}>Resources</Display>
-              <Display size={100} weight={Weight.Light}>
-                Help Center
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                Contact Support
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                API Documentation
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                Community
-              </Display>
-            </div>
-            <div className={styles.footerLinks}>
-              <Display size={100}>Legal</Display>
-              <Display size={100} weight={Weight.Light}>
-                Privacy Policy
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                Terms of Service
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                Cookie Policy
-              </Display>
-            </div>
-            <div className={styles.footerLinks}>
-              <Display size={100}>Follow Us</Display>
-              <Display size={100} weight={Weight.Light}>
-                Github
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                X
-              </Display>
-            </div>
           </div>
         </div>
       </div>

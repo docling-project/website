@@ -15,6 +15,7 @@ import { LIST } from "@/utils/constants";
 
 // Styles
 import styles from "./styles.module.scss";
+import Text from "../ui/text";
 
 const DarkHeader = () => {
   const [isActive, setIsActive] = useState(false);
@@ -61,17 +62,14 @@ const DarkHeader = () => {
                   <div key={item.title} className={styles.navItem}>
                     {item?.link ? (
                       <Link href={item.link}>
-                        <Display
-                          size={100}
-                          className={styles.drawerItem_heading}
-                        >
+                        <Text size={100} className={styles.drawerItem_heading}>
                           {item.title}
-                        </Display>
+                        </Text>
                       </Link>
                     ) : (
-                      <Display size={100} className={styles.drawerItem_heading}>
+                      <Text size={100} className={styles.drawerItem_heading}>
                         {item.title}
-                      </Display>
+                      </Text>
                     )}
                   </div>
                 );
@@ -85,7 +83,12 @@ const DarkHeader = () => {
               <Button
                 text={"Get Started"}
                 className={styles.dark_button}
-                onClick={() => {window.open('https://docling-project.github.io/docling/installation/', '_blank');}}
+                onClick={() => {
+                  window.open(
+                    "https://docling-project.github.io/docling/installation/",
+                    "_blank",
+                  );
+                }}
               />
             </div>
           </div>

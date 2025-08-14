@@ -25,6 +25,7 @@ const GetStarted = () => {
               title={card.title + " →"}
               details={card.text}
               backgroundUrl={card.backgroundUrl}
+              link={card.link}
             />
           ))}
         </div>

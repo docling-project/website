@@ -105,12 +105,6 @@ const DARK_SOCIALS = [
     count: "24k",
     url: "https://github.com/docling-project/docling",
   },
-
-  {
-    icon: <Twitter color="#E9DBBDE5" />,
-    count: "4k",
-    url: "",
-  },
 ];
 
 export const STARTED_CARD = [
@@ -118,21 +112,25 @@ export const STARTED_CARD = [
     title: "Concepts",
     text: "Learn Docling fundamentals",
     backgroundUrl: "/images/concepts_bg.webp",
+    link: "https://docling-project.github.io/docling/concepts/",
   },
   {
     title: "Examples",
     text: "Recipes for various use cases",
     backgroundUrl: "/images/examples_bg.webp",
+    link: "https://docling-project.github.io/docling/examples/",
   },
   {
     title: "Integrations",
     text: "Popular frameworks and tools",
     backgroundUrl: "/images/integrations_bg.webp",
+    link: "https://docling-project.github.io/docling/integrations/",
   },
   {
     title: "Reference",
     text: "See more API details",
     backgroundUrl: "/images/reference_bg.webp",
+    link: "https://docling-project.github.io/docling/reference/document_converter/",
   },
 ];
 export const TRANSFORM_CARD = [

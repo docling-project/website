@@ -5,6 +5,7 @@ $primary: (
   white: #ffffff,
   offwhite: #fffefa,
   body: rgba(233, 219, 189, 0.9),
+  border: rgba(210, 198, 172, 0.08),
   dark: #02030c,
 );
 
@@ -27,6 +28,7 @@ $_colors: (
     600: #fc7400,
   ),
   blue: (
+    800: #0a071f,
     700: #161230,
     600: rgba(22, 18, 48, 0.4),
   ),

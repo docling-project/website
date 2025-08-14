@@ -78,10 +78,9 @@
 .rightContainer {
   width: 100%;
   display: flex;
-  align-items: start;
-  justify-content: space-between;
+  align-items: flex-start;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: var(--spacer-7);
 }
 
 .footerLinks {
@@ -109,7 +108,20 @@
   color: var(--interface-yellow-200);
   padding-right: 77px;
   font-family: var(--font-body) !important;
+  max-width: 592px;
   @include media-breakpoint-down(lg) {
     min-width: 100%;
   }
+}
+.link {
+  text-decoration: none !important;
+}
+.footer_links {
+  display: flex;
+  gap: 24px;
+  justify-content: flex-start;
+}
+.icon {
+  display: flex;
+  gap: 8px;
 }

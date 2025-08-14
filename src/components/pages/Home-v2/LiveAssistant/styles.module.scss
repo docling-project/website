@@ -35,7 +35,8 @@
   }
   &_chat_now {
     font-weight: 600;
-    color: var(--interface-orange-600);
+    color: var(--interface-orange-600) !important;
+    text-decoration: none !important;
   }
   &_image {
     img {

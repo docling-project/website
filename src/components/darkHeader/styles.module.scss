@@ -189,6 +189,10 @@
     line-height: 20px !important;
     color: var(--primary-body) !important;
     &:hover {
+      color: var(--interface-yellow-900) !important;
+      opacity: 1 !important;
+    }
+    &:active {
       color: var(--interface-orange-600) !important;
       opacity: 1 !important;
     }
@@ -231,7 +235,11 @@
     margin-right: 16px;
   }
   &:hover {
-    background-color: var(--primary-white);
-    opacity: 0.8;
+    background-color: var(--interface-yellow-900) !important;
+    opacity: 1 !important;
+  }
+  &:active {
+    background-color: var(--interface-yellow-900) !important;
+    opacity: 1 !important;
   }
 }

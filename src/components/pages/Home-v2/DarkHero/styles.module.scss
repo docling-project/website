@@ -46,7 +46,7 @@
     padding-top: 76px;
     @include media-breakpoint-down(md) {
       font-size: 48px !important;
-      padding-top: 48px;
+      padding-top: var(--spacer-0);
     }
 
     @media (max-width: 1240px) {
@@ -98,5 +98,8 @@
   }
   @include media-breakpoint-down(md) {
     min-height: 700px;
+  }
+  @include media-breakpoint-down(sm) {
+    min-height: auto;
   }
 }

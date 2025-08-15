@@ -26,6 +26,7 @@ const GetStarted = () => {
               details={card.text}
               backgroundUrl={card.backgroundUrl}
               link={card.link}
+              className={styles.card}
             />
           ))}
         </div>

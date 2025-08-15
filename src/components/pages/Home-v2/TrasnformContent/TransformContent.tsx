@@ -1,3 +1,7 @@
+"use client";
+//Dependences
+import { useState } from "react";
+
 //Components
 import Display from "@/components/ui/Display";
 import Text from "@/components/ui/text";
@@ -12,6 +16,15 @@ import styles from "./styles.module.scss";
 import Card_v2 from "@/components/ui/Card-v2";
 
 const TransformContent = () => {
+  const [githubColor, setGithubColor] = useState("#E9DBBDE5"); // Default color for GitHub icon
+
+  const handleMouseEnter = () => {
+    setGithubColor("#F8A700"); // Change color when hovered
+  };
+
+  const handleMouseLeave = () => {
+    setGithubColor("#E9DBBDE5"); // Revert to original color when hover ends
+  };
   return (
     <section className={`${styles.container}`}>
       <div className="container-wide">
@@ -19,11 +32,15 @@ const TransformContent = () => {
           <a href="https://docling-project.github.io/docling/installation/">
             <Button text={"Get Started"} className={styles.dark_button} />
           </a>
-          <a href="https://github.com/docling-project/docling">
+          <a
+            href="https://github.com/docling-project/docling"
+            onMouseEnter={handleMouseEnter} // Add event handlers for hover
+            onMouseLeave={handleMouseLeave}
+          >
             <Button
               text={"Star on GitHub"}
-              icon={<Github color="#E9DBBDE5" size="23" />}
-              className={styles.section_button}
+              icon={<Github color={githubColor} size="23" />}
+              className={`${styles.section_button} ${styles.section_git_button}`}
             />
           </a>
         </div>

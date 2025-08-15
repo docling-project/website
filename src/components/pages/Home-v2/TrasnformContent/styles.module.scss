@@ -40,6 +40,7 @@
     letter-spacing: -0.2px;
     @include media-breakpoint-down(md) {
       font-size: 16px !important;
+      margin-bottom: var(--spacer-2);
     }
   }
 
@@ -54,14 +55,32 @@
     }
     @media (max-width: 500px) {
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      align-items: flex-start;
+      justify-content: flex-start;
       gap: var(--spacer-3);
     }
   }
   &_button {
     background-color: transparent !important;
     color: var(--interface-yellow-200) !important;
+    &:hover {
+      color: var(--interface-yellow-900) !important;
+      opacity: 1 !important;
+    }
+  }
+  &_git_button {
+    @media (max-width: 500px) {
+      padding-left: var(--spacer-0) !important;
+    }
+    &:hover {
+      color: var(--interface-yellow-900) !important;
+      opacity: 1 !important;
+    }
+
+    &:active {
+      color: var(--interface-orange-600) !important;
+      opacity: 1 !important;
+    }
   }
 }
 
@@ -82,7 +101,12 @@
     margin-right: 16px;
   }
   &:hover {
-    background-color: var(--primary-white);
+    background-color: var(--interface-yellow-900) !important;
+    opacity: 1 !important;
+  }
+  &:active {
+    background-color: var(--interface-orange-600) !important;
+    opacity: 1 !important;
   }
 }
 .transform {
@@ -90,17 +114,18 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: var(--spacer-3);
-    row-gap: var(--spacer-3);
+    row-gap: 40px;
     align-items: stretch;
   }
 
   &_card {
     background: none;
-    padding-left: var(--spacer-0);
     width: 100%;
+    padding: 0px;
     min-width: 0;
     min-height: 258px;
     box-sizing: border-box;
+    border: none !important;
   }
   &_card_title {
     font-size: 30px !important;

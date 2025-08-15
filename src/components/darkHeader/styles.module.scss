@@ -5,9 +5,6 @@
   background: var(--primary-black);
   padding: var(--spacer-3) 0px;
   color: var(--primary-black);
-  @include media-breakpoint-down(xl) {
-    padding: var(--spacer-3) var(--spacer-1);
-  }
 }
 
 .container {
@@ -40,7 +37,7 @@
     align-items: center;
     gap: 12px;
     &:hover {
-      opacity: 0.6;
+      opacity: 1;
     }
   }
   @include media-breakpoint-down(xl) {
@@ -186,7 +183,19 @@
   }
 
   &_heading {
-    font-size: 15px;
+    font-size: 16px !important;
+    font-style: normal;
+    font-weight: 500 !important;
+    line-height: 20px !important;
+    color: var(--primary-body) !important;
+    &:hover {
+      color: var(--interface-yellow-900) !important;
+      opacity: 1 !important;
+    }
+    &:active {
+      color: var(--interface-orange-600) !important;
+      opacity: 1 !important;
+    }
   }
 }
 
@@ -226,7 +235,11 @@
     margin-right: 16px;
   }
   &:hover {
-    background-color: var(--primary-white);
-    opacity: 0.8;
+    background-color: var(--interface-yellow-900) !important;
+    opacity: 1 !important;
+  }
+  &:active {
+    background-color: var(--interface-yellow-900) !important;
+    opacity: 1 !important;
   }
 }

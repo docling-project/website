@@ -1,14 +1,14 @@
 // Dependencies
 import type { Metadata } from "next";
+import Script from "next/script";
 
 // Components
-// import Header from "@/components/header";
-// import Footer from "@/components/footer";
+import DarkHeader from "@/components/darkHeader";
+import DarkFooter from "@/components/darkFooter";
+import AnnouncmentBar from "@/components/announcmentBar";
 
 // Styles
 import "@/styles/index.scss";
-import DarkHeader from "@/components/darkHeader";
-import DarkFooter from "@/components/darkFooter";
 
 export const metadata: Metadata = {
   title: "Docling - Open Source Document Processing for AI",
@@ -36,8 +36,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-MP75NXFDH4"
+        />
+        <Script
+          id="gtag-script"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-MP75NXFDH4');
+            `,
+          }}
+        />
+      </head>
       <body>
         <div className="layout">
+          <AnnouncmentBar />
           <DarkHeader />
           {children}
           <DarkFooter />

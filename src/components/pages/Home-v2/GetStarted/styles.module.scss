@@ -8,6 +8,7 @@
     padding-bottom: var(--spacer-3);
     line-height: 52px !important;
     letter-spacing: -0.48px !important;
+    font-size: 24px !important;
   }
   &_cards {
     display: grid;
@@ -39,4 +40,7 @@
       grid-template-columns: 1fr;
     }
   }
+}
+.card {
+  border: none !important;
 }

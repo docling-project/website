@@ -42,5 +42,22 @@
   }
 }
 .card {
-  border: none !important;
+  position: relative;
+  border: none !important; // Force no border by default
+
+  // Blended border on hover (using ::before)
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent; // Default transparent
+    border-radius: 8px;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    transition: border-color 0.2s ease;
+  }
+
+  &:hover::before {
+    border-color: rgba(210, 198, 172, 0.28); // Only shows on hover
+  }
 }

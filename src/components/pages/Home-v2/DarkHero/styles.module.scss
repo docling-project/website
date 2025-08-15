@@ -58,7 +58,7 @@
       max-width: 100%;
     }
     @media (max-width: 700px) {
-      font-size: 24px !important;
+      font-size: 30px !important;
       max-width: 100%;
     }
   }
@@ -82,24 +82,29 @@
     position: absolute;
     top: 20%;
     right: 5%;
+    @media (max-width: 1250px) {
+      right: 5%;
+    }
     @media (max-width: 1000px) {
       position: relative;
       right: 0;
       margin-top: var(--spacer-3);
     }
-
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       width: 100%;
       object-fit: contain;
+      position: absolute;
+      top: 124px;
+      left: -2%;
     }
-    @media (max-width: 1250px) {
-      right: 5%;
+    @media (max-width: 400px) {
+      top: 150px;
     }
+  }
+  @media (max-width: 1000px) {
+    min-height: 500px;
   }
   @include media-breakpoint-down(md) {
-    min-height: 700px;
-  }
-  @include media-breakpoint-down(sm) {
-    min-height: auto;
+    min-height: 500px;
   }
 }

@@ -58,6 +58,29 @@
       grid-template-columns: repeat(2, 1fr);
     }
   }
+  @include media-breakpoint-down(md) {
+    .features_cards {
+      display: flex;
+      overflow-x: auto;
+      gap: var(--spacer-4);
+      padding-bottom: var(--spacer-0);
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .features_card {
+      flex: 0 0 auto;
+      min-width: 224px;
+    }
+    &_card_text {
+      max-width: 173px;
+    }
+    .features {
+      margin-bottom: var(--spacer-0) !important;
+    }
+  }
+
   @include media-breakpoint-down(sm) {
     &_cards {
       grid-template-columns: 1fr;

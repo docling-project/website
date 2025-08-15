@@ -91,15 +91,14 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: var(--spacer-3);
-    row-gap: var(--spacer-3);
+    row-gap: 40px;
     align-items: stretch;
   }
 
   &_card {
     background: none;
-    padding-left: var(--spacer-2);
-    padding-right: var(--spacer-2);
     width: 100%;
+    padding: 0px;
     min-width: 0;
     min-height: 258px;
     box-sizing: border-box;

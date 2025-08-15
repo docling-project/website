@@ -9,13 +9,13 @@ import Display from "@/components/ui/Display";
 import Logo from "@/components/icons/logo/Logo";
 import Social from "@/components/social";
 import Button from "../ui/Button";
+import Text from "../ui/text";
 
 // Utils
 import { LIST } from "@/utils/constants";
 
 // Styles
 import styles from "./styles.module.scss";
-import Text from "../ui/text";
 
 const DarkHeader = () => {
   const [isActive, setIsActive] = useState(false);

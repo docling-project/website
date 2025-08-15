@@ -13,7 +13,7 @@
     linear-gradient(0deg, #0a071f 0%, #0a071f 100%), #161230;
   background-blend-mode: overlay, normal, normal, normal;
   @include media-breakpoint-down(md) {
-    padding: 40px var(--spacer-1) 52px;
+    padding: 40px 0px 52px;
   }
 }
 .container {

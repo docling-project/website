@@ -7,6 +7,9 @@
   background: linear-gradient(0deg, #ffffff00 89.93%, #ffffff99 100%),
     linear-gradient(180deg, #00000000 0%, #02030c 100%), #0a071f;
   background-blend-mode: overlay, normal, normal;
+  @include media-breakpoint-down(md) {
+    padding-top: var(--spacer-7);
+  }
 }
 .section {
   display: flex;
@@ -40,7 +43,7 @@
     letter-spacing: -0.2px;
     @include media-breakpoint-down(md) {
       font-size: 16px !important;
-      margin-bottom: var(--spacer-2);
+      margin-bottom: var(--spacer-4);
     }
   }
 
@@ -58,6 +61,7 @@
       align-items: flex-start;
       justify-content: flex-start;
       gap: var(--spacer-3);
+      margin-bottom: var(--spacer-4);
     }
   }
   &_button {
@@ -126,6 +130,7 @@
     min-height: 258px;
     box-sizing: border-box;
     border: none !important;
+    padding-left: 0px !important;
   }
   &_card_title {
     font-size: 30px !important;

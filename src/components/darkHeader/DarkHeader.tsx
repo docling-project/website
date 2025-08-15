@@ -16,6 +16,7 @@ import { LIST } from "@/utils/constants";
 
 // Styles
 import styles from "./styles.module.scss";
+import Cross from "../icons/Cross";
 
 const DarkHeader = () => {
   const [isActive, setIsActive] = useState(false);
@@ -29,23 +30,66 @@ const DarkHeader = () => {
       <div className="container-wide">
         <div className={styles.container}>
           {isActive && (
-            <div className={styles.drawer}>
-              <div className={styles.drawerContent}>
-                {LIST.map((item) => (
-                  <div key={item.title}>
-                    <div className={styles.drawerItem}>
-                      <Display
-                        tagName="div"
-                        className={styles.drawerItem_heading}
-                        size={100}
-                      >
-                        {item.title}
+            <>
+              <div className={styles.drawer}>
+                <div className={styles.wrapper}>
+                  <div className={styles.drawerHeader}>
+                    <div className={styles.logo}>
+                      <Link href={"/"}>
+                        <Logo />
+                      </Link>
+                      <Display size={300} className={styles.left_text}>
+                        Docling
                       </Display>
                     </div>
+                    {isActive && (
+                      <div onClick={toggleMenu}>
+                        <Cross />
+                      </div>
+                    )}
                   </div>
-                ))}
+                  <div className={styles.nav_flex}>
+                    <div className={styles.drawerContent}>
+                      {LIST?.map((item) => {
+                        return (
+                          <div key={item.title} className={styles.navItem}>
+                            {item?.link ? (
+                              <Link href={item.link}>
+                                <Text
+                                  size={100}
+                                  className={styles.drawerItem_heading}
+                                >
+                                  {item.title}
+                                </Text>
+                              </Link>
+                            ) : (
+                              <Text
+                                size={100}
+                                className={styles.drawerItem_heading}
+                              >
+                                {item.title}
+                              </Text>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className={styles.mob}>
+                      <Button
+                        text={"Get Started"}
+                        className={`${styles.dark_button} ${styles.mob_button}`}
+                        onClick={() => {
+                          window.open(
+                            "https://docling-project.github.io/docling/installation/",
+                            "_blank",
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            </>
           )}
           <div className={styles.left}>
             <div className={styles.logo}>
@@ -92,12 +136,13 @@ const DarkHeader = () => {
               />
             </div>
           </div>
-          <div
-            className={`${styles.menuButton} ${isActive ? styles.active : ""}`}
-            onClick={toggleMenu}
-          >
-            <span></span>
-            <span></span>
+          <div className={styles.menuButton} onClick={toggleMenu}>
+            {!isActive && (
+              <>
+                <span></span>
+                <span></span>
+              </>
+            )}
           </div>
         </div>
       </div>

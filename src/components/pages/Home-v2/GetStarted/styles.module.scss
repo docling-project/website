@@ -44,6 +44,7 @@
 .card {
   position: relative;
   border: none !important; // Force no border by default
+  padding-right: 21.72px;
 
   // Blended border on hover (using ::before)
   &::before {

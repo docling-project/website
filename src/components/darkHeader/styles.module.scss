@@ -18,6 +18,7 @@
   box-shadow: 0 2px 14px 0 rgba(13, 0, 255, 0.1);
   @media (max-width: 840px) {
     border: none !important;
+    padding: var(--spacer-0) !important;
   }
 }
 

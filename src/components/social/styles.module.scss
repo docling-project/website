@@ -44,3 +44,8 @@
   line-height: 24px !important;
   color: var(--primary-body) !important;
 }
+.hover {
+  &:hover {
+    color: var(--interface-orange-600) !important ;
+  }
+}

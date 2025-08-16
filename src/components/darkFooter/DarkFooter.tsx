@@ -45,7 +45,13 @@ const DarkFooter = () => {
             <Text size={100} className={styles.content}>
               Copyright © Docling a Series of LF Projects, LLC For web site
               terms of use, trademark policy and general project policies please
-              see this <Link href={"https://lfprojects.org"}>this</Link>
+              see this{" "}
+              <Link
+                className={styles.hoverLink}
+                href={"https://lfprojects.org"}
+              >
+                link
+              </Link>
             </Text>
           </div>
         </div>

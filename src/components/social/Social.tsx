@@ -13,6 +13,7 @@ import { DARK_SOCIALS, SOCIALS } from "@/utils/constants";
 // Styles
 import styles from "./styles.module.scss";
 import Text from "../ui/text";
+import Github from "../icons/Github";
 
 interface Props {
   darkMode?: boolean;
@@ -24,6 +25,15 @@ const Social = ({ darkMode = false, isFooter = false }: Props) => {
     github: "Loading...",
     twitter: "Loading...",
   });
+  const [githubColor, setGithubColor] = useState("#E9DBBDE5"); // Default color for GitHub icon
+
+  const handleMouseEnter = () => {
+    setGithubColor("#fc7400"); // Change color when hovered
+  };
+
+  const handleMouseLeave = () => {
+    setGithubColor("#E9DBBDE5"); // Revert to original color when hover ends
+  };
 
   useEffect(() => {
     const fetchCounts = async () => {
@@ -64,10 +74,20 @@ const Social = ({ darkMode = false, isFooter = false }: Props) => {
           ))
         : DARK_SOCIALS?.map((s, index) => (
             <div key={index}>
-              <Link href={s.url} target="_blank">
+              <Link
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                href={s.url}
+                target="_blank"
+              >
                 <div className={styles.dark_social}>
-                  {s.icon}
-                  <Text className={styles.count} size={100}>
+                  {isFooter ? <Github color={githubColor} /> : s.icon}
+                  <Text
+                    className={`${styles.count} ${
+                      isFooter ? styles.hover : ""
+                    }`}
+                    size={100}
+                  >
                     {s?.url?.toLowerCase()?.includes("github")
                       ? isFooter
                         ? `GitHub | ${counts.github} Stars`

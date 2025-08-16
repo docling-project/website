@@ -116,6 +116,9 @@
   font-size: 15px !important;
   font-weight: 400 !important;
   line-height: 24px !important;
+  &:hover {
+    color: var(--interface-orange-600);
+  }
 }
 .link {
   text-decoration: none !important;
@@ -132,4 +135,10 @@
 .icon {
   display: flex;
   gap: 8px;
+}
+
+.hoverLink {
+  &:hover {
+    color: var(--interface-orange-600) !important ;
+  }
 }

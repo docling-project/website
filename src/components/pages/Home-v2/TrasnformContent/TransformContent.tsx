@@ -34,7 +34,7 @@ const TransformContent = () => {
           </a>
           <a
             href="https://github.com/docling-project/docling"
-            onMouseEnter={handleMouseEnter} // Add event handlers for hover
+            onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
             <Button

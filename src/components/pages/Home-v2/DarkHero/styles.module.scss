@@ -80,10 +80,12 @@
   }
   &_image {
     position: absolute;
-    top: 20%;
+    top: 21%;
     right: 5%;
-    @media (max-width: 1250px) {
-      right: 5%;
+    @media (max-width: 1240px) {
+      top: 26%;
+      width: 400px;
+      height: 400px;
     }
     @media (max-width: 1000px) {
       position: relative;
@@ -96,6 +98,7 @@
       position: absolute;
       top: 124px;
       left: -2%;
+      padding: var(--spacer-3) var(--spacer-3) 0px;
     }
     @media (max-width: 400px) {
       top: 150px;

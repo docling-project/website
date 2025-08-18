@@ -170,7 +170,7 @@ export const FEATURES = [
   },
   {
     title: "🤖",
-    text: "Integrates easily with LangChain, LlamaIndex, Haystack, and more.",
+    text: "Integrates easily with LangChain, LlamaIndex, Langflow, and more.",
   },
   { title: "🔍", text: "OCR support for scanned PDFs and images." },
   { title: "👓", text: "Works with visual language models (SmolDocling)." },

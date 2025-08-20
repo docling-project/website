@@ -11,13 +11,13 @@ const Cross = () => {
     >
       <path
         d="M18.5 1L1 18.5"
-        stroke="#FC7401"
+        stroke="#E58C07"
         stroke-width="2"
         stroke-linecap="round"
       />
       <path
         d="M1 1L18.5 18.5"
-        stroke="#FC7401"
+        stroke="#E58C07"
         stroke-width="2"
         stroke-linecap="round"
       />

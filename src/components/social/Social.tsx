@@ -28,7 +28,7 @@ const Social = ({ darkMode = false, isFooter = false }: Props) => {
   const [githubColor, setGithubColor] = useState("#E9DBBDE5"); // Default color for GitHub icon
 
   const handleMouseEnter = () => {
-    setGithubColor("#fc7400"); // Change color when hovered
+    setGithubColor("#E58C07"); // Change color when hovered
   };
 
   const handleMouseLeave = () => {

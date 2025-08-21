@@ -1,0 +1,48 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.reason {
+  &_title {
+    font-weight: 500 !important;
+    line-height: 100% !important; /* 48px */
+    letter-spacing: -0.24px !important;
+  }
+  &_detail {
+    padding-top: var(--spacer-4);
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    line-height: 140% !important;
+    letter-spacing: -0.09px !important;
+    padding-bottom: var(--spacer-6);
+  }
+
+  &_bold {
+    font-weight: 700 !important;
+  }
+  &_num {
+    color: var(--interface-orange-600);
+  }
+  &_subTitle {
+    font-size: 40px !important;
+    line-height: 130% !important;
+    letter-spacing: -0.8px !important;
+    padding-bottom: var(--spacer-4);
+  }
+  &_speakers {
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+    margin-bottom: 68px;
+  }
+  &_speaker {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacer-2);
+  }
+  &_speakerDetail {
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    line-height: 140% !important;
+    letter-spacing: -0.09px !important;
+  }
+}

@@ -15,20 +15,47 @@ import PrevArrow from "@/components/icons/PrevArrow";
 
 const Features = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [autoPlay, setAutoPlay] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const totalSlides = FEATURES.length;
+  const AUTO_PLAY_INTERVAL = 4000;
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    resetAutoPlay();
   };
 
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+    resetAutoPlay();
   };
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
+    resetAutoPlay();
   };
+
+  const resetAutoPlay = () => {
+    setAutoPlay(true);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+  };
+
+  useEffect(() => {
+    if (autoPlay) {
+      intervalRef.current = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % totalSlides);
+      }, AUTO_PLAY_INTERVAL);
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [autoPlay, totalSlides]);
 
   useEffect(() => {
     if (carouselRef.current) {
@@ -40,6 +67,14 @@ const Features = () => {
       });
     }
   }, [currentSlide]);
+
+  // Pause autoplay when user interacts with carousel
+  const handleInteraction = () => {
+    setAutoPlay(false);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+  };
 
   return (
     <section className={styles.features}>
@@ -65,7 +100,11 @@ const Features = () => {
         </div>
 
         <div className={styles.mobile_carousel}>
-          <div className={styles.carousel_container}>
+          <div
+            className={styles.carousel_container}
+            onMouseEnter={handleInteraction}
+            onTouchStart={handleInteraction}
+          >
             <div className={styles.carousel_track} ref={carouselRef}>
               {FEATURES.map((card, index) => (
                 <div key={index} className={styles.carousel_slide}>

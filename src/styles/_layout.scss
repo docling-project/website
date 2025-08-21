@@ -19,3 +19,12 @@ body:has(.layout) {
     padding: 0px 40px !important;
   }
 }
+.container {
+  @include make-container(48px);
+  @include media-breakpoint-up(xl) {
+    max-width: 887px !important;
+  }
+  @include media-breakpoint-down(xl) {
+    max-width: 100%;
+  }
+}

@@ -3,7 +3,7 @@ import Form from "../Form";
 import styles from "./styles.module.scss";
 const Webinar = () => {
   return (
-    <div className={`container-wide ${styles.container}`}>
+    <div className={`container ${styles.container}`}>
       <Form className={styles.webinar} isWeb />
     </div>
   );

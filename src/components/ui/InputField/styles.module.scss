@@ -1,0 +1,64 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.inputField {
+  border-radius: 8px;
+  border: 1px solid var(--primary-border);
+  background: rgba(22, 18, 48, 0.4);
+  padding: 16px 0 16px 20px;
+  color: var(--primary-body);
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+
+  // Placeholder styling
+  &::placeholder {
+    color: rgba(233, 219, 189, 0.9);
+    opacity: 0.7;
+  }
+
+  // Focus state
+  &:focus {
+    border-color: ar(--primary-body);
+    background: rgba(22, 18, 48, 0.6);
+  }
+
+  // Hover state
+  &:hover:not(:disabled) {
+    border-color: ar(--primary-body);
+  }
+
+  // Disabled state
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  // Error state (optional)
+  &.error {
+    border-color: #ff4757;
+    background: rgba(255, 71, 87, 0.1);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .inputField {
+    padding: 14px 0 14px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .inputField {
+    padding: 12px 0 12px 14px;
+  }
+}
+
+@media (max-width: 330px) {
+  .inputField {
+    padding: 10px 0 10px 12px;
+    font-size: 13px;
+  }
+}

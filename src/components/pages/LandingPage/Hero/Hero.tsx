@@ -4,6 +4,7 @@ import Display from "@/components/ui/Display";
 //Styles
 import styles from "./styles.module.scss";
 import Text from "@/components/ui/text";
+import Form from "../Form";
 
 const Hero = () => {
   return (
@@ -26,7 +27,7 @@ const Hero = () => {
             {"Join Us Thursday, September 11, 9:00 AM PT  "}
           </Text>
         </div>
-        <div className={styles.hero_formWrapper}></div>
+        <Form className={styles.hero_form} />
       </div>
     </section>
   );

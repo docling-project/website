@@ -28,6 +28,9 @@
     right: 20%;
     top: -50px;
   }
+  @include media-breakpoint-down(lg) {
+    min-width: 100%;
+  }
 }
 .dark_button {
   display: flex;

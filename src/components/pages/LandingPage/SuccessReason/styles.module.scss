@@ -7,6 +7,9 @@
     line-height: 100% !important; /* 48px */
     letter-spacing: -0.24px !important;
     font-size: 46px !important;
+    @include media-breakpoint-down(md) {
+      font-size: 30px !important;
+    }
   }
   &_detail {
     padding-top: var(--spacer-4);

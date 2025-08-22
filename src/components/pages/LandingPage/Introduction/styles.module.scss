@@ -7,7 +7,7 @@
     linear-gradient(180deg, #00000000 0%, #02030c 100%), #0a071f;
   background-blend-mode: overlay, normal, normal;
   @include media-breakpoint-down(md) {
-    padding-top: var(--spacer-7);
+    padding-top: var(--spacer-0);
   }
 }
 .section {
@@ -15,16 +15,10 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 76px 0px;
-  @include media-breakpoint-down(xl) {
-    gap: var(--spacer-4);
-  }
   @include media-breakpoint-down(lg) {
     gap: var(--spacer-2);
     padding: 30px 0px;
-    padding: var(--spacer-0);
-  }
-  @include media-breakpoint-down(sm) {
-    gap: var(--spacer-0);
+    flex-direction: column;
   }
   color: var(--primary-body);
   &_title {
@@ -34,6 +28,10 @@
     line-height: 130% !important; /* 31.2px */
     letter-spacing: -0.12px !important;
     color: var(--interface-orange-600);
+    @include media-breakpoint-down(lg) {
+      max-width: 100%;
+      text-align: center;
+    }
   }
   &_description {
     color: var(--interface-yellow-800);
@@ -42,6 +40,10 @@
     font-weight: 500 !important;
     line-height: 130% !important; /* 41.6px */
     letter-spacing: -0.16px !important;
+    @include media-breakpoint-down(lg) {
+      max-width: 100%;
+      text-align: center;
+    }
     @include media-breakpoint-down(md) {
       font-size: 24px !important;
       margin-bottom: var(--spacer-4);

@@ -20,6 +20,10 @@
     align-items: center;
     gap: 36px;
     flex-direction: row;
+    @include media-breakpoint-down(lg) {
+      flex-direction: column;
+      gap: 64px;
+    }
   }
 
   &_content {
@@ -46,6 +50,10 @@
     text-align: left;
     max-width: 580px;
     padding-top: 13px;
+    @include media-breakpoint-down(lg) {
+      max-width: 100%;
+      text-align: center;
+    }
   }
   &_color {
     color: var(--primary-body) !important;
@@ -61,22 +69,12 @@
     max-width: 558px;
     text-align: left;
     padding-top: 40px;
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(xl) {
       font-size: 30px !important;
-      padding-top: var(--spacer-0);
     }
-
-    @media (max-width: 1240px) {
-      font-size: 50px !important;
-      max-width: 500px;
-    }
-    @media (max-width: 1000px) {
-      font-size: 40px !important;
+    @include media-breakpoint-down(lg) {
       max-width: 100%;
-    }
-    @media (max-width: 700px) {
-      font-size: 36px !important;
-      max-width: 100%;
+      text-align: center;
     }
   }
   &_form {

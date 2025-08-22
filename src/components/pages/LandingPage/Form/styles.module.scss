@@ -22,11 +22,20 @@
     position: absolute;
     right: 9%;
     top: -11%;
+    @media (max-width: 458px) {
+      display: none;
+    }
   }
   &_webImage {
     position: absolute;
     right: 20%;
     top: -50px;
+    @include media-breakpoint-down(sm) {
+      right: 4%;
+    }
+    @media (max-width: 406px) {
+      display: none;
+    }
   }
   @include media-breakpoint-down(lg) {
     min-width: 100%;

@@ -9,7 +9,7 @@ const Eclipse = () => {
       viewBox="0 0 32 32"
       fill="none"
     >
-      <circle cx="16" cy="16" r="16" fill="#FC7400" />
+      <circle cx="16" cy="16" r="16" fill="#e58c07" />
     </svg>
   );
 };

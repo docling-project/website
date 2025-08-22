@@ -6,8 +6,9 @@
   background: linear-gradient(0deg, #02030c 0%, #02030c 100%),
     linear-gradient(0deg, #ffe185 0%, #ffe185 100%);
   width: 100%;
-  min-height: 70vh;
-  padding-top: 107px;
+  min-height: auto;
+  padding-top: 72px;
+  padding-bottom: var(--spacer-6);
 
   @include media-breakpoint-down(md) {
     min-height: fit-content;

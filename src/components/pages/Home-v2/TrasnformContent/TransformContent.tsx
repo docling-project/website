@@ -29,7 +29,7 @@ const TransformContent = () => {
     <section className={`${styles.container}`}>
       <div className="container-wide">
         <div className={styles.section_button_group}>
-          <a href="https://docling-project.github.io/docling/installation/">
+          <a href="https://docling-project.github.io/docling/getting_started/">
             <Button text={"Get Started"} className={styles.dark_button} />
           </a>
           <a

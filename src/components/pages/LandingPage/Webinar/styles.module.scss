@@ -1,0 +1,20 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+.container {
+  margin-bottom: 184px;
+}
+.webinar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    text-align: center;
+  }
+}
+.input {
+  width: 100%;
+}

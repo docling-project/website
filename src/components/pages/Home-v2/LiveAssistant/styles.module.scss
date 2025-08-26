@@ -1,0 +1,56 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.live {
+  padding-top: var(--spacer-3);
+  margin-bottom: var(--spacer-7);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  color: var(--primary-body);
+  @include media-breakpoint-down(xl) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacer-3);
+  }
+
+  &_title {
+    line-height: 52px !important;
+    letter-spacing: -0.48px !important;
+    margin-bottom: var(--spacer-1);
+    font-size: 24px !important;
+  }
+  &_detail {
+    line-height: 52px !important;
+    letter-spacing: -0.2px !important;
+    font-size: 40px !important;
+    max-width: 606px;
+    @include media-breakpoint-down(md) {
+      font-size: 32px !important;
+      font-weight: 400 !important;
+      line-height: 122% !important;
+      letter-spacing: -0.16px !important;
+    }
+  }
+  &_chat_with {
+    font-weight: 300;
+  }
+  &_chat_now {
+    font-weight: 600;
+    color: var(--interface-orange-600) !important;
+    text-decoration: none !important;
+
+    &:hover {
+      text-decoration: underline !important;
+    }
+  }
+  &_image {
+    img {
+      @include media-breakpoint-down(sm) {
+        width: 100% !important ;
+        height: 100% !important;
+      }
+    }
+  }
+}

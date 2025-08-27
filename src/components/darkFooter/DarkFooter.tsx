@@ -35,7 +35,7 @@ const DarkFooter = () => {
               <Text size={100} className={styles.text}>
                 <Link
                   className={styles.link}
-                  href="https://discord.gg/wJuvux5Q"
+                  href="https://discord.gg/WczpRJ8y"
                 >
                   Community
                 </Link>

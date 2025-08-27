@@ -7,6 +7,7 @@ import Display from "@/components/ui/Display";
 import styles from "./styles.module.scss";
 import Text from "@/components/ui/text";
 import StaticImage from "@/components/ui/StaticImage";
+import Button from "@/components/ui/Button";
 
 const Hero = () => {
   const [isLibraryLoaded, setIsLibraryLoaded] = useState(false);
@@ -75,6 +76,11 @@ const Hero = () => {
               <div className={styles.loading_button}>Loading...</div>
             )}
           </div>
+          <Button
+            text={"Add to Calendar"}
+            className={`${styles.dark_button} ${styles.mob_button}`}
+            onClick={() => {}}
+          />
         </div>
         <StaticImage
           src={"/images/assistant.webp"}

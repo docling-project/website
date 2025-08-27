@@ -7,7 +7,7 @@
     linear-gradient(0deg, #ffe185 0%, #ffe185 100%);
   width: 100%;
   min-height: auto;
-  padding-top: 72px;
+  padding-top: 55px;
   padding-bottom: var(--spacer-6);
 
   @include media-breakpoint-down(md) {
@@ -43,13 +43,13 @@
     }
   }
   &_subTitle {
+    font-size: 18px !important;
     font-weight: 500 !important;
     line-height: 130% !important;
-    letter-spacing: -0.12px !important;
-    color: var(--interface-orange-600);
+    letter-spacing: -0.09px !important;
+    color: var(--interface-orange-600) !important;
     text-align: left;
     max-width: 580px;
-    padding-top: 13px;
     @include media-breakpoint-down(lg) {
       max-width: 100%;
       text-align: center;
@@ -57,20 +57,21 @@
   }
   &_color {
     color: var(--primary-body) !important;
-    padding-top: 43px !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
   }
   &_title {
-    font-size: 40px !important;
+    font-size: 32px !important;
     font-weight: 500 !important;
+    line-height: 130% !important; /* 41.6px */
+    letter-spacing: -0.64px !important;
     color: var(--interface-yellow-800);
     text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    line-height: 130% !important;
-    letter-spacing: -0.8px !important;
     max-width: 558px;
     text-align: left;
     padding-top: 40px;
     @include media-breakpoint-down(xl) {
-      font-size: 30px !important;
+      font-size: 24px !important;
     }
     @include media-breakpoint-down(lg) {
       max-width: 100%;
@@ -81,5 +82,37 @@
     display: flex !important;
     flex-direction: column !important;
     gap: 32px;
+  }
+  &_image {
+    @include media-breakpoint-down(md) {
+      width: 100% !important;
+      height: auto !important;
+    }
+  }
+}
+.dark_button {
+  display: flex;
+  padding: 10px 20px !important;
+  max-width: 177px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--interface-orange-600) !important;
+  color: var(--primary-black) !important;
+  border: none;
+  border-radius: 100px !important;
+  font-size: 15px !important;
+  font-weight: 500;
+  font-family: var(--font-body);
+  line-height: 24px;
+  &_icon {
+    margin-right: 16px;
+  }
+  &:hover {
+    background-color: var(--interface-yellow-900) !important;
+    opacity: 1 !important;
+  }
+  &:active {
+    background-color: var(--interface-yellow-900) !important;
+    opacity: 1 !important;
   }
 }

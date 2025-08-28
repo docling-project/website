@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 //Components
 import Display from "@/components/ui/Display";
@@ -9,11 +9,27 @@ import Text from "@/components/ui/text";
 import StaticImage from "@/components/ui/StaticImage";
 
 const Hero = () => {
+  const [isLibraryLoaded, setIsLibraryLoaded] = useState(false);
+
   useEffect(() => {
-    // Import the add-to-calendar-button functionality
-    import("add-to-calendar-button").catch((error) => {
-      console.error("Failed to load Add to Calendar Button:", error);
-    });
+    const loadCalendarLibrary = async () => {
+      try {
+        if (typeof window !== "undefined" && (window as any).atcb) {
+          setIsLibraryLoaded(true);
+          return;
+        }
+
+        await import("add-to-calendar-button");
+
+        setTimeout(() => {
+          setIsLibraryLoaded(true);
+        }, 100);
+      } catch (error) {
+        console.error("Failed to load Add to Calendar Button:", error);
+      }
+    };
+
+    loadCalendarLibrary();
   }, []);
 
   return (
@@ -37,23 +53,27 @@ const Hero = () => {
           </Text>
 
           <div className={styles.calendar_wrapper}>
-            <add-to-calendar-button
-              name="Unlock AI-Ready Data from Any Document with Docling Open Source"
-              options="'Apple','Google'"
-              location="youtube.com"
-              startDate="2025-09-17"
-              endDate="2025-09-17"
-              startTime="09:00"
-              endTime="10:00"
-              timeZone="America/Los_Angeles"
-              buttonStyle="round"
-              trigger="click"
-              hideIconButton="true"
-              hideBranding="true"
-              label="Add to Calendar"
-              styleLight="--btn-background: var(--interface-orange-600); --btn-text: var(--primary-black); --btn-border: none; --btn-border-radius: 100px; --font: var(--font-body); --btn-padding: 10px 20px; --btn-font-size: 15px; --btn-font-weight: 500; --btn-line-height: 24px; --btn-max-width: 177px;"
-              styleDark="--btn-background: var(--interface-orange-600); --btn-text: var(--primary-black);"
-            />
+            {isLibraryLoaded ? (
+              <add-to-calendar-button
+                name="Unlock AI-Ready Data from Any Document with Docling Open Source"
+                options="'Apple','Google'"
+                location="youtube.com"
+                startDate="2025-09-17"
+                endDate="2025-09-17"
+                startTime="09:00"
+                endTime="10:00"
+                timeZone="America/Los_Angeles"
+                buttonStyle="round"
+                trigger="click"
+                hideIconButton="true"
+                hideBranding="true"
+                label="Add to Calendar"
+                styleLight="--btn-background: var(--interface-orange-600); --btn-text: var(--primary-black); --btn-border: none; --btn-border-radius: 100px; --font: var(--font-body); --btn-padding: 10px 20px; --btn-font-size: 15px; --btn-font-weight: 500; --btn-line-height: 24px; --btn-max-width: 177px;"
+                styleDark="--btn-background: var(--interface-orange-600); --btn-text: var(--primary-black);"
+              />
+            ) : (
+              <div className={styles.loading_button}>Loading...</div>
+            )}
           </div>
         </div>
         <StaticImage

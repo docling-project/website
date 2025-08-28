@@ -13,6 +13,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "add-to-calendar-button": "^2.9.1",
     "bootstrap": "^5.3.2",
     "next": "14.2.25",
     "react": "^18",

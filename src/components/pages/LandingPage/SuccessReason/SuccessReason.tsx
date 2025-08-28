@@ -72,10 +72,11 @@ const SuccessReason = () => {
             alt="image"
             width={32}
             height={32}
-          />{" "}
+            className={styles.reason_speakerAvatar}
+          />
           <Text className={styles.reason_speakerDetail} size={100}>
-            <span className={styles.reason_bold}>David Gilardi,</span> Developer
-            Relations – IBM{" "}
+            <span className={styles.reason_bold}>Ming Zhao,</span> Developer
+            Relations – IBM
           </Text>
         </div>
       </div>

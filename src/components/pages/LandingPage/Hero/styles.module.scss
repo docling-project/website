@@ -90,29 +90,38 @@
     }
   }
 }
-.dark_button {
+
+.calendar_wrapper {
   display: flex;
-  padding: 10px 20px !important;
-  max-width: 177px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  background-color: var(--interface-orange-600) !important;
-  color: var(--primary-black) !important;
-  border: none;
-  border-radius: 100px !important;
-  font-size: 15px !important;
-  font-weight: 500;
-  font-family: var(--font-body);
-  line-height: 24px;
-  &_icon {
-    margin-right: 16px;
+
+  @include media-breakpoint-down(lg) {
+    justify-content: center;
   }
-  &:hover {
-    background-color: var(--interface-yellow-900) !important;
-    opacity: 1 !important;
-  }
-  &:active {
-    background-color: var(--interface-yellow-900) !important;
-    opacity: 1 !important;
+
+  // Style the add-to-calendar-button web component
+  add-to-calendar-button {
+    --btn-background: var(--interface-orange-600);
+    --btn-text: var(--primary-black);
+    --btn-border: none;
+    --btn-border-radius: 100px;
+    --font: var(--font-body);
+    --btn-padding: 10px 20px;
+    --btn-font-size: 15px;
+    --btn-font-weight: 500;
+    --btn-line-height: 24px;
+    --btn-max-width: 177px;
+    --btn-hover-background: var(--interface-yellow-900);
+    --btn-active-background: var(--interface-yellow-900);
+
+    // Ensure the button displays properly
+    display: block;
+    max-width: 177px;
+
+    @include media-breakpoint-down(md) {
+      width: 100%;
+      max-width: 100%;
+    }
   }
 }

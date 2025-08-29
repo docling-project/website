@@ -1,7 +1,6 @@
 import Display from "@/components/ui/Display";
 import styles from "./styles.module.scss";
 import Text from "@/components/ui/text";
-import Eclipse from "@/components/icons/Eclipse/Eclipse";
 import StaticImage from "@/components/ui/StaticImage";
 
 const SuccessReason = () => {
@@ -58,13 +57,6 @@ const SuccessReason = () => {
         Speakers
       </Display>
       <div className={styles.reason_speakers}>
-        <div className={styles.reason_speaker}>
-          <Eclipse />{" "}
-          <Text className={styles.reason_speakerDetail} size={100}>
-            <span className={styles.reason_bold}> Engineer Name,</span> Docling
-            Core Team – IBM Research{" "}
-          </Text>
-        </div>
         <div className={styles.reason_speaker}>
           {" "}
           <StaticImage

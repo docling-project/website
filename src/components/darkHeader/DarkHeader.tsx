@@ -34,13 +34,13 @@ const DarkHeader = () => {
               <div className={styles.drawer}>
                 <div className={styles.wrapper}>
                   <div className={styles.drawerHeader}>
-                    <div className={styles.logo}>
-                      <Link href={"/"}>
+                    <div>
+                      <Link className={styles.logo} href={"/"}>
                         <Logo />
+                        <Display size={300} className={styles.left_text}>
+                          Docling
+                        </Display>
                       </Link>
-                      <Display size={300} className={styles.left_text}>
-                        Docling
-                      </Display>
                     </div>
                     {isActive && (
                       <div onClick={toggleMenu}>
@@ -92,13 +92,14 @@ const DarkHeader = () => {
             </>
           )}
           <div className={styles.left}>
-            <div className={styles.logo}>
-              <Link href={"/"}>
+            <div>
+              <Link className={styles.logo} href={"/"}>
                 <Logo />
+
+                <Display size={300} className={styles.left_text}>
+                  Docling
+                </Display>
               </Link>
-              <Display size={300} className={styles.left_text}>
-                Docling
-              </Display>
             </div>
             <nav className={styles.nav}>
               {LIST?.map((item) => {

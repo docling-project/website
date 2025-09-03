@@ -50,10 +50,11 @@ const Header = () => {
             <div className={styles.logo}>
               <Link href={"/"}>
                 <Logo />
+
+                <Display size={300} className={styles.left_text}>
+                  Docling
+                </Display>
               </Link>
-              <Display size={300} className={styles.left_text}>
-                Docling
-              </Display>
             </div>
             <nav className={styles.nav}>
               {LIST?.map((item) => {

@@ -16,8 +16,8 @@ const DarkFooter = () => {
       <div className="container-wide">
         <div className={styles.container}>
           <div className={styles.leftContainer}>
-            <div className={styles.logo}>
-              <Link href={"/"}>
+            <div>
+              <Link className={styles.logo} href={"/"}>
                 <Logo />
                 <Display size={300}>Docling</Display>
               </Link>

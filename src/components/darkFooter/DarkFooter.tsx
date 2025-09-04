@@ -19,8 +19,8 @@ const DarkFooter = () => {
             <div className={styles.logo}>
               <Link href={"/"}>
                 <Logo />
+                <Display size={300}>Docling</Display>
               </Link>
-              <Display size={300}>Docling</Display>
             </div>
             <div className={styles.footer_links}>
               <Social darkMode isFooter />

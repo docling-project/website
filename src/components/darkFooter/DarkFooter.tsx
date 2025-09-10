@@ -19,7 +19,6 @@ const DarkFooter = () => {
             <div>
               <Link className={styles.logo} href={"/"}>
                 <Logo />
-
                 <Display size={300}>Docling</Display>
               </Link>
             </div>

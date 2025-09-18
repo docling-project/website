@@ -1,3 +1,4 @@
+import Discord from "@/components/icons/Discord";
 import Document from "@/components/icons/Document";
 import GenAi from "@/components/icons/GenAi";
 import Github from "@/components/icons/Github";
@@ -104,6 +105,11 @@ const DARK_SOCIALS = [
     icon: <Github color="#E9DBBDE5" />,
     count: "24k",
     url: "https://github.com/docling-project/docling",
+  },
+  {
+    icon: <Discord />,
+    count: "",
+    url: "https://discord.gg/wJuvux5Q",
   },
 ];
 

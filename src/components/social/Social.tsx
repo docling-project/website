@@ -1,15 +1,11 @@
 "use client";
-
 // Dependencies
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
 // Components
 import Display from "@/components/ui/Display";
-
 // Utils
 import { DARK_SOCIALS, SOCIALS } from "@/utils/constants";
-
 // Styles
 import styles from "./styles.module.scss";
 import Text from "../ui/text";
@@ -25,14 +21,14 @@ const Social = ({ darkMode = false, isFooter = false }: Props) => {
     github: "Loading...",
     twitter: "Loading...",
   });
-  const [githubColor, setGithubColor] = useState("#E9DBBDE5"); // Default color for GitHub icon
+  const [githubColor, setGithubColor] = useState("#E9DBBDE5");
 
   const handleMouseEnter = () => {
-    setGithubColor("#E58C07"); // Change color when hovered
+    setGithubColor("#E58C07");
   };
 
   const handleMouseLeave = () => {
-    setGithubColor("#E9DBBDE5"); // Revert to original color when hover ends
+    setGithubColor("#E9DBBDE5");
   };
 
   useEffect(() => {
@@ -72,32 +68,38 @@ const Social = ({ darkMode = false, isFooter = false }: Props) => {
               </Link>
             </div>
           ))
-        : DARK_SOCIALS?.map((s, index) => (
-            <div key={index}>
-              <Link
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                href={s.url}
-                target="_blank"
-              >
-                <div className={styles.dark_social}>
-                  {isFooter ? <Github color={githubColor} /> : s.icon}
-                  <Text
-                    className={`${styles.count} ${
-                      isFooter ? styles.hover : ""
-                    }`}
-                    size={100}
-                  >
-                    {s?.url?.toLowerCase()?.includes("github")
-                      ? isFooter
-                        ? `GitHub | ${counts.github} Stars`
-                        : counts.github
-                      : s.count}
-                  </Text>
-                </div>
-              </Link>
-            </div>
-          ))}
+        : DARK_SOCIALS?.filter((s) => (isFooter ? s.count : true)).map(
+            (s, index) => (
+              <div key={index}>
+                <Link
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  href={s.url}
+                  target="_blank"
+                >
+                  <div className={styles.dark_social}>
+                    {isFooter && index == 0 ? (
+                      <Github color={githubColor} />
+                    ) : (
+                      s.icon
+                    )}
+                    <Text
+                      className={`${styles.count} ${
+                        isFooter ? styles.hover : ""
+                      }`}
+                      size={100}
+                    >
+                      {s?.url?.toLowerCase()?.includes("github")
+                        ? isFooter
+                          ? `GitHub | ${counts.github} Stars`
+                          : counts.github
+                        : s.count}
+                    </Text>
+                  </div>
+                </Link>
+              </div>
+            ),
+          )}
     </div>
   );
 };

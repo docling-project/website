@@ -5,8 +5,8 @@ import Script from "next/script";
 // Components
 import DarkHeader from "@/components/darkHeader";
 import DarkFooter from "@/components/darkFooter";
-import AnnouncmentBanner from "@/components/announcementBanner";
 import AnnouncmentBar from "@/components/announcmentBar";
+import AnnouncmentBanner from "@/components/announcementBanner";
 
 // Styles
 import "@/styles/index.scss";

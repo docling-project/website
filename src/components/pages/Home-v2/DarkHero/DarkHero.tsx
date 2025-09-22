@@ -1,12 +1,11 @@
-//Components
-import Display from "@/components/ui/Display";
-
-import StaticImage from "@/components/ui/StaticImage";
-
 // Utilities
 import { HERO_TEXT } from "@/utils/constants";
 
-//Styles
+// Components
+import Display from "@/components/ui/Display";
+import StaticImage from "@/components/ui/StaticImage";
+
+// Styles
 import styles from "./styles.module.scss";
 
 const DarkHero = () => {
@@ -17,8 +16,8 @@ const DarkHero = () => {
           {HERO_TEXT}
         </Display>
         <StaticImage
-          src={"/images/darkHero.webp"}
-          alt={"Docling Hero Image"}
+          src="/images/darkHero.webp"
+          alt="Docling Hero Image"
           width={439}
           height={439}
           priority

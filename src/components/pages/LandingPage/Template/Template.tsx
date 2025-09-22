@@ -1,8 +1,8 @@
-import React from "react";
-import Hero from "../Hero";
-import Webinar from "../Webinar";
-import Introduction from "../Introduction";
-import SuccessReason from "../SuccessReason";
+// Components
+import Hero from "@/components/pages/LandingPage/Hero";
+import Webinar from "@/components/pages/LandingPage/Webinar";
+import Introduction from "@/components/pages/LandingPage/Introduction";
+import SuccessReason from "@/components/pages/LandingPage/SuccessReason";
 
 const Template = () => {
   return (

@@ -4,16 +4,16 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
+// Utilities
+import { DARK_SOCIALS, SOCIALS } from "@/utils/constants";
+
 // Components
 import Display from "@/components/ui/Display";
-
-// Utils
-import { DARK_SOCIALS, SOCIALS } from "@/utils/constants";
+import Text from "@/components/ui/text";
+import Github from "@/components/icons/Github";
 
 // Styles
 import styles from "./styles.module.scss";
-import Text from "../ui/text";
-import Github from "../icons/Github";
 
 interface Props {
   darkMode?: boolean;
@@ -25,14 +25,14 @@ const Social = ({ darkMode = false, isFooter = false }: Props) => {
     github: "Loading...",
     twitter: "Loading...",
   });
-  const [githubColor, setGithubColor] = useState("#E9DBBDE5"); // Default color for GitHub icon
+  const [githubColor, setGithubColor] = useState("#E9DBBDE5");
 
   const handleMouseEnter = () => {
-    setGithubColor("#E58C07"); // Change color when hovered
+    setGithubColor("#E58C07");
   };
 
   const handleMouseLeave = () => {
-    setGithubColor("#E9DBBDE5"); // Revert to original color when hover ends
+    setGithubColor("#E9DBBDE5");
   };
 
   useEffect(() => {

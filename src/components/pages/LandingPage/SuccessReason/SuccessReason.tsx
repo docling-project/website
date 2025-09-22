@@ -1,8 +1,11 @@
+// Components
 import Display from "@/components/ui/Display";
-import styles from "./styles.module.scss";
 import Text from "@/components/ui/text";
 import Eclipse from "@/components/icons/Eclipse/Eclipse";
 import StaticImage from "@/components/ui/StaticImage";
+
+// Styles
+import styles from "./styles.module.scss";
 
 const SuccessReason = () => {
   return (
@@ -68,7 +71,7 @@ const SuccessReason = () => {
         <div className={styles.reason_speaker}>
           {" "}
           <StaticImage
-            src={"/images/avatar.webp"}
+            src="/images/avatar.webp"
             alt="image"
             width={32}
             height={32}

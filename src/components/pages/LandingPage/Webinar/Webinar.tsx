@@ -1,6 +1,9 @@
-import Form from "../Form";
-//Styles
+// Components
+import Form from "@/components/pages/LandingPage/Form";
+
+// Styles
 import styles from "./styles.module.scss";
+
 const Webinar = () => {
   return (
     <div className={`container ${styles.container}`}>

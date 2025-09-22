@@ -1,9 +1,9 @@
-//Components
-import Display from "@/components/ui/Display";
-import Card from "@/components/ui/Card";
-
 // Utilities
 import { CARD_DATA } from "@/utils/constants";
+
+// Components
+import Display from "@/components/ui/Display";
+import Card from "@/components/ui/Card";
 
 //Styles
 import styles from "./styles.module.scss";
@@ -11,7 +11,7 @@ import styles from "./styles.module.scss";
 const GetStarted = () => {
   return (
     <section className={styles.getStarted}>
-      <div className={`container-wide`}>
+      <div className="container-wide">
         <Display size={600} weight={500} className={styles.getStarted_title}>
           Get Started
         </Display>

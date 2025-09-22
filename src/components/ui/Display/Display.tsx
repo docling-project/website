@@ -6,15 +6,15 @@ import {
   PropsWithChildren,
 } from "react";
 
-// Utilities
-import { getLargerSize, getSizesFromObject, getTagNameFromSize } from "./utils";
-
 // Types
 import { Size, SizeRecord, Weight } from "./types";
 
+// Utilities
+import { getLargerSize, getSizesFromObject, getTagNameFromSize } from "./utils";
+import { buildClassName } from "@/lib/utils/style";
+
 // Styles
 import styles from "./styles.module.scss";
-import { buildClassName } from "@/lib/utils/style";
 
 // Props types
 type Props = PropsWithChildren<

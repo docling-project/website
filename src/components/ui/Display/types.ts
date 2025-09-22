@@ -1,5 +1,4 @@
 // Types
-
 import { Breakpoint } from "@/lib/types/definitions";
 
 /**

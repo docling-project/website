@@ -1,5 +1,3 @@
-import React from "react";
-
 const Cross = () => {
   return (
     <svg
@@ -12,14 +10,14 @@ const Cross = () => {
       <path
         d="M18.5 1L1 18.5"
         stroke="#E58C07"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <path
         d="M1 1L18.5 18.5"
         stroke="#E58C07"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
     </svg>
   );

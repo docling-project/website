@@ -4,19 +4,18 @@
 import { useState } from "react";
 import Link from "next/link";
 
-// Components
-import Display from "@/components/ui/Display";
-import Logo from "@/components/icons/logo/Logo";
-import Social from "@/components/social";
-import Button from "../ui/Button";
-import Text from "../ui/text";
-
-// Utils
+// Utilities
 import { LIST } from "@/utils/constants";
+
+// Components
+import Logo from "@/components/ui/Logo";
+import Social from "@/components/social";
+import Button from "@/components/ui/Button";
+import Text from "@/components/ui/text";
+import Cross from "@/components/icons/Cross";
 
 // Styles
 import styles from "./styles.module.scss";
-import Cross from "../icons/Cross";
 
 const DarkHeader = () => {
   const [isActive, setIsActive] = useState(false);
@@ -34,14 +33,7 @@ const DarkHeader = () => {
               <div className={styles.drawer}>
                 <div className={styles.wrapper}>
                   <div className={styles.drawerHeader}>
-                    <div className={styles.logo}>
-                      <Link href={"/"}>
-                        <Logo />
-                      </Link>
-                      <Display size={300} className={styles.left_text}>
-                        Docling
-                      </Display>
-                    </div>
+                    <Logo />
                     {isActive && (
                       <div onClick={toggleMenu}>
                         <Cross />
@@ -76,7 +68,7 @@ const DarkHeader = () => {
                     </div>
                     <div className={styles.mob}>
                       <Button
-                        text={"Get Started"}
+                        text="Get Started"
                         className={`${styles.dark_button} ${styles.mob_button}`}
                         onClick={() => {
                           window.open(
@@ -92,14 +84,7 @@ const DarkHeader = () => {
             </>
           )}
           <div className={styles.left}>
-            <div className={styles.logo}>
-              <Link href={"/"}>
-                <Logo />
-              </Link>
-              <Display size={300} className={styles.left_text}>
-                Docling
-              </Display>
-            </div>
+            <Logo />
             <nav className={styles.nav}>
               {LIST?.map((item) => {
                 return (
@@ -125,7 +110,7 @@ const DarkHeader = () => {
             <div className={styles.verticalColumn}></div>
             <div>
               <Button
-                text={"Get Started"}
+                text="Get Started"
                 className={styles.dark_button}
                 onClick={() => {
                   window.open(

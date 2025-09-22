@@ -40,20 +40,6 @@
   }
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  gap: var(--spacer-1);
-  h5 {
-    font-weight: 600;
-    color: var(--primary-body);
-  }
-  @include media-breakpoint-up(lg) {
-    gap: 5px;
-  }
-}
-
 .socials {
   display: flex;
   align-items: center;

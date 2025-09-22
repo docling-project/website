@@ -1,4 +1,4 @@
-//Styles
+// Styles
 import styles from "./styles.module.scss";
 
 interface InputFieldProps {

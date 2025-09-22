@@ -1,0 +1,13 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacer-1);
+
+  h5 {
+    font-weight: 600;
+    color: var(--primary-body);
+  }
+}

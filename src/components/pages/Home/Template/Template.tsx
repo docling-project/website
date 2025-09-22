@@ -1,9 +1,9 @@
-//Components;
-import Hero from "../Hero";
-import TransformContent from "../../Home-v2/TrasnformContent";
-import GetStarted from "../GetStarted";
-import WhyChoose from "../WhyChoose";
-import DarkHero from "../../Home-v2/DarkHero";
+// Components;
+import Hero from "@/components/pages/Home/Hero";
+import TransformContent from "@/components/pages/Home-v2/TrasnformContent";
+import GetStarted from "@/components/pages/Home/GetStarted";
+import WhyChoose from "@/components/pages/Home/WhyChoose";
+import DarkHero from "@/components/pages/Home-v2/DarkHero";
 
 const Template = () => {
   return (

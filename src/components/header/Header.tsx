@@ -4,14 +4,14 @@
 import { useState } from "react";
 import Link from "next/link";
 
+// Utilities
+import { LIST } from "@/utils/constants";
+
 // Components
 import Display from "@/components/ui/Display";
 import Logo from "@/components/icons/logo/Logo";
 import Social from "@/components/social";
 import Button from "@/components/ui/Button";
-
-// Utils
-import { LIST } from "@/utils/constants";
 
 // Styles
 import styles from "./styles.module.scss";
@@ -83,7 +83,7 @@ const Header = () => {
             <div className={styles.verticalColumn}></div>
             <div>
               <Button
-                text={"Get Started"}
+                text="Get Started"
                 className={styles.small_button}
                 onClick={() => {
                   window.open(

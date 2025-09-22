@@ -1,9 +1,9 @@
-//Components
-import StaticImage from "../StaticImage";
-import Display from "../Display";
-import Text from "../text";
+// Components
+import StaticImage from "@/components/ui/StaticImage";
+import Display from "@/components/ui/Display";
+import Text from "@/components/ui/text";
 
-//Styles
+// Styles
 import styles from "./styles.module.scss";
 
 interface CardProps {

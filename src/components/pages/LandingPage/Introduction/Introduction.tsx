@@ -1,7 +1,7 @@
-//Components
+// Components
 import Text from "@/components/ui/text";
 
-//Styles
+// Styles
 import styles from "./styles.module.scss";
 
 const Introduction = () => {
@@ -10,12 +10,11 @@ const Introduction = () => {
       <div className="container">
         <div className={`${styles.section} ${styles.transform_content}`}>
           <Text className={styles.section_title} size={300}>
-            {"Meet Docling"}
+            Meet Docling
           </Text>
           <Text className={styles.section_description} size={200} weight={400}>
-            {
-              "IBM’s open-source, Python-based, dev-friendly toolkit, for turning any document into clean, structured, AI-ready data.  "
-            }
+            IBM’s open-source, Python-based, dev-friendly toolkit, for turning
+            any document into clean, structured, AI-ready data.
           </Text>
         </div>
       </div>

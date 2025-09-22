@@ -1,3 +1,4 @@
+// Types
 import { ClassNameHash } from "@/lib/types/definitions";
 
 export function buildClassName(classHash: ClassNameHash): string {

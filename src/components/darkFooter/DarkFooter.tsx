@@ -1,45 +1,39 @@
 // Dependencies
 import Link from "next/link";
 
+// Constants
+import { LINKS } from "./constants";
+
 // Components
 import Display from "@/components/ui/Display";
 import Logo from "@/components/icons/logo";
-import Social from "../social";
+import Social from "@/components/social";
+import Text from "@/components/ui/text";
 
 // Styles
 import styles from "./styles.module.scss";
-import Text from "../ui/text";
 
 const DarkFooter = () => {
   return (
-    <section className={`${styles.footer}`}>
+    <section className={styles.footer}>
       <div className="container-wide">
         <div className={styles.container}>
           <div className={styles.leftContainer}>
             <div className={styles.logo}>
-              <Link href={"/"}>
+              <Link href="/">
                 <Logo />
               </Link>
               <Display size={300}>Docling</Display>
             </div>
             <div className={styles.footer_links}>
               <Social darkMode isFooter />
-              <Text size={100} className={styles.text}>
-                <Link
-                  className={styles.link}
-                  href="https://docling-project.github.io/docling/"
-                >
-                  Documentation
-                </Link>
-              </Text>
-              <Text size={100} className={styles.text}>
-                <Link
-                  className={styles.link}
-                  href="https://discord.gg/eSJczJCq"
-                >
-                  Community
-                </Link>
-              </Text>
+              {LINKS.map((link) => (
+                <Text size={100} className={styles.text} key={link.title}>
+                  <Link className={styles.link} href={link.href}>
+                    {link.title}
+                  </Link>
+                </Text>
+              ))}
             </div>
 
             <Text size={100} className={styles.content}>

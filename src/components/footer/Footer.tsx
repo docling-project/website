@@ -1,13 +1,16 @@
 // Dependencies
 import Link from "next/link";
 
+// Types
+import { Weight } from "@/components/ui/Display/types";
+
+// Constants
+import { CONTENT } from "./constants";
+
 // Components
 import Display from "@/components/ui/Display";
 import Social from "@/components/social";
 import Logo from "@/components/icons/logo";
-
-// Types
-import { Weight } from "@/components/ui/Display/types";
 
 // Styles
 import styles from "./styles.module.scss";
@@ -29,57 +32,16 @@ const Footer = () => {
             <Social />
           </div>
           <div className={styles.rightContainer}>
-            <div className={styles.footerLinks}>
-              <Display size={100}>Concepts</Display>
-              <Display size={100} weight={Weight.Light}>
-                Lorem Ipsum
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                Lorem Ipsum
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                Lorem Ipsum
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                Lorem Ipsum
-              </Display>
-            </div>
-            <div className={styles.footerLinks}>
-              <Display size={100}>Resources</Display>
-              <Display size={100} weight={Weight.Light}>
-                Help Center
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                Contact Support
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                API Documentation
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                Community
-              </Display>
-            </div>
-            <div className={styles.footerLinks}>
-              <Display size={100}>Legal</Display>
-              <Display size={100} weight={Weight.Light}>
-                Privacy Policy
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                Terms of Service
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                Cookie Policy
-              </Display>
-            </div>
-            <div className={styles.footerLinks}>
-              <Display size={100}>Follow Us</Display>
-              <Display size={100} weight={Weight.Light}>
-                Github
-              </Display>
-              <Display size={100} weight={Weight.Light}>
-                X
-              </Display>
-            </div>
+            {CONTENT.map((item) => (
+              <div className={styles.footerLinks} key={item.title}>
+                <Display size={100}>{item.title}</Display>
+                {item.links.map((link) => (
+                  <Display size={100} weight={Weight.Light} key={link}>
+                    {link}
+                  </Display>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </div>

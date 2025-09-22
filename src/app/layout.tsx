@@ -6,6 +6,7 @@ import Script from "next/script";
 import DarkHeader from "@/components/darkHeader";
 import DarkFooter from "@/components/darkFooter";
 import AnnouncmentBar from "@/components/announcmentBar";
+import AnnouncmentBanner from "@/components/announcementBanner";
 
 // Styles
 import "@/styles/index.scss";
@@ -57,6 +58,7 @@ export default function RootLayout({
         <div className="layout">
           <AnnouncmentBar />
           <DarkHeader />
+          <AnnouncmentBanner />
           {children}
           <DarkFooter />
         </div>

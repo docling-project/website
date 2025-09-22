@@ -1,17 +1,17 @@
-//Styles
-import styles from "./styles.module.scss";
+// Utilities
+import { DOCLING_CARD_DATA } from "@/utils/constants";
 
-//Components
+// Components
 import Display from "@/components/ui/Display";
 import Card from "./Card";
 
-//Utilities
-import { DOCLING_CARD_DATA } from "@/utils/constants";
+// Styles
+import styles from "./styles.module.scss";
 
 const WhyChoose = () => {
   return (
     <section className={styles.choose}>
-      <div className={`container-wide`}>
+      <div className="container-wide">
         <Display size={600} weight={500} className={styles.choose_title}>
           Why Choose Docling?
         </Display>

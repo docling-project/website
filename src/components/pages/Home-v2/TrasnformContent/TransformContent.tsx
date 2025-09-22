@@ -1,29 +1,30 @@
 "use client";
-//Dependences
-import { useState } from "react";
 
-//Components
-import Display from "@/components/ui/Display";
-import Text from "@/components/ui/text";
-import Button from "@/components/ui/Button";
-import Github from "@/components/icons/Github";
+// Dependences
+import { useState } from "react";
 
 // Utilities
 import { TRANSFORM, TRANSFORM_CARD } from "@/utils/constants";
 
-//Styles
-import styles from "./styles.module.scss";
+// Components
+import Display from "@/components/ui/Display";
+import Text from "@/components/ui/text";
+import Button from "@/components/ui/Button";
+import Github from "@/components/icons/Github";
 import Card_v2 from "@/components/ui/Card-v2";
 
+// Styles
+import styles from "./styles.module.scss";
+
 const TransformContent = () => {
-  const [githubColor, setGithubColor] = useState("#E9DBBDE5"); // Default color for GitHub icon
+  const [githubColor, setGithubColor] = useState("#E9DBBDE5");
 
   const handleMouseEnter = () => {
-    setGithubColor("#F8A700"); // Change color when hovered
+    setGithubColor("#F8A700");
   };
 
   const handleMouseLeave = () => {
-    setGithubColor("#E9DBBDE5"); // Revert to original color when hover ends
+    setGithubColor("#E9DBBDE5");
   };
   return (
     <section className={`${styles.container}`}>
@@ -38,7 +39,7 @@ const TransformContent = () => {
             onMouseLeave={handleMouseLeave}
           >
             <Button
-              text={"Star on GitHub"}
+              text="Star on GitHub"
               icon={<Github color={githubColor} size="23" />}
               className={`${styles.section_button} ${styles.section_git_button}`}
             />

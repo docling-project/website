@@ -1,17 +1,19 @@
 "use client";
 
+// Depedencies
+import { useState, useRef, useEffect } from "react";
+
+// Utilities
+import { FEATURES } from "@/utils/constants";
+
 // Components
 import Display from "@/components/ui/Display";
 import Card_v2 from "@/components/ui/Card-v2";
+import NextArrow from "@/components/icons/NextArrow";
+import PrevArrow from "@/components/icons/PrevArrow";
 
 // Styles
 import styles from "./styles.module.scss";
-
-// Utils
-import { FEATURES } from "@/utils/constants";
-import { useState, useRef, useEffect } from "react";
-import NextArrow from "@/components/icons/NextArrow";
-import PrevArrow from "@/components/icons/PrevArrow";
 
 const Features = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -78,7 +80,7 @@ const Features = () => {
 
   return (
     <section className={styles.features}>
-      <div className={"container-wide"}>
+      <div className="container-wide">
         <Display
           className={`display display--weight-700 ${styles.features_title}`}
           size={300}

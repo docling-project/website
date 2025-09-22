@@ -1,0 +1,32 @@
+@import "/src/styles/variables";
+@import "~bootstrap/scss/mixins";
+
+.banner {
+  border-radius: 100px;
+  background: linear-gradient(
+      180deg,
+      rgba(233, 219, 189, 0) 0%,
+      rgba(233, 219, 189, 0.4) 100%
+    ),
+    #f5ca69;
+  padding: 14px var(--spacer-4);
+  margin: var(--spacer-4) 0px var(--spacer-2);
+  width: fit-content;
+
+  @include media-breakpoint-down(md) {
+    margin-bottom: var(--spacer-4);
+  }
+
+  @include media-breakpoint-down(sm) {
+    border-radius: 10px;
+  }
+
+  p {
+    color: var(--primary-dark);
+  }
+
+  a {
+    font-weight: 700;
+    text-decoration: none !important;
+  }
+}

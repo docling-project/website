@@ -1,8 +1,6 @@
+// Components
 import Template from "@/components/pages/LandingPage/Template";
-import React from "react";
 
-const Webinar = () => {
+export default function Webinar() {
   return <Template />;
-};
-
-export default Webinar;
+}

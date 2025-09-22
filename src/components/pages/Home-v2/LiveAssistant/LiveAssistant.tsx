@@ -1,11 +1,13 @@
-//Components
+// Dependencies
+import Link from "next/link";
+
+// Components
 import Display from "@/components/ui/Display";
 import Text from "@/components/ui/text";
 import StaticImage from "@/components/ui/StaticImage";
 
-//Styles
+// Styles
 import styles from "./styles.module.scss";
-import Link from "next/link";
 
 const LiveAssistant = () => {
   return (
@@ -35,8 +37,8 @@ const LiveAssistant = () => {
         </div>
         <div className={styles.live_image}>
           <StaticImage
-            src={"/images/assistant.webp"}
-            alt={"live image"}
+            src="/images/assistant.webp"
+            alt="live image"
             width={498}
             height={332}
             priority

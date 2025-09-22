@@ -1,11 +1,17 @@
 "use client";
 
+// Dependencies
 import { useState } from "react";
-import styles from "./styles.module.scss";
+
+// Components
 import InputField from "@/components/ui/InputField/InputField";
 import Button from "@/components/ui/Button";
 import Display from "@/components/ui/Display";
 import StaticImage from "@/components/ui/StaticImage";
+
+// Styles
+import styles from "./styles.module.scss";
+
 interface FormProps {
   className?: string;
   isWeb?: boolean;
@@ -77,8 +83,8 @@ const Form = ({ className, isWeb }: FormProps) => {
         onClick={() => {}}
       />
       <StaticImage
-        src={"/images/duckPoint.webp"}
-        alt={"Docling Hero Image"}
+        src="/images/duckPoint.webp"
+        alt="Docling Hero Image"
         width={135}
         height={145}
         priority

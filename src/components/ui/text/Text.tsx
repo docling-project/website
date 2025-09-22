@@ -6,11 +6,11 @@ import {
   PropsWithChildren,
 } from "react";
 
-// Utilities
-import { getTagNameFromSize } from "./utils";
-
 // Types
 import { Size, Weight } from "./types";
+
+// Utilities
+import { getTagNameFromSize } from "./utils";
 
 // Styles
 import styles from "./styles.module.scss";

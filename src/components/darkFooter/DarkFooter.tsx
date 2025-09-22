@@ -5,8 +5,7 @@ import Link from "next/link";
 import { LINKS } from "./constants";
 
 // Components
-import Display from "@/components/ui/Display";
-import Logo from "@/components/icons/logo";
+import Logo from "@/components/ui/Logo";
 import Social from "@/components/social";
 import Text from "@/components/ui/text";
 
@@ -19,12 +18,7 @@ const DarkFooter = () => {
       <div className="container-wide">
         <div className={styles.container}>
           <div className={styles.leftContainer}>
-            <div className={styles.logo}>
-              <Link href="/">
-                <Logo />
-              </Link>
-              <Display size={300}>Docling</Display>
-            </div>
+            <Logo />
             <div className={styles.footer_links}>
               <Social darkMode isFooter />
               {LINKS.map((link) => (

@@ -8,8 +8,7 @@ import Link from "next/link";
 import { LIST } from "@/utils/constants";
 
 // Components
-import Display from "@/components/ui/Display";
-import Logo from "@/components/icons/logo/Logo";
+import Logo from "@/components/ui/Logo";
 import Social from "@/components/social";
 import Button from "@/components/ui/Button";
 import Text from "@/components/ui/text";
@@ -34,14 +33,7 @@ const DarkHeader = () => {
               <div className={styles.drawer}>
                 <div className={styles.wrapper}>
                   <div className={styles.drawerHeader}>
-                    <div className={styles.logo}>
-                      <Link href={"/"}>
-                        <Logo />
-                      </Link>
-                      <Display size={300} className={styles.left_text}>
-                        Docling
-                      </Display>
-                    </div>
+                    <Logo />
                     {isActive && (
                       <div onClick={toggleMenu}>
                         <Cross />
@@ -92,14 +84,7 @@ const DarkHeader = () => {
             </>
           )}
           <div className={styles.left}>
-            <div className={styles.logo}>
-              <Link href="/">
-                <Logo />
-              </Link>
-              <Display size={300} className={styles.left_text}>
-                Docling
-              </Display>
-            </div>
+            <Logo />
             <nav className={styles.nav}>
               {LIST?.map((item) => {
                 return (

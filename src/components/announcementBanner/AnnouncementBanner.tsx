@@ -13,7 +13,7 @@ const AnnouncmentBanner = () => {
             IBM releases Granite-Docling-258M, a compact open-source VLM for
             precise document-to-data conversion.{" "}
             <a
-              href="https://www.ibm.com/new/announcements/granite-docling-end-to-end-document-conversion"
+              href="https://huggingface.co/ibm-granite/granite-docling-258M"
               target="_blank"
             >
               Learn More

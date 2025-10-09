@@ -5,6 +5,6 @@ export const LINKS = [
   },
   {
     title: "Community",
-    href: "https://discord.gg/aMSbKYaDrG",
+    href: "https://discord.com/invite/6Ug6RRsz",
   },
 ];

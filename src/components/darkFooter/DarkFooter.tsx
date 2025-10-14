@@ -22,16 +22,21 @@ const DarkFooter = () => {
     let isMounted = true;
     const fetchInvite = async () => {
       try {
-        const res = await fetch("/api/discord_invite", { cache: "no-store" });
+        const res = await fetch("/api/discord_invite");
         if (!res.ok) return;
         const data = await res.json();
         const inviteUrl = data?.invite_link;
-        if (inviteUrl && isMounted) {
-          setLinks((prev) =>
-            prev.map((l) =>
-              l.title === "Community" ? { ...l, href: inviteUrl } : l,
-            ),
-          );
+        if (isMounted) {
+          setLinks([
+            {
+              title: "Documentation",
+              href: "https://docling-project.github.io/docling/",
+            },
+            {
+              title: "Community",
+              href: inviteUrl,
+            },
+          ]);
         }
       } catch {
         // ignore network errors; keep default link
@@ -51,13 +56,16 @@ const DarkFooter = () => {
             <Logo />
             <div className={styles.footer_links}>
               <Social darkMode isFooter />
-              {links.map((link) => (
-                <Text size={100} className={styles.text} key={link.title}>
-                  <Link className={styles.link} href={link.href}>
-                    {link.title}
-                  </Link>
-                </Text>
-              ))}
+              {links &&
+                links
+                  .filter((link) => link.href !== "")
+                  .map((link) => (
+                    <Text size={100} className={styles.text} key={link.title}>
+                      <Link className={styles.link} href={link.href}>
+                        {link.title}
+                      </Link>
+                    </Text>
+                  ))}
             </div>
 
             <Text size={100} className={styles.content}>

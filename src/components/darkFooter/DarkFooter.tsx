@@ -4,9 +4,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-// Constants
-import { LINKS } from "./constants";
-
 // Components
 import Logo from "@/components/ui/Logo";
 import Social from "@/components/social";
@@ -16,7 +13,7 @@ import Text from "@/components/ui/text";
 import styles from "./styles.module.scss";
 
 const DarkFooter = () => {
-  const [links, setLinks] = useState(LINKS);
+  const [links, setLinks] = useState<{ title: string; href: string }[]>([]);
 
   useEffect(() => {
     let isMounted = true;

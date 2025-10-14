@@ -1,4 +1,7 @@
+"use client";
+
 // Dependencies
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 // Constants
@@ -13,6 +16,33 @@ import Text from "@/components/ui/text";
 import styles from "./styles.module.scss";
 
 const DarkFooter = () => {
+  const [links, setLinks] = useState(LINKS);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchInvite = async () => {
+      try {
+        const res = await fetch("/api/discord_invite", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        const inviteUrl = data?.invite_link;
+        if (inviteUrl && isMounted) {
+          setLinks((prev) =>
+            prev.map((l) =>
+              l.title === "Community" ? { ...l, href: inviteUrl } : l,
+            ),
+          );
+        }
+      } catch {
+        // ignore network errors; keep default link
+      }
+    };
+    fetchInvite();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <section className={styles.footer}>
       <div className="container-wide">
@@ -21,7 +51,7 @@ const DarkFooter = () => {
             <Logo />
             <div className={styles.footer_links}>
               <Social darkMode isFooter />
-              {LINKS.map((link) => (
+              {links.map((link) => (
                 <Text size={100} className={styles.text} key={link.title}>
                   <Link className={styles.link} href={link.href}>
                     {link.title}

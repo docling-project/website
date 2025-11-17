@@ -72,7 +72,7 @@ const DarkHeader = () => {
                         className={`${styles.dark_button} ${styles.mob_button}`}
                         onClick={() => {
                           window.open(
-                            "https://docling-project.github.io/docling/getting_started/",
+                            "https://docling-project.github.io/docling/",
                             "_blank",
                           );
                         }}
@@ -114,7 +114,7 @@ const DarkHeader = () => {
                 className={styles.dark_button}
                 onClick={() => {
                   window.open(
-                    "https://docling-project.github.io/docling/getting_started/",
+                    "https://docling-project.github.io/docling/",
                     "_blank",
                   );
                 }}

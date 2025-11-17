@@ -167,17 +167,20 @@ export const FEATURES = [
   { title: "↪", text: "Export to Markdown, HTML, DocTags, or lossless JSON." },
   {
     title: "🔒",
-    text: "Run locally for sensitive or air-gapped environments.",
+    text: "Run locally for sensitive data or air-gapped environments.",
   },
   {
     title: "🤖",
     text: "Integrates easily with LangChain, LlamaIndex, Haystack, Langflow, and more.",
   },
   { title: "🔍", text: "OCR support for scanned PDFs and images." },
-  { title: "👓", text: "Works with visual language models (SmolDocling)." },
+  {
+    title: "👓",
+    text: "Works with Visual Language Models (VLMs), e.g. GraniteDocling.",
+  },
   {
     title: "🎙",
-    text: "Supports audio via automatic speech recognition (ASR).",
+    text: "Supports audio via Automatic Speech Recognition (ASR).",
   },
   { title: "💻", text: "Fast and easy to use with a simple CLI." },
 ];

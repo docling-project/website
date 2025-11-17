@@ -12,11 +12,11 @@ Docling transforms messy PDFs, DOCX, and slides into clean, structured data—re
 - **📑 Deep PDF Understanding**: Layout, tables, reading order, code, and formulas
 - **🧬 Unified Format**: Consistent DoclingDocument structure for all outputs
 - **↪ Multiple Export Formats**: Markdown, HTML, DocTags, or lossless JSON
-- **🔒 Local Processing**: Run locally for sensitive or air-gapped environments
+- **🔒 Local Processing**: Run locally for sensitive data or air-gapped environments
 - **🤖 AI Framework Integration**: Works with LangChain, LlamaIndex, Haystack, and more
 - **🔍 OCR Support**: Handle scanned PDFs and images
-- **👓 Visual Language Models**: Compatible with SmolDocling
-- **🎙️ Audio Support**: Automatic speech recognition (ASR)
+- **👓 Visual Language Models**: Compatible with GraniteDocling and other VLMs
+- **🎙️ Audio Support**: Automatic Speech Recognition (ASR)
 - **💻 Developer Friendly**: Fast CLI and easy integration
 
 ## Tech Stack

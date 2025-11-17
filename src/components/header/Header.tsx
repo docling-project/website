@@ -87,7 +87,7 @@ const Header = () => {
                 className={styles.small_button}
                 onClick={() => {
                   window.open(
-                    "https://docling-project.github.io/docling/getting_started/",
+                    "https://docling-project.github.io/docling/",
                     "_blank",
                   );
                 }}

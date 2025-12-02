@@ -10,13 +10,13 @@ const AnnouncmentBanner = () => {
       <div className="d-flex justify-content-center w-100">
         <div className={styles.banner}>
           <Text weight={Weight.Medium} size={300} tagName="p">
-            IBM releases Granite-Docling-258M, a compact open-source VLM for
-            precise document-to-data conversion.{" "}
+            First Docling Office Hours on Wednesday, December 11th at 10:00 AM
+            ET.{" "}
             <a
-              href="https://huggingface.co/ibm-granite/granite-docling-258M"
+              href="https://zoom-lfx.platform.linuxfoundation.org/meeting/95733266721?password=c4dde8b6-8371-4139-a1d4-44c20df28005"
               target="_blank"
             >
-              Learn More
+              Click for details
             </a>
           </Text>
         </div>

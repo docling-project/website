@@ -2,7 +2,7 @@
 
 // Dependencies
 import Image, { ImageProps } from "next/image";
-import { useState } from "react";
+import { useState, JSX } from "react";
 
 // Utilities
 import { loader } from "./";

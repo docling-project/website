@@ -4,6 +4,7 @@ import {
   forwardRef,
   HTMLAttributes,
   PropsWithChildren,
+  JSX,
 } from "react";
 
 // Types

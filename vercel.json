@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "builds": [
+    {
+      "src": "public/index.html",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "client/build/$1" }
+  ]
+}

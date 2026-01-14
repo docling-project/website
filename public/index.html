@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/vs2015.min.css">
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/python.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="img/logo.svg" />
+  <script src="index.js"></script>
+
+  <title>Docling</title>
+
+  <meta property="og:title" content="Docling" />
+  <meta property="og:description"
+    content="Docling converts messy documents into structured data and simplifies downstream document and AI processing by detecting tables, formulas, reading order, OCR, and much more." />
+  <meta property="og:image" content="img/bigduck.webp" />
+  <meta property="og:image:width" content="300" />
+  <meta property="og:image:height" content="300" />
+  <meta property="og:image:alt" content="Docling Open Graph Image" />
+</head>
+
+<body onload="load()">
+  <header>
+    <nav>
+      <h2>
+        <span>D</span><img src="img/logo.svg" /><span>CLING</span>
+      </h2>
+
+      <ul>
+        <li><a href="#start">Start</a></li>
+        <li><a href="#features">Features</a></li>
+        <li>
+          <a class="primary" title="Documentation" href="https://docling-project.github.io/docling">
+            Docs
+          </a><a class="chat" title="Chat with Dosu"
+            href="https://app.dosu.dev/097760a8-135e-4789-8234-90c8837d7f1c/ask?utm_source=github">
+            Chat
+          </a>
+        </li>
+      </ul>
+
+      <a title="GitHub" href="https://github.com/docling-project/docling">
+        <img src="img/github.svg" />
+        <span id="stars"></span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+      <h3>
+        Docling converts messy documents into structured data
+        and simplifies downstream document and AI processing
+        by detecting tables, formulas, reading order, OCR, and much more.
+      </h3>
+      <aside>
+        <img src="img/bigduck.webp" />
+      </aside>
+    </article>
+
+    <article id="community">
+      <span class="group">
+        Find us at
+        <a href="discord">Discord</a>
+        <a href="https://docling-project.github.io/docling">GitHub</a>
+        <a href="https://huggingface.co/docling-project">HuggingFace</a>
+        <a href="https://linkedin.com/company/docling">LinkedIn</a>
+      </span>
+    </article>
+
+    <section id="start">
+      <header>
+        <h3>Start</h3>
+      </header>
+
+      <article>
+        <p>
+          <b>Install</b> Docling as a <a href="https://pypi.org/project/docling">Python library</a> with your favorite
+          package manager:
+        <pre><code>pip install docling</code></pre>
+        </p>
+
+        <p>
+          <b>Use</b> the CLI directly from your terminal:
+        <pre><code>docling https://arxiv.org/pdf/2206.01062</code></pre>
+        </p>
+
+        <p>
+          <b>Integrate</b> a document conversion into your Python application:
+        <pre><code class="language-python">from docling.document_converter import DocumentConverter
+
+source = "https://arxiv.org/pdf/2408.09869"
+converter = DocumentConverter()
+doc = converter.convert(source).document
+print(doc.export_to_markdown())
+</code></pre>
+        </p>
+
+        <p>
+          <b>Explore</b> the <a href="https://docling-project.github.io/docling/examples">examples</a>
+        </p>
+      </article>
+    </section>
+
+    <section id="features">
+      <header>
+        <h3>Features</h3>
+      </header>
+
+      <article>
+        <p>
+          <b>Parse</b> many document formats into a unified and structured form.
+        </p>
+
+        <aside class="lists">
+          <div>
+            <span>PDF</span>
+            <span>Word</span>
+            <span>PowerPoint</span>
+            <span>Excel</span>
+          </div>
+          <div>
+            <span>Markdown</span>
+            <span>HTML</span>
+            <span>AsciiDoc</span>
+            <span>CSV</span>
+            <span>WebVTT</span>
+          </div>
+          <div>
+            <span>PNG</span>
+            <span>JPEG</span>
+            <span>TIFF</span>
+            <span>BMP</span>
+            <span>WEBP</span>
+          </div>
+        </aside>
+      </article>
+
+      <article>
+        <div>
+          <p>
+            <b>Access</b> document components and their properties in the
+            <a href="https://docling-project.github.io/docling/concepts/docling_document">Docling Document</a>.
+
+          <nav class="tabs">
+            <a href="#text">Text</a>
+            <a href="#pictures">Pictures</a>
+            <a href="#tables">Tables</a>
+            <a href="#formulas">Formulas</a>
+          </nav>
+
+          <nav class="tabs">
+            <a href="#bounds">Bounds</a>
+            <a href="#order">Ordering</a>
+            <a href="#chunking">Chunking</a>
+          </nav>
+          </p>
+
+          <p class="details" id="text">
+            Text components capture paragraphs, headers, captions, and lists.
+            Text is captured via programmatic extraction or an OCR engine of your choice.
+            Fragmented paragraphs, across one or multiple pages, are concatenated into one.
+            List items are grouped together.
+          </p>
+
+          <p class="details" id="pictures">
+            Picture components provide binary image data, either em
+          </p>
+        </div>
+
+        <aside>
+          <img class="doc-page" src="img/featpage.webp" />
+        </aside>
+      </article>
+
+      <article>
+        <p>
+          <b>Export</b> a parsed document to formats that simplify processing and ingestion into AI, RAG, and agentic
+          systems.
+        </p>
+
+        <aside class="lists">
+          <div>
+            <span>Text</span>
+            <span>Markdown</span>
+            <span>HTML</span>
+          </div>
+          <div>
+            <span>JSON</span>
+            <a href="https://arxiv.org/pdf/2503.11576">Doctags</a>
+          </div>
+        </aside>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <nav>
+      <img src="img/lf.svg" />
+      <span>
+        Copyright © Docling, a Series of LF Projects, LLC. <br />
+        <a href="https://lfprojects.org/policies/terms-of-use">terms of use</a> |
+        <a href="https://lfprojects.org/policies/trademark-policy">trademark policy</a> |
+        <a href="https://lfprojects.org/policies/general-rules-of-operation-policy">general policies</a>
+      </span>
+    </nav>
+  </footer>
+</body>
+
+</html>

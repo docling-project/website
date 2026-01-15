@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="style.css" />
+
+  <script type="module">
+    const response = await fetch(
+      "https://discord.com/api/guilds/1399788921306746971/widget.json",
+      { cache: "no-store" }
+    );
+    const link = (await response.json())?.instant_invite;
+
+    if (link) {
+      window.location.assign(link);
+    }
+  </script>
+</head>
+
+<body>
+  <main>
+    <dialog open>
+      Inviting you to Discord...
+    </dialog>
+  </main>
+</body>
+
+</html>

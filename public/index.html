@@ -35,9 +35,10 @@
 <body onload="load()">
   <header>
     <nav>
-      <h2>
-        <span>D</span><img src="img/logo.svg" /><span>CLING</span>
-      </h2>
+      <div>
+        <h2>D</h2><img src="img/logo.svg" />
+        <h2>CLING</h2>
+      </div>
 
       <ul>
         <li><a href="#start">Start</a></li>
@@ -72,13 +73,17 @@
     </article>
 
     <article id="community">
-      <span class="group">
+      <div class="group">
         Find us at
-        <a href="discord">Discord</a>
-        <a href="https://docling-project.github.io/docling">GitHub</a>
-        <a href="https://huggingface.co/docling-project">HuggingFace</a>
-        <a href="https://linkedin.com/company/docling">LinkedIn</a>
-      </span>
+        <div>
+          <a href="discord">Discord</a>
+          <a href="https://docling-project.github.io/docling">GitHub</a>
+        </div>
+        <div>
+          <a href="https://linkedin.com/company/docling">LinkedIn</a>
+          <a href="https://huggingface.co/docling-project">HuggingFace</a>
+        </div>
+      </div>
     </article>
 
     <section id="start">
@@ -138,6 +143,8 @@ print(doc.export_to_markdown())
             <span>AsciiDoc</span>
             <span>CSV</span>
             <span>WebVTT</span>
+            <span>MP3</span>
+            <span>WAV</span>
           </div>
           <div>
             <span>PNG</span>

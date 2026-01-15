@@ -5,6 +5,10 @@ const nextConfig = {
         source: "/",
         destination: "/index.html",
       },
+      {
+        source: "/discord",
+        destination: "/discord/index.html"
+      }
     ];
   },
 };

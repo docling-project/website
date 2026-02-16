@@ -19,6 +19,7 @@
 
 # vercel
 .vercel
+*.egg-info
 
 # Python
 __pycache__/

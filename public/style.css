@@ -730,6 +730,7 @@ pre span,
 kbd,
 samp {
   font-family: var(--mono-font);
+  white-space: normal;
 }
 
 code.hljs {

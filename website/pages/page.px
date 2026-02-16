@@ -1,0 +1,42 @@
+from pyjsx import jsx, JSX
+
+_description = "Docling converts messy documents into structured data and simplifies downstream document and AI processing by detecting tables, formulas, reading order, OCR, and much more."
+
+
+def Page(children) -> JSX:
+    return (
+        <html lang="en" id="root">
+            <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/vs2015.min.css" />
+                <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/python.min.js"></script>
+
+                <script async src="https://www.googletagmanager.com/gtag/js?id=G-MP75NXFDH4"></script>
+                <script>
+                    {"window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-MP75NXFDH4');"}
+                </script>
+
+                <link rel="stylesheet" href="style.css" />
+                <link rel="icon" href="https://www.docling.ai/img/logo.svg" />
+                <script src="index.js"></script>
+
+                <title>Docling</title>
+                <meta name="description" content={_description} />
+                <meta name="keywords" content="Docling, document conversion, document chunking, document parsing, OCR, Python library, unstructured" />
+                <meta name="robots" content="index, follow" />
+
+                <meta property="og:title" content="Docling" />
+                <meta property="og:description" content={_description} />
+                <meta property="og:image" content="https://www.docling.ai/img/og.png" />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="675" />
+            </head>
+
+            <body onload="load()">
+                {children}
+            </body>
+        </html>
+    )

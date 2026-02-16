@@ -7,14 +7,6 @@ This is the official website for [Docling](https://github.com/docling-project/do
 Install the required dependencies:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install .
-```
-
-Or, if using [uv](https://docs.astral.sh/uv/):
-
-```bash
 uv sync
 ```
 

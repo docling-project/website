@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 
 app = FastAPI(
@@ -6,6 +7,9 @@ app = FastAPI(
     description="Docling website",
     version="1.0.0",
 )
+
+# Serve public files.
+app.mount("/", StaticFiles(directory="public", html=True), name="public")
 
 
 if __name__ == "__main__":

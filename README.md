@@ -32,3 +32,6 @@ This website is part of the [Docling project](https://github.com/docling-project
 
 ## License
 This project is part of the Docling ecosystem. See the main [Docling repository](https://github.com/docling-project/docling) for license information.
+
+
+# Minor change

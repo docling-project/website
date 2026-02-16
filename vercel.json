@@ -12,6 +12,14 @@
   "routes": [
     {
       "src": "/(.*)",
+      "dest": "/public/$1",
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
       "dest": "main.py"
     }
   ]

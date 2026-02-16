@@ -3,27 +3,33 @@ This is the official website for [Docling](https://github.com/docling-project/do
 
 
 ## Getting Started
-First, install dependencies:
+
+Install the required dependencies:
 
 ```bash
-npm install
-# or
-yarn install
-# or
-pnpm install
+python -m venv .venv
+source .venv/bin/activate
+pip install .
 ```
 
-Then, run the development server:
+Or, if using [uv](https://docs.astral.sh/uv/):
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+uv sync
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Running Locally
+
+Start the development server on http://0.0.0.0:5001
+
+```bash
+python main.py
+# using uv:
+uv run main.py
+```
+
+When you make changes to your project, the server will automatically reload.
 
 
 ## Contributing

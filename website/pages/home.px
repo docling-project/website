@@ -7,33 +7,6 @@ from .svg import circle, defs, g, image, line, marker, path, polyline, rect
 def Home() -> JSX:
     return (
         <Page>
-              <header>
-                <nav>
-                <div>
-                    <h2>D</h2><img src="img/logo.svg" />
-                    <h2>CLING</h2>
-                </div>
-
-                <ul>
-                    <li><a href="#start">Start</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li>
-                    <a class="primary" title="Documentation" href="https://docling-project.github.io/docling">
-                        Docs
-                    </a><a class="chat" title="Chat with Dosu"
-                        href="https://app.dosu.dev/097760a8-135e-4789-8234-90c8837d7f1c/ask?utm_source=github">
-                        Chat
-                    </a>
-                    </li>
-                </ul>
-
-                <a title="GitHub" href="https://github.com/docling-project/docling">
-                    <img src="img/github.svg" />
-                    <span id="stars"></span>
-                </a>
-                </nav>
-            </header>
-
             <main>
                 <article>
                     <h3>
@@ -71,47 +44,46 @@ def Home() -> JSX:
 
                 <article>
                     <p>
-                    <b>Install</b> Docling as a <a href="https://pypi.org/project/docling">Python library</a> with your favorite
-                    package manager:
-                    <pre><code>pip install docling</code></pre>
+                        <b>Install</b> Docling as a <a href="https://pypi.org/project/docling">Python library</a> with your favorite
+                        package manager:
+                        <pre><code>pip install docling</code></pre>
                     </p>
 
                     <p>
-                    <b>Run</b> the CLI directly from your terminal:
-                    <pre><code>docling https://arxiv.org/pdf/2206.01062</code></pre>
+                        <b>Run</b> the CLI directly from your terminal:
+                        <pre><code>docling https://arxiv.org/pdf/2206.01062</code></pre>
                     </p>
 
                     <p>
-                    <b>Code</b> a document conversion as part of a Python application:
-                    <pre><code class="language-python">from docling.document_converter import DocumentConverter
+                        <b>Code</b> a document conversion as part of a Python application:
+                        <pre><code class="language-python">
+                            from docling.document_converter import DocumentConverter
 
-            source = "https://arxiv.org/pdf/2408.09869"
-            converter = DocumentConverter()
-            doc = converter.convert(source).document
-            print(doc.export_to_markdown())
-            </code></pre>
+                            source = "https://arxiv.org/pdf/2408.09869"
+                            converter = DocumentConverter()
+                            doc = converter.convert(source).document
+                            print(doc.export_to_markdown())
+                        </code></pre>
                     </p>
 
                     <div class="starters">
-                    <div>
-                        <span>
-                        <b>Deploy</b> it as
-                        </span>
-                        <a href="https://github.com/docling-project/docling-serve">
-                        Docling Serve
-                        <img src="img/serve.webp" />
-                        </a>
-                    </div>
+                        <div>
+                            <span><b>Deploy</b> it as</span>
+                            <a href="https://github.com/docling-project/docling-serve">
+                                Docling Serve
+                                <img src="img/serve.webp" />
+                            </a>
+                        </div>
 
-                    <div>
-                        <span>
-                            <b>Enable</b> an agent via
-                        </span>
-                        <a href="https://github.com/docling-project/docling-mcp">
-                            Docling MCP
-                            <img src="img/mcp.webp" />
-                        </a>
-                    </div>
+                        <div>
+                            <span>
+                                <b>Enable</b> an agent via
+                            </span>
+                            <a href="https://github.com/docling-project/docling-mcp">
+                                Docling MCP
+                                <img src="img/mcp.webp" />
+                            </a>
+                        </div>
                     </div>
                 </article>
                 </section>

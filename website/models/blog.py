@@ -1,4 +1,3 @@
-from functools import lru_cache
 from pathlib import Path
 from pydantic import BaseModel
 import markdown
@@ -34,7 +33,6 @@ class Post(BaseModel):
     date: str | None = None
 
 
-@lru_cache()
 def _blog_post(path: Path) -> Post:
     with open(path, "r", encoding="utf-8") as mdf:
         html = markdown.markdown(
@@ -55,7 +53,6 @@ def blog_post(id: str) -> Post:
     return _blog_post(_blog_path / id / "post.md")
 
 
-@lru_cache()
 def blog_posts() -> list[Post]:
     """Get all blog posts, ordered by descending date."""
 

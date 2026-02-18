@@ -1,7 +1,19 @@
 from pyjsx import jsx, JSX
 
+from .components import Code
 from .page import Page
 from .svg import circle, defs, g, image, line, marker, path, polyline, rect
+
+
+_conversion_code = (
+"""from docling.document_converter import DocumentConverter
+
+    source = "https://arxiv.org/pdf/2408.09869"
+    converter = DocumentConverter()
+    doc = converter.convert(source).document
+    print(doc.export_to_markdown())
+"""
+)
 
 
 def Home() -> JSX:
@@ -46,26 +58,16 @@ def Home() -> JSX:
                     <p>
                         <b>Install</b> Docling as a <a href="https://pypi.org/project/docling">Python library</a> with your favorite
                         package manager:
-                        <pre><code>pip install docling</code></pre>
+                        <Code text="pip install docling" />
                     </p>
-
                     <p>
                         <b>Run</b> the CLI directly from your terminal:
-                        <pre><code>docling https://arxiv.org/pdf/2206.01062</code></pre>
+                        <Code text="docling https://arxiv.org/pdf/2206.01062" />
                     </p>
-
                     <p>
                         <b>Code</b> a document conversion as part of a Python application:
-                        <pre><code class="language-python">
-                            from docling.document_converter import DocumentConverter
-
-                            source = "https://arxiv.org/pdf/2408.09869"
-                            converter = DocumentConverter()
-                            doc = converter.convert(source).document
-                            print(doc.export_to_markdown())
-                        </code></pre>
+                        <Code language="python" text={_conversion_code} />
                     </p>
-
                     <div class="starters">
                         <div>
                             <span><b>Deploy</b> it as</span>

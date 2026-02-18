@@ -1,0 +1,9 @@
+from pyjsx import HTMLDontEscape, jsx, JSX
+
+from .page import Page
+from .svg import circle, defs, g, image, line, marker, path, polyline, rect
+
+
+def Code(children, text: str, language: str | None = None) -> JSX:
+    lang_class = "" if language is None else f" language-{language}"
+    return HTMLDontEscape(f"<pre><code class='{lang_class}'>{text}</code></pre>")

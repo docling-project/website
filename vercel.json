@@ -5,6 +5,10 @@
       "use": "@vercel/python"
     },
     {
+      "src": "blog/**",
+      "use": "@vercel/static"
+    },
+    {
       "src": "public/**",
       "use": "@vercel/static"
     }

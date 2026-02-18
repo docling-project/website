@@ -15,13 +15,10 @@ def Page(children) -> JSX:
                 <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/python.min.js"></script>
 
                 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MP75NXFDH4"></script>
-                <script>
-                    {"window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-MP75NXFDH4');"}
-                </script>
 
-                <link rel="stylesheet" href="style.css" />
+                <link rel="stylesheet" href="/style.css" />
                 <link rel="icon" href="https://www.docling.ai/img/logo.svg" />
-                <script src="index.js"></script>
+                <script src="/main.js"></script>
 
                 <title>Docling</title>
                 <meta name="description" content={_description} />
@@ -38,36 +35,39 @@ def Page(children) -> JSX:
             <body onload="load()">
               <header>
                 <nav>
-                <div>
-                    <h2>D</h2><img src="img/logo.svg" />
-                    <h2>CLING</h2>
-                </div>
-
-                <details>
-                    <summary>Resources</summary>
-                    <ul>
-                        <li><a href="#start">Start</a></li>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="/blog">Blog</a></li>
-                        <li><a href="/publications">Publications</a></li>
-                    </ul>
-                </details>
-
-                <ul>
-                    <li>
-                    <a class="primary" title="Documentation" href="https://docling-project.github.io/docling">
-                        Docs
-                    </a><a class="chat" title="Chat with Dosu"
-                        href="https://app.dosu.dev/097760a8-135e-4789-8234-90c8837d7f1c/ask?utm_source=github">
-                        Chat
+                    <a href="/">
+                        <h2>D</h2><img src="/img/logo.svg" />
+                        <h2>CLING</h2>
                     </a>
-                    </li>
-                </ul>
 
-                <a title="GitHub" href="https://github.com/docling-project/docling">
-                    <img src="img/github.svg" />
-                    <span id="stars"></span>
-                </a>
+                    <ul>
+                        <li>
+                            <details>
+                                <summary>Resources</summary>
+                                <ul>
+                                    <li><a href="/#start">Start</a></li>
+                                    <li><a href="/#features">Features</a></li>
+                                    <li><a href="/blog/">Blog</a></li>
+                                    <li><a href="/papers/">Papers</a></li>
+                                </ul>
+                            </details>
+                        </li>
+
+                        <li>
+                            <a class="primary" title="Documentation" href="https://docling-project.github.io/docling">
+                                Docs
+                            </a>
+                            <a class="chat" title="Chat with Dosu"
+                            href="https://app.dosu.dev/097760a8-135e-4789-8234-90c8837d7f1c/ask?utm_source=github">
+                                Chat
+                            </a>
+                        </li>
+                    </ul>
+
+                    <a title="GitHub" href="https://github.com/docling-project/docling">
+                        <img src="/img/github.svg" />
+                        <span id="stars"></span>
+                    </a>
                 </nav>
             </header>
 

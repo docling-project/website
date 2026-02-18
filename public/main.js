@@ -1,11 +1,41 @@
 async function load() {
+  // Analytics.
+  window.dataLayer = window.dataLayer ?? [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+  gtag("config", "G-MP75NXFDH4");
+
   // Highlight code.
   hljs.highlightAll();
+
+  // Open dropdown on hover.
+  document.querySelectorAll("nav details").forEach((details) => {
+    details.addEventListener("mouseenter", () => {
+      details.setAttribute("data-hover", "true");
+      details.open = true;
+    });
+
+    details.addEventListener("mouseleave", () => {
+      details.removeAttribute("data-hover");
+      setTimeout(
+        () => (details.open = details.hasAttribute("data-hover")),
+        1000,
+      );
+    });
+  });
+  document.querySelectorAll("nav details a").forEach((link) => {
+    link.addEventListener(
+      "click",
+      () => (document.querySelector("nav details").open = false),
+    );
+  });
 
   // Fetch GitHub stars.
   const response = await fetch(
     "https://api.github.com/repos/docling-project/docling",
-    { cache: "force-cache" }
+    { cache: "force-cache" },
   );
   const stars = (await response.json()).stargazers_count;
 
@@ -23,9 +53,9 @@ async function load() {
 
   function addTargets(hash) {
     const pre = hash.split("-")[0];
-    const query = [hash, pre].map(
-      (t) => `[data-id="${t}"],[id="${t}"],[href="#${t}"]`
-    ).join(",");
+    const query = [hash, pre]
+      .map((t) => `[data-id="${t}"],[id="${t}"],[href="#${t}"]`)
+      .join(",");
 
     document
       .querySelectorAll(query)
@@ -55,8 +85,10 @@ async function load() {
     if (!explicit) {
       const nextTarget = targets[targetIndex];
       clearTargets();
-      addTargets(nextTarget.href.split("#")[1]);
-      targetIndex = (targetIndex + 1) % targets.length;
+      if (nextTarget) {
+        addTargets(nextTarget.href.split("#")[1]);
+        targetIndex = (targetIndex + 1) % targets.length;
+      }
     }
   }
   swap();
@@ -66,6 +98,6 @@ async function load() {
   document
     .querySelectorAll(".stack a")
     .forEach((el) =>
-      el.addEventListener("click", (e) => window.scrollTo(0, window.scrollY))
+      el.addEventListener("click", (e) => window.scrollTo(0, window.scrollY)),
     );
 }

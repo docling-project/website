@@ -1,0 +1,37 @@
+from pyjsx import HTMLDontEscape, jsx, JSX
+from website.models.blog import blog_post, blog_posts
+
+from .page import Page
+
+
+def Blog() -> JSX:
+    posts = blog_posts()
+
+    return (
+        <Page>
+            <main>
+                <h1>Blog</h1>
+
+                {[
+                    <a href={post.id}>
+                        <article class="post">
+                            <h3>{post.title}</h3>
+                        </article>
+                    </a>
+                    for post in posts
+                ]}
+            </main>
+        </Page>
+    )
+
+
+def BlogPost(id: str) -> JSX:
+    post = blog_post(id)
+
+    return (
+        <Page>
+            <main>
+                {HTMLDontEscape(post.html)}
+            </main>
+        </Page>
+    )

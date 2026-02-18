@@ -1,16 +1,15 @@
 ---
-title: The title of your post
-date: 10-02-2019
-summary: A short description of your post that will be shown in the overview.
+title: This is a second test post
+date: 4-01-2019
+summary: This test post contains the same content as the template post and can be used for testing.
 ---
 
 To add a new blog:
 
-1. Copy the *template* folder that contains this file.
+1. Copy the _template_ folder that contains this file.
 2. Rename the new folder to the identifier (without spaces) of your post.
 3. Edit the new file "post.md" with your post.
-4. Update the title and date at the top.
-5. Add your images in the new folder.
+4. Add your images in the new folder.
 
 
 ## Markdown Syntax Examples

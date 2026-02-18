@@ -15,6 +15,11 @@
   ],
   "routes": [
     {
+      "src": "/blog/(.*)",
+      "dest": "/blog/$1",
+      "continue": true
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/$1",
       "continue": true

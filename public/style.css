@@ -35,6 +35,7 @@ body > footer {
   --border: hsl(0, 0%, 40%);
   --preformatted: #ccc;
   --disabled: #111;
+  --doc: hsl(42, 100%, 8%);
   --img-themer: invert() hue-rotate(180deg) brightness(1.5);
 }
 
@@ -54,6 +55,7 @@ body > footer {
     --preformatted: #444;
     --marked: #ffdd33;
     --disabled: #efefef;
+    --doc: hsl(42, 100%, 98%);
     --img-themer: none;
   }
 }
@@ -139,12 +141,10 @@ h1 {
 
 h2 {
   font-size: 2.6rem;
-  margin-top: 3rem;
 }
 
 h3 {
   font-size: 1.8rem;
-  margin-top: 3rem;
 }
 
 h4 {
@@ -171,7 +171,7 @@ b {
 ol,
 ul {
   padding: 0;
-  margin: 0;
+  margin: 0 0 1rem 0;
   padding-inline-start: 2rem;
 }
 
@@ -197,15 +197,15 @@ h3,
 h4,
 h5,
 h6 {
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem 0;
   line-height: 1.3;
-  font-weight: 500;
+  font-weight: 300;
 }
 
 /* Reduce header size and spacing on mobile */
 @media only screen and (max-width: 720px) {
   main {
-    padding: 0 0 4rem 0;
+    padding: 1rem 0 4rem 0;
   }
 
   h1 {
@@ -1108,8 +1108,42 @@ section.bar {
   }
 }
 
+/* Blog posts. */
+a.post {
+  color: var(--text);
+
+  label {
+    color: var(--text-light)
+  }
+}
+
 /* Markdown rendering. */
 .emojione {
   width: 1em;
   height: 1em;
+}
+
+a.post {
+  padding: 1rem 1rem 3rem 1rem;
+
+  border: solid var(--border);
+  border-width: 1px 1px 0 1px;
+  background-color: var(--doc);
+  box-shadow: 0 0 5px var(--border);
+
+  mask-image: linear-gradient(to bottom, black calc(100% - 3rem), transparent 100%);
+
+  &:first-of-type {
+    margin-top: 2rem;
+  }
+
+  & > h3 {
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  time {
+    margin-right: 1rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+  }
 }

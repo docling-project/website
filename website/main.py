@@ -29,13 +29,14 @@ async def get_blog():
 
 
 # Blog post.
-@app.get("/blog/{id}", response_class=HTMLResponse)
+@app.get("/blog/{id}/", response_class=HTMLResponse)
 async def get_blog_post(id: str):
     return str(BlogPost(id))
 
 
-# Serve public files. Redundant w.r.t. Vercel file serving, but useful for local development.
+# Serve static files. Redundant w.r.t. Vercel file serving, but useful for local development.
 try:
+    app.mount("/blog", StaticFiles(directory="blog", html=True), name="blog")
     app.mount("/", StaticFiles(directory="public", html=True), name="public")
 except Exception as ex:
     print("Unable to serve local files:", ex)

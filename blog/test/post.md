@@ -1,4 +1,8 @@
-# The title of your post
+---
+title: This is a test post
+date: 10-02-2019
+summary: This test post contains the same content as the template post and can be used for testing.
+---
 
 To add a new blog:
 

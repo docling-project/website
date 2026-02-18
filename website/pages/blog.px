@@ -1,3 +1,4 @@
+from babel.dates import format_date
 from pyjsx import HTMLDontEscape, jsx, JSX
 from website.models.blog import blog_post, blog_posts
 
@@ -13,10 +14,9 @@ def Blog() -> JSX:
                 <h1>Blog</h1>
 
                 {[
-                    <a href={post.id}>
-                        <article class="post">
-                            <h3>{post.title}</h3>
-                        </article>
+                    <a class="post" href={f"{post.id}/"}>
+                        <h3>{post.title}</h3>
+                        <p><time>{format_date(post.date, "MMM d, yyyy")}</time> {post.summary}</p>
                     </a>
                     for post in posts
                 ]}
@@ -31,6 +31,9 @@ def BlogPost(id: str) -> JSX:
     return (
         <Page>
             <main>
+                <h1>{post.title}</h1>
+                <time>{format_date(post.date, "MMM d, yyyy")}</time>
+
                 {HTMLDontEscape(post.html)}
             </main>
         </Page>

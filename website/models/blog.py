@@ -1,3 +1,4 @@
+from datetime import datetime
 from pathlib import Path
 from pydantic import BaseModel
 import markdown
@@ -11,6 +12,7 @@ _markdown_extensions = [
     "markdown.extensions.def_list",
     "markdown.extensions.footnotes",
     "markdown.extensions.tables",
+    "meta",
     "pymdownx.caret",
     "pymdownx.emoji",
     "pymdownx.mark",
@@ -28,23 +30,25 @@ _extension_configs = {
 
 class Post(BaseModel):
     id: str
+    date: datetime
     title: str
+    summary: str
     html: str
-    date: str | None = None
 
 
 def _blog_post(path: Path) -> Post:
     with open(path, "r", encoding="utf-8") as mdf:
-        html = markdown.markdown(
-            mdf.read(),
+        md = markdown.Markdown(
             extensions=_markdown_extensions,
             extension_configs=_extension_configs,
         )
 
         return Post(
             id=path.parts[1],
-            title=path.parts[1],
-            html=html,
+            html=md.convert(mdf.read()),
+            date=datetime.strptime(md.Meta.get("date", ["01-01-0001"])[0], "%d-%m-%Y"), # type: ignore
+            title=md.Meta.get("title", ["Missing Title"])[0], # type: ignore
+            summary=md.Meta.get("summary", [""])[0], # type: ignore
         )
 
 

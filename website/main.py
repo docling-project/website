@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pyjsx import auto_setup  # type: ignore
 
-from website.pages.blog import Blog, BlogPost  # type: ignore
+# from website.pages.blog import Blog, BlogPost  # type: ignore
 from website.pages.home import Home  # type: ignore
 
 
@@ -23,15 +23,15 @@ async def get_home():
 
 
 # Blog page.
-@app.get("/blog/", response_class=HTMLResponse)
-async def get_blog():
-    return str(Blog())
+# @app.get("/blog/", response_class=HTMLResponse)
+# async def get_blog():
+#     return str(Blog())
 
 
-# Blog post.
-@app.get("/blog/{id}", response_class=HTMLResponse)
-async def get_blog_post(id: str):
-    return str(BlogPost(id))
+# # Blog post.
+# @app.get("/blog/{id}", response_class=HTMLResponse)
+# async def get_blog_post(id: str):
+#     return str(BlogPost(id))
 
 
 # Serve public files. Redundant w.r.t. Vercel file serving, but useful for local development.

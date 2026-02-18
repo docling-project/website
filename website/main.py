@@ -35,7 +35,10 @@ async def get_home():
 
 
 # Serve public files. Redundant w.r.t. Vercel file serving, but useful for local development.
-# app.mount("/", StaticFiles(directory="public", html=True), name="public")
+try:
+    app.mount("/", StaticFiles(directory="public", html=True), name="public")
+except Exception as ex:
+    print("Unable to serve local files:", ex)
 
 
 if __name__ == "__main__":

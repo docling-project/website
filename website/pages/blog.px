@@ -10,12 +10,12 @@ def Blog() -> JSX:
 
     return (
         <Page>
-            <main>
+            <main class="blog">
                 <h1>Blog</h1>
 
                 {[
                     <a class="post" href={f"{post.id}/"}>
-                        <h3>{post.title}</h3>
+                        <h4>{post.title}</h4>
                         <p><time>{format_date(post.date, "MMM d, yyyy")}</time> {post.summary}</p>
                     </a>
                     for post in posts

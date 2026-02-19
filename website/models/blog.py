@@ -65,6 +65,6 @@ def blog_posts() -> list[Post]:
         for path in _blog_path.glob("*/post.md")
         if path.parts[1] != "template"
     ]
-    # TODO: order by date.
+    posts.sort(key=lambda post: post.date, reverse=True)
 
     return posts

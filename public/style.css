@@ -35,8 +35,9 @@ body > footer {
   --border: hsl(0, 0%, 40%);
   --preformatted: #ccc;
   --disabled: #111;
-  --doc: hsl(42, 100%, 8%);
+  --doc: hsl(46, 100%, 10%);
   --img-themer: invert() hue-rotate(180deg) brightness(1.5);
+  --hover: brightness(1.2);
 }
 
 /* Light theme */
@@ -55,8 +56,9 @@ body > footer {
     --preformatted: #444;
     --marked: #ffdd33;
     --disabled: #efefef;
-    --doc: hsl(42, 100%, 98%);
+    --doc: hsl(46, 100%, 94%);
     --img-themer: none;
+    --hover: brightness(0.975);
   }
 }
 
@@ -198,7 +200,7 @@ h4,
 h5,
 h6 {
   margin: 0 0 1.5rem 0;
-  line-height: 1.3;
+  line-height: 1.5;
   font-weight: 300;
 }
 
@@ -952,7 +954,7 @@ div.notice p:last-of-type {
 
 /* Layouts */
 .starters {
-  max-width: 55ch;
+  max-width: var(--text-width);
   display: flex;
   justify-content: space-around;
   gap: 1rem;
@@ -1108,19 +1110,18 @@ section.bar {
   }
 }
 
-/* Blog posts. */
-a.post {
-  color: var(--text);
+/* Blog amd papers. */
+.blog,
+.papers {
+  --text-width: 100%;
 
-  label {
-    color: var(--text-light)
+  > h1 {
+    margin-bottom: 3rem;
   }
-}
 
-/* Markdown rendering. */
-.emojione {
-  width: 1em;
-  height: 1em;
+  > h3:not(:first-of-type) {
+    margin-top: 2rem;
+  }
 }
 
 a.post {
@@ -1131,10 +1132,11 @@ a.post {
   background-color: var(--doc);
   box-shadow: 0 0 5px var(--border);
 
+  color: var(--text);
   mask-image: linear-gradient(to bottom, black calc(100% - 3rem), transparent 100%);
 
-  &:first-of-type {
-    margin-top: 2rem;
+  &:hover {
+    filter: var(--hover);
   }
 
   & > h3 {
@@ -1142,8 +1144,18 @@ a.post {
   }
 
   time {
-    margin-right: 1rem;
+    margin-right: 0.5rem;
     color: var(--text-light);
     font-size: 0.9rem;
   }
+}
+
+a.post:last-of-type {
+    margin-bottom: 2rem;
+}
+
+/* Markdown rendering. */
+.emojione {
+  width: 1em;
+  height: 1em;
 }

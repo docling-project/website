@@ -5,6 +5,7 @@ from pyjsx import auto_setup  # type: ignore
 
 from website.pages.blog import Blog, BlogPost  # type: ignore
 from website.pages.home import Home  # type: ignore
+from website.pages.papers import PapersPage  # type: ignore
 
 
 auto_setup
@@ -32,6 +33,12 @@ async def get_blog():
 @app.get("/blog/{id}/", response_class=HTMLResponse)
 async def get_blog_post(id: str):
     return str(BlogPost(id))
+
+
+# Papers.
+@app.get("/papers/", response_class=HTMLResponse)
+async def get_papers():
+    return str(PapersPage())
 
 
 # Serve static files. Redundant w.r.t. Vercel file serving, but useful for local development.

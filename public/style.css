@@ -35,7 +35,9 @@ body > footer {
   --border: hsl(0, 0%, 40%);
   --preformatted: #ccc;
   --disabled: #111;
+  --doc: hsl(46, 100%, 10%);
   --img-themer: invert() hue-rotate(180deg) brightness(1.5);
+  --hover: brightness(1.2);
 }
 
 /* Light theme */
@@ -54,7 +56,9 @@ body > footer {
     --preformatted: #444;
     --marked: #ffdd33;
     --disabled: #efefef;
+    --doc: hsl(46, 100%, 96%);
     --img-themer: none;
+    --hover: brightness(0.975);
   }
 }
 
@@ -85,6 +89,7 @@ html {
 body {
   display: grid;
   grid-template-columns: 1fr min(75ch, 90%) 1fr;
+  align-content: flex-start;
   margin: 0;
 
   background-color: var(--bg);
@@ -101,7 +106,7 @@ main {
   padding: 4rem 0;
   display: grid;
   grid-template-columns: subgrid;
-  
+
   > * {
     grid-column: 2;
   }
@@ -138,12 +143,10 @@ h1 {
 
 h2 {
   font-size: 2.6rem;
-  margin-top: 3rem;
 }
 
 h3 {
   font-size: 1.8rem;
-  margin-top: 3rem;
 }
 
 h4 {
@@ -160,11 +163,22 @@ h6 {
 
 p {
   max-width: var(--text-width);
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1rem 0;
 }
 
 b {
   font-weight: 600;
+}
+
+ol,
+ul {
+  padding: 0;
+  margin: 0 0 1rem 0;
+  padding-inline-start: 2rem;
+}
+
+ul {
+  list-style-type: square;
 }
 
 /* Prevent long strings from overflowing container */
@@ -185,15 +199,15 @@ h3,
 h4,
 h5,
 h6 {
-  margin-bottom: 1.5rem;
-  line-height: 1.3;
-  font-weight: 500;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.5;
+  font-weight: 300;
 }
 
 /* Reduce header size and spacing on mobile */
 @media only screen and (max-width: 720px) {
   main {
-    padding: 0 0 4rem 0;
+    padding: 1rem 0 4rem 0;
   }
 
   h1 {
@@ -337,6 +351,10 @@ body > header {
 }
 
 /* List items are inline elements, make them behave more like blocks */
+header {
+  height: fit-content;
+}
+
 header nav ul li {
   display: inline-block;
 }
@@ -389,7 +407,7 @@ header nav a.primary {
 }
 
 header nav a.chat {
-  margin-left: calc(-1 * var(--standard-border-radius));
+  margin-left: calc(-2 * var(--standard-border-radius));
   background: var(--bg);
   border-radius: 0 var(--standard-border-radius) var(--standard-border-radius) 0;
   border-color: var(--accent);
@@ -408,6 +426,106 @@ header nav a:has(img) {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Navigation dropdown menu */
+header nav details {
+  position: relative;
+  padding: 0;
+  margin: 0;
+
+  summary {
+    padding: 0 1rem;
+    margin: 0;
+
+    color: var(--text);
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: normal;
+
+    background: transparent;
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--standard-border-radius);
+
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  summary:hover {
+    background: var(--bg);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::after {
+    content: "›";
+    margin-left: 0.5rem;
+    display: inline-block;
+    transform: rotate(90deg);
+    transition: transform 0.5s;
+  }
+
+  &[open] summary {
+    margin: 0;
+
+    &::after {
+      transform: rotate(-90deg);
+    }
+  }
+
+  /* Show dropdown on hover */
+  &:hover summary::after {
+    transform: rotate(-90deg);
+  }
+
+  ul {
+    position: absolute;
+    top: calc(100% + 1.5rem);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+    background: var(--strong-bg);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--standard-border-radius);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.75);
+
+    flex-direction: column;
+    gap: 0;
+
+    li {
+      display: block;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+
+      a {
+        display: block;
+        padding: 0.5rem 1rem;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        color: var(--text);
+        text-decoration: none;
+      }
+
+      a:hover {
+        background: var(--accent-bg);
+        color: var(--accent);
+      }
+    }
+  }
+}
+
+/* Account for header when scrolling to linked elements. */
+*[id] {
+  scroll-margin: 6rem;
 }
 
 /* Consolidate box styling */
@@ -442,7 +560,7 @@ section:last-child {
 }
 
 article {
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 }
 
 /* Aside in article */
@@ -493,6 +611,7 @@ details[open] > :last-child {
 /* Format tables */
 table {
   width: 100%;
+  margin-bottom: 1rem;
   border-collapse: collapse;
   font-size: 0.9rem;
 }
@@ -502,7 +621,7 @@ tbody {
 }
 
 td {
-  padding: 0.125rem 0.5rem;
+  padding: 0.25rem 0.5rem;
   border-left: var(--border-width) solid var(--border);
   border-right: var(--border-width) solid var(--border);
   transition:
@@ -526,13 +645,13 @@ td[colspan="5"] {
 }
 
 th {
-  padding: 0.125rem 0.5rem;
+  padding: 0.5rem 0.25rem;
   font-weight: bold;
   border: var(--border-width) solid var(--border);
 }
 
 th.side {
-  padding: 0.5rem 0.125rem;
+  padding: 0.25rem 0.125rem;
   border-color: transparent var(--border) var(--border) transparent;
   writing-mode: vertical-lr;
   text-orientation: mixed;
@@ -660,10 +779,9 @@ input[type="file"] {
 
 /* Misc body elements */
 hr {
-  border: none;
+  margin: 1rem 0;
   height: var(--border-width);
   background: var(--border);
-  margin: 1rem auto;
 }
 
 mark {
@@ -724,7 +842,7 @@ dt {
   color: var(--text-light);
 }
 
-/* Use mono font for code elements */
+/* Code-like elements */
 pre,
 pre span,
 kbd,
@@ -734,10 +852,13 @@ samp {
 
 code.hljs {
   max-width: var(--text-width);
+  padding: 1rem;
+
   background-color: black;
   border-radius: var(--standard-border-radius);
   font-family: var(--mono-font);
   font-size: 0.9rem;
+  white-space: pre-line;
 }
 
 kbd {
@@ -833,7 +954,7 @@ div.notice p:last-of-type {
 
 /* Layouts */
 .starters {
-  max-width: 55ch;
+  max-width: var(--text-width);
   display: flex;
   justify-content: space-around;
   gap: 1rem;
@@ -876,7 +997,6 @@ div.notice p:last-of-type {
     gap: 0.25rem;
   }
 }
-
 
 section.bar {
   grid-column: 2 / span 2;
@@ -988,4 +1108,87 @@ section.bar {
       }
     }
   }
+}
+
+/* Blog amd papers. */
+.previews {
+  display: flex;
+  flex-wrap: wrap;
+  justify-items: stretch;
+  gap: 1rem;
+}
+
+.preview {
+  flex: 1;
+  min-width: calc(0.3 * var(--text-width));
+  max-width: var(--text-width);
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  time {
+    font-size: 0.9rem;
+    color: var(--text-light);
+  }
+
+  > a.card {
+    flex: 1;
+  }
+
+  > a.all {
+    padding: 0 1rem;
+  }
+}
+
+.preview > a.card,
+a.post {
+  padding: 1rem 1rem 3rem 1rem;
+
+  color: var(--text);
+  background-color: var(--doc);
+  box-shadow: 0 0 5px var(--border);
+
+  border: solid var(--border);
+  border-width: 1px 1px 0 1px;
+  mask-image: linear-gradient(to bottom, black calc(100% - 3rem), transparent 100%);
+}
+
+.blog,
+.papers {
+  --text-width: 100%;
+
+  > h1 {
+    margin-bottom: 3rem;
+  }
+
+  > h3:not(:first-of-type) {
+    margin-top: 2rem;
+  }
+}
+
+a.post {
+  &:hover {
+    filter: var(--hover);
+  }
+
+  & > h3 {
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  time {
+    margin-right: 0.5rem;
+    color: var(--text-light);
+    font-size: 0.9rem;
+  }
+}
+
+a.post:last-of-type {
+    margin-bottom: 2rem;
+}
+
+/* Markdown rendering. */
+.emojione {
+  width: 1em;
+  height: 1em;
 }

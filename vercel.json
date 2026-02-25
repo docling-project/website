@@ -1,0 +1,35 @@
+{
+  "builds": [
+    {
+      "src": "website/main.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "blog/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/blog/(.*)",
+      "dest": "/blog/$1",
+      "continue": true
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1",
+      "continue": true
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "website/main.py"
+    }
+  ]
+}

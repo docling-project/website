@@ -1,0 +1,20 @@
+[project]
+name = "vercel-fastapi-starter"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi>=0.129.0",
+  "python-jsx>=0.4.0",
+  "uvicorn>=0.40.0",
+  "markdown>=3.10.2",
+  "pydantic>=2.12.5",
+  "pymdown-extensions>=10.21",
+  "babel>=2.18.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["website*"]
+namespaces = true
+
+[tool.uv]
+package = true

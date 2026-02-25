@@ -1,0 +1,468 @@
+from pyjsx import jsx, JSX
+
+from .components import Code
+from .blog import LastBlogPostPreview
+from .page import Page
+from .papers import LastPaperPreview
+from .svg import circle, defs, g, image, line, marker, path, polyline, rect
+
+
+_conversion_code = (
+"""from docling.document_converter import DocumentConverter
+
+    source = "https://arxiv.org/pdf/2408.09869"
+    converter = DocumentConverter()
+    doc = converter.convert(source).document
+    print(doc.export_to_markdown())
+"""
+)
+
+
+def HomePage() -> JSX:
+    return (
+        <Page>
+            <main>
+                <article>
+                    <h3>
+                        Docling converts messy documents into structured data
+                        and simplifies downstream document and AI processing
+                        by detecting tables, formulas, reading order, OCR, and much more.
+                    </h3>
+                    <aside>
+                        <img src="img/bigduck.webp" />
+                    </aside>
+                </article>
+
+                <article id="community">
+                    <a href="https://docling-project.github.io/docling">
+                        <img src="img/community/github.svg" /> GitHub
+                    </a>
+                    <a href="https://huggingface.co/docling-project">
+                        <img src="img/community/huggingface.svg" /> HuggingFace
+                    </a>
+                    <a href="discord">
+                        <img src="img/community/discord.svg" /> Discord
+                    </a>
+                    <a href="https://linkedin.com/company/docling">
+                        <img src="img/community/linkedin.svg" /> LinkedIn
+                    </a>
+                    <a href="https://www.youtube.com/playlist?list=PLt0drfpBaTa1ywCtPwJGLYg-t0UmxhQP4">
+                        <img src="img/community/youtube.svg" /> YouTube
+                    </a>
+                </article>
+
+
+                <section id="news">
+                <header>
+                    <h3>Read all about it</h3>
+                </header>
+                <article id="preview" class="previews">
+                    <LastBlogPostPreview />
+                    <LastPaperPreview />
+                </article>
+                </section>
+
+                <section id="start">
+                <header>
+                    <h3>Start</h3>
+                </header>
+
+                <article>
+                    <p>
+                        <b>Install</b> Docling as a <a href="https://pypi.org/project/docling">Python library</a> with your favorite
+                        package manager:
+                        <Code text="pip install docling" />
+                    </p>
+                    <p>
+                        <b>Run</b> the CLI directly from your terminal:
+                        <Code text="docling https://arxiv.org/pdf/2206.01062" />
+                    </p>
+                    <p>
+                        <b>Code</b> a document conversion as part of a Python application:
+                        <Code language="python" text={_conversion_code} />
+                    </p>
+                    <div class="starters">
+                        <div>
+                            <span><b>Deploy</b> it as</span>
+                            <a href="https://github.com/docling-project/docling-serve">
+                                Docling Serve
+                                <img src="img/serve.webp" />
+                            </a>
+                        </div>
+
+                        <div>
+                            <span>
+                                <b>Enable</b> an agent via
+                            </span>
+                            <a href="https://github.com/docling-project/docling-mcp">
+                                Docling MCP
+                                <img src="img/mcp.webp" />
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                </section>
+
+                <section id="features">
+                <header>
+                    <h3>Features</h3>
+                </header>
+
+                <article>
+                    <p>
+                    <b>Import</b> many document formats into a unified and structured <a
+                        href="https://docling-project.github.io/docling/concepts/docling_document">Docling Document</a>, including
+                    scanned pages via an OCR engine of your choice.
+                    </p>
+                    <p>
+                    <b>Export</b> a parsed document to formats that simplify processing and ingestion into AI, RAG, and
+                    agentic systems.
+                    </p>
+                    <p>
+                    <b>Extract</b> document components and their properties from the Docling Document.
+                    </p>
+                </article>
+                </section>
+                <section class="bar">
+                <div class="overview">
+                    <table>
+                    <thead>
+                        <tr>
+                        <th class="side"></th>
+                        <th>Rich</th>
+                        <th>Markup</th>
+                        <th>Tabular</th>
+                        <th>Image</th>
+                        <th>Audio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <th class="side" rowspan="5">Import</th>
+
+                        <td>PDF</td>
+                        <td>Markdown</td>
+                        <td>XLSX</td>
+                        <td>PNG</td>
+                        <td>MP3</td>
+                        </tr>
+                        <tr>
+                        <td>DOCX</td>
+                        <td>HTML</td>
+                        <td>CSV</td>
+                        <td>JPEG</td>
+                        <td>WAV</td>
+                        </tr>
+                        <tr>
+                        <td>PPTX</td>
+                        <td>AsciiDoc</td>
+                        <td></td>
+                        <td>TIFF</td>
+                        <td></td>
+                        </tr>
+                        <tr>
+                        <td></td>
+                        <td>WebVTT</td>
+                        <td></td>
+                        <td>BMP</td>
+                        <td></td>
+                        </tr>
+                        <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>WEBP</td>
+                        <td></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                        <th class="side" rowspan="3">Export</th>
+
+                        <td>JSON</td>
+                        <td>Text</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        </tr>
+                        <tr>
+                        <td>Doctags</td>
+                        <td>Markdown</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        </tr>
+                        <tr>
+                        <td></td>
+                        <td>HTML</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                        <th class="side" rowspan="11">Extract</th>
+
+                        <th rowspan="2">Page</th>
+                        <th colspan="4">Component</th>
+                        </tr>
+                        <tr>
+                        <th>Text</th>
+                        <th>Table</th>
+                        <th colspan="2">Picture</th>
+                        </tr>
+                        <tr>
+                        <td>Image</td>
+                        <td><a href="#text-header">Header</a></td>
+                        <td><a href="#table-structure">Structure</a></td>
+                        <td colspan="2"><a href="#picture-image">Image</a></td>
+                        </tr>
+                        <tr>
+                        <td>Number</td>
+                        <td><a href="#text-paragraph">Paragraph</a></td>
+                        <td><a href="#table-cell">Cell</a></td>
+                        <td colspan="2"><a href="#picture-class">Class</a></td>
+                        </tr>
+                        <tr>
+                        <td><a href="#furniture">Header</a></td>
+                        <td><a href="#seq-list">List item</a></td>
+                        <td></td>
+                        <td colspan="2"><a href="#picture-description">Description</a></td>
+                        </tr>
+                        <tr>
+                        <td><a href="#furniture">Footer</a></td>
+                        <td><a href="#seq-code">Code</a></td>
+                        <td></td>
+                        <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                        <td></td>
+                        <td><a href="#formula">Formula</a></td>
+                        <td colspan="3"><a href="#table-caption">Caption</a></td>
+                        </tr>
+                        <tr>
+                        <td></td>
+                        <td colspan="4"><a href="#order">Reading order</a></td>
+                        </tr>
+                        <tr>
+                        <td></td>
+                        <td colspan="4"><a href="#chunks">Chunks</a></td>
+                        </tr>
+                        <tr>
+                        <td colspan="5"><a href="#layout">Bounding boxes</a></td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+
+                <div class="stack">
+                    <div id="chunks">
+                    <div>
+                        <span id="chunks">Docling partitions a document into bite-sized chunks of contiguous text, ready for
+                        ingestion
+                        by AI systems.</span>
+                    </div>
+
+                    <svg viewBox="0 0 914 1184" width="100%">
+                        <image href="img/features-1.png" />
+
+                        <g data-id="chunks">
+                        <polyline points="70,1080 70,875 445,875 445,1080" vector-effect="non-scaling-stroke" />
+                        <polyline points="468,560 468,720 843,720 843,560" vector-effect="non-scaling-stroke" />
+                        <line x1="70" y1="905" x2="445" y2="905" vector-effect="non-scaling-stroke" />
+                        <line x1="468" y1="605" x2="843" y2="605" vector-effect="non-scaling-stroke" />
+                        </g>
+                    </svg>
+                    </div>
+
+                    <div id="order">
+                    <div>
+                        <span id="order">Docling stores and traverses components according to reading order.</span>
+                    </div>
+
+                    <svg viewBox="0 0 914 1184" width="100%">
+                        <defs>
+                        <marker id="mark-dot" viewBox="0 0 2 2" refX="1" refY="1" markerWidth="3" markerHeight="3" orient="auto">
+                            <circle cx="1" cy="1" r="1" />
+                        </marker>
+                        <marker id="mark-end" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="3" markerHeight="3"
+                            orient="auto">
+                            <path d="M 0 0 L 10 5 L 0 10 z" />
+                        </marker>
+                        </defs>
+
+                        <image href="img/features-1.png" />
+
+                        <g data-id="order">
+                        <polyline class="halo"
+                            points="250,50 250,210 250,430 250,710 250,895 250,1000 650,250 650,460 650,650 650,750 650,900 650,1100"
+                            marker-mid="url(#mark-dot)" marker-end="url(#mark-end)" vector-effect="non-scaling-stroke" />
+                        </g>
+                    </svg>
+                    </div>
+
+                    <div id="layout">
+                    <div>
+                        <span id="layout">Docling detects one or multiple bounding boxes per component, which can fragment and
+                        span different pages.</span>
+                    </div>
+
+                    <svg viewBox="0 0 914 1184" width="100%">
+                        <image href="img/features-1.png" />
+
+                        <g data-id="layout">
+                        <rect x="70" y="910" width="375" height="160" vector-effect="non-scaling-stroke" />
+                        <rect x="468" y="570" width="375" height="37" vector-effect="non-scaling-stroke" />
+                        </g>
+                    </svg>
+                    </div>
+
+                    <div id="furniture">
+                    <div>
+                        <span id="furniture">Docling detects and optionally excludes page headers and footers from exports.</span>
+                    </div>
+
+                    <svg viewBox="0 0 914 1184" width="100%">
+                        <image href="img/features-1.png" />
+
+                        <g data-id="furniture">
+                        <rect x="70" y="80" width="775" height="30" vector-effect="non-scaling-stroke" />
+                        </g>
+                    </svg>
+                    </div>
+
+                    <div id="table">
+                    <div>
+                        <span id="table-structure">Docling captures table structure, such as rows, columns, and (multi-level)
+                        headers.</span>
+                        <span id="table-cell">Docling is able to interpret complex table cell content, such as lists.</span>
+                        <span id="table-caption">Docling groups captions with their respective pictures and tables.</span>
+                    </div>
+
+                    <svg viewBox="0 0 914 1184" width="100%">
+                        <image href="img/features-1.png" />
+
+                        <g data-id="table-structure">
+                        <rect x="85" y="286" width="348" height="246" vector-effect="non-scaling-stroke" />
+                        <line x1="75" y1="325" x2="443" y2="325" vector-effect="non-scaling-stroke" />
+                        <line x1="190" y1="276" x2="190" y2="545" vector-effect="non-scaling-stroke" />
+                        <line x1="240" y1="276" x2="240" y2="545" vector-effect="non-scaling-stroke" />
+                        </g>
+
+                        <g data-id="table-cell">
+                        <rect x="190" y="340" width="50" height="20" vector-effect="non-scaling-stroke" />
+                        </g>
+
+                        <g data-id="table-caption">
+                        <rect x="73" y="120" width="372" height="412" vector-effect="non-scaling-stroke" />
+                        <line x1="73" y1="280" x2="445" y2="280" vector-effect="non-scaling-stroke" />
+                        </g>
+                    </svg>
+                    </div>
+
+                    <div id="picture">
+                    <div>
+                        <span id="picture-image">Docling extracts pictures as image data and stores it in the Docling
+                        Document or as external image files.</span>
+                        <span id="picture-class">Docling classifies pictures by their contents, assigning labels such as chart and
+                        diagram types.</span>
+                        <span id="picture-description">Docling enriches pictures with additional captions that describe their
+                        contents.</span>
+                    </div>
+
+                    <svg viewBox="0 0 914 1184" width="100%">
+                        <image href="img/features-1.png" />
+
+                        <g data-id="picture-image">
+                        <rect x="475" y="120" width="365" height="280" vector-effect="non-scaling-stroke" />
+                        </g>
+
+                        <g data-id="picture-class">
+                        <rect x="475" y="120" width="365" height="280" vector-effect="non-scaling-stroke" />
+                        </g>
+
+                        <g data-id="picture-description">
+                        <rect x="475" y="120" width="365" height="280" vector-effect="non-scaling-stroke" />
+                        </g>
+                    </svg>
+                    </div>
+
+                    <div id="formula">
+                    <div>
+                        <span id="formula">
+                        Docling detects mathematical formulas and converts them to LaTeX syntax.
+                        </span>
+                    </div>
+
+                    <svg viewBox="0 0 914 1184" width="100%">
+                        <image href="img/features-3.png" />
+
+                        <g data-id="formula">
+                        <rect x="530" y="218" width="250" height="42" vector-effect="non-scaling-stroke" />
+                        <rect x="568" y="348" width="178" height="30" vector-effect="non-scaling-stroke" />
+                        </g>
+                    </svg>
+                    </div>
+
+                    <div id="seq">
+                    <div>
+                        <span id="seq-code">
+                        Docling detects blocks of code and classifies their programming languages.
+                        </span>
+                        <span id="seq-list">Docling detects list items and groups them together.</span>
+                    </div>
+
+                    <svg viewBox="0 0 914 1184" width="100%">
+                        <image href="img/features-2.png" />
+
+                        <g data-id="seq-code">
+                        <rect x="152" y="505" width="590" height="115" vector-effect="non-scaling-stroke" />
+                        </g>
+                        <g data-id="seq-list">
+                        <rect x="190" y="135" width="580" height="170" vector-effect="non-scaling-stroke" />
+                        <line x1="190" y1="160" x2="770" y2="160" vector-effect="non-scaling-stroke" />
+                        <line x1="190" y1="200" x2="770" y2="200" vector-effect="non-scaling-stroke" />
+                        <line x1="190" y1="220" x2="770" y2="220" vector-effect="non-scaling-stroke" />
+                        <line x1="190" y1="245" x2="770" y2="245" vector-effect="non-scaling-stroke" />
+                        <line x1="190" y1="280" x2="770" y2="280" vector-effect="non-scaling-stroke" />
+                        </g>
+                    </svg>
+                    </div>
+
+                    <div id="text">
+                    <div>
+                        <span id="text-header">Docling distinguishes section headers from subsequent paragraphs.</span>
+                        <span id="text-paragraph">Docling concatenates fragmented paragraphs, across one or multiple pages, into
+                        one text.</span>
+                    </div>
+
+                    <svg viewBox="0 0 914 1184" width="100%">
+                        <image href="img/features-1.png" />
+
+                        <g data-id="text-header">
+                        <rect x="70" y="875" width="160" height="25" vector-effect="non-scaling-stroke" />
+                        </g>
+                        <g data-id="text-paragraph">
+                        <polyline points="70,1080 70,910 445,910 445,1080" vector-effect="non-scaling-stroke" />
+                        <polyline points="468,560 468,608 843,608 843,560" vector-effect="non-scaling-stroke" />
+                        </g>
+                    </svg>
+                    </div>
+                </div>
+                </section>
+            </main>
+
+            <footer>
+                <nav>
+                <img src="img/lf.svg" />
+                <span>
+                    Copyright © Docling, a Series of LF Projects, LLC. <br />
+                    <a href="https://lfprojects.org/policies/terms-of-use">terms of use</a> |
+                    <a href="https://lfprojects.org/policies/trademark-policy">trademark policy</a> |
+                    <a href="https://lfprojects.org/policies/general-rules-of-operation-policy">general policies</a>
+                </span>
+                </nav>
+            </footer>
+        </Page>
+    )

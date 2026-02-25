@@ -1,0 +1,79 @@
+from pyjsx import jsx, JSX
+
+_description = "Docling converts messy documents into structured data and simplifies downstream document and AI processing by detecting tables, formulas, reading order, OCR, and much more."
+
+
+def Page(children) -> JSX:
+    # TODO: add when there are blog posts.
+    # <li><a href="/blog/">Blog</a></li>
+
+    return (
+        <html lang="en" id="root">
+            <head>
+                <meta charset="utf-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/vs2015.min.css" />
+                <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/python.min.js"></script>
+
+                <script async src="https://www.googletagmanager.com/gtag/js?id=G-MP75NXFDH4"></script>
+
+                <link rel="stylesheet" href="/style.css" />
+                <link rel="icon" href="https://www.docling.ai/img/logo.svg" />
+                <script src="/main.js"></script>
+
+                <title>Docling</title>
+                <meta name="description" content={_description} />
+                <meta name="keywords" content="Docling, document conversion, document chunking, document parsing, OCR, Python library, unstructured" />
+                <meta name="robots" content="index, follow" />
+
+                <meta property="og:title" content="Docling" />
+                <meta property="og:description" content={_description} />
+                <meta property="og:image" content="https://www.docling.ai/img/og.png" />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="675" />
+            </head>
+
+            <body onload="load()">
+              <header>
+                <nav>
+                    <a href="/">
+                        <h2>D</h2><img src="/img/logo.svg" />
+                        <h2>CLING</h2>
+                    </a>
+
+                    <ul>
+                        <li>
+                            <details>
+                                <summary>Resources</summary>
+                                <ul>
+                                    <li><a href="/#start">Start</a></li>
+                                    <li><a href="/#features">Features</a></li>
+                                    <li><a href="/papers/">Papers</a></li>
+                                </ul>
+                            </details>
+                        </li>
+
+                        <li>
+                            <a class="primary" title="Documentation" href="https://docling-project.github.io/docling">
+                                Docs
+                            </a>
+                            <a class="chat" title="Chat with Dosu"
+                            href="https://app.dosu.dev/097760a8-135e-4789-8234-90c8837d7f1c/ask?utm_source=github">
+                                Chat
+                            </a>
+                        </li>
+                    </ul>
+
+                    <a title="GitHub" href="https://github.com/docling-project/docling">
+                        <img src="/img/github.svg" />
+                        <span id="stars"></span>
+                    </a>
+                </nav>
+            </header>
+
+                {children}
+            </body>
+        </html>
+    )

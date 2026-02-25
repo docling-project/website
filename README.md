@@ -3,27 +3,23 @@ This is the official website for [Docling](https://github.com/docling-project/do
 
 
 ## Getting Started
-First, install dependencies:
+
+Install the required dependencies:
 
 ```bash
-npm install
-# or
-yarn install
-# or
-pnpm install
+uv sync
 ```
 
-Then, run the development server:
+
+## Running Locally
+
+Start the development server on http://0.0.0.0:5001
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+uv run website/main.py
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+When you make changes to your project, the server will automatically reload.
 
 
 ## Contributing

@@ -1,0 +1,51 @@
+from babel.dates import format_date
+from pyjsx import HTMLDontEscape, jsx, JSX
+from website.models.papers import last_paper, Paper, PaperYear, paper_index
+
+from .page import Page
+
+
+def Paper(children, paper) -> JSX:
+    return (
+        <a class="post" href={paper.url}>
+            <h4>{paper.title}</h4>
+            <label>{paper.venue}</label>
+        </a>
+    )
+
+
+def PaperYear(children, paper_year: PaperYear) -> JSX:
+    return (
+        [<h3>{paper_year.year}</h3>] +
+        [<Paper paper={paper} /> for paper in paper_year.papers]
+    )
+
+
+def PapersPage() -> JSX:
+    index = paper_index()
+
+    return (
+        <Page>
+            <main class="papers">
+                <h1>Papers</h1>
+                {[<PaperYear paper_year={year} /> for year in index.years]}
+            </main>
+        </Page>
+    )
+
+
+def LastPaperPreview(children) -> JSX:
+    paper = last_paper()
+
+    if paper:
+        return (
+            <div class="preview">
+                <a class="card" href={paper.url}>
+                    <h5>{paper.title}</h5>
+                </a>
+                <a class="all" href="papers/">All papers</a>
+            </div>
+        )
+    else:
+        return None
+

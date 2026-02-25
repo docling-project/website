@@ -1,4 +1,5 @@
 from datetime import datetime
+from functools import lru_cache
 from pathlib import Path
 from pydantic import BaseModel
 import markdown
@@ -36,6 +37,7 @@ class Post(BaseModel):
     html: str
 
 
+@lru_cache()
 def _blog_post(path: Path) -> Post:
     with open(path, "r", encoding="utf-8") as mdf:
         md = markdown.Markdown(
@@ -52,11 +54,13 @@ def _blog_post(path: Path) -> Post:
         )
 
 
+@lru_cache()
 def blog_post(id: str) -> Post:
     """Get a blog post by name."""
     return _blog_post(_blog_path / id / "post.md")
 
 
+@lru_cache()
 def blog_posts() -> list[Post]:
     """Get all blog posts, ordered by descending date."""
 
@@ -68,3 +72,9 @@ def blog_posts() -> list[Post]:
     posts.sort(key=lambda post: post.date, reverse=True)
 
     return posts
+
+
+@lru_cache()
+def last_blog_post() -> Post | None:
+    """Get the most recent blog post."""
+    return next(iter(blog_posts()), None)

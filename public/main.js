@@ -25,11 +25,11 @@ async function load() {
       );
     });
   });
-  document.querySelectorAll("nav details a").forEach((link) => {
-    link.addEventListener(
-      "click",
-      () => (document.querySelector("nav details").open = false),
-    );
+  document.addEventListener("click", () => {
+    const menu = document.querySelector("nav details");
+    if (menu.open) {
+      menu.open = false;
+    }
   });
 
   // Fetch GitHub stars.

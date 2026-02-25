@@ -1,11 +1,11 @@
 from babel.dates import format_date
 from pyjsx import HTMLDontEscape, jsx, JSX
-from website.models.blog import blog_post, blog_posts
+from website.models.blog import blog_post, blog_posts, last_blog_post
 
 from .page import Page
 
 
-def Blog() -> JSX:
+def BlogPage() -> JSX:
     posts = blog_posts()
 
     return (
@@ -25,16 +25,32 @@ def Blog() -> JSX:
     )
 
 
-def BlogPost(id: str) -> JSX:
+def BlogPostPage(id: str) -> JSX:
     post = blog_post(id)
 
     return (
         <Page>
             <main>
                 <h1>{post.title}</h1>
-                <time>{format_date(post.date, "MMM d, yyyy")}</time>
+                <h4><time>{format_date(post.date, "MMM d, yyyy")}</time></h4>
 
                 {HTMLDontEscape(post.html)}
             </main>
         </Page>
     )
+
+def LastBlogPostPreview(children) -> JSX:
+    post = last_blog_post()
+
+    if post:
+        return (
+            <div class="preview">
+                <a class="card" href={f"blog/{post.id}/"}>
+                    <h5>{post.title}</h5>
+                    <time>{format_date(post.date, "MMM d, yyyy")}</time>
+                </a>
+                <a class="all" href="blog/">All blog posts</a>
+            </div>
+        )
+    else:
+        return None

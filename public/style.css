@@ -56,7 +56,7 @@ body > footer {
     --preformatted: #444;
     --marked: #ffdd33;
     --disabled: #efefef;
-    --doc: hsl(46, 100%, 94%);
+    --doc: hsl(46, 100%, 96%);
     --img-themer: none;
     --hover: brightness(0.975);
   }
@@ -525,7 +525,7 @@ header nav details {
 
 /* Account for header when scrolling to linked elements. */
 *[id] {
-  scroll-margin: 4rem;
+  scroll-margin: 6rem;
 }
 
 /* Consolidate box styling */
@@ -560,7 +560,7 @@ section:last-child {
 }
 
 article {
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 }
 
 /* Aside in article */
@@ -1111,6 +1111,49 @@ section.bar {
 }
 
 /* Blog amd papers. */
+.previews {
+  display: flex;
+  flex-wrap: wrap;
+  justify-items: stretch;
+  gap: 1rem;
+}
+
+.preview {
+  flex: 1;
+  min-width: calc(0.3 * var(--text-width));
+  max-width: var(--text-width);
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  time {
+    font-size: 0.9rem;
+    color: var(--text-light);
+  }
+
+  > a.card {
+    flex: 1;
+  }
+
+  > a.all {
+    padding: 0 1rem;
+  }
+}
+
+.preview > a.card,
+a.post {
+  padding: 1rem 1rem 3rem 1rem;
+
+  color: var(--text);
+  background-color: var(--doc);
+  box-shadow: 0 0 5px var(--border);
+
+  border: solid var(--border);
+  border-width: 1px 1px 0 1px;
+  mask-image: linear-gradient(to bottom, black calc(100% - 3rem), transparent 100%);
+}
+
 .blog,
 .papers {
   --text-width: 100%;
@@ -1125,16 +1168,6 @@ section.bar {
 }
 
 a.post {
-  padding: 1rem 1rem 3rem 1rem;
-
-  border: solid var(--border);
-  border-width: 1px 1px 0 1px;
-  background-color: var(--doc);
-  box-shadow: 0 0 5px var(--border);
-
-  color: var(--text);
-  mask-image: linear-gradient(to bottom, black calc(100% - 3rem), transparent 100%);
-
   &:hover {
     filter: var(--hover);
   }

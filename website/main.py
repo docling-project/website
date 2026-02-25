@@ -3,8 +3,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pyjsx import auto_setup  # type: ignore
 
-from website.pages.blog import Blog, BlogPost  # type: ignore
-from website.pages.home import Home  # type: ignore
+from website.pages.blog import BlogPage, BlogPostPage  # type: ignore
+from website.pages.home import HomePage  # type: ignore
 from website.pages.papers import PapersPage  # type: ignore
 
 
@@ -20,19 +20,19 @@ app = FastAPI(
 # Home page.
 @app.get("/", response_class=HTMLResponse)
 async def get_home():
-    return str(Home())
+    return str(HomePage())
 
 
 # Blog page.
 @app.get("/blog/", response_class=HTMLResponse)
 async def get_blog():
-    return str(Blog())
+    return str(BlogPage())
 
 
 # Blog post.
 @app.get("/blog/{id}/", response_class=HTMLResponse)
 async def get_blog_post(id: str):
-    return str(BlogPost(id))
+    return str(BlogPostPage(id))
 
 
 # Papers.

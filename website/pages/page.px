@@ -4,6 +4,9 @@ _description = "Docling converts messy documents into structured data and simpli
 
 
 def Page(children) -> JSX:
+    # TODO: add when there are blog posts.
+    # <li><a href="/blog/">Blog</a></li>
+
     return (
         <html lang="en" id="root">
             <head>
@@ -47,7 +50,6 @@ def Page(children) -> JSX:
                                 <ul>
                                     <li><a href="/#start">Start</a></li>
                                     <li><a href="/#features">Features</a></li>
-                                    <li><a href="/blog/">Blog</a></li>
                                     <li><a href="/papers/">Papers</a></li>
                                 </ul>
                             </details>

@@ -1,6 +1,6 @@
 from babel.dates import format_date
 from pyjsx import HTMLDontEscape, jsx, JSX
-from website.models.papers import Paper, PaperYear, paper_index
+from website.models.papers import last_paper, Paper, PaperYear, paper_index
 
 from .page import Page
 
@@ -32,3 +32,20 @@ def PapersPage() -> JSX:
             </main>
         </Page>
     )
+
+
+def LastPaperPreview(children) -> JSX:
+    paper = last_paper()
+
+    if paper:
+        return (
+            <div class="preview">
+                <a class="card" href={paper.url}>
+                    <h5>{paper.title}</h5>
+                </a>
+                <a class="all" href="papers/">All papers</a>
+            </div>
+        )
+    else:
+        return None
+

@@ -1,7 +1,9 @@
 from pyjsx import jsx, JSX
 
 from .components import Code
+from .blog import LastBlogPostPreview
 from .page import Page
+from .papers import LastPaperPreview
 from .svg import circle, defs, g, image, line, marker, path, polyline, rect
 
 
@@ -16,7 +18,7 @@ _conversion_code = (
 )
 
 
-def Home() -> JSX:
+def HomePage() -> JSX:
     return (
         <Page>
             <main>
@@ -48,6 +50,17 @@ def Home() -> JSX:
                         <img src="img/community/youtube.svg" /> YouTube
                     </a>
                 </article>
+
+
+                <section id="news">
+                <header>
+                    <h3>Read all about it</h3>
+                </header>
+                <article id="preview" class="previews">
+                    <LastBlogPostPreview />
+                    <LastPaperPreview />
+                </article>
+                </section>
 
                 <section id="start">
                 <header>

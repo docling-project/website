@@ -53,4 +53,4 @@ def LastBlogPostPreview(children) -> JSX:
             </div>
         )
     else:
-        return None
+        return <></>

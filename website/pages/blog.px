@@ -12,11 +12,34 @@ def BlogPage() -> JSX:
         <Page>
             <main class="blog">
                 <h1>Blog</h1>
+                
+                <div class="blog-filters">
+                    <label>
+                        <input type="radio" name="category" value="all" checked />
+                        <span>All</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="category" value="technical" />
+                        <span>Technical</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="category" value="event" />
+                        <span>Event</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="category" value="new-feature-alert" />
+                        <span>New Feature</span>
+                    </label>
+                </div>
 
                 {[
-                    <a class="post" href={f"{post.id}/"}>
-                        <h4>{post.title}</h4>
-                        <p><time>{format_date(post.date, "MMM d, yyyy")}</time> {post.summary}</p>
+                    <a class="post" href={f"{post.id}/"} data-category={post.category}>
+                        {<img src={f"/blog/{post.id}/{post.thumbnail}"} alt={post.title} /> if post.thumbnail else <></>}
+                        <div>
+                            <span class="category-badge">{post.category.replace('-', ' ').title()}</span>
+                            <h4>{post.title}</h4>
+                            <p><time>{format_date(post.date, "MMM d, yyyy")}</time> {post.summary}</p>
+                        </div>
                     </a>
                     for post in posts
                 ]}
@@ -30,12 +53,7 @@ def BlogPostPage(id: str) -> JSX:
 
     return (
         <Page>
-            <main>
-                <h1>{post.title}</h1>
-                <h4><time>{format_date(post.date, "MMM d, yyyy")}</time></h4>
-
-                {HTMLDontEscape(post.html)}
-            </main>
+            <main><h1>{post.title}</h1><h4><time>{format_date(post.date, "MMM d, yyyy")}</time></h4>{HTMLDontEscape(post.html)}</main>
         </Page>
     )
 

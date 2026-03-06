@@ -2,15 +2,35 @@
 title: The title of your post
 date: 10-02-2019
 summary: A short description of your post that will be shown in the overview.
+thumbnail: images/thumbnail.jpg
+category: technical
 ---
+
+**Available categories:**
+- `technical` - Technical guides, tutorials, and deep dives
+- `event` - Announcements about events, conferences, or community gatherings
+- `new-feature-alert` - Announcements of new features or releases
 
 To add a new blog:
 
 1. Copy the *template* folder that contains this file.
-2. Rename the new folder to the identifier (without spaces) of your post.
-3. Edit the new file "post.md" with your post.
-4. Update the title and date at the top.
-5. Add your images in the new folder.
+2. Rename the new folder using the format: `YYYYMMDD_HH_<title-with-dashes>`
+   Example: `20260306_10_getting-started-with-docling`
+3. Create an `images/` subfolder inside your post folder for all images.
+4. Add a thumbnail image as `images/thumbnail.jpg` (recommended size: 1200x630px).
+5. Edit the new file "post.md" with your post content.
+6. Update the title, date, summary, and thumbnail path in the metadata at the top.
+7. Reference images in your post using relative paths: `![Alt text](images/your-image.jpg)`
+
+**Folder Structure:**
+```
+blog/
+└── 20260306_10_your-post-title/
+    ├── post.md
+    └── images/
+        ├── thumbnail.jpg
+        └── other-images.jpg
+```
 
 
 ## Markdown Syntax Examples

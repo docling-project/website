@@ -35,6 +35,8 @@ class Post(BaseModel):
     title: str
     summary: str
     html: str
+    thumbnail: str | None = None
+    category: str = "technical"
 
 
 @lru_cache()
@@ -51,6 +53,8 @@ def _blog_post(path: Path) -> Post:
             date=datetime.strptime(md.Meta.get("date", ["01-01-0001"])[0], "%d-%m-%Y"), # type: ignore
             title=md.Meta.get("title", ["Missing Title"])[0], # type: ignore
             summary=md.Meta.get("summary", [""])[0], # type: ignore
+            thumbnail=md.Meta.get("thumbnail", [None])[0], # type: ignore
+            category=md.Meta.get("category", ["technical"])[0], # type: ignore
         )
 
 

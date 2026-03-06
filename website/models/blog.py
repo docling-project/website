@@ -1,6 +1,7 @@
 from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
+import re
 from pydantic import BaseModel
 import markdown
 
@@ -11,6 +12,7 @@ _markdown_extensions = [
     "markdown.extensions.abbr",
     "markdown.extensions.admonition",
     "markdown.extensions.def_list",
+    "markdown.extensions.fenced_code",
     "markdown.extensions.footnotes",
     "markdown.extensions.tables",
     "meta",
@@ -23,10 +25,22 @@ _markdown_extensions = [
 
 _extension_configs = {
     "pymdownx.superfences": {
-        "preserve_tabs": True,
+        "preserve_tabs": False,
         "custom_fences": [],
     }
 }
+
+
+_code_tag_re = re.compile(r"(<code\b[^>]*>)(.*?)(</code>)", re.DOTALL)
+
+
+def _stabilize_code_newlines(html: str) -> str:
+    # pyjsx pretty-prints multiline child strings and injects indentation after
+    # each newline. Encoding newlines in <code> blocks avoids false indentation.
+    return _code_tag_re.sub(
+        lambda m: f"{m.group(1)}{m.group(2).replace('\n', '&#10;')}{m.group(3)}",
+        html,
+    )
 
 
 class Post(BaseModel):
@@ -40,7 +54,9 @@ class Post(BaseModel):
 
 
 @lru_cache()
-def _blog_post(path: Path) -> Post:
+def _blog_post(path: Path, mtime_ns: int) -> Post:
+    # `mtime_ns` is part of the cache key so markdown edits invalidate cached HTML.
+    _ = mtime_ns
     with open(path, "r", encoding="utf-8") as mdf:
         md = markdown.Markdown(
             extensions=_markdown_extensions,
@@ -49,7 +65,7 @@ def _blog_post(path: Path) -> Post:
 
         return Post(
             id=path.parts[1],
-            html=md.convert(mdf.read()),
+            html=_stabilize_code_newlines(md.convert(mdf.read())),
             date=datetime.strptime(md.Meta.get("date", ["01-01-0001"])[0], "%d-%m-%Y"), # type: ignore
             title=md.Meta.get("title", ["Missing Title"])[0], # type: ignore
             summary=md.Meta.get("summary", [""])[0], # type: ignore
@@ -58,18 +74,17 @@ def _blog_post(path: Path) -> Post:
         )
 
 
-@lru_cache()
 def blog_post(id: str) -> Post:
     """Get a blog post by name."""
-    return _blog_post(_blog_path / id / "post.md")
+    path = _blog_path / id / "post.md"
+    return _blog_post(path, path.stat().st_mtime_ns)
 
 
-@lru_cache()
 def blog_posts() -> list[Post]:
     """Get all blog posts, ordered by descending date."""
 
     posts = [
-        _blog_post(path)
+        _blog_post(path, path.stat().st_mtime_ns)
         for path in _blog_path.glob("*/post.md")
         if path.parts[1] != "template"
     ]
@@ -78,7 +93,6 @@ def blog_posts() -> list[Post]:
     return posts
 
 
-@lru_cache()
 def last_blog_post() -> Post | None:
     """Get the most recent blog post."""
     return next(iter(blog_posts()), None)

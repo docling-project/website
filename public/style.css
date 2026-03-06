@@ -162,7 +162,6 @@ h6 {
 }
 
 p {
-  max-width: var(--text-width);
   margin: 0 0 1rem 0;
 }
 
@@ -851,14 +850,14 @@ samp {
 }
 
 code.hljs {
-  max-width: var(--text-width);
   padding: 1rem;
 
   background-color: black;
   border-radius: var(--standard-border-radius);
   font-family: var(--mono-font);
   font-size: 0.9rem;
-  white-space: pre-line;
+  white-space: pre;
+  overflow-x: auto;
 }
 
 kbd {

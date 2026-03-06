@@ -11,6 +11,14 @@ category: technical
 - `event` - Announcements about events, conferences, or community gatherings
 - `new-feature-alert` - Announcements of new features or releases
 
+**Thumbnail formats:**
+The thumbnail field accepts any image format (jpg, jpeg, png, webp, etc.). Just specify the relative path from the post folder.
+Examples:
+- `thumbnail: images/thumbnail.jpg`
+- `thumbnail: images/thumbnail.jpeg`
+- `thumbnail: images/thumbnail.png`
+- `thumbnail: images/thumbnail.webp`
+
 To add a new blog:
 
 1. Copy the *template* folder that contains this file.

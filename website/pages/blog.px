@@ -53,12 +53,7 @@ def BlogPostPage(id: str) -> JSX:
 
     return (
         <Page>
-            <main>
-                <h1>{post.title}</h1>
-                <h4><time>{format_date(post.date, "MMM d, yyyy")}</time></h4>
-
-                {HTMLDontEscape(post.html)}
-            </main>
+            <main><h1>{post.title}</h1><h4><time>{format_date(post.date, "MMM d, yyyy")}</time></h4>{HTMLDontEscape(post.html)}</main>
         </Page>
     )
 

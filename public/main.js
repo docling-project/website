@@ -100,26 +100,4 @@ async function load() {
     .forEach((el) =>
       el.addEventListener("click", (e) => window.scrollTo(0, window.scrollY)),
     );
-
-  // Blog category filtering with radio buttons.
-  const filterRadios = document.querySelectorAll('.blog-filters input[type="radio"]');
-  const blogPosts = document.querySelectorAll('.blog .post');
-
-  if (filterRadios.length > 0 && blogPosts.length > 0) {
-    filterRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        const category = radio.value;
-        
-        // Filter posts
-        blogPosts.forEach(post => {
-          const postCategory = post.getAttribute('data-category');
-          if (category === 'all' || postCategory === category) {
-            post.style.display = '';
-          } else {
-            post.style.display = 'none';
-          }
-        });
-      });
-    });
-  }
 }

@@ -49,8 +49,6 @@ def Page(children) -> JSX:
                                     <li><a href="/#features">Features</a></li>
                                     <li><a href="/papers/">Papers</a></li>
                                     <li><a href="/blog/">Blog</a></li>
-                                    <li><a href="/faq/">FAQ</a></li>
-                                    <li><a href="/releases/">Releases</a></li>
                                 </ul>
                             </details>
                         </li>
@@ -71,9 +69,9 @@ def Page(children) -> JSX:
                         <span id="stars"></span>
                     </a>
                 </nav>
-            </header>
+              </header>
 
-                {children}
+              {children}
             </body>
         </html>
     )

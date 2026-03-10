@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from pyjsx import auto_setup  # type: ignore
 
+from website.models.blog import BlogFilter
 from website.pages.blog import BlogPage, BlogPostPage  # type: ignore
 from website.pages.components import ComingSoonPage  # type: ignore
 from website.pages.home import HomePage  # type: ignore
@@ -26,14 +27,14 @@ async def get_home():
 
 # Blog page.
 @app.get("/blog/", response_class=HTMLResponse)
-async def get_blog():
-    return str(BlogPage())
+async def get_blog(filter: BlogFilter = BlogFilter.ALL):
+    return str(BlogPage(filter=filter))
 
 
 # Blog post.
 @app.get("/blog/{id}/", response_class=HTMLResponse)
 async def get_blog_post(id: str):
-    return str(BlogPostPage(id))
+    return str(BlogPostPage(id=id))
 
 
 # Papers.

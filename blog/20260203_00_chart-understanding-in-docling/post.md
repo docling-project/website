@@ -10,13 +10,13 @@ When teams say they want to "extract charts from PDFs," they usually mean someth
 
 Docling addresses this gap by enriching picture elements during conversion and attaching machine-readable chart tables to chart-like images. In practice, this gives you a path from "figure in a PDF" to "structured values I can validate and use in analytics, RAG, or agents."
 
-## Why This Matters in Real Workflows
+## Why this matters in real workflows
 
 In many reports and papers, the key numbers are present only inside charts. Teams often end up building brittle custom pipelines that crop figures, run OCR, and infer values from geometry. Those approaches can work for one template, then break on the next export style.
 
 Docling moves that effort into a standard conversion pipeline. Instead of treating each chart as a one-off parsing problem, you get a consistent metadata structure that can be validated and stored.
 
-## Visual Examples from Docling
+## Visual examples from Docling
 
 The following examples show Docling layout output with chart extraction enabled on the sample chart document.
 
@@ -26,13 +26,13 @@ The following examples show Docling layout output with chart extraction enabled 
 ![Line chart extraction example from Docling](images/linechart_example.png)
 *Figure 2. Line chart example produced from `./docs/examples/data/chart_document.pdf`.*
 
-## What Gets Added to the Pipeline
+## What gets added to the pipeline
 
 When chart extraction is enabled, Docling does more than plain text parsing. It classifies picture elements and enriches chart-like items with extracted table data. At the moment, the official chart extraction path focuses on bar, pie, and line charts, with extracted data available in Python at `PictureItem.meta.tabular_chart.chart_data`.
 
 A useful way to think about this is as a two-step process. First, Docling converts pages into typed document elements such as text blocks, tables, and images. Then it enriches relevant picture elements with inferred tabular values. The result is not only a rendered document, but also chart metadata that can be consumed programmatically.
 
-## CLI Walkthrough
+## CLI walkthrough
 
 The CLI is the fastest way to validate behavior on a real PDF:
 
@@ -47,7 +47,7 @@ uv run docling --from pdf --to html_split_page --show-layout --enrich-chart-extr
 
 This command runs conversion with chart enrichment enabled and produces output you can inspect immediately. A practical starting pattern is to test one representative PDF first, inspect quality carefully, and only then scale out to a larger corpus.
 
-## Python Walkthrough
+## Python walkthrough
 
 For programmatic workflows, configure `PdfPipelineOptions`, convert once, then inspect `PictureItem` metadata.
 
@@ -92,12 +92,12 @@ for item, _ in result.document.iterate_items():
 
 The important detail in this flow is that extracted chart data is returned as cell objects with row and column offsets. Reconstructing the 2D grid gives you a form that is easy to validate, compare, and export. If you use this in production, it is worth persisting provenance such as source file, page number, and figure index so you can trace outputs during debugging and reviews.
 
-## Performance and Model Notes
+## Performance and model notes
 
 Docling chart extraction uses `ibm-granite/granite-vision-3.3-2b-chart2csv-preview` for the chart-to-table step. On the model card's internal Chart2CSV benchmark, the reported scores are:
 
 | Model | Chart2CSV Score |
-|---|---:|
+|---|---|
 | chartgemma | 37.1 |
 | granite-vision-3.3-2b | 53.8 |
 | Qwen3-VL-4B-Instruct | 58.1 |
@@ -109,13 +109,13 @@ Docling chart extraction uses `ibm-granite/granite-vision-3.3-2b-chart2csv-previ
 
 The same family also reports `0.87` on ChartQA in the public evaluation table. These numbers are useful directional signals, but they are not guarantees for every document style. In practice, accuracy still depends on chart clarity, resolution, visual clutter, and labeling conventions.
 
-## Running This Safely in Production
+## Running this safely in production
 
 A robust pipeline usually follows a simple rhythm: run conversion with chart enrichment enabled, store extracted tables with provenance, and apply lightweight validation before downstream use. Even basic checks on shape, numeric parsing, plausible ranges, and label presence can remove many silent failures.
 
 It also helps to avoid treating extraction as all-or-nothing. High-confidence outputs can flow automatically, while ambiguous or low-quality extractions can be flagged for review. This hybrid model preserves automation speed without hiding risk.
 
-## Common Pitfalls
+## Common pitfalls
 
 Low-resolution scans, heavily stylized charts, and crowded multi-series plots can all reduce extraction quality. Another common mistake is assuming every picture is a chart. In code, always guard for missing metadata and process only items where chart enrichment is actually present.
 

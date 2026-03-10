@@ -1,59 +1,65 @@
 from babel.dates import format_date
 from pyjsx import HTMLDontEscape, jsx, JSX
-from website.models.blog import blog_post, blog_posts, last_blog_post
+from website.models.blog import blog_post, blog_posts, last_blog_post, BlogFilter
 
 from .page import Page
 
 
-def BlogPage() -> JSX:
-    posts = blog_posts()
+def BlogPage(filter: BlogFilter) -> JSX:
+    posts = blog_posts(filter)
 
     return (
         <Page>
-            <main class="blog">
+            <main class="blogs">
                 <h1>Blog</h1>
                 
-                <div class="blog-filters">
-                    <label>
-                        <input type="radio" name="category" value="all" checked />
-                        <span>All</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="category" value="technical" />
-                        <span>Technical</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="category" value="event" />
-                        <span>Event</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="category" value="new-feature-alert" />
-                        <span>New Feature</span>
-                    </label>
+                <form class="filters" method="get">
+                    {[
+                        <button
+                            type="submit"
+                            name="filter"
+                            value={filter_option.value}
+                            class={"active" if filter_option == filter else ""}
+                        >
+                            {filter_option.label}
+                        </button>
+                        for filter_option in BlogFilter
+                    ]}
+                </form>
+                
+                <div class="posts">
+                    {
+                        [
+                            <a class="post" href={f"{post.id}/?filter={filter.value}"} data-category={post.category.value}>
+                                {<img src={f"/blog/{post.id}/{post.thumbnail}"} alt={post.title} /> if post.thumbnail else <></>}
+                                <div>
+                                    <button class="category">{post.category.label}</button>
+                                    <h4>{post.title}</h4>
+                                    <p><time>{format_date(post.date, "MMM d, yyyy")}</time> {post.summary}</p>
+                                </div>
+                            </a>
+                            for post in posts
+                        ]
+                        if posts
+                        else (<div class="no-match">No matching posts</div>)
+                    }
                 </div>
-
-                {[
-                    <a class="post" href={f"{post.id}/"} data-category={post.category}>
-                        {<img src={f"/blog/{post.id}/{post.thumbnail}"} alt={post.title} /> if post.thumbnail else <></>}
-                        <div>
-                            <span class="category-badge">{post.category.replace('-', ' ').title()}</span>
-                            <h4>{post.title}</h4>
-                            <p><time>{format_date(post.date, "MMM d, yyyy")}</time> {post.summary}</p>
-                        </div>
-                    </a>
-                    for post in posts
-                ]}
             </main>
         </Page>
     )
 
 
-def BlogPostPage(id: str) -> JSX:
+def BlogPostPage(id: str, filter: BlogFilter | None = None) -> JSX:
     post = blog_post(id)
+    back_url = f"/blog/?filter={filter}" if filter else "/blog/"
 
     return (
         <Page>
-            <main><h1>{post.title}</h1><h4><time>{format_date(post.date, "MMM d, yyyy")}</time></h4>{HTMLDontEscape(post.html)}</main>
+            <main class="blog-posts">
+                <h1>{post.title}</h1>
+                <h4><time>{format_date(post.date, "MMM d, yyyy")}</time></h4>
+                {HTMLDontEscape(post.html)}
+            </main>
         </Page>
     )
 

@@ -2,7 +2,7 @@
 title: Docling at NVIDIA GTC
 date: 11-03-2026
 summary: Accelerating Document Processing with NVIDIA Nemotron OCR
-thumbnail: images/thumbnail.jpg
+thumbnail: images/thumbnail.png
 category: event
 ---
 

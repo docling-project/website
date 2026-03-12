@@ -83,11 +83,15 @@ def _blog_post(path: Path, mtime_ns: int) -> Post:
             extensions=_markdown_extensions,
             extension_configs=_extension_configs,
         )
+        content = mdf.read()
+        html = md.convert(content)
+        
+        # Access metadata after conversion
         category_str = md.Meta.get("category", ["technical"])[0] # type: ignore
      
         return Post(
             id=path.parts[1],
-            html=_stabilize_code_newlines(md.convert(mdf.read())),
+            html=_stabilize_code_newlines(html),
             date=datetime.strptime(md.Meta.get("date", ["01-01-0001"])[0], "%d-%m-%Y"), # type: ignore
             title=md.Meta.get("title", ["Missing Title"])[0], # type: ignore
             summary=md.Meta.get("summary", [""])[0], # type: ignore

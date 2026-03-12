@@ -1,16 +1,74 @@
 from babel.dates import format_date
 from pyjsx import HTMLDontEscape, jsx, JSX
-from website.models.papers import last_paper, Paper, PaperYear, paper_index
+from website.models.papers import last_paper, Paper, PaperYear, paper_index, PaperType
+import base64
 
 from .page import Page
 
 
 def Paper(children, paper) -> JSX:
+    # Generate BibTeX data URL for download
+    cite_link = None
+    if paper.bibtex:
+        bibtex_encoded = base64.b64encode(paper.bibtex.encode('utf-8')).decode('utf-8')
+        cite_link = f"data:text/plain;base64,{bibtex_encoded}"
+        # Generate filename from title
+        filename = paper.title.lower().replace(' ', '_')[:50] + '.bib'
+    
     return (
-        <a class="post" href={paper.url}>
-            <h4>{paper.title}</h4>
-            <label>{paper.venue}</label>
-        </a>
+        <div class="paper">
+            {paper.thumbnail and (
+                <img src={paper.thumbnail} alt={paper.title} class="paper-thumbnail" loading="lazy" />
+            )}
+            <div class="paper-header">
+                <a href={paper.url} target="_blank" rel="noopener noreferrer">
+                    <h4>{paper.title}</h4>
+                </a>
+                <label>{paper.venue}</label>
+            </div>
+            
+            {paper.abstract and (
+                <details class="paper-abstract">
+                    <summary>Abstract</summary>
+                    <p>{paper.abstract}</p>
+                </details>
+            )}
+            
+            <div class="paper-actions">
+                {paper.url and (
+                    <a class="button paper-link" href={paper.url} target="_blank" rel="noopener noreferrer">
+                        View Paper
+                    </a>
+                )}
+                {paper.arxiv_id and (
+                    <a class="button paper-link" href={f"https://arxiv.org/abs/{paper.arxiv_id}"} target="_blank" rel="noopener noreferrer">
+                        arXiv
+                    </a>
+                )}
+                {paper.google_scholar and (
+                    <a class="button paper-link" href={paper.google_scholar} target="_blank" rel="noopener noreferrer">
+                        Google Scholar
+                    </a>
+                )}
+                {cite_link and (
+                    <a class="button cite-btn" href={cite_link} download={filename}>
+                        Cite (BibTeX)
+                    </a>
+                )}
+            </div>
+            
+            {len(paper.figures) > 0 and (
+                <div class="paper-figures">
+                    {[
+                        <figure>
+                            <img src={fig.src} alt={fig.caption} loading="lazy" />
+                            <figcaption>{fig.caption}</figcaption>
+                        </figure>
+                        for fig in paper.figures
+                    ]}
+                </div>
+            )}
+        </div>
     )
 
 
@@ -21,13 +79,28 @@ def PaperYear(children, paper_year: PaperYear) -> JSX:
     )
 
 
-def PapersPage() -> JSX:
-    index = paper_index()
+def PapersPage(filter: PaperType = PaperType.ALL) -> JSX:
+    index = paper_index(filter)
 
     return (
         <Page>
             <main class="papers">
                 <h1>Papers</h1>
+                
+                <form class="filters" method="get">
+                    {[
+                        <button
+                            type="submit"
+                            name="filter"
+                            value={filter_option.value}
+                            class={"active" if filter_option == filter else ""}
+                        >
+                            {filter_option.label}
+                        </button>
+                        for filter_option in PaperType
+                    ]}
+                </form>
+                
                 {[<PaperYear paper_year={year} /> for year in index.years]}
             </main>
         </Page>
@@ -48,4 +121,3 @@ def LastPaperPreview(children) -> JSX:
         )
     else:
         return None
-

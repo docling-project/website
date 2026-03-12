@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from pyjsx import auto_setup  # type: ignore
 
 from website.models.blog import BlogFilter
+from website.models.papers import PaperType
 from website.pages.blog import BlogPage, BlogPostPage  # type: ignore
 from website.pages.components import ComingSoonPage  # type: ignore
 from website.pages.home import HomePage  # type: ignore
@@ -39,8 +40,8 @@ async def get_blog_post(id: str):
 
 # Papers.
 @app.get("/papers/", response_class=HTMLResponse)
-async def get_papers():
-    return str(PapersPage())
+async def get_papers(filter: PaperType = PaperType.ALL):
+    return str(PapersPage(filter=filter))
 
 
 # FAQ page (stub).
@@ -57,6 +58,7 @@ async def get_releases():
 
 # Serve static files. Redundant w.r.t. Vercel file serving, but useful for local development.
 try:
+    app.mount("/papers", StaticFiles(directory="papers", html=True), name="papers")
     app.mount("/blog", StaticFiles(directory="blog", html=True), name="blog")
     app.mount("/", StaticFiles(directory="public", html=True), name="public")
 except Exception as ex:

@@ -6,6 +6,11 @@ import base64
 from .page import Page
 
 
+            # {paper.thumbnail and (
+            #     <img src={paper.thumbnail} alt={paper.title} class="paper-thumbnail" loading="lazy" />
+            # )}
+
+
 def Paper(children, paper) -> JSX:
     # Generate BibTeX data URL for download
     cite_link = None
@@ -16,57 +21,46 @@ def Paper(children, paper) -> JSX:
         filename = paper.title.lower().replace(' ', '_')[:50] + '.bib'
     
     return (
-        <div class="paper">
-            {paper.thumbnail and (
-                <img src={paper.thumbnail} alt={paper.title} class="paper-thumbnail" loading="lazy" />
-            )}
-            <div class="paper-header">
-                <a href={paper.url} target="_blank" rel="noopener noreferrer">
-                    <h4>{paper.title}</h4>
-                </a>
-                <label>{paper.venue}</label>
+        <div id={paper.title} class="paper">
+            <div class="header">
+                <button class="category">{paper.type.label}</button>
+
+                <h4>{paper.title}</h4>
+                
+                <div class="actions">
+                    <label>{paper.venue}</label>
+
+                    {paper.arxiv_id and (
+                        <a href={f"https://arxiv.org/abs/{paper.arxiv_id}"} target="_blank" rel="noopener noreferrer">
+                            arXiv
+                        </a>
+                    )}
+                    {paper.google_scholar and (
+                        <a href={paper.google_scholar} target="_blank" rel="noopener noreferrer">
+                            scholar
+                        </a>
+                    )}
+                    {cite_link and (
+                        <a href={cite_link} download={filename}>
+                            cite
+                        </a>
+                    )}
+                    {paper.url and (
+                        <a href={paper.url} target="_blank" rel="noopener noreferrer">
+                            view →
+                        </a>
+                    )}
+                </div>
             </div>
             
             {paper.abstract and (
-                <details class="paper-abstract">
-                    <summary>Abstract</summary>
-                    <p>{paper.abstract}</p>
-                </details>
-            )}
-            
-            <div class="paper-actions">
-                {paper.url and (
-                    <a class="button paper-link" href={paper.url} target="_blank" rel="noopener noreferrer">
-                        View Paper
-                    </a>
-                )}
-                {paper.arxiv_id and (
-                    <a class="button paper-link" href={f"https://arxiv.org/abs/{paper.arxiv_id}"} target="_blank" rel="noopener noreferrer">
-                        arXiv
-                    </a>
-                )}
-                {paper.google_scholar and (
-                    <a class="button paper-link" href={paper.google_scholar} target="_blank" rel="noopener noreferrer">
-                        Google Scholar
-                    </a>
-                )}
-                {cite_link and (
-                    <a class="button cite-btn" href={cite_link} download={filename}>
-                        Cite (BibTeX)
-                    </a>
-                )}
-            </div>
-            
-            {len(paper.figures) > 0 and (
-                <div class="paper-figures">
-                    {[
-                        <figure>
-                            <img src={fig.src} alt={fig.caption} loading="lazy" />
-                            <figcaption>{fig.caption}</figcaption>
-                        </figure>
-                        for fig in paper.figures
-                    ]}
-                </div>
+                <a class="abstract" href={f"#{paper.title}"}>
+                    {paper.thumbnail and (
+                        <img src={paper.thumbnail} alt={paper.title} class="thumbnail" loading="lazy" />
+                    )}
+
+                    {paper.abstract}
+                </a>
             )}
         </div>
     )

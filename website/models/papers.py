@@ -19,8 +19,8 @@ class PaperType(str, Enum):
         """Get the display label for this filter."""
         labels = {
             PaperType.ALL: "All",
-            PaperType.PAPER: "Papers",
-            PaperType.PATENT: "Patents",
+            PaperType.PAPER: "Paper",
+            PaperType.PATENT: "Patent",
         }
         return labels[self]
 
@@ -78,7 +78,11 @@ def parse_paper_frontmatter(content: str) -> dict:
         if ':' in line and not line.startswith(' ') and not line.startswith('-'):
             key, value = line.split(':', 1)
             current_key = key.strip()
-            metadata[current_key] = value.strip()
+            # Strip quotes from value
+            value = value.strip()
+            if value.startswith('"') and value.endswith('"'):
+                value = value[1:-1]
+            metadata[current_key] = value
         elif current_key and line.strip():
             # Multi-line value
             metadata[current_key] += '\n' + line.strip()

@@ -49,19 +49,21 @@ The backend parses table content into structured cells, including common merged-
 
 <table>
 <tr>
-<td width="50%" align="center" valign="top">
+<td align="center" valign="top">
 <img
-src="images/tablerepresentation_latex.png"
+src="images/tablerepresenttion_latex.png"
 alt="LaTeX table example"
-style="width: 100%; max-height: 320px; object-fit: contain;"
+style="width: 75%; max-height: 240px; object-fit: contain;"
 />
 <p><em>Source table with structure that should survive conversion.</em></p>
 </td>
-<td width="50%" align="center" valign="top">
+</tr>
+<tr>
+<td align="center" valign="top">
 <img
 src="images/tablerepresentation_md.png"
 alt="Markdown table export"
-style="width: 100%; max-height: 320px; object-fit: contain;"
+style="width: 75%; max-height: 240px; object-fit: contain;"
 />
 <p><em>Docling output with rows, columns, and spans carried through.</em></p>
 </td>

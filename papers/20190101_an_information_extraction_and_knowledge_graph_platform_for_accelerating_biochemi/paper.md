@@ -11,6 +11,6 @@ url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvI
 arxiv: 1907.08400
 google_scholar: https://scholar.google.com/scholar?q=An+information+extraction+and+knowledge+graph+platform+for+accelerating+biochemical
 
-category: paper
 grouping: 2019
+category: use_cases
 ---

@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2408.09869
 arxiv: 2408.09869
 google_scholar: https://scholar.google.com/scholar?q=Docling+document+conversion+PDF
-category: paper
 grouping: 2024
+category: document_conversion
 ---

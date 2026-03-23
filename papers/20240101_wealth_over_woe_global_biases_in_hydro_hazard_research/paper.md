@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: http://dx.doi.org/10.1029/2024EF004590
 google_scholar: https://scholar.google.com/scholar?q=Wealth+over+Woe+Global+Biases+in+Hydro-Hazard+Research
 
-category: paper
 grouping: 2024
+category: use_cases
 ---

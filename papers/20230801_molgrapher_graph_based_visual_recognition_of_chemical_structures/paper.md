@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2308.12234
 arxiv: 2308.12234
 google_scholar: https://scholar.google.com/scholar?q=MolGrapher+chemical+structure+recognition
-category: paper
 grouping: 2023
+category: document_enrichments
 ---

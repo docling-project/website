@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvIfgAAAAJ&cstart=20&pagesize=80&citation_for_view=sPuvIfgAAAAJ:Y5dfb0dijaUC
 google_scholar: https://scholar.google.com/scholar?q=Automated+Disaster+Event+Extraction+to+Understand+Lessons+Learned
 
-category: paper
 grouping: 2025
+category: use_cases
 ---

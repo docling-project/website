@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2502.09927
 arxiv: 2502.09927
 google_scholar: https://scholar.google.com/scholar?q=Granite+Vision+multimodal+document+understanding
-category: paper
 grouping: 2025
+category: document_enrichments
 ---

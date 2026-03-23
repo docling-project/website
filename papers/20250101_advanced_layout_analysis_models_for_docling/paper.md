@@ -11,6 +11,6 @@ url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvI
 arxiv: 2509.11720
 google_scholar: https://scholar.google.com/scholar?q=Advanced+Layout+Analysis+Models+for+Docling
 
-category: paper
 grouping: 2025
+category: document_conversion
 ---

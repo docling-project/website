@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvIfgAAAAJ&cstart=20&pagesize=80&citation_for_view=sPuvIfgAAAAJ:dfsIfKJdRG4C
 google_scholar: https://scholar.google.com/scholar?q=FlowchartQA+The+First+Large-Scale+Benchmark+for+Reasoning+over+Flowcharts
 
-category: paper
 grouping: 2023
+category: document_enrichments
 ---

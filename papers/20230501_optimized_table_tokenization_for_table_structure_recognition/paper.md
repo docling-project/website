@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2305.03393
 arxiv: 2305.03393
 google_scholar: https://scholar.google.com/scholar?q=optimized+table+tokenization+structure+recognition
-category: paper
 grouping: 2023
+category: document_conversion
 ---

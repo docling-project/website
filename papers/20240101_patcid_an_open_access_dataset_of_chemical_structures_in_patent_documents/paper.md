@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://doi.org/10.1038/s41467-024-50779-y
 google_scholar: https://scholar.google.com/scholar?q=PatCID+an+open-access+dataset+of+chemical+structures+in+patent+documents
 
-category: paper
 grouping: 2024
+category: use_cases
 ---

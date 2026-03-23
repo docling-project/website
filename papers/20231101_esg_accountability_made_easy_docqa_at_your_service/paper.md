@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2311.18481
 arxiv: 2311.18481
 google_scholar: https://scholar.google.com/scholar?q=DocQA+ESG+document+question+answering
-category: paper
 grouping: 2023
+category: use_cases
 ---

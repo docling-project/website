@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2406.19102
 arxiv: 2406.19102
 google_scholar: https://scholar.google.com/scholar?q=Statements+information+extraction+tables+ESG
-category: paper
 grouping: 2024
+category: use_cases
 ---

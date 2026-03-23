@@ -11,6 +11,6 @@ url: https://arxiv.org/abs/2503.11576
 arxiv: 2503.11576
 google_scholar: https://scholar.google.com/scholar?q=SmolDocling+vision+language+document+conversion
 
-category: paper
 grouping: 2025
+category: document_conversion
 ---

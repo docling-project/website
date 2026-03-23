@@ -8,19 +8,21 @@ from pydantic import BaseModel
 from typing import Optional
 
 
-class PaperType(str, Enum):
-    """Paper type filter categories."""
+class PublicationCategory(str, Enum):
+    """Publication category filter categories."""
     ALL = "all"
-    PAPER = "paper"
-    PATENT = "patent"
+    DOCUMENT_CONVERSION = "document_conversion"
+    DOCUMENT_ENRICHMENTS = "document_enrichments"
+    USE_CASES = "use_cases"
     
     @property
     def label(self) -> str:
         """Get the display label for this filter."""
         labels = {
-            PaperType.ALL: "All",
-            PaperType.PAPER: "Paper",
-            PaperType.PATENT: "Patent",
+            PublicationCategory.ALL: "All",
+            PublicationCategory.DOCUMENT_CONVERSION: "Document conversion",
+            PublicationCategory.DOCUMENT_ENRICHMENTS: "Document enrichments",
+            PublicationCategory.USE_CASES: "Use cases",
         }
         return labels[self]
 
@@ -34,7 +36,7 @@ class Paper(BaseModel):
     venue: str
     title: str
     url: str
-    type: PaperType = PaperType.PAPER
+    category: PublicationCategory = PublicationCategory.DOCUMENT_CONVERSION
     arxiv_id: str | None = None
     abstract: str | None = None
     bibtex: str | None = None
@@ -50,16 +52,6 @@ class PaperYear(BaseModel):
 
 class PaperIndex(BaseModel):
     years: list[PaperYear]
-
-
-@lru_cache()
-def paper_index() -> PaperIndex:
-    """Get all registered papers."""
-    
-    papers_index = Path("papers/index.json")
-    
-    with open(papers_index, "r", encoding="utf-8") as f:
-        return PaperIndex.model_validate(json.load(f))
 
 
 def parse_paper_frontmatter(content: str) -> dict:
@@ -141,14 +133,16 @@ def load_papers_from_folders() -> PaperIndex:
             with open(bibtex_file, 'r', encoding='utf-8') as f:
                 bibtex = f.read()
         
-        # Determine paper type
-        paper_type = PaperType.PAPER
-        type_str = metadata.get('type', '').lower()
-        venue = metadata.get('venue', '').lower()
+        # Determine paper category
+        category_str = metadata.get('category', '').lower().replace(' ', '_')
         
-        # Check explicit type field first, then fallback to venue detection
-        if type_str == 'patent' or 'patent' in venue:
-            paper_type = PaperType.PATENT
+        # Map category string to enum
+        category_map = {
+            'document_conversion': PublicationCategory.DOCUMENT_CONVERSION,
+            'document_enrichments': PublicationCategory.DOCUMENT_ENRICHMENTS,
+            'use_cases': PublicationCategory.USE_CASES,
+        }
+        paper_category = category_map.get(category_str, PublicationCategory.DOCUMENT_CONVERSION)
         
         # Construct full thumbnail path if thumbnail exists and file is present
         thumbnail = metadata.get('thumbnail')
@@ -164,7 +158,7 @@ def load_papers_from_folders() -> PaperIndex:
             venue=metadata.get('venue', ''),
             title=metadata.get('title', ''),
             url=metadata.get('url', ''),
-            type=paper_type,
+            category=paper_category,
             arxiv_id=metadata.get('arxiv'),
             abstract=metadata.get('summary'),
             bibtex=bibtex or metadata.get('bibtex'),
@@ -188,22 +182,22 @@ def load_papers_from_folders() -> PaperIndex:
 
 
 @lru_cache()
-def paper_index(filter: PaperType = PaperType.ALL) -> PaperIndex:
+def paper_index(filter: PublicationCategory = PublicationCategory.ALL) -> PaperIndex:
     """Get all registered papers from paper folders.
     
     Args:
-        filter: Optional type filter (ALL, PAPER, or PATENT).
+        filter: Optional category filter (ALL, DOCUMENT_CONVERSION, DOCUMENT_ENRICHMENTS, or USE_CASES).
     """
     all_papers = load_papers_from_folders()
     
-    # Apply type filter if specified
-    if filter == PaperType.ALL:
+    # Apply category filter if specified
+    if filter == PublicationCategory.ALL:
         return all_papers
     
-    # Filter papers by type
+    # Filter papers by category
     filtered_years = []
     for year in all_papers.years:
-        filtered_papers = [p for p in year.papers if p.type == filter]
+        filtered_papers = [p for p in year.papers if p.category == filter]
         if filtered_papers:
             filtered_years.append(PaperYear(year=year.year, papers=filtered_papers))
     
@@ -213,4 +207,4 @@ def paper_index(filter: PaperType = PaperType.ALL) -> PaperIndex:
 @lru_cache()
 def last_paper() -> Paper:
     """Get the latest paper."""
-    return paper_index(PaperType.ALL).years[0].papers[0]
+    return paper_index(PublicationCategory.ALL).years[0].papers[0]

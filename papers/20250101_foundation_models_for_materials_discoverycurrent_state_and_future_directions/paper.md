@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvIfgAAAAJ&citation_for_view=sPuvIfgAAAAJ:olpn-zPbct0C
 google_scholar: https://scholar.google.com/scholar?q=Foundation+models+for+materials+discovery+current+state+and+future
 
-category: paper
 grouping: 2025
+category: use_cases
 ---

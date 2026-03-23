@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvIfgAAAAJ&cstart=20&pagesize=80&citation_for_view=sPuvIfgAAAAJ:TFP_iSt0sucC
 google_scholar: https://scholar.google.com/scholar?q=Application+of+Geocognitive+Technologies+to+Basin+Petroleum+System
 
-category: paper
 grouping: 2019
+category: use_cases
 ---

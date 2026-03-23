@@ -11,6 +11,6 @@ url: https://arxiv.org/abs/2405.10725
 arxiv: 2405.10725
 google_scholar: https://scholar.google.com/scholar?q=INDUS+language+models+scientific+applications
 
-category: paper
 grouping: 2024
+category: use_cases
 ---

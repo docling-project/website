@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvIfgAAAAJ&cstart=100&pagesize=100&citation_for_view=sPuvIfgAAAAJ:rO6llkc54NcC
 google_scholar: https://scholar.google.com/scholar?q=Racial+Representation+Analysis+in+Dermatology+Academic+Materials
 
-category: paper
 grouping: 2021
+category: use_cases
 ---

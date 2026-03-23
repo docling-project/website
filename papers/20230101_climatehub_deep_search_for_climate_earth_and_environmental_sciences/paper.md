@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvIfgAAAAJ&cstart=100&pagesize=100&citation_for_view=sPuvIfgAAAAJ:738O_yMBCRsC
 google_scholar: https://scholar.google.com/scholar?q=CliMateHub+Deep+Search+for+Climate+Earth+Environmental+Sciences
 
-category: paper
 grouping: 2023
+category: use_cases
 ---

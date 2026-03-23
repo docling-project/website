@@ -11,6 +11,6 @@ url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvI
 arxiv: 2209.03648
 google_scholar: https://scholar.google.com/scholar?q=FETA+Towards+Specializing+Foundational+Models+for+Expert+Task+Applications
 
-category: paper
 grouping: 2022
+category: use_cases
 ---

@@ -1,6 +1,6 @@
 from babel.dates import format_date
 from pyjsx import HTMLDontEscape, jsx, JSX
-from website.models.papers import last_paper, Paper, PaperYear, paper_index, PaperType
+from website.models.papers import last_paper, Paper, PaperYear, paper_index, PublicationCategory
 import base64
 
 from .page import Page
@@ -23,7 +23,7 @@ def Paper(children, paper) -> JSX:
     return (
         <div id={paper.title} class="paper">
             <div class="header">
-                <button class="category">{paper.type.label}</button>
+                <button class="category">{paper.category.label}</button>
 
                 <h4>{paper.title}</h4>
                 
@@ -73,7 +73,7 @@ def PaperYear(children, paper_year: PaperYear) -> JSX:
     )
 
 
-def PapersPage(filter: PaperType = PaperType.ALL) -> JSX:
+def PapersPage(filter: PublicationCategory = PublicationCategory.ALL) -> JSX:
     index = paper_index(filter)
 
     return (
@@ -91,7 +91,7 @@ def PapersPage(filter: PaperType = PaperType.ALL) -> JSX:
                         >
                             {filter_option.label}
                         </button>
-                        for filter_option in PaperType
+                        for filter_option in PublicationCategory
                     ]}
                 </form>
                 

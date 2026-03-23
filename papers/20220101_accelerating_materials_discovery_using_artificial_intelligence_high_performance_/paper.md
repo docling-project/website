@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvIfgAAAAJ&citation_for_view=sPuvIfgAAAAJ:g5m5HwL7SMYC
 google_scholar: https://scholar.google.com/scholar?q=Accelerating+materials+discovery+using+artificial+intelligence+high+performance
 
-category: paper
 grouping: 2022
+category: use_cases
 ---

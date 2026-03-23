@@ -11,6 +11,6 @@ url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvI
 arxiv: 2503.16096
 google_scholar: https://scholar.google.com/scholar?q=MarkushGrapher+Joint+Visual+and+Textual+Recognition+of+Markush
 
-category: paper
 grouping: 2025
+category: document_enrichments
 ---

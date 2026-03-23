@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2306.12802
 arxiv: 2306.12802
 google_scholar: https://scholar.google.com/scholar?q=Otter-Knowledge+knowledge+graph+drug+discovery
-category: paper
 grouping: 2023
+category: use_cases
 ---

@@ -11,6 +11,6 @@ url: https://arxiv.org/abs/2206.01062
 arxiv: 2206.01062
 google_scholar: https://scholar.google.com/scholar?q=DocLayNet+document+layout+dataset
 
-category: paper
 grouping: 2022
+category: document_conversion
 ---

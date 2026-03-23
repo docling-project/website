@@ -11,6 +11,6 @@ url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvI
 arxiv: 2504.19695
 google_scholar: https://scholar.google.com/scholar?q=SubGrapher+Visual+Fingerprinting+of+Chemical+Structures
 
-category: paper
 grouping: 2025
+category: document_enrichments
 ---

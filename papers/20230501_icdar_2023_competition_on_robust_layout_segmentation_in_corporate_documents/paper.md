@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2305.14962
 arxiv: 2305.14962
 google_scholar: https://scholar.google.com/scholar?q=ICDAR+2023+layout+segmentation+corporate+documents
-category: paper
 grouping: 2023
+category: document_conversion
 ---

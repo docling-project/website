@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://doi.org/10.5194/egusphere-egu24-8752
 google_scholar: https://scholar.google.com/scholar?q=Identifying+global+biases+in+hydro-hazard+research+by+mining
 
-category: paper
 grouping: 2024
+category: use_cases
 ---

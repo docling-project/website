@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2501.17887
 arxiv: 2501.17887
 google_scholar: https://scholar.google.com/scholar?q=Docling+document+conversion+toolkit
-category: paper
 grouping: 2025
+category: document_conversion
 ---

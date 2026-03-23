@@ -11,6 +11,6 @@ url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvI
 arxiv: 2405.00505
 google_scholar: https://scholar.google.com/scholar?q=KVP10k+Comprehensive+Dataset+for+Key-Value+Pair+Extraction
 
-category: paper
 grouping: 2024
+category: document_enrichments
 ---

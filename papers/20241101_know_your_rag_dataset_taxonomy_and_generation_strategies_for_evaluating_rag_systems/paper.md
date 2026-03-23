@@ -11,6 +11,6 @@ url: https://doi.org/10.48550/arXiv.2411.19710
 arxiv: 2411.19710
 google_scholar: https://scholar.google.com/scholar?q=Know+Your+RAG+Dataset+Taxonomy+and+Generation+Strategies
 
-category: paper
 grouping: 2024
+category: use_cases
 ---

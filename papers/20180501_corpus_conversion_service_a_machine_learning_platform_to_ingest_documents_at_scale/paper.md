@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/1806.02284
 arxiv: 1806.02284
 google_scholar: https://scholar.google.com/scholar?q=Corpus+Conversion+Service+document+ingestion
-category: paper
 grouping: 2018
+category: document_conversion
 ---

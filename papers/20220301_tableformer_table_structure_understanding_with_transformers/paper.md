@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2203.01017
 arxiv: 2203.01017
 google_scholar: https://scholar.google.com/scholar?q=TableFormer+table+structure+transformers
-category: paper
 grouping: 2022
+category: document_conversion
 ---

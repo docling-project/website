@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvIfgAAAAJ&cstart=20&pagesize=80&citation_for_view=sPuvIfgAAAAJ:lSLTfruPkqcC
 google_scholar: https://scholar.google.com/scholar?q=Using+knowledge+graphs+to+navigate+through+geological+concepts
 
-category: paper
 grouping: 2021
+category: use_cases
 ---

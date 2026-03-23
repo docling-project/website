@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://doi.org/10.1002/ail2.20
 google_scholar: https://scholar.google.com/scholar?q=Corpus+Processing+Service+Knowledge+Graph+Platform
 
-category: paper
 grouping: 2020
+category: use_cases
 ---

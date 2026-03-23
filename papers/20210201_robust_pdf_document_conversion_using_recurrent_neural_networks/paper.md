@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2102.09395
 arxiv: 2102.09395
 google_scholar: https://scholar.google.com/scholar?q=Robust+PDF+Document+Conversion+RNN
-category: paper
 grouping: 2021
+category: document_conversion
 ---

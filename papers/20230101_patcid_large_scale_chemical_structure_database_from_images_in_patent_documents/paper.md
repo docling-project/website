@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://research.ibm.com/publications/patcid-large-scale-chemical-structure-database-from-images-in-patent-documents
 google_scholar: https://scholar.google.com/scholar?q=PatCID+Large-scale+Chemical+Structure+Database+from+Images+in+Patent
 
-category: paper
 grouping: 2023
+category: use_cases
 ---

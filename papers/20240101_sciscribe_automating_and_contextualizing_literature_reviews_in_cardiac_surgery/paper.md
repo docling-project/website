@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvIfgAAAAJ&cstart=20&pagesize=80&citation_for_view=sPuvIfgAAAAJ:eJXPG6dFmWUC
 google_scholar: https://scholar.google.com/scholar?q=SciScribe+Automating+and+Contextualizing+Literature+Reviews+in+Cardiac
 
-category: paper
 grouping: 2024
+category: use_cases
 ---

@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvIfgAAAAJ&cstart=100&pagesize=100&citation_for_view=sPuvIfgAAAAJ:xtRiw3GOFMkC
 google_scholar: https://scholar.google.com/scholar?q=Knowledge+Graphs+in+Deep+Search+Climate-Hub
 
-category: paper
 grouping: 2022
+category: use_cases
 ---

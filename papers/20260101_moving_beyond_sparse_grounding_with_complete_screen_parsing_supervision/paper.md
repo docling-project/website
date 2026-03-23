@@ -11,6 +11,6 @@ url: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=sPuvI
 arxiv: 2602.14276
 google_scholar: https://scholar.google.com/scholar?q=Moving+Beyond+Sparse+Grounding+with+Complete+Screen+Parsing
 
-category: paper
 grouping: 2026
+category: document_conversion
 ---

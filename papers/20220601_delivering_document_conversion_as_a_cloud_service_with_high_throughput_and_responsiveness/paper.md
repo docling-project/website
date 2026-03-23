@@ -10,6 +10,6 @@ bibtex: paper.bib
 url: https://arxiv.org/abs/2206.00785
 arxiv: 2206.00785
 google_scholar: https://scholar.google.com/scholar?q=document+conversion+cloud+service+OCR+layout
-category: paper
 grouping: 2022
+category: document_conversion
 ---

@@ -1168,19 +1168,6 @@ a.post {
   );
 }
 
-.blog,
-.papers {
-  --text-width: 100%;
-
-  > h1 {
-    margin-bottom: 3rem;
-  }
-
-  > h3:not(:first-of-type) {
-    margin-top: 2rem;
-  }
-}
-
 a.post {
   position: relative;
 
@@ -1213,42 +1200,43 @@ a.post:last-of-type {
   height: 1em;
 }
 
+/* Blog and paper category filters. */
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  button.active {
+    color: var(--bg);
+    background-color: var(--text);
+    border-color: var(--text);
+  }
+}
+
+.filters button,
+button.category {
+  padding: 0.25rem 0.5rem;
+  margin: 0;
+  color: var(--text);
+  font-size: 0.9rem;
+  background-color: var(--bg);
+  border-color: var(--border);
+  border-radius: 0 0.5rem 0 0.5rem;
+}
+
+button.category {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-width: 0 0 1px 1px;
+  background-color: black;
+  color: white;
+}
+
 /* Blog overview. */
 main.blogs {
-  .filters {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-
-    button.active {
-      color: var(--bg);
-      background-color: var(--text);
-      border-color: var(--text);
-    }
-  }
-
-  .filters button,
-  button.category {
-    padding: 0.25rem 0.5rem;
-    margin: 0;
-    color: var(--text);
-    font-size: 0.9rem;
-    background-color: var(--bg);
-    border-color: var(--border);
-    border-radius: 0 0.5rem 0 0.5rem;
-  }
-
-  button.category {
-    position: absolute;
-    top: 1px;
-    right: 1px;
-    border-width: 0 0 1px 1px;
-    background-color: black;
-    color: white;
-  }
-
   .no-match {
     margin: 3rem auto;
   }
@@ -1261,10 +1249,12 @@ main.blogs {
 
   a.post {
     max-width: var(--card-width);
+    height: 35rem;
     padding: 0 0 3rem 0;
     border-radius: 0 0.5rem 0 0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 
     img {
       width: 100%;
@@ -1337,5 +1327,81 @@ main.blog-posts {
       border: none;
       border-bottom: 1px solid var(--border-light);
     }
+  }
+}
+
+/* Papers. */
+.paper {
+  position: relative;
+  max-height: 12rem;
+  padding: 1rem 1rem 3rem 1rem;
+  margin-bottom: 0.5rem;
+
+  font-size: 1rem;
+  background-color: var(--doc);
+  border: 1px solid var(--border);
+  border-radius: 0 0.5rem 0 0;
+
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to bottom,
+    black calc(100% - 3rem),
+    transparent 100%
+  );
+  transition: max-height 0.3s ease;
+
+  .header {
+    margin-bottom: 0.5rem;
+
+    h4 {
+      margin-bottom: 0.5rem;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    .actions {
+      margin-right: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    label {
+      max-width: 15rem;
+      margin-right: auto;
+      color: var(--text-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  
+  .abstract {
+    display: block;
+    max-width: 100%;
+    margin: 1rem 0;
+    
+    color: var(--text);
+    text-align: justify;
+    cursor: pointer;
+  }
+  
+  .thumbnail {
+    display: none;
+    float: right;
+    max-width: calc(max(50%, 20rem));
+    margin: 1rem 0 1rem 1rem;
+  }
+}
+
+.paper:target {
+  max-height: none;
+  mask-image: none;
+  padding-bottom: 1rem;
+  
+  .thumbnail {
+    display: block;
   }
 }

@@ -8,25 +8,40 @@ Each paper in `papers/index.json` only has `venue`, `title`, and `url`. The pape
 
 ## Proposed Changes
 
-### `papers/index.json`
+### Self contained papers
 
-Extend each paper entry with optional new fields:
+Every paper needs to have its dedicated folder and standardised structure similar to the blogs,
 
-```json
-{
-  "venue": "AAAI",
-  "title": "Docling: An Efficient Open-Source Toolkit for AI-driven Document Conversion",
-  "url": "https://arxiv.org/abs/2501.17887",
-  "arxiv_id": "2501.17887",
-  "abstract": "We present Docling...",
-  "bibtex": "@inproceedings{docling2025,\n  title={...},\n  ...}",
-  "figures": [
-    { "src": "img/papers/2501.17887/fig1.png", "caption": "Pipeline overview." }
-  ]
-}
+1. every paper has a directory in ./papers of the form: ./papers/<YYMMDD_{title all lower case and with underscores}>
+2. in every folder, we find, 
+    - the original pdf
+    - the docling-document in json
+    - subfolder with `images`
+    - a protected thumbnail.jpg|png|jpeg in images
+    - a paper.md in the folder with the template layout,
+    - a bibtex file
+```
+---
+title: ...
+authors: ...
+date: ...
+venue: ... <optional>
+summary: ...
+thumbnail: images/thumbnail.jpeg
+keywords: technical
+bibtex: ...
+url: ... <optional>
+arxiv: ... <optional>
+category: paper or patent
+grouping: year <optional> if not defined, simply deduce the year dynamically
+---
+
+image 1:
+- caption: ...
+- filename: images/<...>
 ```
 
-All new fields are optional so existing entries remain valid without changes.
+This structure can be analyzed and there is no need for the index.json
 
 ### `website/models/papers.py`
 

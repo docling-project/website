@@ -49,6 +49,7 @@ def Page(children) -> JSX:
                                     <li><a href="/#features">Features</a></li>
                                     <li><a href="/papers/">Papers</a></li>
                                     <li><a href="/blog/">Blog</a></li>
+                                    <li><a href="/community/">Community</a></li>
                                 </ul>
                             </details>
                         </li>

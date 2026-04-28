@@ -43,6 +43,9 @@ def HomePage() -> JSX:
                     <a href="discord">
                         <img src="img/community/discord.svg" /> Discord
                     </a>
+                    <a href="/community/#slack">
+                        <img src="img/community/slack.svg" /> Slack
+                    </a>
                     <a href="https://linkedin.com/company/docling">
                         <img src="img/community/linkedin.svg" /> LinkedIn
                     </a>

@@ -44,7 +44,7 @@ async def get_papers(filter: PublicationCategory = PublicationCategory.ALL):
     return str(PapersPage(filter=filter))
 
 
-# Community landing page (chat surfaces — Slack, Discord).
+# Community landing page.
 @app.get("/community/", response_class=HTMLResponse)
 async def get_community():
     return str(CommunityPage())

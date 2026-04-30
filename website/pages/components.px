@@ -45,16 +45,6 @@ def CommunityPage() -> JSX:
                             </li>
                         </ul>
                     </section>
-
-                    <section id="discord">
-                        <h2>Discord</h2>
-                        <p>Hang out with the Docling community on Discord.</p>
-                        <p>
-                            <a class="cta" href="/discord/">
-                                Join the Docling Discord
-                            </a>
-                        </p>
-                    </section>
                 </article>
             </main>
         </Page>

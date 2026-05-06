@@ -6,7 +6,7 @@ from pyjsx import auto_setup  # type: ignore
 from website.models.blog import BlogFilter
 from website.models.papers import PublicationCategory
 from website.pages.blog import BlogPage, BlogPostPage  # type: ignore
-from website.pages.components import ComingSoonPage  # type: ignore
+from website.pages.components import ComingSoonPage, CommunityPage  # type: ignore
 from website.pages.home import HomePage  # type: ignore
 from website.pages.papers import PapersPage  # type: ignore
 
@@ -42,6 +42,12 @@ async def get_blog_post(id: str):
 @app.get("/papers/", response_class=HTMLResponse)
 async def get_papers(filter: PublicationCategory = PublicationCategory.ALL):
     return str(PapersPage(filter=filter))
+
+
+# Community landing page.
+@app.get("/community/", response_class=HTMLResponse)
+async def get_community():
+    return str(CommunityPage())
 
 
 # FAQ page (stub).

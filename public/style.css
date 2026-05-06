@@ -1405,3 +1405,20 @@ main.blog-posts {
     display: block;
   }
 }
+
+/* Content-area call-to-action button (used in /community/ sections). */
+a.cta {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--standard-border-radius);
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+a.cta:hover {
+  background: var(--bg);
+  color: var(--accent);
+}

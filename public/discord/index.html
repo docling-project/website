@@ -2,25 +2,23 @@
 <html lang="en">
 
 <head>
-  <link rel="stylesheet" href="style.css" />
-
+  <meta charset="utf-8" />
+  <title>Redirecting to the Docling community</title>
+  <meta http-equiv="refresh" content="0; url=/community/#slack" />
+  <link rel="canonical" href="/community/" />
+  <link rel="stylesheet" href="/style.css" />
   <script type="module">
-    const response = await fetch(
-      "https://discord.com/api/guilds/1399788921306746971/widget.json",
-      { cache: "no-store" }
-    );
-    const link = (await response.json())?.instant_invite;
-
-    if (link) {
-      window.location.assign(link);
-    }
+    window.location.replace("/community/#slack");
   </script>
 </head>
 
 <body>
   <main>
     <dialog open>
-      Inviting you to Discord...
+      Redirecting you to the Docling community…
+      <p>
+        If you are not redirected, <a href="/community/#slack">join us on Slack</a>.
+      </p>
     </dialog>
   </main>
 </body>

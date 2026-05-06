@@ -19,9 +19,9 @@ In this article we will present the "Taxonomy-invariant Object Recognition Evalu
 - Can be implemented efficiently using SIMD operations.
 
 
-## Limitations of the mAP metric and qualitative evaluation
+## Evaluation Challenges in Layout Analysis
 
-As it has already been observed (see [[1]](https://arxiv.org/abs/2509.11720), [[2]](https://arxiv.org/abs/2011.10772), [[5]](https://github.com/cocodataset/cocoapi/issues/678)) mean Average Precision suffers from several notable limitations.
+As it has already been observed (see [[1]](https://arxiv.org/abs/2509.11720), [[2]](https://arxiv.org/abs/2011.10772), [[4]](https://github.com/cocodataset/cocoapi/issues/678)) mean Average Precision suffers from several notable limitations.
 Most critically, mAP becomes meaningless when predictions lack confidence scores. Without a ranking mechanism, the Precision-Recall curve degenerates into a single point, rendering Average Precision nonsensical.
 However many models provide predictions without confidence scores.
 Beyond this, mAP treats all predictions that meet the minimum IoU threshold as equally valid, regardless of how precisely they overlap with the ground truth.
@@ -37,19 +37,36 @@ In the example the main body of the page has been annotated as one big `Picture`
 *Figure 1. Ambiguous document layout analysis predictions.*
 
 
-## Pixel-wise Layout Resolution: The Core Idea
+## Pixel-wise Layout Resolution and binary representation
 
-The central insight is to project every layout prediction directly onto the image pixels rather than reasoning about bounding boxes as geometric objects.
+The first step in TORE is to project the document layout resolution on the image pixels.
+This process happens both for the ground truth annotations and the predictions.
+The taxonomy classes and the special "background" class are flags set for each image pixel.
+The ground truth pixels have only one class (or the "background").
+The prediction pixels can have multiple classes as the model may produce overlapping bounding boxes.
 
-![Pixel-wise layout resolution illustration](slide-05.jpg)
+![pixel-wise layout resolution](images/pixel_grid.png)
+*Figure 2. Pixel-wise layout resolution for the classes R, G, B. The background class Z has been added for the pixels without class resolution.*
 
-Each pixel is assigned one or more class labels depending on the predictions that cover it. Ground truth pixels always carry exactly one label (or the background class Z), because ground truth annotations are non-overlapping. Predicted pixels, however, may carry multiple labels whenever predicted bounding boxes overlap. A background class is added automatically for any pixel that falls outside all annotated or predicted regions, so the evaluation is always complete — no pixel is left unaccounted for.
 
-This representation has a clean interpretation: an overlap of predicted bounding boxes becomes a multi-label assignment on the pixels they share, and background "leakage" is simply those pixels that the ground truth marks as background but the model has claimed for some content class (or vice versa).
+The next step is to bit-pack the classes of each pixel generating a dense binary representation.
+Using `uint64` numbers we can encode 63 classes and the Background.
+The background is the index 0 and each class is represented by the indices 1 - 63.
 
----
+![Binary Representation](images/binary_representation.png)
+*Figure 3. Bit-packing allows to encode the multiple classes in a single integer per pixel*
+
 
 ## Building the Confusion Matrix for a Single Taxonomy
+
+A confusion matrix is a tabular representation of the predictions of a classifier, where each row corresponds to the ground-truth class and each column corresponds to the predicted class.
+The element (C_{ij}) denotes the number of samples belonging to class (i) that were predicted as class (j).
+From the confusion matrix, a recall matrix can be obtained by normalizing each row by the total number of ground-truth samples of the corresponding class, yielding the fraction of correctly and incorrectly recognized instances per true class.
+Similarly, a precision matrix is derived by normalizing each column by the total number of predictions for the corresponding class, expressing how reliable the predictions of each class are.
+The diagonal elements of these normalized matrices form the per-class recall and precision vectors, where recall measures the proportion of correctly detected samples for each ground-truth class, and precision measures the proportion of correct predictions among all predictions assigned to each class.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 When the ground truth and the model share the same classification taxonomy, the evaluation reduces to a standard multi-label confusion matrix. The matrix rows represent ground truth classes and the columns represent predicted classes; each cell (i, j) accumulates the fractional pixel count for pixels that belong to class i according to the ground truth and are predicted as class j.
 
@@ -109,6 +126,7 @@ This pixel-wise evaluation framework addresses the limitations of existing appro
 - [[1] "Advanced Layout Analysis Models for Docling"](https://arxiv.org/abs/2509.11720)
 - [[2] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"](https://csitcp.org/paper/10/108csit01.pdf)
 - [[3] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks"](https://arxiv.org/abs/2011.10772)
-- [[4] "MinerU2.5: A Decoupled Vision-Language Model for Efficient High-Resolution Document Parsing"](https://arxiv.org/abs/2509.22186)
-- [[5] "mAP is wrong if all scores are equal](https://github.com/cocodataset/cocoapi/issues/678)
+- [[4] "mAP is wrong if all scores are equal](https://github.com/cocodataset/cocoapi/issues/678)
+
+<!-- - [[4] "MinerU2.5: A Decoupled Vision-Language Model for Efficient High-Resolution Document Parsing"](https://arxiv.org/abs/2509.22186)  -->
 

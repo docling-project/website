@@ -21,19 +21,19 @@ In this article we will present the "Taxonomy-invariant Object Recognition Evalu
 
 ## Limitations of the mAP metric and qualitative evaluation
 
-As it has already been observed (see [[1]](https://arxiv.org/abs/2509.11720), [[2]](https://arxiv.org/abs/2011.10772), [[5]](https://github.com/cocodataset/cocoapi/issues/678)) the mean Average Precision metric suffers from many limitations.
-The most critical shortcoming is that mAP cannot be computed in a meaningful way when the predictions lack confidence scores.
-Without a way to rank the predictions, the Precision-Recall curve becomes a single point and this make the computation of the Average Precision meaningless.
-Furthermore, mAP does not account for the degree of bounding box overlap in its evaluation. Any prediction that meets the minimum IoU threshold is treated as equally valid — whether it barely clears the threshold or aligns perfectly with the ground truth.
-Additional implementation choices like the interpolation of the PR curve, the way how the area under the PR curve is calculated and boundaries on the maximum number of image predictions have been proved to affect the evaluation results.
-Finally, mAP offers no mechanism for diagnosing the strengths and weaknesses of a model's predictions. Knowing which specific classes the model excels at or struggles with, for instance, would be invaluable to the model designer.
+As it has already been observed (see [[1]](https://arxiv.org/abs/2509.11720), [[2]](https://arxiv.org/abs/2011.10772), [[5]](https://github.com/cocodataset/cocoapi/issues/678)) mean Average Precision suffers from several notable limitations.
+Most critically, mAP becomes meaningless when predictions lack confidence scores. Without a ranking mechanism, the Precision-Recall curve degenerates into a single point, rendering Average Precision nonsensical.
+However many models provide predictions without confidence scores.
+Beyond this, mAP treats all predictions that meet the minimum IoU threshold as equally valid, regardless of how precisely they overlap with the ground truth.
+Implementation details such as PR curve interpolation, area computation methods, and caps on the number of predictions per image have also been shown to affect the evaluation results.
+Finally, mAP offers no diagnostic value: it provides no insight into which classes a model excels at or struggles with — information that would be invaluable during model development.
 
-A qualitative study of layout analysis in real-world documents reveals that the high complexity of documents often yields ambiguous annotations.
+A qualitative study of layout analysis in real-world documents reveals that the high complexity of documents often yield ambiguous annotations.
 As shown in Figure1 it is not clear if the ground truth data (left side) or the model predictions (right side) are correct or maybe both are valid layout resolutions.
-In the first example the main body of the page has been annotated as one big `Picture`, but the model predicts a more detailed classification where textual elements have been identified as `Section-Header`, `Text` and `List Item` and the bounding boxes of the pictures have been reduced to cover only the visual content.
+In the example the main body of the page has been annotated as one big `Picture`, but the model predicts a more detailed classification where textual elements have been identified as `Section-Header`, `Text` and `List Item` and the bounding boxes of the pictures have been reduced to cover only the visual content.
 
-![Ambiguous predictions1](images/ambiguous_0e83a04a6b4eaece3ec8284b8a359f45de542aced44968208036fe58b5bbc106.png)
-![Ambiguous predictions2](images/ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png)
+![Ambiguous predictions1](images/ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png)
+<!-- ![Ambiguous predictions2](images/ambiguous_0e83a04a6b4eaece3ec8284b8a359f45de542aced44968208036fe58b5bbc106.png) -->
 *Figure 1. Ambiguous document layout analysis predictions.*
 
 

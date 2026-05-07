@@ -40,8 +40,8 @@ def HomePage() -> JSX:
                     <a href="https://huggingface.co/docling-project">
                         <img src="img/community/huggingface.svg" /> HuggingFace
                     </a>
-                    <a href="discord">
-                        <img src="img/community/discord.svg" /> Discord
+                    <a href="/community/#slack">
+                        <img src="img/community/slack.svg" /> Slack
                     </a>
                     <a href="https://linkedin.com/company/docling">
                         <img src="img/community/linkedin.svg" /> LinkedIn

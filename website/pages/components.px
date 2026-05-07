@@ -18,3 +18,34 @@ def ComingSoonPage(title: str) -> JSX:
             </main>
         </Page>
     )
+
+
+def CommunityPage() -> JSX:
+    return (
+        <Page>
+            <main>
+                <article>
+                    <h1>Community</h1>
+                    <p>Chat with the Docling community in real time.</p>
+
+                    <section id="slack">
+                        <h2>Slack</h2>
+                        <p>Talk with the Docling community on the LF AI & Data Slack.</p>
+                        <p>
+                            <a class="cta" href="https://communityinviter.com/apps/lfaifoundation/join-lf-ai-and-data-foundation">
+                                Join the LF AI & Data Slack workspace
+                            </a>
+                        </p>
+                        <p>Once you're in the workspace, find the Docling community in:</p>
+                        <ul>
+                            <li>
+                                <a href="https://lfaifoundation.slack.com/archives/docling-technical-discuss/">
+                                    #docling-technical-discuss
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                </article>
+            </main>
+        </Page>
+    )

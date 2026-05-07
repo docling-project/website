@@ -57,6 +57,13 @@ The background is the index 0 and each class is represented by the indices 1 - 6
 *Figure 3. Bit-packing allows to encode the multiple classes in a single integer per pixel*
 
 
+<!-- TODO(Nikos):
+
+- The text has been reviewed up to this point.
+- The remaining text comes from AI conversion of my powerpoint. Needs to be improved.
+
+-->
+
 ## Building the Confusion Matrix for a Single Taxonomy
 
 A confusion matrix is a tabular representation of the predictions of a classifier, where each row corresponds to the ground-truth class and each column corresponds to the predicted class.

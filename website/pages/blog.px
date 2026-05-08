@@ -56,6 +56,9 @@ def BlogPostPage(id: str, filter: BlogFilter | None = None) -> JSX:
     return (
         <Page>
             <main class="blog-posts">
+                {post.thumbnail and (
+                    <img src={f"/blog/{id}/{post.thumbnail}"} alt={post.title} class="banner" />
+                )}
                 <h1>{post.title}</h1>
                 <h4><time>{format_date(post.date, "MMM d, yyyy")}</time></h4>
                 {HTMLDontEscape(post.html)}
@@ -70,8 +73,13 @@ def LastBlogPostPreview(children) -> JSX:
         return (
             <div class="preview">
                 <a class="card" href={f"blog/{post.id}/"}>
-                    <h5>{post.title}</h5>
-                    <time>{format_date(post.date, "MMM d, yyyy")}</time>
+                    {post.thumbnail and (
+                        <img src={f"/blog/{post.id}/{post.thumbnail}"} alt={post.title} loading="lazy" />
+                    )}
+                    <div class="content">
+                        <h5>{post.title}</h5>
+                        <time>{format_date(post.date, "MMM d, yyyy")}</time>
+                    </div>
                 </a>
                 <a class="all" href="blog/">All blog posts</a>
             </div>

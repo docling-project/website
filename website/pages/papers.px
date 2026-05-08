@@ -108,7 +108,12 @@ def LastPaperPreview(children) -> JSX:
         return (
             <div class="preview">
                 <a class="card" href={paper.url}>
-                    <h5>{paper.title}</h5>
+                    {paper.thumbnail and (
+                        <img src={paper.thumbnail} alt={paper.title} loading="lazy" />
+                    )}
+                    <div class="content">
+                        <h5>{paper.title}</h5>
+                    </div>
                 </a>
                 <a class="all" href="papers/">All papers</a>
             </div>

@@ -57,39 +57,43 @@ The background is the index 0 and each class is represented by the indices 1 - 6
 *Figure 3. Bit-packing allows to encode the multiple classes in a single integer per pixel*
 
 
-<!-- TODO(Nikos):
-
-- The text has been reviewed up to this point.
-- The remaining text comes from AI conversion of my powerpoint. Needs to be improved.
-
--->
 
 ## Building the Confusion Matrix for a Single Taxonomy
 
-A confusion matrix is a tabular representation of the predictions of a classifier, where each row corresponds to the ground-truth class and each column corresponds to the predicted class.
-The element (C_{ij}) denotes the number of samples belonging to class (i) that were predicted as class (j).
-From the confusion matrix, a recall matrix can be obtained by normalizing each row by the total number of ground-truth samples of the corresponding class, yielding the fraction of correctly and incorrectly recognized instances per true class.
-Similarly, a precision matrix is derived by normalizing each column by the total number of predictions for the corresponding class, expressing how reliable the predictions of each class are.
-The diagonal elements of these normalized matrices form the per-class recall and precision vectors, where recall measures the proportion of correctly detected samples for each ground-truth class, and precision measures the proportion of correct predictions among all predictions assigned to each class.
+A confusion matrix is a tabular representation of a classifier’s predictions, where each row corresponds to a ground-truth class and each column to a predicted class.
+The element (C_{ij}) denotes the number of pixels belonging to class (i) that were predicted as class (j).
+For a perfect classifier, the confusion matrix is purely diagonal.
+Off-diagonal elements correspond to mispredictions.
+The diagonal entries quantify correct predictions and count as "gains", while the off-diagonal entries reveal the type and magnitude of the model’s errors and count as "penalties".
+
+A confusion matrix enables the derivation of several informative performance measures:
+
+- **Recall matrix (row-wise normalized confusion matrix):** Provides a class-wise overview of recall. It shows how accurately each class is predicted and highlights systematic confusions, e.g., “class (X) is misclassified as class (Y) with this frequency”.
+- **Precision matrix (column-wise normalized confusion matrix):** Provides a class-wise overview of precision by showing how reliable the predictions of each class are.
+- **Recall and precision vectors:** Contain the exact recall and precision values for each class individually.
+- **Higher-level abstractions:** The matrix can be aggregated to analyze broader behaviors, such as the magnitude of correct and incorrect predictions between the "Background" class (BG) and all foreground classes combined.
+
+Finally, the confusion matrix and its derived recall and precision matrices can be visualized effectively using heatmaps, enabling intuitive inspection of prediction patterns and systematic errors.
+
+![Confusion Matrix](images/confusion_matrix.png)
+*Figure 4. The Confusion Matrix quantifies the strengths and weaknesses of the predictions both globally and on a per-class basis*
 
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+The confusion matrix is computed pixel by pixel according to an algorithm that distinguishes 4 cases as described in [[2]](https://csitcp.org/paper/10/108csit01.pdf):
 
-When the ground truth and the model share the same classification taxonomy, the evaluation reduces to a standard multi-label confusion matrix. The matrix rows represent ground truth classes and the columns represent predicted classes; each cell (i, j) accumulates the fractional pixel count for pixels that belong to class i according to the ground truth and are predicted as class j.
+- Case 1: Prediction and GT are a perfect match.
+- Case 2: Prediction is a superset of the GT classes (over-prediction).
+- Case 3: Prediction is a subset of the GT classes (under-prediction).
+- Case 4: Prediction and GT have some partial overlap and some diff (diff-prediction).
 
-![Single-taxonomy confusion matrix and recall/precision matrices](slide-06.jpg)
+The pixel-level confusion matrices  are summed up to produce the confusion matrix for each page and for the entire dataset.
+Recall/Precision matrices and vectors provide the evaluation metrics.
 
-Correct predictions land on the diagonal — these are the **gains**. Off-diagonal entries are the **penalties**, i.e., mispredictions. Two derivative matrices, the **Recall matrix** and the **Precision matrix**, are obtained by dividing each row by its row sum and each column by its column sum, respectively. The main diagonal of these derivative matrices then gives the recall and precision vectors per class, and heatmap visualizations make patterns immediately legible:
 
-- High off-diagonal values signal misclassifications.
-- High values in the first row (excluding the background-background cell) indicate that the model predicts content where the ground truth sees background — in other words, bounding boxes that are too large.
-- High values in the first column (excluding the background-background cell) indicate the opposite: bounding boxes that are too small, missing content that the ground truth covers.
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<!-- The text has been reviewed up to this point -->
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
-Because the ground truth can assign at most one class per pixel while predictions may be multi-label, the algorithm that fills the confusion matrix must handle four distinct cases pixel by pixel: (1) prediction and ground truth are a perfect match; (2) prediction is a superset of the ground truth classes (over-prediction); (3) prediction is a subset (under-prediction); and (4) prediction and ground truth have partial overlap and some divergence. The confusion matrices computed at the page level are then summed across the entire dataset to yield the dataset-level matrix.
-
-![Multi-label confusion matrix algorithm](slide-07.jpg)
-
----
 
 ## Extending to Dual Taxonomies
 

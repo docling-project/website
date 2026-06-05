@@ -79,7 +79,7 @@ Finally, the confusion matrix and its derived recall and precision matrices can 
 
 Document layout analysis is a multi-class and multi-label task as it involves multiple classes and the prediction can assign multiple labels at the same pixel due to bounding box overlaps.
 We can compute the confusion matrix per page by applying the approach of [[2]](https://csitcp.org/paper/10/108csit01.pdf) for each pixel.
-The main idea of [[2]](https://csitcp.org/paper/10/108csit01.pdf) is the "Algorithm1" listed on page 9, which distinguishes 4 cases and assigns fractional "gains" and "penalties" for each "sample" of the dataset.
+The main idea of [[2]](https://csitcp.org/paper/10/108csit01.pdf) is the "Algorithm 1" listed on page 9, which distinguishes 4 cases and assigns fractional "gains" and "penalties" for each "sample" of the dataset.
 These 4 cases are:
 
 - Case 1: The prediction has assigned to the sample the same label as in ground-truth (perfect match).
@@ -87,11 +87,85 @@ These 4 cases are:
 - Case 3: The prediction has assigned to the sample only a subset of the ground-truth labels (under-prediction).
 - Case 4: Predicted and ground-truth labels have some partial overlap and some diff (diff-prediction).
 
-In our case each sample is an image pixel.
-Also case 3 cannot happen in our case because the ground-truth annotation has at most 1 label.
-We get the confusion matrix for a single page by applying "Algorithm1" on the rasterized page.
-Lastly the confusion matrix for the entire dataset is the sum of the page-level confusion matrices.
+The "TORE" algorithm is an application of "Algorithm 1" for the use case where the samples are image pixels.
+Additionally in TORE we omit the case 3, has the ground-truth has single-label annotations.
+First we compute the confusion matrix for all pixels of a page and then we sum up to produce the dataset-level confusion matrix.
 
+## 5. Example on "Heron" model for Document Layout Analysis
+
+In the next example we will show how the confusion, recall and precison matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
+([[1] "Advanced Layout Analysis Models for Docling"](https://arxiv.org/abs/2509.11720), [[5] "Heron - Docling"](https://huggingface.co/docling-project/docling-layout-heron))
+
+The "Heron" model uses a taxonomy of 17 classes:
+
+```python
+[
+    "Caption",
+    "Footnote",
+    "Formula",
+    "List-item",
+    "Page-footer",
+    "Page-header",
+    "Picture",
+    "Section-header",
+    "Table",
+    "Text",
+    "Title",
+    "Document Index",
+    "Code",
+    "Checkbox-Selected",
+    "Checkbox-Unselected",
+    "Form",
+    "Key-Value Region",
+]
+```
+Additionally, the class `"Background"` has been added as the first row/column.
+
+Figure 5 shows the "Confusion Matrix" of the model against the DocLayNet-v2 dataset which uses the same class taxonomy.
+The rows correspond to the ground-truth, the columns to the predictions and each `cell(i,j)` shows the number of pixels that belong to `class-i` but have been predicted as `class-j`.
+Notice that the pixel counts are fractional due the way the algorithm distributes "gains" and "penalties" for each predicted label.
+We use a color code to indicate the magnitude of the cell counts and highlight the main diagonal with pink.
+
+![Heron - Confusion Matrix](images/heron_DLNv2_confusion_matrix.png)
+*Figure 5. The Confusion Matrix of Heron model on the DocLayNet v2 dataset*
+
+If we normalize the confusion matrix row-wise (divide each cell with the sum of its row), we get the "Recall Matrix", as shown in Figure 6.
+Given that an ideal recall matrix has values only on the main diagonal, the perfect predictor should have red cells on the diagonal and black elsewhere.
+
+As we can see in the example of "Heron" the recall matrix provides invaluable insight on the performance of the model.
+We can see immediately for which classes the model performs well or bad and in case of mis-classifications which classes are confusing the model.
+For example we can see that "Heron" performs excellent for "Background" and quite well for the classes: "Picture", "Table", "Text", "Document Index", "Code" and "Form".
+The recall for "Checkbox-Selected" and "Checkbox-Unselected" is still high but a bit lower.
+The model lacks recall mostly for the classes "Key-Value Region", and "Title".
+Also the recall reveals that "Heron" tends to mis-classify "Title" as "Section-Header".
+
+If we extract the main diagonal elements we get the _Recall Vector_.
+
+![Heron - Recall Matrix](images/heron_DLNv2_recall_matrix.png)
+*Figure 6. The Recall Matrix of Heron model on the DocLayNet v2 dataset*
+
+The Precision Matrix is the normalisation of the confusion matrix column-wise (divide each cell with the sum of its column).
+This is shown in Figure 7.
+The precision matrix can also help to derive interesting conclusions for the performance of a model.
+For example we see high off-diagonal value for the cell `["Background", "Key-Value Region"]`, which indicates that Heron misses key-value bounding boxes and mis-classifies them as "Background".
+
+![Heron - Precision Matrix](images/heron_DLNv2_precision_matrix.png)
+*Figure 7. The Precision Matrix of Heron model on the DocLayNet v2 dataset*
+
+
+## 6. Reduced matrices
+
+As we saw in the previous section the Confusion, Recall and Precision matrices are an invaluable source of information for the performance of a classifier.
+At the same time this information can be intimidating. In case of Heron it means to analyze the information of 3 matrices (confusion, recall, precision) with dimensions `18x18`.
+One way to abstract this information into a reduced form, is to sum up the cell values for all "non-background" classes into one class.
+This way we produce reduced `2x2` matrices for the "Background" class and the "non-Background" super-class.
+This abstraction allows to quickly check if the classifier can detect the elements of the page correctly, regardless of the type of document element.
+
+In case of Heron, Figure 8 shows the reduced Recall and Precision matrices:
+
+
+![Heron - Reduced Recall & Precision Matrices](images/heron_DLNv2_reduced_recall_precision.png)
+*Figure 8. Reduced Recall & Precision Matrices of Heron model on the DocLayNet v2 dataset*
 
 
 <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
@@ -99,7 +173,11 @@ Lastly the confusion matrix for the entire dataset is the sum of the page-level 
 <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 
-## Extending to Dual Taxonomies
+## 7. Extending to Dual Taxonomies
+
+A crucial obstacle to compare the predictions coming from different document layout analysis models are the 
+
+---
 
 The most novel part of this framework is how it handles the case where the model under evaluation uses a different classification taxonomy from the ground truth (or from a reference model). This scenario is common: two document AI systems trained on different datasets may use different, yet semantically related, label sets.
 
@@ -142,6 +220,7 @@ This pixel-wise evaluation framework addresses the limitations of existing appro
 - [[2] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"](https://csitcp.org/paper/10/108csit01.pdf)
 - [[3] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks"](https://arxiv.org/abs/2011.10772)
 - [[4] "mAP is wrong if all scores are equal](https://github.com/cocodataset/cocoapi/issues/678)
+- [[5] "Heron - Docling"](https://huggingface.co/docling-project/docling-layout-heron)
 
 <!-- - [[4] "MinerU2.5: A Decoupled Vision-Language Model for Efficient High-Resolution Document Parsing"](https://arxiv.org/abs/2509.22186)  -->
 

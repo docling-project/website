@@ -19,7 +19,7 @@ In this article we will present the "Taxonomy-invariant Object Recognition Evalu
 - Can be implemented efficiently using SIMD operations.
 
 
-## Evaluation Challenges in Layout Analysis
+## 1. Evaluation Challenges in Layout Analysis
 
 As it has already been observed (see [[1]](https://arxiv.org/abs/2509.11720), [[2]](https://arxiv.org/abs/2011.10772), [[4]](https://github.com/cocodataset/cocoapi/issues/678)) mean Average Precision suffers from several notable limitations.
 Most critically, mAP becomes meaningless when predictions lack confidence scores. Without a ranking mechanism, the Precision-Recall curve degenerates into a single point, rendering Average Precision nonsensical.
@@ -37,7 +37,7 @@ In the example the main body of the page has been annotated as one big `Picture`
 *Figure 1. Ambiguous document layout analysis predictions.*
 
 
-## Pixel-wise Layout Resolution and binary representation
+## 2. Pixel-wise Layout Resolution and binary representation
 
 The first step in TORE is to project the document layout resolution on the image pixels.
 This process happens both for the ground truth annotations and the predictions.
@@ -49,7 +49,7 @@ The prediction pixels can have multiple classes as the model may produce overlap
 *Figure 2. Pixel-wise layout resolution for the classes R, G, B. The background class Z has been added for the pixels without class resolution.*
 
 
-The next step is to bit-pack the classes of each pixel generating a dense binary representation.
+The next step is to bit-pack the classes of each pixel, generating a dense binary representation.
 Using `uint64` numbers we can encode 63 classes and the Background.
 The background is the index 0 and each class is represented by the indices 1 - 63.
 
@@ -57,16 +57,14 @@ The background is the index 0 and each class is represented by the indices 1 - 6
 *Figure 3. Bit-packing allows to encode the multiple classes in a single integer per pixel*
 
 
-
-## Building the Confusion Matrix for a Single Taxonomy
+## 3. Building the Confusion Matrix for a Single Taxonomy
 
 A confusion matrix is a tabular representation of a classifier’s predictions, where each row corresponds to a ground-truth class and each column to a predicted class.
 The element (C_{ij}) denotes the number of pixels belonging to class (i) that were predicted as class (j).
 For a perfect classifier, the confusion matrix is purely diagonal.
-Off-diagonal elements correspond to mispredictions.
-The diagonal entries quantify correct predictions and count as "gains", while the off-diagonal entries reveal the type and magnitude of the model’s errors and count as "penalties".
+In real-life classifications, the diagonal entries quantify correct predictions and count as "gains", while the off-diagonal entries correspond to mispredictions and count as "penalties".
 
-A confusion matrix enables the derivation of several informative performance measures:
+Several performance measurements can derive out of the confusion matrix:
 
 - **Recall matrix (row-wise normalized confusion matrix):** Provides a class-wise overview of recall. It shows how accurately each class is predicted and highlights systematic confusions, e.g., “class (X) is misclassified as class (Y) with this frequency”.
 - **Precision matrix (column-wise normalized confusion matrix):** Provides a class-wise overview of precision by showing how reliable the predictions of each class are.
@@ -79,15 +77,21 @@ Finally, the confusion matrix and its derived recall and precision matrices can 
 *Figure 4. The Confusion Matrix quantifies the strengths and weaknesses of the predictions both globally and on a per-class basis*
 
 
-The confusion matrix is computed pixel by pixel according to an algorithm that distinguishes 4 cases as described in [[2]](https://csitcp.org/paper/10/108csit01.pdf):
+Document layout analysis is a multi-class and multi-label task as it involves multiple classes and the prediction can assign multiple labels at the same pixel due to bounding box overlaps.
+We can compute the confusion matrix per page by applying the approach of [[2]](https://csitcp.org/paper/10/108csit01.pdf) for each pixel.
+The main idea of [[2]](https://csitcp.org/paper/10/108csit01.pdf) is the "Algorithm1" listed on page 9, which distinguishes 4 cases and assigns fractional "gains" and "penalties" for each "sample" of the dataset.
+These 4 cases are:
 
-- Case 1: Prediction and GT are a perfect match.
-- Case 2: Prediction is a superset of the GT classes (over-prediction).
-- Case 3: Prediction is a subset of the GT classes (under-prediction).
-- Case 4: Prediction and GT have some partial overlap and some diff (diff-prediction).
+- Case 1: The prediction has assigned to the sample the same label as in ground-truth (perfect match).
+- Case 2: The prediction has assigned to the sample the label of the ground-truth plus some additional wrong label(s) (over-prediction).
+- Case 3: The prediction has assigned to the sample only a subset of the ground-truth labels (under-prediction).
+- Case 4: Predicted and ground-truth labels have some partial overlap and some diff (diff-prediction).
 
-The pixel-level confusion matrices  are summed up to produce the confusion matrix for each page and for the entire dataset.
-Recall/Precision matrices and vectors provide the evaluation metrics.
+In our case each sample is an image pixel.
+Also case 3 cannot happen in our case because the ground-truth annotation has at most 1 label.
+We get the confusion matrix for a single page by applying "Algorithm1" on the rasterized page.
+Lastly the confusion matrix for the entire dataset is the sum of the page-level confusion matrices.
+
 
 
 <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->

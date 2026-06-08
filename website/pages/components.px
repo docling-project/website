@@ -4,6 +4,16 @@ from .page import Page
 from .svg import circle, defs, g, image, line, marker, path, polyline, rect
 
 
+def AnnouncementBanner(children=None) -> JSX:
+    return (
+        <div class="announcement-banner">
+            <p>
+                IBM announced Docling for IBM watsonx - <a href="https://www.ibm.com/watsonx" target="_blank" rel="noopener noreferrer">give it a try for free!</a>
+            </p>
+        </div>
+    )
+
+
 def Code(children, text: str, language: str | None = None) -> JSX:
     lang_class = "" if language is None else f" language-{language}"
     return HTMLDontEscape(f"<pre><code class='{lang_class}'>{text}</code></pre>")

@@ -7,16 +7,31 @@ category: technical
 ---
 
 
-Document layout analysis — the task of locating and classifying elements such as titles, tables, figures, and text blocks within a page — is a cornerstone of modern document AI pipelines. Yet evaluating how well a model performs this task turns out to be surprisingly tricky. Two fundamental difficulties stand out immediately:
+Document layout analysis — the task of locating and classifying elements such as titles, tables, figures, and text blocks within a page — is a cornerstone of modern document AI pipelines.
+Yet evaluating how well a model performs this task turns out to be surprisingly tricky.
+Three fundamental difficulties stand out immediately:
 
-- By definition each model uses its own taxonomoy of classes, making it very hard to perform cross-taxonomy evaluations.
-- The most widely used metric, mean Average Precision (mAP), is known to have many limitations and cannot be applied in a meaningful way when the predictions lack confidence scores.
+- The most widely used metric, mean Average Precision (mAP), is known to have many limitations which makes mAP inappropriate for the evaluation of document layout analysis.
+- Most evaluation methods are applicable only between layout resolutions that use the same class taxonomy. This leaves outside cases like:
+  - Evaluate a model on an annotated dataset that uses a different class taxonomy.
+  - Use a non-annotated dataset to evaluate two models against each other, and each model uses its own class taxonomy.
+- How to accelerate the computation of the metric on the CPU using SIMD operations.
 
-In this article we will present the "Taxonomy-invariant Object Recognition Evaluation (TORE)" method which allows to:
+In this article we will present the **"Taxonomy-invariant Object Recognition Evaluation (TORE)"** method which allows to overcome all above limitations.
 
-- Compute a multi-label confusion matrix that provides insights about the recall and precision for each individual class. This can be computed regardless of the existence of confidence scores.
-- Allows evaluations across class taxonomies.
-- Can be implemented efficiently using SIMD operations.
+In a typical TORE workflow the following steps take place:
+- Generate rasterizations of the reference and predicted layout resolutions (boundings boxes + labels).
+  - Each resolution is projected on top of the input image.
+  - Each rasterized pixel is assigned one or more labels.
+  - Assign the special class "Background" to the pixels without any annotation/detection.
+  - The reference resolution can be either ground-truth annotations or the detections of a "reference" model.
+- Convert the rasterized layout resolutions into a compressed binary format.
+  - Each pixel is represented by a `uint64` number.
+  - Only unique combinations of `(reference, predicted)` pixel pairs take part in the computation.
+- Compute the Confusion Matrix and its derivatives Recall Matrix and Precision Matrix.
+- Reduce the matrices to their `2x2` variants by collapsing the non-background classes together.
+
+In the next sections we provide more insight
 
 
 ## 1. Evaluation Challenges in Layout Analysis
@@ -37,45 +52,29 @@ In the example the main body of the page has been annotated as one big `Picture`
 *Figure 1. Ambiguous document layout analysis predictions.*
 
 
-## 2. Pixel-wise Layout Resolution and binary representation
-
-The first step in TORE is to project the document layout resolution on the image pixels.
-This process happens both for the ground truth annotations and the predictions.
-The taxonomy classes and the special "background" class are flags set for each image pixel.
-The ground truth pixels have only one class (or the "background").
-The prediction pixels can have multiple classes as the model may produce overlapping bounding boxes.
-
-![pixel-wise layout resolution](images/pixel_grid.png)
-*Figure 2. Pixel-wise layout resolution for the classes R, G, B. The background class Z has been added for the pixels without class resolution.*
-
-
-The next step is to bit-pack the classes of each pixel, generating a dense binary representation.
-Using `uint64` numbers we can encode 63 classes and the Background.
-The background is the index 0 and each class is represented by the indices 1 - 63.
-
-![Binary Representation](images/binary_representation.png)
-*Figure 3. Bit-packing allows to encode the multiple classes in a single integer per pixel*
-
-
-## 3. Building the Confusion Matrix for a Single Taxonomy
+## 2. Single taxonomy Confusion Matrix and its derivatives
 
 A confusion matrix is a tabular representation of a classifier’s predictions, where each row corresponds to a ground-truth class and each column to a predicted class.
-The element (C_{ij}) denotes the number of pixels belonging to class (i) that were predicted as class (j).
+The element `c[i,j]` denotes the number of pixels belonging to class `i` that were predicted as class `j`.
 For a perfect classifier, the confusion matrix is purely diagonal.
-In real-life classifications, the diagonal entries quantify correct predictions and count as "gains", while the off-diagonal entries correspond to mispredictions and count as "penalties".
+In real-life classifications, the diagonal entries quantify correct predictions and count as "Gains",
+while the off-diagonal entries correspond to mis-predictions and count as "Penalties".
+
+In Figure 4 we can see a Confusion Matrix built for the classes `C1, C2, ... , Cn` and the special "Background" class `BG`.
+
+![Confusion Matrix](images/confusion_matrix.png)
+*Figure 4. The Confusion Matrix quantifies the strengths and weaknesses of the predictions both globally and on a per-class basis*
 
 Several performance measurements can derive out of the confusion matrix:
 
 - **Recall matrix (row-wise normalized confusion matrix):** Provides a class-wise overview of recall. It shows how accurately each class is predicted and highlights systematic confusions, e.g., “class (X) is misclassified as class (Y) with this frequency”.
 - **Precision matrix (column-wise normalized confusion matrix):** Provides a class-wise overview of precision by showing how reliable the predictions of each class are.
 - **Recall and precision vectors:** Contain the exact recall and precision values for each class individually.
-- **Higher-level abstractions:** The matrix can be aggregated to analyze broader behaviors, such as the magnitude of correct and incorrect predictions between the "Background" class (BG) and all foreground classes combined.
 
 Finally, the confusion matrix and its derived recall and precision matrices can be visualized effectively using heatmaps, enabling intuitive inspection of prediction patterns and systematic errors.
 
-![Confusion Matrix](images/confusion_matrix.png)
-*Figure 4. The Confusion Matrix quantifies the strengths and weaknesses of the predictions both globally and on a per-class basis*
 
+## 3. Building a multi-class, multi-label Confusion Matrix
 
 Document layout analysis is a multi-class and multi-label task as it involves multiple classes and the prediction can assign multiple labels at the same pixel due to bounding box overlaps.
 We can compute the confusion matrix per page by applying the approach of [[2]](https://csitcp.org/paper/10/108csit01.pdf) for each pixel.
@@ -91,7 +90,7 @@ The "TORE" algorithm is an application of "Algorithm 1" for the use case where t
 Additionally in TORE we omit the case 3, has the ground-truth has single-label annotations.
 First we compute the confusion matrix for all pixels of a page and then we sum up to produce the dataset-level confusion matrix.
 
-## 5. Example on "Heron" model for Document Layout Analysis
+## 4. Example on "Heron" model for Document Layout Analysis
 
 In the next example we will show how the confusion, recall and precison matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
 ([[1] "Advanced Layout Analysis Models for Docling"](https://arxiv.org/abs/2509.11720), [[5] "Heron - Docling"](https://huggingface.co/docling-project/docling-layout-heron))
@@ -153,7 +152,7 @@ For example we see high off-diagonal value for the cell `["Background", "Key-Val
 *Figure 7. The Precision Matrix of Heron model on the DocLayNet v2 dataset*
 
 
-## 6. Reduced matrices
+## 5. Reduced matrices
 
 As we saw in the previous section the Confusion, Recall and Precision matrices are an invaluable source of information for the performance of a classifier.
 At the same time this information can be intimidating. In case of Heron it means to analyze the information of 3 matrices (confusion, recall, precision) with dimensions `18x18`.
@@ -168,38 +167,68 @@ In case of Heron, Figure 8 shows the reduced Recall and Precision matrices:
 *Figure 8. Reduced Recall & Precision Matrices of Heron model on the DocLayNet v2 dataset*
 
 
+## 6. Extending to Dual Taxonomies
+
+So far we have constructed confusion matrixes where both the ground truth (rows) and the model predictions (columns) use the same classes.
+However very often we need to compare model predictions against datasets or other models that use different class taxonomies.
+Assuming that the ground truth uses the classes `BG, GT1, ..., GTn` and a model uses the classes `BG, P1, ... , Pm`,
+we can create a confusion matrix on top of the union-taxonomy with the classes `BG, GT1, ..., GTn, P1, ... Pm`.
+
+This extended matrix will be sparse and have the block structure shown in Figure 9 where the non-zero values are:
+- First column (Background) for the rows: `[BG, GT1, ..., GTn]`
+- Top left block, fro the rows `[BG, GT1, ..., GTn]` and columns: `[BG, P1, ..., Pm]`.
+
+All other values are zero as the model never predicts on the ground truth taxonomy and the evaluation is never done against the model's taxonomy.
+
+![Dual taxonomy confusion matrix](images/dual_taxonomy_confusion_matrix.png)
+*Figure 9. Dual class taxonomies matrices*
+
+As shown in Figure 9 we can derive Recall and Precision matrices by dividing each value over its row/column sum.
+Notice that the classic recall and precision vectors per class can no longer be computed,
+as the diagonal of the recall and precision matrices are no longer meaningful.
+
+What can be extracted, however, is highly informative.
+From the **Recall matrix**, one can start from a prediction class (column) and trace which ground truth classes (rows) it maps to most strongly — revealing the semantic relationship between the two vocabularies.
+From the **Precision matrix**, one starts from a ground truth class (row) and identifies which prediction classes correspond to it.
+In practice this allows a researcher to see, for instance, that prediction class `P1` is strongly related to ground truth class `GTn`, or that prediction class `Pm` cannot be easily mapped to any ground truth class at all.
+
+Additionally, similarly to what happens with the same class taxonomy matrices, it is possible to reduce the matrix but collapsing all non-background classes into one class.
+
+Figure 10 shows the full picture for the same class taxonomy and dual class taxonomies confusion matrices and their derivatives.
+
+![Multiple taxonomies matrices](images/TORE_multiple_taxonomies.png)
+*Figure 10. Multiple class taxonomies matrices (read the diagram in the indicated order)*
+
+
 <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 <!-- The text has been reviewed up to this point -->
 <!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
 
-## 7. Extending to Dual Taxonomies
+## 7. Implementation Optimisations: Binary Encoding and Parallelism
 
-A crucial obstacle to compare the predictions coming from different document layout analysis models are the 
+<!--
+## 2. Pixel-wise Layout Resolution and binary representation
 
----
+The first step in TORE is to project the document layout resolution on the image pixels.
+This process happens both for the ground truth annotations and the predictions.
+The taxonomy classes and the special "background" class are flags set for each image pixel.
+The ground truth pixels have only one class (or the "background").
+The prediction pixels can have multiple classes as the model may produce overlapping bounding boxes.
 
-The most novel part of this framework is how it handles the case where the model under evaluation uses a different classification taxonomy from the ground truth (or from a reference model). This scenario is common: two document AI systems trained on different datasets may use different, yet semantically related, label sets.
+![pixel-wise layout resolution](images/pixel_grid.png)
+*Figure 2. Pixel-wise layout resolution for the classes R, G, B. The background class Z has been added for the pixels without class resolution.*
 
-![Dual-taxonomy confusion matrix structure](slide-08.jpg)
 
-When two taxonomies are involved, the confusion matrix is extended to cover all classes from both taxonomies simultaneously. The resulting matrix is sparse and has a clear block structure: the rows corresponding to the prediction taxonomy and the columns corresponding to the ground truth taxonomy contain zeros (a model trained on taxonomy B never directly predicts a class from taxonomy A), and vice versa. This means the classic recall and precision vectors per class can no longer be computed — the diagonal is no longer meaningful in isolation.
+The next step is to bit-pack the classes of each pixel, generating a dense binary representation.
+Using `uint64` numbers we can encode 63 classes and the Background.
+The background is the index 0 and each class is represented by the indices 1 - 63.
 
-What can be extracted, however, is highly informative. From the **Recall matrix**, one can start from a prediction class (column) and trace which ground truth classes (rows) it maps to most strongly — revealing the semantic relationship between the two vocabularies. From the **Precision matrix**, one starts from a ground truth class (row) and identifies which prediction classes correspond to it. In practice this allows a researcher to see, for instance, that prediction class P₁ is strongly related to ground truth class GTₙ, or that prediction class Pₘ cannot be easily mapped to any ground truth class at all.
+![Binary Representation](images/binary_representation.png)
+*Figure 3. Bit-packing allows to encode the multiple classes in a single integer per pixel*
 
----
 
-## Reduced Matrices: A Common Currency Across Taxonomies
-
-Because recall and precision vectors cannot be defined when two taxonomies differ, a further abstraction is needed to consolidate evaluations across settings. The solution is the **reduced matrix**: collapse all non-background classes into a single "non-background" bin by summing the corresponding pixel counts.
-
-![Reduced matrices illustration](slide-09.jpg)
-
-The result is always a 2×2 matrix — background versus non-background — regardless of the original taxonomy size or the number of taxonomies involved. This reduction can be applied to the raw confusion matrix as well as to any of its derivative matrices (recall, precision, F1, and so on), and it works identically whether one or two taxonomies are in play. The reduced matrices serve two concrete purposes: they make it possible to evaluate over- and under-sized predicted bounding boxes in a taxonomy-agnostic way, and they provide a consistent basis for comparing results across heterogeneous experimental settings.
-
----
-
-## Implementation: Binary Encoding and Parallelism
+## 7. Implementation Optimisations: Binary Encoding and Parallelism
 
 Efficiency is not an afterthought. The framework encodes every pixel's class assignment as a bit-packed integer using `uint64` values, which can represent up to 63 content classes plus the background class (index 0). Each class occupies one bit at positions 1–63, and the background occupies bit 0.
 
@@ -207,11 +236,14 @@ Efficiency is not an afterthought. The framework encodes every pixel's class ass
 
 A compression step further reduces the computational cost. Rather than processing every pixel independently, the implementation counts the number of distinct (ground truth, prediction) pixel-pairs that appear on a page. Only the contribution matrix for each unique pair needs to be computed; the page-level confusion matrix is then the weighted sum of these contribution matrices, each multiplied by the number of times its corresponding pixel-pair appears. Because the number of unique pixel-pairs is substantially smaller than the total pixel count, this dramatically reduces the computational overhead. Finally, because each page is entirely independent of the others, page-level matrices can be computed in parallel — something that mAP computation cannot offer.
 
----
+-->
 
-## Summary
+## 8. Summary
 
-This pixel-wise evaluation framework addresses the limitations of existing approaches for document layout analysis in a coherent and systematic way. It handles multi-label predictions arising from overlapping bounding boxes, accounts for background regions even when they are absent from dataset annotations, and — crucially — extends naturally to comparisons across models that operate under different classification taxonomies. The reduced matrix abstraction provides a common currency for cross-taxonomy comparison, while the bit-packed binary encoding and representation compression keep the runtime low enough to support rapid experimentation. Together, these properties make it a practical and principled tool for anyone developing or benchmarking document layout models at scale.
+This pixel-wise evaluation framework addresses the limitations of existing approaches for document layout analysis in a coherent and systematic way.
+It handles multi-label predictions arising from overlapping bounding boxes, accounts for background regions, and extends to comparisons across models that operate under different classification taxonomies.
+The reduced matrix abstraction provides a common currency for cross-taxonomy comparison, while the bit-packed binary encoding and representation compression keep the runtime low enough to support rapid experimentation.
+Together, these properties make it a practical and principled tool for anyone developing or benchmarking document layout models at scale.
 
 
 ## References

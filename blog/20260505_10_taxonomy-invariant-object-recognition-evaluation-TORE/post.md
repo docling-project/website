@@ -47,9 +47,11 @@ A qualitative study of layout analysis in real-world documents reveals that the 
 As shown in Figure 1 it is not clear if the ground truth data (left side) or the model predictions (right side) are correct or maybe both are valid layout resolutions.
 In the example the main body of the page has been annotated as one big `Picture`, but the model predicts a more detailed classification where textual elements have been identified as `Section-Header`, `Text` and `List Item` and the bounding boxes of the pictures have been reduced to cover only the visual content.
 
-![Ambiguous predictions1](images/ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png)
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 1. Ambiguous document layout analysis predictions.</em></figcaption>
+  <img src="images/cropped_ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png" alt="Ambiguous predictions1" />
+</figure>
 <!-- ![Ambiguous predictions2](images/ambiguous_0e83a04a6b4eaece3ec8284b8a359f45de542aced44968208036fe58b5bbc106.png) -->
-*Figure 1. Ambiguous document layout analysis predictions.*
 
 
 ## 2. Single taxonomy Confusion Matrix and its derivatives
@@ -62,8 +64,10 @@ while the off-diagonal entries correspond to mis-predictions and count as "Penal
 
 In Figure 4 we can see a Confusion Matrix built for the classes `C1, C2, ... , Cn` and the special "Background" class `BG`.
 
-![Confusion Matrix](images/confusion_matrix.png)
-*Figure 4. The Confusion Matrix quantifies the strengths and weaknesses of the predictions both globally and on a per-class basis*
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 4. The Confusion Matrix quantifies the strengths and weaknesses of the predictions both globally and on a per-class basis</em></figcaption>
+  <img src="images/scaled_confusion_matrix.png" alt="Confusion Matrix" />
+</figure>
 
 Several performance measurements can derive out of the confusion matrix:
 
@@ -126,8 +130,10 @@ The rows correspond to the ground-truth, the columns to the predictions and each
 Notice that the pixel counts are fractional due the way the algorithm distributes "gains" and "penalties" for each predicted label.
 We use a color code to indicate the magnitude of the cell counts and highlight the main diagonal with pink.
 
-![Heron - Confusion Matrix](images/heron_DLNv2_confusion_matrix.png)
-*Figure 5. The Confusion Matrix of Heron model on the DocLayNet v2 dataset*
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 5. The Confusion Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
+  <img src="images/heron_DLNv2_confusion_matrix.png" alt="Heron - Confusion Matrix" />
+</figure>
 
 If we normalize the confusion matrix row-wise (divide each cell with the sum of its row), we get the "Recall Matrix", as shown in Figure 6.
 Given that an ideal recall matrix has values only on the main diagonal, the perfect predictor should have red cells on the diagonal and black elsewhere.
@@ -141,16 +147,20 @@ Also the recall reveals that "Heron" tends to mis-classify "Title" as "Section-H
 
 If we extract the main diagonal elements we get the _Recall Vector_.
 
-![Heron - Recall Matrix](images/heron_DLNv2_recall_matrix.png)
-*Figure 6. The Recall Matrix of Heron model on the DocLayNet v2 dataset*
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 6. The Recall Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
+  <img src="images/heron_DLNv2_recall_matrix.png" alt="Heron - Recall Matrix" />
+</figure>
 
 The Precision Matrix is the normalisation of the confusion matrix column-wise (divide each cell with the sum of its column).
 This is shown in Figure 7.
 The precision matrix can also help to derive interesting conclusions for the performance of a model.
 For example we see high off-diagonal value for the cell `["Background", "Key-Value Region"]`, which indicates that Heron misses key-value bounding boxes and mis-classifies them as "Background".
 
-![Heron - Precision Matrix](images/heron_DLNv2_precision_matrix.png)
-*Figure 7. The Precision Matrix of Heron model on the DocLayNet v2 dataset*
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 7. The Precision Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
+  <img src="images/heron_DLNv2_precision_matrix.png" alt="Heron - Precision Matrix" />
+</figure>
 
 
 ## 5. Reduced matrices
@@ -164,8 +174,10 @@ This abstraction allows to quickly check if the classifier can detect the elemen
 In case of Heron, Figure 8 shows the reduced Recall and Precision matrices:
 
 
-![Heron - Reduced Recall & Precision Matrices](images/heron_DLNv2_reduced_Recall_Precision.png)
-*Figure 8. Reduced Recall & Precision Matrices of Heron model on the DocLayNet v2 dataset*
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 8. Reduced Recall & Precision Matrices of Heron model on the DocLayNet v2 dataset</em></figcaption>
+  <img src="images/Heron_DLNv2_reduced_Recall_Precision.png" alt="Heron - Reduced Recall & Precision Matrices" />
+</figure>
 
 
 ## 6. Extending to Dual Taxonomies
@@ -181,8 +193,10 @@ This extended matrix will be sparse and have the block structure shown in Figure
 
 All other values are zero as the model never predicts on the ground truth taxonomy and the evaluation is never done against the model's taxonomy.
 
-![Dual taxonomy confusion matrix](images/dual_taxonomy_confusion_matrix.png)
-*Figure 9. Dual class taxonomies matrices*
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 9. Dual class taxonomies matrices</em></figcaption>
+  <img src="images/scaled_dual_taxonomy_confusion_matrix.png" alt="Dual taxonomy confusion matrix" />
+</figure>
 
 As shown in Figure 9 we can derive Recall and Precision matrices by dividing each value over its row/column sum.
 Notice that the classic recall and precision vectors per class can no longer be computed,
@@ -197,8 +211,10 @@ Additionally, similarly to what happens with the same class taxonomy matrices, i
 
 Figure 10 shows the full picture for the same class taxonomy and dual class taxonomies confusion matrices and their derivatives.
 
-![Multiple taxonomies matrices](images/TORE_multiple_taxonomies.png)
-*Figure 10. Multiple class taxonomies matrices (read the diagram in the indicated order)*
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 10. Multiple class taxonomies matrices (read the diagram in the indicated order)</em></figcaption>
+  <img src="images/scaled_TORE_multiple_taxonomies.png" alt="Multiple taxonomies matrices" />
+</figure>
 
 
 ## 7. Example 2: TORE with dual class taxonomies on "Heron"
@@ -224,8 +240,10 @@ The contribution matrix of each unique pair should be computed only once and the
 Because the number of unique pixel-pairs is substantially smaller than the total pixel count, this dramatically reduces the computational overhead.
 Finally we parallelize the computation of the page-level confusion matrices.
 
-![TORE Binary Representation](images/TORE_binary_representation.png)
-*Figure 11. Example of TORE binary representation using uint4 (TORE implementation uses uint64). The bboxes with dashed lines correspond to the reference resolution (e.g. ground-truth) and the solid ones to the predictions.*
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 11. Example of TORE binary representation using uint4 (TORE implementation uses uint64). The bboxes with dashed lines correspond to the reference resolution (e.g. ground-truth) and the solid ones to the predictions.</em></figcaption>
+  <img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" />
+</figure>
 
 ## 9. Summary
 

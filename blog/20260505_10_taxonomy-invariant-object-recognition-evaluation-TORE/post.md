@@ -20,7 +20,7 @@ Three fundamental difficulties stand out immediately:
 In this article we will present the **"Taxonomy-invariant Object Recognition Evaluation (TORE)"** method which allows to overcome all above limitations.
 
 In a typical TORE workflow the following steps take place:
-- Generate rasterizations of the reference and predicted layout resolutions (boundings boxes + labels).
+- Generate rasterizations of the reference and predicted layout resolutions (bounding boxes + labels).
   - Each resolution is projected on top of the input image.
   - Each rasterized pixel is assigned one or more labels.
   - Assign the special class "Background" to the pixels without any annotation/detection.
@@ -31,7 +31,7 @@ In a typical TORE workflow the following steps take place:
 - Compute the Confusion Matrix and its derivatives Recall Matrix and Precision Matrix.
 - Reduce the matrices to their `2x2` variants by collapsing the non-background classes together.
 
-In the next sections we provide more insight
+In the next sections we provide more insight.
 
 
 ## 1. Evaluation Challenges in Layout Analysis
@@ -44,7 +44,7 @@ Implementation details such as PR curve interpolation, area computation methods,
 Finally, mAP offers no diagnostic value: it provides no insight into which classes a model excels at or struggles with — information that would be invaluable during model development.
 
 A qualitative study of layout analysis in real-world documents reveals that the high complexity of documents often yield ambiguous annotations.
-As shown in Figure1 it is not clear if the ground truth data (left side) or the model predictions (right side) are correct or maybe both are valid layout resolutions.
+As shown in Figure 1 it is not clear if the ground truth data (left side) or the model predictions (right side) are correct or maybe both are valid layout resolutions.
 In the example the main body of the page has been annotated as one big `Picture`, but the model predicts a more detailed classification where textual elements have been identified as `Section-Header`, `Text` and `List Item` and the bounding boxes of the pictures have been reduced to cover only the visual content.
 
 ![Ambiguous predictions1](images/ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png)
@@ -78,7 +78,7 @@ Finally, the confusion matrix and its derived recall and precision matrices can 
 
 Document layout analysis is a multi-class and multi-label task as it involves multiple classes and the prediction can assign multiple labels at the same pixel due to bounding box overlaps.
 We can compute the confusion matrix per page by applying the approach of [[2]](https://csitcp.org/paper/10/108csit01.pdf) for each pixel.
-The main idea of [[2]](https://csitcp.org/paper/10/108csit01.pdf) is the "Algorithm 1" listed on page 9, which distinguishes 4 cases and assigns fractional "gains" and "penalties" for each "sample" of the dataset.
+The main idea of [[2]](https://csitcp.org/paper/10/108csit01.pdf) is the _"Algorithm 1"_ listed on page 9, which distinguishes 4 cases and assigns fractional _"Gains"_ and _"Penalties"_ for each sample of the dataset.
 These 4 cases are:
 
 - Case 1: The prediction has assigned to the sample the same label as in ground-truth (perfect match).
@@ -87,12 +87,13 @@ These 4 cases are:
 - Case 4: Predicted and ground-truth labels have some partial overlap and some diff (diff-prediction).
 
 The "TORE" algorithm is an application of "Algorithm 1" for the use case where the samples are image pixels.
-Additionally in TORE we omit the case 3, has the ground-truth has single-label annotations.
+Additionally in TORE we omit the case 3, as the ground-truth has single-label annotations.
 First we compute the confusion matrix for all pixels of a page and then we sum up to produce the dataset-level confusion matrix.
 
-## 4. Example on "Heron" model for Document Layout Analysis
 
-In the next example we will show how the confusion, recall and precison matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
+## 4. Example 1: Apply TORE on the "Heron" model
+
+In the next example we will show how the confusion, recall and precision matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
 ([[1] "Advanced Layout Analysis Models for Docling"](https://arxiv.org/abs/2509.11720), [[5] "Heron - Docling"](https://huggingface.co/docling-project/docling-layout-heron))
 
 The "Heron" model uses a taxonomy of 17 classes:
@@ -169,7 +170,7 @@ In case of Heron, Figure 8 shows the reduced Recall and Precision matrices:
 
 ## 6. Extending to Dual Taxonomies
 
-So far we have constructed confusion matrixes where both the ground truth (rows) and the model predictions (columns) use the same classes.
+So far we have constructed confusion matrices where both the ground truth (rows) and the model predictions (columns) use the same classes.
 However very often we need to compare model predictions against datasets or other models that use different class taxonomies.
 Assuming that the ground truth uses the classes `BG, GT1, ..., GTn` and a model uses the classes `BG, P1, ... , Pm`,
 we can create a confusion matrix on top of the union-taxonomy with the classes `BG, GT1, ..., GTn, P1, ... Pm`.
@@ -199,48 +200,32 @@ Figure 10 shows the full picture for the same class taxonomy and dual class taxo
 ![Multiple taxonomies matrices](images/TORE_multiple_taxonomies.png)
 *Figure 10. Multiple class taxonomies matrices (read the diagram in the indicated order)*
 
-<!--------------------------------------------------------------------------------------------- -->
-<!-- The text has been reviewed up to this point -->
-<!-- ------------------------------------------------------------------------------------------ -->
 
-
-## 7. Heron example with dual class taxonomies
+## 7. Example 2: TORE with dual class taxonomies on "Heron"
 
 TODO
 
 
 ## 8. Implementation Optimisations: Binary Encoding and Parallelism
 
-<!--
-## 2. Pixel-wise Layout Resolution and binary representation
+As already mentioned, the first step in TORE is to project the document layout resolution on the image pixels.
+This process happens both for the reference resolutions and the predictions.
+In the TORE implementation we bit-pack up to 64 labels per pixel inside an unsigned 64-bit integer (`uint64`).
+In our encoding we allocate the `index-0` to the `BG` class and support up to 63 additional labels per pixel,
+which provides enough space for overlapping bounding boxes.
+This dense representation enables an efficient implementation of the [TORE algorithm](#3.-building-a-multi-class,-multi-label-confusion-matrix),
+which computes multiple pixels in parallel using SIMD operations.
 
-The first step in TORE is to project the document layout resolution on the image pixels.
-This process happens both for the ground truth annotations and the predictions.
-The taxonomy classes and the special "background" class are flags set for each image pixel.
-The ground truth pixels have only one class (or the "background").
-The prediction pixels can have multiple classes as the model may produce overlapping bounding boxes.
+Figure 11 provides an example of the binary representation for the pixel labels used in TORE.
 
-![pixel-wise layout resolution](images/pixel_grid.png)
-*Figure 2. Pixel-wise layout resolution for the classes R, G, B. The background class Z has been added for the pixels without class resolution.*
+After the rasterization, compression step further reduces the computational cost.
+Instead of processing every pixel independently, the implementation counts the number of distinct pixel-pairs `[reference, prediction]` that appear on the page.
+The contribution matrix of each unique pair should be computed only once and then multiplied by the number of times this pair appears.
+Because the number of unique pixel-pairs is substantially smaller than the total pixel count, this dramatically reduces the computational overhead.
+Finally we parallelize the computation of the page-level confusion matrices.
 
-
-The next step is to bit-pack the classes of each pixel, generating a dense binary representation.
-Using `uint64` numbers we can encode 63 classes and the Background.
-The background is the index 0 and each class is represented by the indices 1 - 63.
-
-![Binary Representation](images/binary_representation.png)
-*Figure 3. Bit-packing allows to encode the multiple classes in a single integer per pixel*
-
-
-## 7. Implementation Optimisations: Binary Encoding and Parallelism
-
-Efficiency is not an afterthought. The framework encodes every pixel's class assignment as a bit-packed integer using `uint64` values, which can represent up to 63 content classes plus the background class (index 0). Each class occupies one bit at positions 1–63, and the background occupies bit 0.
-
-![Implementation details: binary encoding and compression](slide-10.jpg)
-
-A compression step further reduces the computational cost. Rather than processing every pixel independently, the implementation counts the number of distinct (ground truth, prediction) pixel-pairs that appear on a page. Only the contribution matrix for each unique pair needs to be computed; the page-level confusion matrix is then the weighted sum of these contribution matrices, each multiplied by the number of times its corresponding pixel-pair appears. Because the number of unique pixel-pairs is substantially smaller than the total pixel count, this dramatically reduces the computational overhead. Finally, because each page is entirely independent of the others, page-level matrices can be computed in parallel — something that mAP computation cannot offer.
-
--->
+![TORE Binary Representation](images/TORE_binary_representation.png)
+*Figure 11. Example of TORE binary representation using uint4 (TORE implementation uses uint64). The bboxes with dashed lines correspond to the reference resolution (e.g. ground-truth) and the solid ones to the predictions.*
 
 ## 9. Summary
 
@@ -256,7 +241,8 @@ Together, these properties make it a practical and principled tool for anyone de
 - [[2] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"](https://csitcp.org/paper/10/108csit01.pdf)
 - [[3] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks"](https://arxiv.org/abs/2011.10772)
 - [[4] "mAP is wrong if all scores are equal](https://github.com/cocodataset/cocoapi/issues/678)
-- [[5] "Heron - Docling"](https://huggingface.co/docling-project/docling-layout-heron)
+- [[5] "Heron for Docling on Hugging Face"](https://huggingface.co/docling-project/docling-layout-heron)
+
 
 <!-- - [[4] "MinerU2.5: A Decoupled Vision-Language Model for Efficient High-Resolution Document Parsing"](https://arxiv.org/abs/2509.22186)  -->
 

@@ -162,6 +162,8 @@ For example we see high off-diagonal value for the cell `["Background", "Key-Val
   <img src="images/heron_DLNv2_precision_matrix.png" alt="Heron - Precision Matrix" />
 </figure>
 
+TODO: Add examples of specific images
+
 
 ## 5. Reduced Matrices
 
@@ -176,7 +178,7 @@ In case of Heron, Figure 8 shows the reduced Recall and Precision matrices:
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 8. Reduced Recall & Precision Matrices of Heron model on the DocLayNet v2 dataset</em></figcaption>
-  <img src="images/Heron_DLNv2_reduced_Recall_Precision.png" alt="Heron - Reduced Recall & Precision Matrices" />
+  <img src="images/heron_DLNv2_reduced_Recall_Precision.png" alt="Heron - Reduced Recall & Precision Matrices" />
 </figure>
 
 
@@ -217,10 +219,47 @@ Figure 10 shows the full picture for the same class taxonomy and dual class taxo
 </figure>
 
 
-## 7. Example 2: TORE with Dual Class Taxonomies on "Heron"
+## 7. Example 2: TORE with Dual Class Taxonomies on "Heron" vs "nemotron-page-elements-v3"
 
-TODO
+Dataset: ViDoRe V3 [[6]](https://huggingface.co/collections/vidore/vidore-benchmark-v3)
 
+Reference model: Heron [[2]](https://huggingface.co/docling-project/docling-layout-heron)
+
+Measured model: Nvidia's `nemotron-page-elements-v3` [[7]](https://huggingface.co/nvidia/nemotron-page-elements-v3)
+
+Nemotron's taxonomy:
+
+```python
+[
+    "table",
+    "chart",
+    "title",
+    "infographic",
+    "text",
+    "header_footer",
+]
+```
+
+
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 11. The Confusion Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
+  <img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" />
+</figure>
+
+
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 12. The Recall Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
+  <img src="images/heron_vs_nemotron_page_elements_vidore_recall_matrix.png" alt="Heron - nemotron - Recall Matrix" />
+</figure>
+
+
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 13. The Precision Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
+  <img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Recall Matrix" />
+</figure>
+
+
+TODO: Add examples of specific images
 
 ## 8. TORE Implementation Optimizations
 
@@ -232,7 +271,7 @@ which provides enough space for overlapping bounding boxes.
 This dense representation enables an efficient implementation of the [TORE algorithm](#3.-building-a-multi-class,-multi-label-confusion-matrix),
 which computes multiple pixels in parallel using SIMD operations.
 
-Figure 11 provides an example of the binary representation for the pixel labels used in TORE.
+Figure 14 provides an example of the binary representation for the pixel labels used in TORE.
 
 After the rasterization, compression step further reduces the computational cost.
 Instead of processing every pixel independently, the implementation counts the number of distinct pixel-pairs `[reference, prediction]` that appear on the page.
@@ -241,7 +280,7 @@ Because the number of unique pixel-pairs is substantially smaller than the total
 Finally we parallelize the computation of the page-level confusion matrices.
 
 <figure>
-  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 11. Example of TORE binary representation using uint4 (TORE implementation uses uint64). The bboxes with dashed lines correspond to the reference resolution (e.g. ground-truth) and the solid ones to the predictions.</em></figcaption>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 14. Example of TORE binary representation using uint4 (TORE implementation uses uint64). The bboxes with dashed lines correspond to the reference resolution (e.g. ground-truth) and the solid ones to the predictions.</em></figcaption>
   <img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" />
 </figure>
 
@@ -260,6 +299,8 @@ Together, these properties make it a practical and principled tool for anyone de
 - [[3] "Multi-Label Classifier Performance Evaluation with Confusion Matrix" — https://csitcp.org/paper/10/108csit01.pdf](https://csitcp.org/paper/10/108csit01.pdf)
 - [[4] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks" — https://arxiv.org/abs/2011.10772](https://arxiv.org/abs/2011.10772)
 - [[5] "mAP is wrong if all scores are equal" — https://github.com/cocodataset/cocoapi/issues/678](https://github.com/cocodataset/cocoapi/issues/678)
+- [[6] "ViDoRe V3" — https://huggingface.co/collections/vidore/vidore-benchmark-v3](https://huggingface.co/collections/vidore/vidore-benchmark-v3)
+- [[7] "nemotron-page-elements-v3" — https://huggingface.co/nvidia/nemotron-page-elements-v3](https://huggingface.co/nvidia/nemotron-page-elements-v3)
 
 
 <!-- - [[4] "MinerU2.5: A Decoupled Vision-Language Model for Efficient High-Resolution Document Parsing"](https://arxiv.org/abs/2509.22186)  -->

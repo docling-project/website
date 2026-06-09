@@ -163,7 +163,7 @@ This abstraction allows to quickly check if the classifier can detect the elemen
 In case of Heron, Figure 8 shows the reduced Recall and Precision matrices:
 
 
-![Heron - Reduced Recall & Precision Matrices](images/heron_DLNv2_reduced_recall_precision.png)
+![Heron - Reduced Recall & Precision Matrices](images/heron_DLNv2_reduced_Recall_Precision.png)
 *Figure 8. Reduced Recall & Precision Matrices of Heron model on the DocLayNet v2 dataset*
 
 
@@ -199,13 +199,17 @@ Figure 10 shows the full picture for the same class taxonomy and dual class taxo
 ![Multiple taxonomies matrices](images/TORE_multiple_taxonomies.png)
 *Figure 10. Multiple class taxonomies matrices (read the diagram in the indicated order)*
 
-
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<!--------------------------------------------------------------------------------------------- -->
 <!-- The text has been reviewed up to this point -->
-<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<!-- ------------------------------------------------------------------------------------------ -->
 
 
-## 7. Implementation Optimisations: Binary Encoding and Parallelism
+## 7. Heron example with dual class taxonomies
+
+TODO
+
+
+## 8. Implementation Optimisations: Binary Encoding and Parallelism
 
 <!--
 ## 2. Pixel-wise Layout Resolution and binary representation
@@ -238,7 +242,7 @@ A compression step further reduces the computational cost. Rather than processin
 
 -->
 
-## 8. Summary
+## 9. Summary
 
 This pixel-wise evaluation framework addresses the limitations of existing approaches for document layout analysis in a coherent and systematic way.
 It handles multi-label predictions arising from overlapping bounding boxes, accounts for background regions, and extends to comparisons across models that operate under different classification taxonomies.
@@ -246,7 +250,7 @@ The reduced matrix abstraction provides a common currency for cross-taxonomy com
 Together, these properties make it a practical and principled tool for anyone developing or benchmarking document layout models at scale.
 
 
-## References
+## 10. References
 
 - [[1] "Advanced Layout Analysis Models for Docling"](https://arxiv.org/abs/2509.11720)
 - [[2] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"](https://csitcp.org/paper/10/108csit01.pdf)

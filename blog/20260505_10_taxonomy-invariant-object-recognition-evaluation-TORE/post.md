@@ -36,7 +36,7 @@ In the next sections we provide more insight.
 
 ## 1. Evaluation Challenges in Layout Analysis
 
-As it has already been observed (see [[1]](https://arxiv.org/abs/2509.11720), [[2]](https://arxiv.org/abs/2011.10772), [[4]](https://github.com/cocodataset/cocoapi/issues/678)) mean Average Precision suffers from several notable limitations.
+As it has already been observed (see [[1]](https://arxiv.org/abs/2509.11720), [[3]](https://arxiv.org/abs/2011.10772), [[5]](https://github.com/cocodataset/cocoapi/issues/678)) mean Average Precision suffers from several notable limitations.
 Most critically, mAP becomes meaningless when predictions lack confidence scores. Without a ranking mechanism, the Precision-Recall curve degenerates into a single point, rendering Average Precision nonsensical.
 However many models provide predictions without confidence scores.
 Beyond this, mAP treats all predictions that meet the minimum IoU threshold as equally valid, regardless of how precisely they overlap with the ground truth.
@@ -54,7 +54,7 @@ In the example the main body of the page has been annotated as one big `Picture`
 <!-- ![Ambiguous predictions2](images/ambiguous_0e83a04a6b4eaece3ec8284b8a359f45de542aced44968208036fe58b5bbc106.png) -->
 
 
-## 2. Single taxonomy Confusion Matrix and its derivatives
+## 2. Single Taxonomy Confusion Matrix and its Derivatives
 
 A confusion matrix is a tabular representation of a classifier’s predictions, where each row corresponds to a ground-truth class and each column to a predicted class.
 The element `c[i,j]` denotes the number of pixels belonging to class `i` that were predicted as class `j`.
@@ -81,8 +81,8 @@ Finally, the confusion matrix and its derived recall and precision matrices can 
 ## 3. Building a multi-class, multi-label Confusion Matrix
 
 Document layout analysis is a multi-class and multi-label task as it involves multiple classes and the prediction can assign multiple labels at the same pixel due to bounding box overlaps.
-We can compute the confusion matrix per page by applying the approach of [[2]](https://csitcp.org/paper/10/108csit01.pdf) for each pixel.
-The main idea of [[2]](https://csitcp.org/paper/10/108csit01.pdf) is the _"Algorithm 1"_ listed on page 9, which distinguishes 4 cases and assigns fractional _"Gains"_ and _"Penalties"_ for each sample of the dataset.
+We can compute the confusion matrix per page by applying the approach of [[3]](https://csitcp.org/paper/10/108csit01.pdf) for each pixel.
+The main idea of [[3]](https://csitcp.org/paper/10/108csit01.pdf) is the _"Algorithm 1"_ listed on page 9, which distinguishes 4 cases and assigns fractional _"Gains"_ and _"Penalties"_ for each sample of the dataset.
 These 4 cases are:
 
 - Case 1: The prediction has assigned to the sample the same label as in ground-truth (perfect match).
@@ -98,7 +98,7 @@ First we compute the confusion matrix for all pixels of a page and then we sum u
 ## 4. Example 1: Apply TORE on the "Heron" model
 
 In the next example we will show how the confusion, recall and precision matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
-([[1] "Advanced Layout Analysis Models for Docling"](https://arxiv.org/abs/2509.11720), [[5] "Heron - Docling"](https://huggingface.co/docling-project/docling-layout-heron))
+([[1] "Advanced Layout Analysis Models for Docling"](https://arxiv.org/abs/2509.11720), [[2] "Heron - Docling"](https://huggingface.co/docling-project/docling-layout-heron))
 
 The "Heron" model uses a taxonomy of 17 classes:
 
@@ -152,7 +152,7 @@ If we extract the main diagonal elements we get the _Recall Vector_.
   <img src="images/heron_DLNv2_recall_matrix.png" alt="Heron - Recall Matrix" />
 </figure>
 
-The Precision Matrix is the normalisation of the confusion matrix column-wise (divide each cell with the sum of its column).
+The Precision Matrix is the normalization of the confusion matrix column-wise (divide each cell with the sum of its column).
 This is shown in Figure 7.
 The precision matrix can also help to derive interesting conclusions for the performance of a model.
 For example we see high off-diagonal value for the cell `["Background", "Key-Value Region"]`, which indicates that Heron misses key-value bounding boxes and mis-classifies them as "Background".
@@ -163,7 +163,7 @@ For example we see high off-diagonal value for the cell `["Background", "Key-Val
 </figure>
 
 
-## 5. Reduced matrices
+## 5. Reduced Matrices
 
 As we saw in the previous section the Confusion, Recall and Precision matrices are an invaluable source of information for the performance of a classifier.
 At the same time this information can be intimidating. In case of Heron it means to analyze the information of 3 matrices (confusion, recall, precision) with dimensions `18x18`.
@@ -189,7 +189,7 @@ we can create a confusion matrix on top of the union-taxonomy with the classes `
 
 This extended matrix will be sparse and have the block structure shown in Figure 9 where the non-zero values are:
 - First column (Background) for the rows: `[BG, GT1, ..., GTn]`
-- Top left block, fro the rows `[BG, GT1, ..., GTn]` and columns: `[BG, P1, ..., Pm]`.
+- Top left block, for the rows `[BG, GT1, ..., GTn]` and columns: `[BG, P1, ..., Pm]`.
 
 All other values are zero as the model never predicts on the ground truth taxonomy and the evaluation is never done against the model's taxonomy.
 
@@ -217,12 +217,12 @@ Figure 10 shows the full picture for the same class taxonomy and dual class taxo
 </figure>
 
 
-## 7. Example 2: TORE with dual class taxonomies on "Heron"
+## 7. Example 2: TORE with Dual Class Taxonomies on "Heron"
 
 TODO
 
 
-## 8. Implementation Optimisations: Binary Encoding and Parallelism
+## 8. TORE Implementation Optimizations
 
 As already mentioned, the first step in TORE is to project the document layout resolution on the image pixels.
 This process happens both for the reference resolutions and the predictions.
@@ -255,11 +255,11 @@ Together, these properties make it a practical and principled tool for anyone de
 
 ## 10. References
 
-- [[1] "Advanced Layout Analysis Models for Docling"](https://arxiv.org/abs/2509.11720)
-- [[2] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"](https://csitcp.org/paper/10/108csit01.pdf)
-- [[3] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks"](https://arxiv.org/abs/2011.10772)
-- [[4] "mAP is wrong if all scores are equal](https://github.com/cocodataset/cocoapi/issues/678)
-- [[5] "Heron for Docling on Hugging Face"](https://huggingface.co/docling-project/docling-layout-heron)
+- [[1] "Advanced Layout Analysis Models for Docling" — https://arxiv.org/abs/2509.11720](https://arxiv.org/abs/2509.11720)
+- [[2] "Heron for Docling on Hugging Face" — https://huggingface.co/docling-project/docling-layout-heron](https://huggingface.co/docling-project/docling-layout-heron)
+- [[3] "Multi-Label Classifier Performance Evaluation with Confusion Matrix" — https://csitcp.org/paper/10/108csit01.pdf](https://csitcp.org/paper/10/108csit01.pdf)
+- [[4] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks" — https://arxiv.org/abs/2011.10772](https://arxiv.org/abs/2011.10772)
+- [[5] "mAP is wrong if all scores are equal" — https://github.com/cocodataset/cocoapi/issues/678](https://github.com/cocodataset/cocoapi/issues/678)
 
 
 <!-- - [[4] "MinerU2.5: A Decoupled Vision-Language Model for Efficient High-Resolution Document Parsing"](https://arxiv.org/abs/2509.22186)  -->

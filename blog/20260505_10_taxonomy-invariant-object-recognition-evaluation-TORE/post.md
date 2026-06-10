@@ -1,6 +1,6 @@
 ---
 title: Taxonomy-invariant Object Recognition Evaluation (TORE)
-date: 05-05-2026
+date: 10-06-2026
 summary: Document layout analysis evaluation metric that works across heterogeneous class taxonomies
 thumbnail: images/thumbnail.png
 category: technical
@@ -61,7 +61,7 @@ In the example the main body of the page has been annotated as one big `Picture`
 <!-- ![Ambiguous predictions2](images/ambiguous_0e83a04a6b4eaece3ec8284b8a359f45de542aced44968208036fe58b5bbc106.png) -->
 
 
-## 2. Single Taxonomy Confusion Matrix and its Derivatives
+## 2. Single Taxonomy Confusion Matrix and Derivatives
 
 A confusion matrix is a tabular representation of a classifier’s predictions, where each row corresponds to a ground-truth class and each column to a predicted class.
 The element `c[i,j]` denotes the number of pixels belonging to class `i` that were predicted as class `j`.
@@ -86,7 +86,7 @@ Several performance measurements can derive out of the confusion matrix:
 Finally, the confusion matrix and its derived recall and precision matrices can be visualized effectively using heatmaps, enabling intuitive inspection of prediction patterns and systematic errors.
 
 
-## 3. Building a multi-class, multi-label Confusion Matrix
+## 3. Building the Confusion Matrix
 
 Document layout analysis is a multi-class and multi-label task as it involves multiple classes and the prediction can assign multiple labels at the same pixel due to bounding box overlaps.
 We can compute the confusion matrix per page by applying the approach of [[3]](https://csitcp.org/paper/10/108csit01.pdf) for each pixel.
@@ -103,7 +103,7 @@ Additionally in TORE we omit the case 3, as the ground-truth has single-label an
 First we compute the confusion matrix for all pixels of a page and then we sum up to produce the dataset-level confusion matrix.
 
 
-## 4. Example 1: Apply TORE on the "Heron" model
+## 4. Example 2: TORE with a single Taxonomy
 
 In the next example we will show how the confusion, recall and precision matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
 ([[1] "Advanced Layout Analysis Models for Docling"](https://arxiv.org/abs/2509.11720), [[2] "Heron - Docling"](https://huggingface.co/docling-project/docling-layout-heron))
@@ -112,23 +112,9 @@ The "Heron" model uses a taxonomy of 17 classes:
 
 ```python
 [
-    "Caption",
-    "Footnote",
-    "Formula",
-    "List-item",
-    "Page-footer",
-    "Page-header",
-    "Picture",
-    "Section-header",
-    "Table",
-    "Text",
-    "Title",
-    "Document Index",
-    "Code",
-    "Checkbox-Selected",
-    "Checkbox-Unselected",
-    "Form",
-    "Key-Value Region",
+    "Caption", "Footnote", "Formula", "List-item", "Page-footer", "Page-header", "Picture",
+    "Section-header", "Table", "Text", "Title", "Document Index", "Code",
+    "Checkbox-Selected", "Checkbox-Unselected", "Form", "Key-Value Region"
 ]
 ```
 
@@ -234,31 +220,25 @@ Figure 10 shows the full picture for the same class taxonomy and dual class taxo
 </figure>
 
 
-## 7. Example 2: TORE with Dual Class Taxonomies on "Heron" vs "nemotron-page-elements-v3"
+## 7. Example 2: TORE with Dual Taxonomies
 
 In this example we want to demonstrate how TORE can be used to compare models with different class taxonomies.
 We will use "Heron" ([2](https://huggingface.co/docling-project/docling-layout-heron)) as the rerference and compare it to "nemotron-page-elements-v3" ([7](https://huggingface.co/nvidia/nemotron-page-elements-v3)).
 The "nemotron-page-elements-v3" model uses the following class taxonomy:
 
 ```python
-[
-    "table",
-    "chart",
-    "title",
-    "infographic",
-    "text",
-    "header_footer",
-]
+["table", "chart", "title", "infographic", "text", "header_footer"]
 ```
 
 The input pages are taken from the test split of the "ViDoRe V3" dataset ([6](https://huggingface.co/collections/vidore/vidore-benchmark-v3)).
+Notice that in this example we do not compare the models against any ground truth, but against each other.
+We have selected "Heron" as the reference and "nemotron-page-elements-v3" as the measured model, but it could be the other way around.
 
-In Figure 11 we illustrate the generated Confusion Matrix (you can click on the Figure to zoom in).
-As we can see the classes of the reference model ("Heron") appear on the rows and the classes of the measured model ("nemotron-page-elements-v3") are shown on the columns.
-This dual-taxonomy confusion matrix has the expected block-shape as described in [Section 6](#6._dual_taxonomies_confusion_matrix)
+In Figure 11 we illustrate the generated Confusion Matrix (click on the Figure to zoom in).
+This dual-taxonomy confusion matrix has the expected block shape as described in [Section 6](#6.-dual-taxonomies-confusion_matrix), where certain parts of the matrix are all-zeros:
 
-
-where all zero rows and columns have been removed to make it easier to read.
+- The columns corresponding to the classes of the reference model ("Heron"). This happens because the measured model ("nemotron-page-elements-v3") is never going to predict such classes.
+- The rows corresponding to the classes of the measured model ("nemotron-page-elements-v3"). This happens because the evaluation is done only for the classes of the reference model.
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 11. The full Confusion Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
@@ -266,6 +246,8 @@ where all zero rows and columns have been removed to make it easier to read.
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix_unhidden.png" alt="Heron - nemotron - Full Confusion Matrix" /></dialog>
 </figure>
 
+In order to improve the readability of the confusion matrix, we have redrawn it while hiding the all-zeros rows and columns in Figure 12.
+This allows to focus on the non-zero elements and make some semantic comparison across the predictions of the two models.
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 12. The Confusion Matrix of Heron vs nemotron-page-elements-v3 without the zero rows/columns</em></figcaption>
@@ -273,6 +255,7 @@ where all zero rows and columns have been removed to make it easier to read.
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" /></dialog>
 </figure>
 
+Similarly we provide illustrations while hiding the all-zero rows/columns of the Recall and Precision matrices in Figures 13 and 14 respectively.
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 13. The Recall Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
@@ -287,11 +270,24 @@ where all zero rows and columns have been removed to make it easier to read.
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Recall Matrix" /></dialog>
 </figure>
 
+First we can examine the Recall matrix column-by-column, to see how the predictions of "nemotron-page-elements-v3" map to the classes of "Heron":
 
-TODO: Add examples of specific images
+- The `nvidia_table` class, as expected, maps mainly to `heron_Table` class. However there also some mappings to `heron_Document Index` and `heron_Form`. Most probably due to the fact that "Document Indices" and "Forms" look similar to a "Table".
+- The `nvidia_chart` and `nvidia_infographic` map mainly to `heron_Picture`. Most probably because there are no "chart" and "infographic" classes in the taxonomy of "Heron". Then a Heron "picture" comes the closest to nemotron's "chart" and "infographic".
+- The `nvidia_title` maps to `heron_page_header`, `heron_Section-header` and `heron_Title`. That comes without a surprise as all of them are essentially "titles", it's only that heron has a more fine-grained classification.
+- The `nvidia_text` class is spread over multiple classes of heron. We would expect a stronger focus on the `heron_Text` class. Such discrepancy indicates that "nemotron-page-elements-v3` tends to be less precise than "Heron" and overuse the "nvidia_text" class in cases where another more-precise class could be more suitable.
+- The `nvidia_header_footer` class maps mainly to `heron_Page-footer`, as was expected.
+
+Examining the Precision matrix, we can see that the `Background` row has a non-neglidible mapping to columns other than the `Background`.
+This indicates that that "nemotron-page-elements-v3" tends to produce larger bounding boxes, in comparison to "Heron", that extend over the page background.
+
+Next we can show visualisations of the predictions from both models that support the findings revealed by the examination of the matrices,
+where on the left side is the prediction of Nvidia's "nemotron-page-elements-v3" and on the right side is "heron":
+
++++
 
 
-## 8. TORE Implementation Optimizations
+## 8. Implementation Optimizations
 
 As already mentioned, the first step in TORE is to project the document layout resolution on the image pixels.
 This process happens both for the reference resolutions and the predictions.

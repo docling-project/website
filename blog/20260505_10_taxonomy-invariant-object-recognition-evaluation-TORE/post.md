@@ -6,6 +6,12 @@ thumbnail: images/thumbnail.png
 category: technical
 ---
 
+<style>
+dialog.lb { padding: 0; border: none; background: transparent; max-width: 95vw; max-height: 95vh; }
+dialog.lb::backdrop { background: rgba(0,0,0,0.85); cursor: zoom-out; }
+dialog.lb img { max-width: 95vw; max-height: 95vh; object-fit: contain; display: block; }
+figure img { cursor: zoom-in; }
+</style>
 
 Document layout analysis — the task of locating and classifying elements such as titles, tables, figures, and text blocks within a page — is a cornerstone of modern document AI pipelines.
 Yet evaluating how well a model performs this task turns out to be surprisingly tricky.
@@ -49,7 +55,8 @@ In the example the main body of the page has been annotated as one big `Picture`
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 1. Ambiguous document layout analysis predictions.</em></figcaption>
-  <img src="images/cropped_ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png" alt="Ambiguous predictions1" />
+  <img src="images/cropped_ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png" alt="Ambiguous predictions1" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/cropped_ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png" alt="Ambiguous predictions1" /></dialog>
 </figure>
 <!-- ![Ambiguous predictions2](images/ambiguous_0e83a04a6b4eaece3ec8284b8a359f45de542aced44968208036fe58b5bbc106.png) -->
 
@@ -66,7 +73,8 @@ In Figure 4 we can see a Confusion Matrix built for the classes `C1, C2, ... , C
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 4. The Confusion Matrix quantifies the strengths and weaknesses of the predictions both globally and on a per-class basis</em></figcaption>
-  <img src="images/scaled_confusion_matrix.png" alt="Confusion Matrix" />
+  <img src="images/scaled_confusion_matrix.png" alt="Confusion Matrix" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/scaled_confusion_matrix.png" alt="Confusion Matrix" /></dialog>
 </figure>
 
 Several performance measurements can derive out of the confusion matrix:
@@ -132,7 +140,8 @@ We use a color code to indicate the magnitude of the cell counts and highlight t
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 5. The Confusion Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
-  <img src="images/heron_DLNv2_confusion_matrix.png" alt="Heron - Confusion Matrix" />
+  <img src="images/heron_DLNv2_confusion_matrix.png" alt="Heron - Confusion Matrix" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_confusion_matrix.png" alt="Heron - Confusion Matrix" /></dialog>
 </figure>
 
 If we normalize the confusion matrix row-wise (divide each cell with the sum of its row), we get the "Recall Matrix", as shown in Figure 6.
@@ -149,7 +158,8 @@ If we extract the main diagonal elements we get the _Recall Vector_.
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 6. The Recall Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
-  <img src="images/heron_DLNv2_recall_matrix.png" alt="Heron - Recall Matrix" />
+  <img src="images/heron_DLNv2_recall_matrix.png" alt="Heron - Recall Matrix" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_recall_matrix.png" alt="Heron - Recall Matrix" /></dialog>
 </figure>
 
 The Precision Matrix is the normalization of the confusion matrix column-wise (divide each cell with the sum of its column).
@@ -159,7 +169,8 @@ For example we see high off-diagonal value for the cell `["Background", "Key-Val
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 7. The Precision Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
-  <img src="images/heron_DLNv2_precision_matrix.png" alt="Heron - Precision Matrix" />
+  <img src="images/heron_DLNv2_precision_matrix.png" alt="Heron - Precision Matrix" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_precision_matrix.png" alt="Heron - Precision Matrix" /></dialog>
 </figure>
 
 TODO: Add examples of specific images
@@ -178,7 +189,8 @@ In case of Heron, Figure 8 shows the reduced Recall and Precision matrices:
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 8. Reduced Recall & Precision Matrices of Heron model on the DocLayNet v2 dataset</em></figcaption>
-  <img src="images/heron_DLNv2_reduced_Recall_Precision.png" alt="Heron - Reduced Recall & Precision Matrices" />
+  <img src="images/heron_DLNv2_reduced_Recall_Precision.png" alt="Heron - Reduced Recall & Precision Matrices" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_reduced_Recall_Precision.png" alt="Heron - Reduced Recall & Precision Matrices" /></dialog>
 </figure>
 
 
@@ -197,7 +209,8 @@ All other values are zero as the model never predicts on the ground truth taxono
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 9. Dual class taxonomies matrices</em></figcaption>
-  <img src="images/scaled_dual_taxonomy_confusion_matrix.png" alt="Dual taxonomy confusion matrix" />
+  <img src="images/scaled_dual_taxonomy_confusion_matrix.png" alt="Dual taxonomy confusion matrix" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/scaled_dual_taxonomy_confusion_matrix.png" alt="Dual taxonomy confusion matrix" /></dialog>
 </figure>
 
 As shown in Figure 9 we can derive Recall and Precision matrices by dividing each value over its row/column sum.
@@ -215,11 +228,14 @@ Figure 10 shows the full picture for the same class taxonomy and dual class taxo
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 10. Multiple class taxonomies matrices (read the diagram in the indicated order)</em></figcaption>
-  <img src="images/scaled_TORE_multiple_taxonomies.png" alt="Multiple taxonomies matrices" />
+  <img src="images/scaled_TORE_multiple_taxonomies.png" alt="Multiple taxonomies matrices" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/scaled_TORE_multiple_taxonomies.png" alt="Multiple taxonomies matrices" /></dialog>
 </figure>
 
 
 ## 7. Example 2: TORE with Dual Class Taxonomies on "Heron" vs "nemotron-page-elements-v3"
+
+We can demonstrate how the TORE metric can be used with dual class taxonomies with the following example.
 
 Dataset: ViDoRe V3 [[6]](https://huggingface.co/collections/vidore/vidore-benchmark-v3)
 
@@ -243,23 +259,27 @@ Nemotron's taxonomy:
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 11. The Confusion Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
-  <img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" />
+  <img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" /></dialog>
 </figure>
 
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 12. The Recall Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
-  <img src="images/heron_vs_nemotron_page_elements_vidore_recall_matrix.png" alt="Heron - nemotron - Recall Matrix" />
+  <img src="images/heron_vs_nemotron_page_elements_vidore_recall_matrix.png" alt="Heron - nemotron - Recall Matrix" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_recall_matrix.png" alt="Heron - nemotron - Recall Matrix" /></dialog>
 </figure>
 
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 13. The Precision Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
-  <img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Recall Matrix" />
+  <img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Recall Matrix" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Recall Matrix" /></dialog>
 </figure>
 
 
 TODO: Add examples of specific images
+
 
 ## 8. TORE Implementation Optimizations
 
@@ -281,8 +301,10 @@ Finally we parallelize the computation of the page-level confusion matrices.
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 14. Example of TORE binary representation using uint4 (TORE implementation uses uint64). The bboxes with dashed lines correspond to the reference resolution (e.g. ground-truth) and the solid ones to the predictions.</em></figcaption>
-  <img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" />
+  <img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" /></dialog>
 </figure>
+
 
 ## 9. Summary
 
@@ -294,13 +316,13 @@ Together, these properties make it a practical and principled tool for anyone de
 
 ## 10. References
 
-- [[1] "Advanced Layout Analysis Models for Docling" — https://arxiv.org/abs/2509.11720](https://arxiv.org/abs/2509.11720)
-- [[2] "Heron for Docling on Hugging Face" — https://huggingface.co/docling-project/docling-layout-heron](https://huggingface.co/docling-project/docling-layout-heron)
-- [[3] "Multi-Label Classifier Performance Evaluation with Confusion Matrix" — https://csitcp.org/paper/10/108csit01.pdf](https://csitcp.org/paper/10/108csit01.pdf)
-- [[4] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks" — https://arxiv.org/abs/2011.10772](https://arxiv.org/abs/2011.10772)
-- [[5] "mAP is wrong if all scores are equal" — https://github.com/cocodataset/cocoapi/issues/678](https://github.com/cocodataset/cocoapi/issues/678)
-- [[6] "ViDoRe V3" — https://huggingface.co/collections/vidore/vidore-benchmark-v3](https://huggingface.co/collections/vidore/vidore-benchmark-v3)
-- [[7] "nemotron-page-elements-v3" — https://huggingface.co/nvidia/nemotron-page-elements-v3](https://huggingface.co/nvidia/nemotron-page-elements-v3)
+- [1] "Advanced Layout Analysis Models for Docling" — [https://arxiv.org/abs/2509.11720](https://arxiv.org/abs/2509.11720)
+- [2] "Heron for Docling on Hugging Face" — [https://huggingface.co/docling-project/docling-layout-heron](https://huggingface.co/docling-project/docling-layout-heron)
+- [3] "Multi-Label Classifier Performance Evaluation with Confusion Matrix" — [https://csitcp.org/paper/10/108csit01.pdf](https://csitcp.org/paper/10/108csit01.pdf)
+- [4] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks" — [https://arxiv.org/abs/2011.10772](https://arxiv.org/abs/2011.10772)
+- [5] "mAP is wrong if all scores are equal" — [https://github.com/cocodataset/cocoapi/issues/678](https://github.com/cocodataset/cocoapi/issues/678)
+- [6] "ViDoRe V3" — [https://huggingface.co/collections/vidore/vidore-benchmark-v3](https://huggingface.co/collections/vidore/vidore-benchmark-v3)
+- [7] "nemotron-page-elements-v3" — [https://huggingface.co/nvidia/nemotron-page-elements-v3](https://huggingface.co/nvidia/nemotron-page-elements-v3)
 
 
 <!-- - [[4] "MinerU2.5: A Decoupled Vision-Language Model for Efficient High-Resolution Document Parsing"](https://arxiv.org/abs/2509.22186)  -->

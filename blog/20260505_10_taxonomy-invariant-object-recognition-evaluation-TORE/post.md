@@ -131,6 +131,7 @@ The "Heron" model uses a taxonomy of 17 classes:
     "Key-Value Region",
 ]
 ```
+
 Additionally, the class `"Background"` has been added as the first row/column.
 
 Figure 5 shows the "Confusion Matrix" of the model against the DocLayNet-v2 dataset which uses the same class taxonomy.
@@ -194,7 +195,7 @@ In case of Heron, Figure 8 shows the reduced Recall and Precision matrices:
 </figure>
 
 
-## 6. Extending to Dual Taxonomies
+## 6. Dual Taxonomies Confusion Matrix
 
 So far we have constructed confusion matrices where both the ground truth (rows) and the model predictions (columns) use the same classes.
 However very often we need to compare model predictions against datasets or other models that use different class taxonomies.
@@ -235,15 +236,9 @@ Figure 10 shows the full picture for the same class taxonomy and dual class taxo
 
 ## 7. Example 2: TORE with Dual Class Taxonomies on "Heron" vs "nemotron-page-elements-v3"
 
-We can demonstrate how the TORE metric can be used with dual class taxonomies with the following example.
-
-Dataset: ViDoRe V3 [[6]](https://huggingface.co/collections/vidore/vidore-benchmark-v3)
-
-Reference model: Heron [[2]](https://huggingface.co/docling-project/docling-layout-heron)
-
-Measured model: Nvidia's `nemotron-page-elements-v3` [[7]](https://huggingface.co/nvidia/nemotron-page-elements-v3)
-
-Nemotron's taxonomy:
+In this example we want to demonstrate how TORE can be used to compare models with different class taxonomies.
+We will use "Heron" ([2](https://huggingface.co/docling-project/docling-layout-heron)) as the rerference and compare it to "nemotron-page-elements-v3" ([7](https://huggingface.co/nvidia/nemotron-page-elements-v3)).
+The "nemotron-page-elements-v3" model uses the following class taxonomy:
 
 ```python
 [
@@ -256,16 +251,31 @@ Nemotron's taxonomy:
 ]
 ```
 
+The input pages are taken from the test split of the "ViDoRe V3" dataset ([6](https://huggingface.co/collections/vidore/vidore-benchmark-v3)).
+
+In Figure 11 we illustrate the generated Confusion Matrix (you can click on the Figure to zoom in).
+As we can see the classes of the reference model ("Heron") appear on the rows and the classes of the measured model ("nemotron-page-elements-v3") are shown on the columns.
+This dual-taxonomy confusion matrix has the expected block-shape as described in [Section 6](#6._dual_taxonomies_confusion_matrix)
+
+
+where all zero rows and columns have been removed to make it easier to read.
 
 <figure>
-  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 11. The Confusion Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 11. The full Confusion Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
+  <img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix_unhidden.png" alt="Heron - nemotron - Full Confusion Matrix" /></dialog>
+</figure>
+
+
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 12. The Confusion Matrix of Heron vs nemotron-page-elements-v3 without the zero rows/columns</em></figcaption>
   <img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" /></dialog>
 </figure>
 
 
 <figure>
-  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 12. The Recall Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 13. The Recall Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
   <img src="images/heron_vs_nemotron_page_elements_vidore_recall_matrix.png" alt="Heron - nemotron - Recall Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_recall_matrix.png" alt="Heron - nemotron - Recall Matrix" /></dialog>
 </figure>

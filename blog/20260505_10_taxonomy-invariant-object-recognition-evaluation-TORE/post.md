@@ -2,7 +2,7 @@
 title: Taxonomy-invariant Object Recognition Evaluation (TORE)
 date: 10-06-2026
 summary: Document layout analysis evaluation metric that works across heterogeneous class taxonomies
-thumbnail: images/thumbnail.png
+thumbnail: images/thumbnail2.png
 category: technical
 ---
 
@@ -242,7 +242,7 @@ This dual-taxonomy confusion matrix has the expected block shape as described in
 
 <figure>
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 11. The full Confusion Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
-  <img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" onclick="this.nextElementSibling.showModal()" />
+  <img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix_unhidden.png" alt="Heron - nemotron - Full Confusion Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix_unhidden.png" alt="Heron - nemotron - Full Confusion Matrix" /></dialog>
 </figure>
 
@@ -258,16 +258,16 @@ This allows to focus on the non-zero elements and make some semantic comparison 
 Similarly we provide illustrations while hiding the all-zero rows/columns of the Recall and Precision matrices in Figures 13 and 14 respectively.
 
 <figure>
-  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 13. The Recall Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 13. The Recall Matrix of Heron vs nemotron-page-elements-v3 over ViDoRe V3</em></figcaption>
   <img src="images/heron_vs_nemotron_page_elements_vidore_recall_matrix.png" alt="Heron - nemotron - Recall Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_recall_matrix.png" alt="Heron - nemotron - Recall Matrix" /></dialog>
 </figure>
 
 
 <figure>
-  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 13. The Precision Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
-  <img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Recall Matrix" onclick="this.nextElementSibling.showModal()" />
-  <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Recall Matrix" /></dialog>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 14. The Precision Matrix of Heron vs nemotron-page-elements-v3 over ViDoRe V3</em></figcaption>
+  <img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Precision Matrix" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Precision Matrix" /></dialog>
 </figure>
 
 First we can examine the Recall matrix column-by-column, to see how the predictions of "nemotron-page-elements-v3" map to the classes of "Heron":
@@ -284,7 +284,27 @@ This indicates that that "nemotron-page-elements-v3" tends to produce larger bou
 Next we can show visualisations of the predictions from both models that support the findings revealed by the examination of the matrices,
 where on the left side is the prediction of Nvidia's "nemotron-page-elements-v3" and on the right side is "heron":
 
-+++
+
+<!-- Prediction examples -->
+
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 15. Example: Nemotron tends to over use the "title" class</em></figcaption>
+  <img src="images/viz_hermes_2023-320.png" alt="Heron vs nemotron example" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/viz_hermes_2023-320.png" alt="Heron vs nemotron example" /></dialog>
+</figure>
+
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 16. Example: Background leaks inside the bounding box of the prediction in nemotron</em></figcaption>
+  <img src="images/viz_hermes_2023-269.png" alt="Heron vs nemotron example" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/viz_hermes_2023-269.png" alt="Heron vs nemotron example" /></dialog>
+</figure>
+
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 17. Example: Background leaks inside the bounding box of the prediction in nemotron</em></figcaption>
+  <img src="images/viz_State_of_CDER_FDLI2021_PCavazzoni_20210515-4.png" alt="Heron vs nemotron example" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/viz_State_of_CDER_FDLI2021_PCavazzoni_20210515-4.png" alt="Heron vs nemotron example" /></dialog>
+</figure>
+
 
 
 ## 8. Implementation Optimizations
@@ -306,7 +326,7 @@ Because the number of unique pixel-pairs is substantially smaller than the total
 Finally we parallelize the computation of the page-level confusion matrices.
 
 <figure>
-  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 14. Example of TORE binary representation using uint4 (TORE implementation uses uint64). The bboxes with dashed lines correspond to the reference resolution (e.g. ground-truth) and the solid ones to the predictions.</em></figcaption>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 18. Example of TORE binary representation using uint4 (TORE implementation uses uint64). The bboxes with dashed lines correspond to the reference resolution (e.g. ground-truth) and the solid ones to the predictions.</em></figcaption>
   <img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" /></dialog>
 </figure>

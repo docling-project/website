@@ -51,10 +51,10 @@ Implementation details such as PR curve interpolation, area computation methods,
 Finally, mAP offers no diagnostic value: it provides no insight into which classes a model excels at or struggles with — information that would be invaluable during model development.
 
 A qualitative study of layout analysis in real-world documents ([[1]][1]), reveals that the high complexity of documents often yields ambiguous annotations.
-As shown in Figure 1, it is not clear whether the ground-truth data (left) or the model predictions (right) are correct — or whether both are valid layout resolutions.
+As shown in [Figure 1](#figure-1), it is not clear whether the ground-truth data (left) or the model predictions (right) are correct — or whether both are valid layout resolutions.
 In this example, the main body of the page is annotated as one large `Picture`. The model, however, predicts a more detailed layout: textual elements are identified as `Section-Header`, `Text`, and `List-Item`, and the picture bounding boxes are reduced to cover only the visual content.
 
-<figure>
+<figure id="figure-1">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 1. Ambiguous document layout analysis predictions.</em></figcaption>
   <img src="images/cropped_ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png" alt="Ambiguous predictions1" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/cropped_ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png" alt="Ambiguous predictions1" /></dialog>
@@ -70,9 +70,9 @@ For a perfect classifier, the confusion matrix is purely diagonal.
 In real-life classifications, the diagonal entries quantify correct predictions and count as "Gains",
 while the off-diagonal entries correspond to mis-predictions and count as "Penalties".
 
-In Figure 2 we can see a Confusion Matrix built for the classes `C1, C2, ... , Cn` and the special "Background" class `BG`.
+In [Figure 2](#figure-2) we can see a Confusion Matrix built for the classes `C1, C2, ... , Cn` and the special "Background" class `BG`.
 
-<figure>
+<figure id="figure-2">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 2. The Confusion Matrix quantifies the strengths and weaknesses of the predictions both globally and on a per-class basis</em></figcaption>
   <img src="images/scaled_confusion_matrix.png" alt="Confusion Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/scaled_confusion_matrix.png" alt="Confusion Matrix" /></dialog>
@@ -122,18 +122,18 @@ The "Heron" model uses a taxonomy of 17 classes:
 
 Additionally, the class `"Background"` has been added as the first row/column.
 
-Figure 3 shows the "Confusion Matrix" of the model against the DocLayNet-v2 dataset, which uses the same class taxonomy.
+[Figure 3](#figure-3) shows the "Confusion Matrix" of the model against the DocLayNet-v2 dataset, which uses the same class taxonomy.
 The rows correspond to the ground-truth, the columns to the predictions and each `cell(i,j)` shows the number of pixels that belong to `class-i` but have been predicted as `class-j`.
 Notice that the pixel counts are fractional, due to the way the algorithm distributes "gains" and "penalties" for each predicted label.
 We use a color code to indicate the magnitude of the cell counts and highlight the main diagonal with pink.
 
-<figure>
+<figure id="figure-3">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 3. The Confusion Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
   <img src="images/heron_DLNv2_confusion_matrix.png" alt="Heron - Confusion Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_confusion_matrix.png" alt="Heron - Confusion Matrix" /></dialog>
 </figure>
 
-If we normalize the confusion matrix row-wise (dividing each cell by the sum of its row), we get the "Recall Matrix", as shown in Figure 4.
+If we normalize the confusion matrix row-wise (dividing each cell by the sum of its row), we get the "Recall Matrix", as shown in [Figure 4](#figure-4).
 Given that an ideal recall matrix has values only on the main diagonal, the perfect predictor should have red cells on the diagonal and black elsewhere.
 
 As we can see in the example of "Heron" the recall matrix provides invaluable insight into the performance of the model.
@@ -145,18 +145,18 @@ Also the recall reveals that "Heron" tends to mis-classify "Title" as "Section-H
 
 If we extract the main diagonal elements we get the _Recall Vector_.
 
-<figure>
+<figure id="figure-4">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 4. The Recall Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
   <img src="images/heron_DLNv2_recall_matrix.png" alt="Heron - Recall Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_recall_matrix.png" alt="Heron - Recall Matrix" /></dialog>
 </figure>
 
 The Precision Matrix is the normalization of the confusion matrix column-wise (dividing each cell by the sum of its column).
-This is shown in Figure 5.
+This is shown in [Figure 5](#figure-5).
 The precision matrix can also help to derive interesting conclusions about the performance of a model.
 For example we see a high off-diagonal value for the cell `["Background", "Key-Value Region"]`, which indicates that Heron misses key-value bounding boxes and mis-classifies them as "Background".
 
-<figure>
+<figure id="figure-5">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 5. The Precision Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
   <img src="images/heron_DLNv2_precision_matrix.png" alt="Heron - Precision Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_precision_matrix.png" alt="Heron - Precision Matrix" /></dialog>
@@ -171,10 +171,10 @@ One way to condense this information is to sum the cell values of all "non-backg
 This way we produce reduced `2x2` matrices for the "Background" class and the "non-Background" super-class.
 This abstraction allows us to quickly check if the classifier can detect the elements of the page correctly, regardless of the type of document element.
 
-For Heron, Figure 6 shows the reduced Recall and Precision matrices:
+For Heron, [Figure 6](#figure-6) shows the reduced Recall and Precision matrices:
 
 
-<figure>
+<figure id="figure-6">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 6. Reduced Recall & Precision Matrices of Heron model on the DocLayNet v2 dataset</em></figcaption>
   <img src="images/heron_DLNv2_reduced_Recall_Precision.png" alt="Heron - Reduced Recall & Precision Matrices" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_reduced_Recall_Precision.png" alt="Heron - Reduced Recall & Precision Matrices" /></dialog>
@@ -189,19 +189,19 @@ However, very often we need to compare model predictions against datasets or oth
 Assuming that the ground truth uses the classes `BG, GT1, ..., GTn` and a model uses the classes `BG, P1, ... , Pm`,
 we can create a confusion matrix on top of the union-taxonomy with the classes `BG, GT1, ..., GTn, P1, ... Pm`.
 
-This extended matrix will be sparse and have the block structure shown in Figure 7 where the non-zero values are:
+This extended matrix will be sparse and have the block structure shown in [Figure 7](#figure-7) where the non-zero values are:
 - First column (Background) for the rows: `[BG, GT1, ..., GTn]`
 - Top left block, for the rows `[BG, GT1, ..., GTn]` and columns: `[BG, P1, ..., Pm]`.
 
 All other values are zero as the model never predicts on the ground truth taxonomy and the evaluation is never done against the model's taxonomy.
 
-<figure>
+<figure id="figure-7">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 7. Dual class taxonomies matrices</em></figcaption>
   <img src="images/scaled_dual_taxonomy_confusion_matrix.png" alt="Dual taxonomy confusion matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/scaled_dual_taxonomy_confusion_matrix.png" alt="Dual taxonomy confusion matrix" /></dialog>
 </figure>
 
-As shown in Figure 7 we can derive Recall and Precision matrices by dividing each value by its row/column sum.
+As shown in [Figure 7](#figure-7) we can derive Recall and Precision matrices by dividing each value by its row/column sum.
 Notice that the classic recall and precision vectors per class can no longer be computed,
 as the diagonals of the recall and precision matrices are no longer meaningful.
 
@@ -212,9 +212,9 @@ In practice this allows a researcher to see, for instance, that prediction class
 
 Additionally, similarly to what happens with the same class taxonomy matrices, it is possible to reduce the matrix by collapsing all non-background classes into one class.
 
-Figure 8 shows the full picture for the same class taxonomy and dual class taxonomies confusion matrices and their derivatives.
+[Figure 8](#figure-8) shows the full picture for the same class taxonomy and dual class taxonomies confusion matrices and their derivatives.
 
-<figure>
+<figure id="figure-8">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 8. Multiple class taxonomies matrices (read the diagram in the indicated order)</em></figcaption>
   <img src="images/scaled_TORE_multiple_taxonomies.png" alt="Multiple taxonomies matrices" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/scaled_TORE_multiple_taxonomies.png" alt="Multiple taxonomies matrices" /></dialog>
@@ -235,44 +235,44 @@ The input pages are taken from the test split of the "ViDoRe V3" dataset ([6][6]
 Notice that in this example we do not compare the models against any ground truth, but against each other.
 We have selected "Heron" as the reference and "nemotron-page-elements-v3" as the measured model, but it could be the other way around.
 
-In Figure 9 we illustrate the full dual-taxonomy Confusion Matrix (click on the Figure to zoom in).
+In [Figure 9](#figure-9) we illustrate the full dual-taxonomy Confusion Matrix (click on the Figure to zoom in).
 The matrix has the expected block shape as described in [Section 6](#6-dual-taxonomies-confusion-matrix), with the following all-zero regions:
 
 - The columns corresponding to the classes of the reference model ("Heron"). This happens because the measured model ("nemotron-page-elements-v3") is never going to predict such classes.
 - The rows corresponding to the classes of the measured model ("nemotron-page-elements-v3"). This happens because the evaluation is done only for the classes of the reference model.
 
-<figure>
+<figure id="figure-9">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 9. The full Confusion Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
   <img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix_unhidden.png" alt="Heron - nemotron - Full Confusion Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix_unhidden.png" alt="Heron - nemotron - Full Confusion Matrix" /></dialog>
 </figure>
 
-In order to improve the readability, we have redrawn the confusion matrix while hiding the all-zeros rows and columns in Figure 10.
+In order to improve the readability, we have redrawn the confusion matrix while hiding the all-zeros rows and columns in [Figure 10](#figure-10).
 This allows to focus on the non-zero elements and make some semantic comparison across the predictions of the two models.
 
-<figure>
+<figure id="figure-10">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 10. The Confusion Matrix of Heron vs nemotron-page-elements-v3 without the zero rows/columns</em></figcaption>
   <img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" /></dialog>
 </figure>
 
-Similarly we provide illustrations while hiding the all-zero rows/columns of the Recall and Precision matrices in Figures 11 and 12 respectively.
+Similarly we provide illustrations while hiding the all-zero rows/columns of the Recall and Precision matrices in Figures [11](#figure-11) and [12](#figure-12) respectively.
 
-<figure>
+<figure id="figure-11">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 11. The Recall Matrix of Heron vs nemotron-page-elements-v3 over ViDoRe V3</em></figcaption>
   <img src="images/heron_vs_nemotron_page_elements_vidore_recall_matrix.png" alt="Heron - nemotron - Recall Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_recall_matrix.png" alt="Heron - nemotron - Recall Matrix" /></dialog>
 </figure>
 
 
-<figure>
+<figure id="figure-12">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 12. The Precision Matrix of Heron vs nemotron-page-elements-v3 over ViDoRe V3</em></figcaption>
   <img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Precision Matrix" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Precision Matrix" /></dialog>
 </figure>
 
 We can use the Recall and Precision matrices to gain insight into how the two models' predictions compare.
-Additionally, the visualizations shown in Figures 13 - 16 can help to see in practice the differences in the behavior of the two models.
+Additionally, the visualizations shown in Figures [13](#figure-13) - [16](#figure-16) can help to see in practice the differences in the behavior of the two models.
 All pages are taken from the [ViDoReV3][6] dataset and the actual document id and page number are shown in the caption.
 On the left side are the predictions of Nvidia's "nemotron-page-elements-v3" and on the right side is "Heron".
 
@@ -280,51 +280,51 @@ First we can examine the Recall matrix column-by-column for all classes of "nemo
 
 - The `nvidia_table` class maps mainly to the `heron_Table` class.
 This is expected as both classes describe the same document item (table) and demonstrates how TORE can reveal semantic connections between classes from different taxonomies.
-The example in Figure 13 shows such a case.
+The example in [Figure 13](#figure-13) shows such a case.
 However the Recall matrix reveals also some mappings of the `nvidia_table` class to `heron_Document Index` and `heron_Form`.
 This is most likely because "Document Indices" and "Forms" look similar to a "Table".
 
 - The `nvidia_chart` and `nvidia_infographic` classes map mainly to `heron_Picture`.
 This most likely happens because "Heron" has no "chart" or "infographic" classes, so its "Picture" class is semantically the closest to Nemotron's "chart" and "infographic".
-The example in Figure 16 demonstrates this case.
+The example in [Figure 16](#figure-16) demonstrates this case.
 
 - The `nvidia_title` class maps to `heron_page_header`, `heron_Section-header` and `heron_Title`.
 These 3 Heron classes essentially refer to title-like document elements, so it is no surprise that TORE connects them to the `nvidia_title` class.
-All examples in Figures 13-16 demonstrate such cases.
+All examples in Figures [13](#figure-13)-[16](#figure-16) demonstrate such cases.
 
 - The `nvidia_text` class is spread over multiple classes of Heron.
 This happens because Heron has a more fine-grained taxonomy where different types of text-like document elements are mapped into specialized classes (e.g. `List-item`, `Checkbox-Selected`, `Footnote`, etc.).
 As Nemotron's taxonomy lacks such specialized text classes the model overuses its `text` class.
-Figure 15 demonstrates a characteristic case where a list is classified as "text" by Nemotron and "List-Item" by Heron.
+[Figure 15](#figure-15) demonstrates a characteristic case where a list is classified as "text" by Nemotron and "List-Item" by Heron.
 
 - The `nvidia_header_footer` class maps mainly to `heron_Page-footer`, as was expected.
-The example in Figure 15 shows how both models correctly identified the page footer using their corresponding classes.
+The example in [Figure 15](#figure-15) shows how both models correctly identified the page footer using their corresponding classes.
 
 Examining the Precision matrix, we can see that the `Background` row has a non-negligible mapping to columns other than the `Background`.
 This indicates that "nemotron-page-elements-v3" tends to produce larger bounding boxes, in comparison to "Heron", that extend over the actual document element and cover much of the page background.
-The example in Figure 16 shows how a single `Infographic` box covers the entire page.
+The example in [Figure 16](#figure-16) shows how a single `Infographic` box covers the entire page.
 
 
 <!-- Page visualisations of the predictions of the 2 models -->
-<figure>
+<figure id="figure-13">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 13. Nemotron vs Heron: Example1 (doc_id=viz_AFD-100607-009, page_no=22)</em></figcaption>
   <img src="images/viz_AFD-100607-009-22.png" alt="Heron vs nemotron example" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/viz_AFD-100607-009-22.png" alt="Nemotron vs Heron: Example1" /></dialog>
 </figure>
 
-<figure>
+<figure id="figure-14">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 14. Nemotron vs Heron: Example2 (doc_id=viz_hermes_2023, page_no=320)</em></figcaption>
   <img src="images/viz_hermes_2023-320.png" alt="Heron vs nemotron example" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/viz_hermes_2023-320.png" alt="Nemotron vs Heron: Example2" /></dialog>
 </figure>
 
-<figure>
+<figure id="figure-15">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 15. Nemotron vs Heron: Example 3 (doc_id=viz_hermes_2023, page_no=269)</em></figcaption>
   <img src="images/viz_hermes_2023-269.png" alt="Heron vs nemotron example" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/viz_hermes_2023-269.png" alt="Nemotron vs Heron: Example 3" /></dialog>
 </figure>
 
-<figure>
+<figure id="figure-16">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 16. Nemotron vs Heron: Example 4 (doc_id=viz_State_of_CDER_FDLI2021_PCavazzoni_20210515, page_no=4)</em></figcaption>
   <img src="images/viz_State_of_CDER_FDLI2021_PCavazzoni_20210515-4.png" alt="Heron vs nemotron example" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/viz_State_of_CDER_FDLI2021_PCavazzoni_20210515-4.png" alt="Nemotron vs Heron: Example 4" /></dialog>
@@ -341,7 +341,7 @@ which provides enough space for overlapping bounding boxes.
 This dense representation enables an efficient implementation of the [TORE algorithm](#3-building-the-confusion-matrix),
 which computes multiple pixels in parallel using SIMD operations.
 
-Figure 17 provides an example of the binary representation for the pixel labels used in TORE.
+[Figure 17](#figure-17) provides an example of the binary representation for the pixel labels used in TORE.
 
 After rasterization, a compression step further reduces the computational cost.
 Instead of processing every pixel independently, the implementation counts the number of distinct pixel-pairs `[reference, prediction]` that appear on the page.
@@ -349,7 +349,7 @@ The contribution matrix of each unique pair is computed only once and then multi
 Because the number of unique pixel-pairs is substantially smaller than the total pixel count, this dramatically reduces the computational overhead.
 Finally we parallelize the computation of the page-level confusion matrices.
 
-<figure>
+<figure id="figure-17">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 17. Example of TORE binary representation using uint4 (TORE implementation uses uint64). The bboxes with dashed lines correspond to the reference resolution (e.g. ground-truth) and the solid ones to the predictions.</em></figcaption>
   <img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" /></dialog>

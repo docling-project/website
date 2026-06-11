@@ -29,21 +29,21 @@ Three fundamental difficulties stand out immediately:
     - Comparing directly two models against each other, where each model uses its own taxonomy.
 - We want an efficient implementation that utilizes the capabilities of a modern CPU for parallelism and Single Instruction Multiple Data (SIMD) operations.
 
-In this article we will present the [**"Taxonomy-invariant Object Recognition Evaluation (TORE)"**][8] method, which overcomes all of the above limitations.
+In this article we will present the [**"Taxonomy-invariant Object Recognition Evaluation (TORE)"**][1] method, which overcomes all of the above limitations.
 
-TORE has been open sourced as part of the [docling-metrics package][8].
+TORE has been open sourced as part of the [docling-metrics package][1].
 
 
 ## 1. Evaluation Challenges in Layout Analysis
 
-As has already been observed (see [[1]][1], [[4]][4], [[5]][5]), mean Average Precision suffers from several notable limitations.
+As has already been observed (see [[2]][2], [[5]][5], [[6]][6]), mean Average Precision suffers from several notable limitations.
 Most critically, mAP becomes meaningless when predictions lack confidence scores. Without a ranking mechanism, the Precision-Recall curve degenerates into a single point, rendering Average Precision nonsensical.
 However, many models provide predictions without confidence scores.
 Beyond this, mAP treats all predictions that meet the minimum IoU threshold as equally valid, regardless of how precisely they overlap with the ground truth.
 Implementation details such as PR curve interpolation, area computation methods, and caps on the number of predictions per image have also been shown to affect the evaluation results.
 Finally, mAP offers no diagnostic value: it provides no insight into which classes a model excels at or struggles with — information that would be invaluable during model development.
 
-A qualitative study of layout analysis in real-world documents ([[1]][1]), reveals that the high complexity of documents often yields ambiguous annotations.
+A qualitative study of layout analysis in real-world documents ([[2]][2]), reveals that the high complexity of documents often yields ambiguous annotations.
 As shown in [Figure 1](#figure-1), it is not clear whether the ground-truth data (left) or the model predictions (right) are correct — or whether both are valid layout resolutions.
 In this example, the main body of the page is annotated as one large `Picture`. The model, however, predicts a more detailed layout: textual elements are identified as `Section-Header`, `Text`, and `List-Item`, and the picture bounding boxes are reduced to cover only the visual content.
 
@@ -86,7 +86,7 @@ enabling intuitive inspection of prediction patterns and systematic errors.
 
 Document layout analysis is a multi-class and multi-label task.
 
-In TORE we use the approach described in the paper [\[3\] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"][3].
+In TORE we use the approach described in the paper [\[4\] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"][4].
 The main idea is the _"Algorithm 1"_ listed on page 9, which distinguishes 4 cases and assigns fractional _"Gains"_ and _"Penalties"_ for each sample of the dataset.
 The 4 cases are:
 
@@ -112,7 +112,7 @@ TORE computes the Confusion Matrix and its Recall/Precision matrices for a colle
 ## 4. Example 1: TORE with a Single Taxonomy
 
 In the next example we will show what the confusion, recall and precision matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
-([\[1\]][1], [\[2\]][2]).
+([\[2\]][2], [\[3\]][3]).
 
 The "Heron" model uses a taxonomy of 17 classes:
 
@@ -228,14 +228,14 @@ Additionally, similarly to what happens with the same class taxonomy matrices, i
 ## 7. Example 2: TORE with Dual Taxonomies
 
 In this example we want to demonstrate how TORE can be used to compare models with different class taxonomies.
-We will use "Heron" ([2][2]) as the reference and compare it to "nemotron-page-elements-v3" ([7][7]).
+We will use "Heron" ([3][3]) as the reference and compare it to "nemotron-page-elements-v3" ([8][8]).
 The "nemotron-page-elements-v3" model uses the following class taxonomy:
 
 ```python
 ["table", "chart", "title", "infographic", "text", "header_footer"]
 ```
 
-The input pages are taken from the test split of the "ViDoRe V3" dataset ([6][6]).
+The input pages are taken from the test split of the "ViDoRe V3" dataset ([7][7]).
 Notice that in this example we do not compare the models against any ground truth, but against each other.
 We have selected "Heron" as the reference and "nemotron-page-elements-v3" as the measured model, but it could be the other way around.
 
@@ -277,7 +277,7 @@ Similarly we provide illustrations while hiding the all-zero rows/columns of the
 
 We can use the Recall and Precision matrices to gain insight into how the two models' predictions compare.
 Additionally, the visualizations shown in Figures [13](#figure-13) - [16](#figure-16) can help to see in practice the differences in the behavior of the two models.
-All pages are taken from the [ViDoReV3][6] dataset and the actual document id and page number are shown in the caption.
+All pages are taken from the [ViDoReV3][7] dataset and the actual document id and page number are shown in the caption.
 On the left side are the predictions of Nvidia's "nemotron-page-elements-v3" and on the right side is "Heron".
 
 First we can examine the Recall matrix column-by-column for all classes of "nemotron-page-elements-v3":
@@ -359,7 +359,7 @@ Finally we parallelize the computation of the page-level confusion matrices.
   <dialog class="lb" onclick="this.close()"><img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" /></dialog>
 </figure>
 
-TORE has been open sourced as part of the [docling-metrics package][8].
+TORE has been open sourced as part of the [docling-metrics package][1].
 
 
 ## 9. Summary
@@ -377,25 +377,25 @@ Lastly we showed an efficient TORE implementation that accelerates the runtime p
 ## 10. References
 
 <!-- References with the text only in the visible link -->
-- [\[1\] "Advanced Layout Analysis Models for Docling"][1]
-- [\[2\] "Heron for Docling on Hugging Face"][2]
-- [\[3\] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"][3]
-- [\[4\] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks"][4]
-- [\[5\] mAP is wrong if all scores are equal][5]
-- [\[6\] ViDoRe V3][6]
-- [\[7\] nemotron-page-elements-v3][7]
-- [\[8\] TORE source in GitHub][8]
+- [\[1\] TORE source code in GitHub][1]
+- [\[2\] "Advanced Layout Analysis Models for Docling"][2]
+- [\[3\] "Heron for Docling on Hugging Face"][3]
+- [\[4\] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"][4]
+- [\[5\] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks"][5]
+- [\[6\] mAP is wrong if all scores are equal][6]
+- [\[7\] ViDoRe V3][7]
+- [\[8\] nemotron-page-elements-v3][8]
 - [\[9\] Array programming with NumPy][9]
 
 
 <!-- DO NOT DELETE IT: Invisible ground truth of references with URLs-->
-[1]: https://arxiv.org/abs/2509.11720
-[2]: https://huggingface.co/docling-project/docling-layout-heron
-[3]: https://csitcp.org/paper/10/108csit01.pdf
-[4]: https://arxiv.org/abs/2011.10772
-[5]: https://github.com/cocodataset/cocoapi/issues/678
-[6]: https://huggingface.co/collections/vidore/vidore-benchmark-v3
-[7]: https://huggingface.co/nvidia/nemotron-page-elements-v3
-[8]: https://github.com/docling-project/docling-metrics
+[1]: https://github.com/docling-project/docling-metrics
+[2]: https://arxiv.org/abs/2509.11720
+[3]: https://huggingface.co/docling-project/docling-layout-heron
+[4]: https://csitcp.org/paper/10/108csit01.pdf
+[5]: https://arxiv.org/abs/2011.10772
+[6]: https://github.com/cocodataset/cocoapi/issues/678
+[7]: https://huggingface.co/collections/vidore/vidore-benchmark-v3
+[8]: https://huggingface.co/nvidia/nemotron-page-elements-v3
 [9]: https://www.nature.com/articles/s41586-020-2649-2
 

@@ -1,6 +1,6 @@
 ---
 title: Taxonomy-invariant Object Recognition Evaluation (TORE)
-date: 10-06-2026
+date: 11-06-2026
 summary: Document layout analysis evaluation metric that works across heterogeneous class taxonomies
 thumbnail: images/thumbnail2.png
 category: technical
@@ -13,32 +13,25 @@ dialog.lb img { max-width: 95vw; max-height: 95vh; object-fit: contain; display:
 figure img { cursor: zoom-in; }
 </style>
 
-Document layout analysis — the task of locating and classifying elements such as titles, tables, figures, and text blocks within a page — is a cornerstone of modern document AI pipelines.
-Yet evaluating how well a model performs this task turns out to be surprisingly tricky.
+Document layout analysis is a cornerstone of modern document AI pipelines.
+The task consists of locating and classifying the elements of a document.
+The location of each document element is described by a bounding polygon (e.g. bounding box) and a label is assigned to designate its class (e.g. "Title", "Table", "Figure", etc.).
+The label is selected out of a taxonomy of pre-defined classes which is specific to the dataset or the model.
+Throughout this article we call the outcome of the layout analysis task for a single page as _Layout Resolution_.
+Essentially the layout resolution defines the location and label for the detected elements of one page.
+
+Despite the importance of layout analysis for document understanding, evaluating how well a model performs this task turns out to be surprisingly tricky.
 Three fundamental difficulties stand out immediately:
 
-- The most widely used metric, mean Average Precision (mAP), is known to have many limitations that make it inappropriate for evaluating document layout analysis.
+- The most widely used metric, mean Average Precision (mAP), is known to have many limitations that make it inappropriate for evaluating the layout analysis of documents.
 - Most evaluation methods only apply when both the reference layout resolution and the resolution under evaluation use the same class taxonomy. This excludes cases such as:
-    - Evaluating a model on an annotated dataset that uses a different taxonomy.
-    - Comparing directly two models against each other, where each model uses its own class taxonomy.
-- Efficiently computing the metric on the CPU using Single Instruction Multiple Data (SIMD) operations.
+    - Evaluating a model on a dataset with annotations that use a different taxonomy.
+    - Comparing directly two models against each other, where each model uses its own taxonomy.
+- We want an efficient implementation that utilizes the capabilities of a modern CPU for parallelism and Single Instruction Multiple Data (SIMD) operations.
 
-In this article we will present the **"Taxonomy-invariant Object Recognition Evaluation (TORE)"** method, which overcomes all of the above limitations.
+In this article we will present the [**"Taxonomy-invariant Object Recognition Evaluation (TORE)"**][8] method, which overcomes all of the above limitations.
 
-In a typical TORE workflow the following steps take place:
-
-- Rasterize the reference and predicted layout resolutions (bounding boxes + labels).
-    - Each resolution is projected on top of the input image.
-    - Each rasterized pixel is assigned one or more labels.
-    - Assign the special class "Background" to the pixels without any annotation/detection.
-    - The reference resolution can be either ground-truth annotations or the detections of a "reference" model.
-- Convert the rasterized layout resolutions into a compressed binary format.
-    - Each pixel is represented by a `uint64` number.
-    - Only unique combinations of `(reference, predicted)` pixel pairs take part in the computation.
-- Compute the Confusion Matrix and its derivatives Recall Matrix and Precision Matrix.
-- Reduce the matrices to their `2x2` variants by collapsing the non-background classes together.
-
-In the next sections we provide more details.
+TORE has been open sourced as part of the [docling-metrics package][8].
 
 
 ## 1. Evaluation Challenges in Layout Analysis
@@ -59,18 +52,18 @@ In this example, the main body of the page is annotated as one large `Picture`. 
   <img src="images/cropped_ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png" alt="Ambiguous predictions1" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/cropped_ambiguous_f4118d2bc334935c34bd8214f6d9980b39d0e43ba81b145a7ecb0033bc2ca127.png" alt="Ambiguous predictions1" /></dialog>
 </figure>
-<!-- ![Ambiguous predictions2](images/ambiguous_0e83a04a6b4eaece3ec8284b8a359f45de542aced44968208036fe58b5bbc106.png) -->
 
 
 ## 2. Single Taxonomy Confusion Matrix and Derivatives
 
-A confusion matrix is a tabular representation of a classifier’s predictions, where each row corresponds to a ground-truth class and each column to a predicted class.
-The element `c[i,j]` denotes the number of pixels belonging to class `i` that were predicted as class `j`.
-For a perfect classifier, the confusion matrix is purely diagonal.
+A confusion matrix is a tabular representation of a classifier’s predictions, where each row corresponds to the reference class (e.g. ground truth) and each column to the predicted class.
+The matrix cell `c[i,j]` denotes the number of samples belonging to class `i` that were predicted as class `j`.
+For a perfect classifier, the confusion matrix is diagonal.
 In real-life classifications, the diagonal entries quantify correct predictions and count as "Gains",
 while the off-diagonal entries correspond to mis-predictions and count as "Penalties".
 
-In [Figure 2](#figure-2) we can see a Confusion Matrix built for the classes `C1, C2, ... , Cn` and the special "Background" class `BG`.
+In [Figure 2](#figure-2) we can see a Confusion Matrix built for the classes `C1, C2, ... , Cn` and the special "Background" class `BG`
+(in TORE each sample is a pixel of the rasterized layout resolution - more details below).
 
 <figure id="figure-2">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 2. The Confusion Matrix quantifies the strengths and weaknesses of the predictions both globally and on a per-class basis</em></figcaption>
@@ -80,35 +73,62 @@ In [Figure 2](#figure-2) we can see a Confusion Matrix built for the classes `C1
 
 Several performance measures can be derived from the confusion matrix:
 
-- **Recall matrix (row-wise normalized confusion matrix):** Provides a class-wise overview of recall. It shows how accurately each class is predicted and highlights systematic confusions, e.g., “class (X) is misclassified as class (Y) with this frequency”.
-- **Precision matrix (column-wise normalized confusion matrix):** Provides a class-wise overview of precision by showing how reliable the predictions of each class are.
-- **Recall and precision vectors:** Contain the exact recall and precision values for each class individually.
+- **Recall matrix**: A row-wise normalized confusion matrix that provides an overview of the recall per class in the scope of the entire matrix.
+- **Precision matrix**: A column-wise normalized confusion matrix that provides an overview of the precision per class in the scope of the entire matrix.
+- **Recall and precision vectors:** The diagonals of the corresponding Recall and Precision matrices that contain the recall/precision values for each class individually.
 
-Finally, the confusion matrix and its derived recall and precision matrices can be visualized effectively using heatmaps, enabling intuitive inspection of prediction patterns and systematic errors.
+Finally, the confusion matrix and its derived recall and precision matrices can be visualized effectively using heatmaps,
+enabling intuitive inspection of prediction patterns and systematic errors.
 
 
 <a id="3-building-the-confusion-matrix"></a>
 ## 3. Building the Confusion Matrix
 
-Document layout analysis is a multi-class, multi-label task: it involves multiple classes, and a prediction can assign multiple labels to the same pixel due to bounding-box overlaps.
-We can compute the confusion matrix per page by applying the approach of [[3]][3] for each pixel.
-The main idea of [[3]][3] is the _"Algorithm 1"_ listed on page 9, which distinguishes 4 cases and assigns fractional _"Gains"_ and _"Penalties"_ for each sample of the dataset.
-These 4 cases are:
+TODO
+Document layout analysis is a multi-class, multi-label task.
+By definition the taxonomy of the document elements contains multiple classes and the classifier can assign more than one labels per pixel due to overlapping predictions.
 
-- Case 1: The prediction has assigned to the sample the same label as in ground-truth (perfect match).
-- Case 2: The prediction has assigned to the sample the label of the ground-truth plus some additional wrong label(s) (over-prediction).
-- Case 3: The prediction has assigned to the sample only a subset of the ground-truth labels (under-prediction).
+We can compute the confusion matrix per page by applying the approach described in the paper [\[3\] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"][3] for each pixel.
+The main idea of [\[3\]][3] is the _"Algorithm 1"_ listed on page 9, which distinguishes 4 cases and assigns fractional _"Gains"_ and _"Penalties"_ for each sample of the dataset.
+The 4 cases are:
+
+- Case 1: The classifier has assigned to the sample the same label as in ground-truth (perfect match).
+- Case 2: The classifier has assigned to the sample the label of the ground-truth plus some additional wrong label(s) (over-prediction).
+- Case 3: The classifier has assigned to the sample only a subset of the ground-truth labels (under-prediction).
 - Case 4: Predicted and ground-truth labels have some partial overlap and some diff (diff-prediction).
 
-The "TORE" algorithm is an application of "Algorithm 1" for the use case where the samples are image pixels.
-Additionally in TORE we omit case 3, as the ground-truth has single-label annotations.
+---
+
+TODO
+<!--
+TORE builds the Confusion Matrix for a collection of documents as follows:
+
+- Each sample is a pixel of the rasterized layout resolution for each page.
+- The confusion matrix is computed first for each individual page at the page level and then all page
 First we compute the confusion matrix for all pixels of a page and then we sum up to produce the dataset-level confusion matrix.
+
+In a typical TORE workflow the following steps take place:
+
+- Rasterize the reference and predicted layout resolutions (bounding boxes + labels).
+    - Each resolution is projected on top of the input image.
+    - Each rasterized pixel is assigned one or more labels.
+    - Assign the special class "Background" to the pixels without any annotation/detection.
+    - The reference resolution can be either ground-truth annotations or the detections of a "reference" model.
+- Convert the rasterized layout resolutions into a compressed binary format.
+    - Each pixel is represented by a `uint64` number.
+    - Only unique combinations of `(reference, predicted)` pixel pairs take part in the computation.
+- Compute the Confusion Matrix and its derivatives Recall Matrix and Precision Matrix.
+- Reduce the matrices to their `2x2` variants by collapsing the non-background classes together.
+-->
+
+TORE computes the Confusion Matrix and its Recall/Precision matrices for a collection of documents as follows:
+
 
 
 ## 4. Example 1: TORE with a Single Taxonomy
 
 In the next example we will show what the confusion, recall and precision matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
-([[1] "Advanced Layout Analysis Models for Docling"][1], [[2] "Heron - Docling"][2]).
+([\[1\]][1], [\[2\]][2]).
 
 The "Heron" model uses a taxonomy of 17 classes:
 
@@ -137,7 +157,7 @@ If we normalize the confusion matrix row-wise (dividing each cell by the sum of 
 Given that an ideal recall matrix has values only on the main diagonal, the perfect predictor should have red cells on the diagonal and black elsewhere.
 
 As we can see in the example of "Heron" the recall matrix provides invaluable insight into the performance of the model.
-We can immediately see for which classes the model performs well or poorly, and, in case of misclassifications, which classes the model confuses.
+We can immediately see for which classes the model performs well or poorly, and, in case of mis-classifications, which classes the model confuses.
 For example we can see that "Heron" performs excellently on "Background" and quite well for the classes: "Picture", "Table", "Text", "Document Index", "Code" and "Form".
 The recall for "Checkbox-Selected" and "Checkbox-Unselected" is still high but a bit lower.
 The model lacks recall mostly for the classes "Key-Value Region" and "Title".
@@ -166,7 +186,7 @@ For example we see a high off-diagonal value for the cell `["Background", "Key-V
 ## 5. Reduced Matrices
 
 As we saw in the previous section the Confusion, Recall and Precision matrices are an invaluable source of information for the performance of a classifier.
-At the same time, this information can be overwhelming. In Heron's case, it means analyzing three matrices (confusion, recall, precision), each of dimension `18x18`.
+At the same time, this information can be overwhelming. In Heron's case, it means analyzing three matrices (Confusion, Recall, Precision), each of dimension `18x18`.
 One way to condense this information is to sum the cell values of all "non-background" classes into one class.
 This way we produce reduced `2x2` matrices for the "Background" class and the "non-Background" super-class.
 This abstraction allows us to quickly check if the classifier can detect the elements of the page correctly, regardless of the type of document element.
@@ -339,7 +359,7 @@ In the TORE implementation we bit-pack up to 64 labels per pixel inside an unsig
 In our encoding we allocate the `index-0` to the `BG` class and support up to 63 additional labels per pixel,
 which provides enough space for overlapping bounding boxes.
 This dense representation enables an efficient implementation of the [TORE algorithm](#3-building-the-confusion-matrix),
-which computes multiple pixels in parallel using SIMD operations.
+which computes multiple pixels in parallel using SIMD operations via the [NumPy library][9].
 
 [Figure 17](#figure-17) provides an example of the binary representation for the pixel labels used in TORE.
 
@@ -355,13 +375,15 @@ Finally we parallelize the computation of the page-level confusion matrices.
   <dialog class="lb" onclick="this.close()"><img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" /></dialog>
 </figure>
 
+TORE has been open sourced as part of the [docling-metrics package][8].
+
 
 ## 9. Summary
 
 In this article we presented the "Taxonomy-invariant Object Recognition Evaluation" (TORE) metric and explained why it is well suited to evaluate the layout analysis of documents.
 We showed that the mean Average-Precision metric suffers from many limitations that make it unsuitable and even nonsensical when a model does not produce confidence scores.
 TORE overcomes these limitations through standard mathematical tools such as the confusion matrix and its derivatives,
-which provide not only evaluation measurements but also insights that help diagnose a model's mispredictions.
+which provide not only evaluation measurements but also insights that help diagnose a model's mis-predictions.
 One of TORE's major strengths is its ability to evaluate across heterogeneous classification taxonomies.
 This allows a model to be evaluated on a dataset that uses different classes, as well as direct model-to-model comparisons regardless of the underlying taxonomies.
 Via concrete examples we showcased how to use the confusion, recall and precision matrices and understand where the predictions of two models match and where they differ.
@@ -371,13 +393,15 @@ Lastly we showed an efficient TORE implementation that accelerates the runtime p
 ## 10. References
 
 <!-- References with the text only in the visible link -->
-- [\[1\] Advanced Layout Analysis Models for Docling][1]
-- [\[2\] Heron for Docling on Hugging Face][2]
-- [\[3\] Multi-Label Classifier Performance Evaluation with Confusion Matrix][3]
-- [\[4\] One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks][4]
+- [\[1\] "Advanced Layout Analysis Models for Docling"][1]
+- [\[2\] "Heron for Docling on Hugging Face"][2]
+- [\[3\] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"][3]
+- [\[4\] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks"][4]
 - [\[5\] mAP is wrong if all scores are equal][5]
 - [\[6\] ViDoRe V3][6]
 - [\[7\] nemotron-page-elements-v3][7]
+- [\[8\] TORE source in GitHub][8]
+- [\[9\] Array programming with NumPy][9]
 
 
 <!-- DO NOT DELETE IT: Invisible ground truth of references with URLs-->
@@ -388,4 +412,6 @@ Lastly we showed an efficient TORE implementation that accelerates the runtime p
 [5]: https://github.com/cocodataset/cocoapi/issues/678
 [6]: https://huggingface.co/collections/vidore/vidore-benchmark-v3
 [7]: https://huggingface.co/nvidia/nemotron-page-elements-v3
+[8]: https://github.com/docling-project/docling-metrics
+[9]: https://www.nature.com/articles/s41586-020-2649-2
 

@@ -86,6 +86,7 @@ Several performance measurements can derive out of the confusion matrix:
 Finally, the confusion matrix and its derived recall and precision matrices can be visualized effectively using heatmaps, enabling intuitive inspection of prediction patterns and systematic errors.
 
 
+<a id="3-building-the-confusion-matrix"></a>
 ## 3. Building the Confusion Matrix
 
 Document layout analysis is a multi-class and multi-label task as it involves multiple classes and the prediction can assign multiple labels at the same pixel due to bounding box overlaps.
@@ -181,6 +182,7 @@ In case of Heron, Figure 8 shows the reduced Recall and Precision matrices:
 </figure>
 
 
+<a id="6-dual-taxonomies-confusion-matrix"></a>
 ## 6. Dual Taxonomies Confusion Matrix
 
 So far we have constructed confusion matrices where both the ground truth (rows) and the model predictions (columns) use the same classes.
@@ -235,7 +237,7 @@ Notice that in this example we do not compare the models against any ground trut
 We have selected "Heron" as the reference and "nemotron-page-elements-v3" as the measured model, but it could be the other way around.
 
 In Figure 11 we illustrate the full dual-taxonomy Confusion Matrix (click on the Figure to zoom in).
-The matrix has the expected block shape as described in [Section 6](#6.-dual-taxonomies-confusion_matrix), with the following all-zero regions:
+The matrix has the expected block shape as described in [Section 6](#6-dual-taxonomies-confusion-matrix), with the following all-zero regions:
 
 - The columns corresponding to the classes of the reference model ("Heron"). This happens because the measured model ("nemotron-page-elements-v3") is never going to predict such classes.
 - The rows corresponding to the classes of the measured model ("nemotron-page-elements-v3"). This happens because the evaluation is done only for the classes of the reference model.
@@ -314,7 +316,7 @@ This process happens both for the reference resolutions and the predictions.
 In the TORE implementation we bit-pack up to 64 labels per pixel inside an unsigned 64-bit integer (`uint64`).
 In our encoding we allocate the `index-0` to the `BG` class and support up to 63 additional labels per pixel,
 which provides enough space for overlapping bounding boxes.
-This dense representation enables an efficient implementation of the [TORE algorithm](#3.-building-a-multi-class,-multi-label-confusion-matrix),
+This dense representation enables an efficient implementation of the [TORE algorithm](#3-building-the-confusion-matrix),
 which computes multiple pixels in parallel using SIMD operations.
 
 Figure 14 provides an example of the binary representation for the pixel labels used in TORE.

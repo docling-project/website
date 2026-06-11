@@ -275,17 +275,35 @@ Additionally, the visualizations shown in Figures 15 - 18 can help to see in pra
 All pages are taken from the [ViDoReV3][6] dataset and the actual document id and page number are shown in the caption.
 On the left side are the predictions of Nvidia's "nemotron-page-elements-v3" and on the right side is "Heron".
 
-
 First we can examine the Recall matrix column-by-column for all classes of "nemotron-page-elements-v3":
 
-- The `nvidia_table` class, as expected, maps mainly to `heron_Table` class. However there also some mappings to `heron_Document Index` and `heron_Form`. Most probably due to the fact that "Document Indices" and "Forms" look similar to a "Table".
-- The `nvidia_chart` and `nvidia_infographic` map mainly to `heron_Picture`. Most probably because there are no "chart" and "infographic" classes in the taxonomy of "Heron". Then a Heron "picture" comes the closest to nemotron's "chart" and "infographic".
-- The `nvidia_title` maps to `heron_page_header`, `heron_Section-header` and `heron_Title`. That comes without a surprise as all of them are essentially "titles", it's only that heron has a more fine-grained classification.
-- The `nvidia_text` class is spread over multiple classes of heron. We would expect a stronger focus on the `heron_Text` class. Such discrepancy indicates that "nemotron-page-elements-v3` tends to be less precise than "Heron" and overuse the "nvidia_text" class in cases where another more-precise class could be more suitable.
+- The `nvidia_table` class maps mainly to `heron_Table` class.
+This is expected as both classes describe the same document item (table) and demonstrates how TORE can reveal semantic connections between classes from different taxonomies.
+The example in Figure 15 shows such a case.
+However the Recall matrix reveals also some mappings of the `nvidia_table` class to `heron_Document Index` and `heron_Form`.
+Most probably due to the fact that "Document Indices" and "Forms" look similar to a "Table".
+
+- The `nvidia_chart` and `nvidia_infographic` classes map mainly to `heron_Picture`.
+Most probably this happens because there are no "chart" and "infographic" classes in the taxonomy of "Heron".
+Then the Heron class "picture" is semantically the closest to Nemotron's "chart" and "infographic".
+The example in Figure 18 demonstrates this case.
+
+- The `nvidia_title` maps to `heron_page_header`, `heron_Section-header` and `heron_Title`.
+These 3 Heron classes essentially refer to title-like document elements, no surprise that TORE connects them to the `nvidia_title` class.
+All examples in Figures 15-18 demonstrate such cases.
+
+- The `nvidia_text` class is spread over multiple classes of Heron.
+This happens because Heron has a more fine-grained taxonomy where different types of text-like document elements are mapped into specialized classes (e.g. `List-item`, `Checkbox-Selected`, `Footnote`, etc.)
+As Nemotron's taxonomy lacks such specialized text classes the model ends up abusing its `text` class.
+Figure 17 demonstrates a characteristic case where a list is classified as "text" by Nemotron and "List-Item" by Heron.
+
 - The `nvidia_header_footer` class maps mainly to `heron_Page-footer`, as was expected.
+The example in Figure 17 shows how both models correctly identified the page footer using their corresponding classes.
 
 Examining the Precision matrix, we can see that the `Background` row has a non-neglidible mapping to columns other than the `Background`.
-This indicates that that "nemotron-page-elements-v3" tends to produce larger bounding boxes, in comparison to "Heron", that extend over the page background.
+This indicates that that "nemotron-page-elements-v3" tends to produce larger bounding boxes, in comparison to "Heron", that extend over the actual document element and cover much of the page background.
+The example in Figure 18 shows how a single `Infogarphic` box covers the entire page.
+
 
 <!-- Page visualisations of the predictions of the 2 models -->
 <figure>

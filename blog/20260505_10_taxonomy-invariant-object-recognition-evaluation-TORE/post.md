@@ -31,7 +31,7 @@ Three fundamental difficulties stand out immediately:
 
 In this article we will present the [**"Taxonomy-invariant Object Recognition Evaluation (TORE)"**][1] method, which overcomes all of the above limitations.
 
-TORE has been open sourced as part of the [docling-metrics package][1].
+TORE has been open sourced as part of the [docling-metrics package][1] and it is essential part of the [Docling project][10].
 
 
 ## 1. Evaluation Challenges in Layout Analysis
@@ -386,6 +386,7 @@ Lastly we showed an efficient TORE implementation that accelerates the runtime p
 - [\[7\] ViDoRe V3 on Hugging Face][7]
 - [\[8\] nemotron-page-elements-v3 on Hugging Face][8]
 - [\[9\] Array programming with NumPy][9]
+- [\[10\] Docling project in GitHub][10]
 
 
 <!-- DO NOT DELETE IT: Invisible ground truth of references with URLs-->
@@ -398,4 +399,5 @@ Lastly we showed an efficient TORE implementation that accelerates the runtime p
 [7]: https://huggingface.co/collections/vidore/vidore-benchmark-v3
 [8]: https://huggingface.co/nvidia/nemotron-page-elements-v3
 [9]: https://www.nature.com/articles/s41586-020-2649-2
+[10]: https://github.com/docling-project/docling
 

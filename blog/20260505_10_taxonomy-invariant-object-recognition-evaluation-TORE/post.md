@@ -36,14 +36,14 @@ TORE has been open sourced as part of the [docling-metrics package][1].
 
 ## 1. Evaluation Challenges in Layout Analysis
 
-As has already been observed (see [[2]][2], [[5]][5], [[6]][6]), mean Average Precision suffers from several notable limitations.
+As has already been observed [\[2\]][2], [\[5\]][5], [\[6\]][6], mean Average Precision suffers from several notable limitations.
 Most critically, mAP becomes meaningless when predictions lack confidence scores. Without a ranking mechanism, the Precision-Recall curve degenerates into a single point, rendering Average Precision nonsensical.
 However, many models provide predictions without confidence scores.
 Beyond this, mAP treats all predictions that meet the minimum IoU threshold as equally valid, regardless of how precisely they overlap with the ground truth.
 Implementation details such as PR curve interpolation, area computation methods, and caps on the number of predictions per image have also been shown to affect the evaluation results.
 Finally, mAP offers no diagnostic value: it provides no insight into which classes a model excels at or struggles with — information that would be invaluable during model development.
 
-A qualitative study of layout analysis in real-world documents ([[2]][2]), reveals that the high complexity of documents often yields ambiguous annotations.
+A qualitative study of layout analysis in real-world documents [\[2\]][2], reveals that the high complexity of documents often yields ambiguous annotations.
 As shown in [Figure 1](#figure-1), it is not clear whether the ground-truth data (left) or the model predictions (right) are correct — or whether both are valid layout resolutions.
 In this example, the main body of the page is annotated as one large `Picture`. The model, however, predicts a more detailed layout: textual elements are identified as `Section-Header`, `Text`, and `List-Item`, and the picture bounding boxes are reduced to cover only the visual content.
 
@@ -228,14 +228,14 @@ Additionally, similarly to what happens with the same class taxonomy matrices, i
 ## 7. Example 2: TORE with Dual Taxonomies
 
 In this example we want to demonstrate how TORE can be used to compare models with different class taxonomies.
-We will use "Heron" ([3][3]) as the reference and compare it to "nemotron-page-elements-v3" ([8][8]).
+We will use "Heron" [\[3\]][3] as the reference and compare it to "nemotron-page-elements-v3" [\[8\]][8].
 The "nemotron-page-elements-v3" model uses the following class taxonomy:
 
 ```python
 ["table", "chart", "title", "infographic", "text", "header_footer"]
 ```
 
-The input pages are taken from the test split of the "ViDoRe V3" dataset ([7][7]).
+The input pages are taken from the test split of the "ViDoRe V3" dataset [\[7\]][7].
 Notice that in this example we do not compare the models against any ground truth, but against each other.
 We have selected "Heron" as the reference and "nemotron-page-elements-v3" as the measured model, but it could be the other way around.
 
@@ -276,7 +276,7 @@ Similarly we provide illustrations while hiding the all-zero rows/columns of the
 </figure>
 
 We can use the Recall and Precision matrices to gain insight into how the two models' predictions compare.
-Additionally, the visualizations shown in Figures [13](#figure-13) - [16](#figure-16) can help to see in practice the differences in the behavior of the two models.
+Additionally, the visualizations shown in Figures [13](#figure-13), [14](#figure-14), [15](#figure-15), [16](#figure-16) can help to see in practice the differences in the behavior of the two models.
 All pages are taken from the [ViDoReV3][7] dataset and the actual document id and page number are shown in the caption.
 On the left side are the predictions of Nvidia's "nemotron-page-elements-v3" and on the right side is "Heron".
 
@@ -383,8 +383,8 @@ Lastly we showed an efficient TORE implementation that accelerates the runtime p
 - [\[4\] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"][4]
 - [\[5\] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks"][5]
 - [\[6\] mAP is wrong if all scores are equal][6]
-- [\[7\] ViDoRe V3][7]
-- [\[8\] nemotron-page-elements-v3][8]
+- [\[7\] ViDoRe V3 on Hugging Face][7]
+- [\[8\] nemotron-page-elements-v3 on Hugging Face][8]
 - [\[9\] Array programming with NumPy][9]
 
 

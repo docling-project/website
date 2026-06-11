@@ -84,12 +84,10 @@ enabling intuitive inspection of prediction patterns and systematic errors.
 <a id="3-building-the-confusion-matrix"></a>
 ## 3. Building the Confusion Matrix
 
-TODO
-Document layout analysis is a multi-class, multi-label task.
-By definition the taxonomy of the document elements contains multiple classes and the classifier can assign more than one labels per pixel due to overlapping predictions.
+Document layout analysis is a multi-class and multi-label task.
 
-We can compute the confusion matrix per page by applying the approach described in the paper [\[3\] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"][3] for each pixel.
-The main idea of [\[3\]][3] is the _"Algorithm 1"_ listed on page 9, which distinguishes 4 cases and assigns fractional _"Gains"_ and _"Penalties"_ for each sample of the dataset.
+In TORE we use the approach described in the paper [\[3\] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"][3].
+The main idea is the _"Algorithm 1"_ listed on page 9, which distinguishes 4 cases and assigns fractional _"Gains"_ and _"Penalties"_ for each sample of the dataset.
 The 4 cases are:
 
 - Case 1: The classifier has assigned to the sample the same label as in ground-truth (perfect match).
@@ -97,32 +95,18 @@ The 4 cases are:
 - Case 3: The classifier has assigned to the sample only a subset of the ground-truth labels (under-prediction).
 - Case 4: Predicted and ground-truth labels have some partial overlap and some diff (diff-prediction).
 
----
-
-TODO
-<!--
-TORE builds the Confusion Matrix for a collection of documents as follows:
-
-- Each sample is a pixel of the rasterized layout resolution for each page.
-- The confusion matrix is computed first for each individual page at the page level and then all page
-First we compute the confusion matrix for all pixels of a page and then we sum up to produce the dataset-level confusion matrix.
-
-In a typical TORE workflow the following steps take place:
-
-- Rasterize the reference and predicted layout resolutions (bounding boxes + labels).
-    - Each resolution is projected on top of the input image.
-    - Each rasterized pixel is assigned one or more labels.
-    - Assign the special class "Background" to the pixels without any annotation/detection.
-    - The reference resolution can be either ground-truth annotations or the detections of a "reference" model.
-- Convert the rasterized layout resolutions into a compressed binary format.
-    - Each pixel is represented by a `uint64` number.
-    - Only unique combinations of `(reference, predicted)` pixel pairs take part in the computation.
-- Compute the Confusion Matrix and its derivatives Recall Matrix and Precision Matrix.
-- Reduce the matrices to their `2x2` variants by collapsing the non-background classes together.
--->
-
 TORE computes the Confusion Matrix and its Recall/Precision matrices for a collection of documents as follows:
 
+- Rasterize the layout resolution both for the "reference" and the predictions:
+    - Each resolution is projected on top of the input page.
+    - As a result, the rasterized pixels corresponding to annotations/detections are assigned one or more labels.
+    - Multiple labels for the same pixel may occur due to overlapping predictions.
+    - Assign the special class "Background" to the pixels without any annotations/detections.
+    - The "reference" resolution can be either ground-truth annotations or detections of a "reference" model.
+- Compute the confusion matrix and its derivatives Recall- and Precision Matrix using Algorithm 1 for each page:
+    - Each rasterized pixel becomes a sample input for Algorithm 1.
+    - Notice: The "Case 3" of Algorithm 1 never happens when we have single label annotations/predictions.
+- Sum up the matrices of each page to produce the ones at the dataset level.
 
 
 ## 4. Example 1: TORE with a Single Taxonomy

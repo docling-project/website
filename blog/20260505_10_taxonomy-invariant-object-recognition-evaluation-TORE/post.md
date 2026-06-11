@@ -21,7 +21,7 @@ Three fundamental difficulties stand out immediately:
 - Most evaluation methods are applicable only between layout resolutions that use the same class taxonomy. This leaves outside cases like:
   - Evaluate a model on an annotated dataset that uses a different class taxonomy.
   - Use a non-annotated dataset to evaluate two models against each other, and each model uses its own class taxonomy.
-- How to accelerate the computation of the metric on the CPU using SIMD operations.
+- How to accelerate the computation of the metric on the CPU using Single Instruction Multiple Data (SIMD) operations.
 
 In this article we will present the **"Taxonomy-invariant Object Recognition Evaluation (TORE)"** method which allows to overcome all above limitations.
 
@@ -358,10 +358,13 @@ Finally we parallelize the computation of the page-level confusion matrices.
 
 ## 9. Summary
 
-This pixel-wise evaluation framework addresses the limitations of existing approaches for document layout analysis in a coherent and systematic way.
-It handles multi-label predictions arising from overlapping bounding boxes, accounts for background regions, and extends to comparisons across models that operate under different classification taxonomies.
-The reduced matrix abstraction provides a common currency for cross-taxonomy comparison, while the bit-packed binary encoding and representation compression keep the runtime low enough to support rapid experimentation.
-Together, these properties make it a practical and principled tool for anyone developing or benchmarking document layout models at scale.
+In this article we presented the "Taxonomy-invariant Object Recognition Evaluation" (TORE) metric and explained why it is well suited to evaluate the layout analysis of documents.
+We showed that the mean Average-Precision metric suffers from many limitations that make it unsuitable and even nonsensical when a model does not produce confidence scores.
+TORE overcomes these limitations and provides insights for the performance of model via standard mathematical tools like the confusion matrix and its derivatives.
+One of TORE's major strengths is its ability to evaluate across heterogeneous classification taxonomies.
+This allows to evaluate a model on a dataset that uses different classes or direct model-to-model comparisons regardless of the underlying taxonomies.
+Via concrete examples we showcased how to use the confusion, recall and precision matrices and understand where the predictions of two models match and where they differ.
+Lastly we showed an efficient TORE implementation that accelerates the runtime performance of the metric via SIMD operations and parallelism.
 
 
 ## 10. References

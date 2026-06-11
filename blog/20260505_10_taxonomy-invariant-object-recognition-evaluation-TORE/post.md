@@ -19,8 +19,8 @@ Three fundamental difficulties stand out immediately:
 
 - The most widely used metric, mean Average Precision (mAP), is known to have many limitations which makes mAP inappropriate for the evaluation of document layout analysis.
 - Most evaluation methods are applicable only between layout resolutions that use the same class taxonomy. This leaves outside cases like:
-  - Evaluate a model on an annotated dataset that uses a different class taxonomy.
-  - Use a non-annotated dataset to evaluate two models against each other, and each model uses its own class taxonomy.
+    - Evaluate a model on an annotated dataset that uses a different class taxonomy.
+    - Use a non-annotated dataset to evaluate two models against each other, and each model uses its own class taxonomy.
 - How to accelerate the computation of the metric on the CPU using Single Instruction Multiple Data (SIMD) operations.
 
 In this article we will present the **"Taxonomy-invariant Object Recognition Evaluation (TORE)"** method which allows to overcome all above limitations.

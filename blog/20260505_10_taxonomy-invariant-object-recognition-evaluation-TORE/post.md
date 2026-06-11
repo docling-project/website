@@ -161,8 +161,6 @@ For example we see high off-diagonal value for the cell `["Background", "Key-Val
   <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_precision_matrix.png" alt="Heron - Precision Matrix" /></dialog>
 </figure>
 
-TODO: Add examples of specific images
-
 
 ## 5. Reduced Matrices
 
@@ -272,7 +270,13 @@ Similarly we provide illustrations while hiding the all-zero rows/columns of the
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Precision Matrix" /></dialog>
 </figure>
 
-First we can examine the Recall matrix column-by-column, to see how the predictions of "nemotron-page-elements-v3" map to the classes of "Heron":
+We can use the Recall and Precision matrices to get insights how the predictions of the two models are compared to each other.
+Additionally, the visualizations shown in Figures 15 - 18 can help to see in practice the differences in the behavior of the two models.
+All pages are taken from the [ViDoReV3][6] dataset and the actual document id and page number are shown in the caption.
+On the left side are the predictions of Nvidia's "nemotron-page-elements-v3" and on the right side is "Heron".
+
+
+First we can examine the Recall matrix column-by-column for all classes of "nemotron-page-elements-v3":
 
 - The `nvidia_table` class, as expected, maps mainly to `heron_Table` class. However there also some mappings to `heron_Document Index` and `heron_Form`. Most probably due to the fact that "Document Indices" and "Forms" look similar to a "Table".
 - The `nvidia_chart` and `nvidia_infographic` map mainly to `heron_Picture`. Most probably because there are no "chart" and "infographic" classes in the taxonomy of "Heron". Then a Heron "picture" comes the closest to nemotron's "chart" and "infographic".
@@ -283,30 +287,30 @@ First we can examine the Recall matrix column-by-column, to see how the predicti
 Examining the Precision matrix, we can see that the `Background` row has a non-neglidible mapping to columns other than the `Background`.
 This indicates that that "nemotron-page-elements-v3" tends to produce larger bounding boxes, in comparison to "Heron", that extend over the page background.
 
-Next we can show visualisations of the predictions from both models that support the findings revealed by the examination of the matrices,
-where on the left side is the prediction of Nvidia's "nemotron-page-elements-v3" and on the right side is "heron":
-
-
-<!-- Prediction examples -->
+<!-- Page visualisations of the predictions of the 2 models -->
+<figure>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 15. Nemotron vs Heron: Example1 (doc_id=viz_AFD-100607-009, page_no=22)</em></figcaption>
+  <img src="images/viz_AFD-100607-009-22.png" alt="Heron vs nemotron example" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/viz_AFD-100607-009-22.png" alt="Nemotron vs Heron: Example1" /></dialog>
+</figure>
 
 <figure>
-  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 15. Example: Nemotron tends to over use the "title" class</em></figcaption>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 16. Nemotron vs Heron: Example2 (doc_id=viz_hermes_2023, page_no=320)</em></figcaption>
   <img src="images/viz_hermes_2023-320.png" alt="Heron vs nemotron example" onclick="this.nextElementSibling.showModal()" />
-  <dialog class="lb" onclick="this.close()"><img src="images/viz_hermes_2023-320.png" alt="Heron vs nemotron example" /></dialog>
+  <dialog class="lb" onclick="this.close()"><img src="images/viz_hermes_2023-320.png" alt="Nemotron vs Heron: Example2" /></dialog>
 </figure>
 
 <figure>
-  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 16. Example: Background leaks inside the bounding box of the prediction in nemotron</em></figcaption>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 17. Nemotron vs Heron: Example 3 (doc_id=viz_hermes_2023, page_no=269)</em></figcaption>
   <img src="images/viz_hermes_2023-269.png" alt="Heron vs nemotron example" onclick="this.nextElementSibling.showModal()" />
-  <dialog class="lb" onclick="this.close()"><img src="images/viz_hermes_2023-269.png" alt="Heron vs nemotron example" /></dialog>
+  <dialog class="lb" onclick="this.close()"><img src="images/viz_hermes_2023-269.png" alt="Nemotron vs Heron: Example 3" /></dialog>
 </figure>
 
 <figure>
-  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 17. Example: Background leaks inside the bounding box of the prediction in nemotron</em></figcaption>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 18. Nemotron vs Heron: Example 4 (doc_id=viz_State_of_CDER_FDLI2021_PCavazzoni_20210515, page_no=4)</em></figcaption>
   <img src="images/viz_State_of_CDER_FDLI2021_PCavazzoni_20210515-4.png" alt="Heron vs nemotron example" onclick="this.nextElementSibling.showModal()" />
-  <dialog class="lb" onclick="this.close()"><img src="images/viz_State_of_CDER_FDLI2021_PCavazzoni_20210515-4.png" alt="Heron vs nemotron example" /></dialog>
+  <dialog class="lb" onclick="this.close()"><img src="images/viz_State_of_CDER_FDLI2021_PCavazzoni_20210515-4.png" alt="Nemotron vs Heron: Example 4" /></dialog>
 </figure>
-
 
 
 ## 8. Implementation Optimizations
@@ -328,7 +332,7 @@ Because the number of unique pixel-pairs is substantially smaller than the total
 Finally we parallelize the computation of the page-level confusion matrices.
 
 <figure>
-  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 18. Example of TORE binary representation using uint4 (TORE implementation uses uint64). The bboxes with dashed lines correspond to the reference resolution (e.g. ground-truth) and the solid ones to the predictions.</em></figcaption>
+  <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 19. Example of TORE binary representation using uint4 (TORE implementation uses uint64). The bboxes with dashed lines correspond to the reference resolution (e.g. ground-truth) and the solid ones to the predictions.</em></figcaption>
   <img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" onclick="this.nextElementSibling.showModal()" />
   <dialog class="lb" onclick="this.close()"><img src="images/scaled_TORE_binary_representation.png" alt="TORE Binary Representation" /></dialog>
 </figure>

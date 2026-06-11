@@ -49,7 +49,7 @@ Beyond this, mAP treats all predictions that meet the minimum IoU threshold as e
 Implementation details such as PR curve interpolation, area computation methods, and caps on the number of predictions per image have also been shown to affect the evaluation results.
 Finally, mAP offers no diagnostic value: it provides no insight into which classes a model excels at or struggles with — information that would be invaluable during model development.
 
-A qualitative study of layout analysis in real-world documents reveals that the high complexity of documents often yield ambiguous annotations.
+A qualitative study of layout analysis in real-world documents reveals that the high complexity of documents often yields ambiguous annotations.
 As shown in Figure 1, it is not clear whether the ground-truth data (left) or the model predictions (right) are correct — or whether both are valid layout resolutions.
 In this example, the main body of the page is annotated as one large `Picture`. The model, however, predicts a more detailed layout: textual elements are identified as `Section-Header`, `Text`, and `List-Item`, and the picture bounding boxes are reduced to cover only the visual content.
 
@@ -106,8 +106,8 @@ First we compute the confusion matrix for all pixels of a page and then we sum u
 
 ## 4. Example 1: TORE with a Single Taxonomy
 
-In the next example we will show how the confusion, recall and precision matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
-([[1] "Advanced Layout Analysis Models for Docling"][1], [[2] "Heron - Docling"][2])
+In the next example we will show what the confusion, recall and precision matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
+([[1] "Advanced Layout Analysis Models for Docling"][1], [[2] "Heron - Docling"][2]).
 
 The "Heron" model uses a taxonomy of 17 classes:
 
@@ -135,11 +135,11 @@ We use a color code to indicate the magnitude of the cell counts and highlight t
 If we normalize the confusion matrix row-wise (dividing each cell by the sum of its row), we get the "Recall Matrix", as shown in Figure 4.
 Given that an ideal recall matrix has values only on the main diagonal, the perfect predictor should have red cells on the diagonal and black elsewhere.
 
-As we can see in the example of "Heron" the recall matrix provides invaluable insight on the performance of the model.
+As we can see in the example of "Heron" the recall matrix provides invaluable insight into the performance of the model.
 We can immediately see for which classes the model performs well or poorly, and, in case of misclassifications, which classes the model confuses.
 For example we can see that "Heron" performs excellently on "Background" and quite well for the classes: "Picture", "Table", "Text", "Document Index", "Code" and "Form".
 The recall for "Checkbox-Selected" and "Checkbox-Unselected" is still high but a bit lower.
-The model lacks recall mostly for the classes "Key-Value Region", and "Title".
+The model lacks recall mostly for the classes "Key-Value Region" and "Title".
 Also the recall reveals that "Heron" tends to mis-classify "Title" as "Section-Header".
 
 If we extract the main diagonal elements we get the _Recall Vector_.
@@ -152,7 +152,7 @@ If we extract the main diagonal elements we get the _Recall Vector_.
 
 The Precision Matrix is the normalization of the confusion matrix column-wise (dividing each cell by the sum of its column).
 This is shown in Figure 5.
-The precision matrix can also help to derive interesting conclusions for the performance of a model.
+The precision matrix can also help to derive interesting conclusions about the performance of a model.
 For example we see a high off-diagonal value for the cell `["Background", "Key-Value Region"]`, which indicates that Heron misses key-value bounding boxes and mis-classifies them as "Background".
 
 <figure>
@@ -168,7 +168,7 @@ As we saw in the previous section the Confusion, Recall and Precision matrices a
 At the same time, this information can be overwhelming. In Heron's case, it means analyzing three matrices (confusion, recall, precision), each of dimension `18x18`.
 One way to condense this information is to sum the cell values of all "non-background" classes into one class.
 This way we produce reduced `2x2` matrices for the "Background" class and the "non-Background" super-class.
-This abstraction allows to quickly check if the classifier can detect the elements of the page correctly, regardless of the type of document element.
+This abstraction allows us to quickly check if the classifier can detect the elements of the page correctly, regardless of the type of document element.
 
 For Heron, Figure 6 shows the reduced Recall and Precision matrices:
 
@@ -184,7 +184,7 @@ For Heron, Figure 6 shows the reduced Recall and Precision matrices:
 ## 6. Dual Taxonomies Confusion Matrix
 
 So far we have constructed confusion matrices where both the ground truth (rows) and the model predictions (columns) use the same classes.
-However very often we need to compare model predictions against datasets or other models that use different class taxonomies.
+However, very often we need to compare model predictions against datasets or other models that use different class taxonomies.
 Assuming that the ground truth uses the classes `BG, GT1, ..., GTn` and a model uses the classes `BG, P1, ... , Pm`,
 we can create a confusion matrix on top of the union-taxonomy with the classes `BG, GT1, ..., GTn, P1, ... Pm`.
 
@@ -202,7 +202,7 @@ All other values are zero as the model never predicts on the ground truth taxono
 
 As shown in Figure 7 we can derive Recall and Precision matrices by dividing each value by its row/column sum.
 Notice that the classic recall and precision vectors per class can no longer be computed,
-as the diagonal of the recall and precision matrices are no longer meaningful.
+as the diagonals of the recall and precision matrices are no longer meaningful.
 
 What can be extracted, however, is highly informative.
 From the **Recall matrix**, one can start from a prediction class (column) and trace which ground truth classes (rows) it maps to most strongly — revealing the semantic relationship between the two vocabularies.
@@ -277,7 +277,7 @@ On the left side are the predictions of Nvidia's "nemotron-page-elements-v3" and
 
 First we can examine the Recall matrix column-by-column for all classes of "nemotron-page-elements-v3":
 
-- The `nvidia_table` class maps mainly to `heron_Table` class.
+- The `nvidia_table` class maps mainly to the `heron_Table` class.
 This is expected as both classes describe the same document item (table) and demonstrates how TORE can reveal semantic connections between classes from different taxonomies.
 The example in Figure 13 shows such a case.
 However the Recall matrix reveals also some mappings of the `nvidia_table` class to `heron_Document Index` and `heron_Form`.
@@ -287,8 +287,8 @@ This is most likely because "Document Indices" and "Forms" look similar to a "Ta
 This most likely happens because "Heron" has no "chart" or "infographic" classes, so its "Picture" class is semantically the closest to Nemotron's "chart" and "infographic".
 The example in Figure 16 demonstrates this case.
 
-- The `nvidia_title` maps to `heron_page_header`, `heron_Section-header` and `heron_Title`.
-These 3 Heron classes essentially refer to title-like document elements, no surprise that TORE connects them to the `nvidia_title` class.
+- The `nvidia_title` class maps to `heron_page_header`, `heron_Section-header` and `heron_Title`.
+These 3 Heron classes essentially refer to title-like document elements, so it is no surprise that TORE connects them to the `nvidia_title` class.
 All examples in Figures 13-16 demonstrate such cases.
 
 - The `nvidia_text` class is spread over multiple classes of Heron.

@@ -42,7 +42,7 @@ In the next sections we provide more insight.
 
 ## 1. Evaluation Challenges in Layout Analysis
 
-As it has already been observed (see [[1]](https://arxiv.org/abs/2509.11720), [[3]](https://arxiv.org/abs/2011.10772), [[5]](https://github.com/cocodataset/cocoapi/issues/678)) mean Average Precision suffers from several notable limitations.
+As it has already been observed (see [[1]][1], [[4]][4], [[5]][5]) mean Average Precision suffers from several notable limitations.
 Most critically, mAP becomes meaningless when predictions lack confidence scores. Without a ranking mechanism, the Precision-Recall curve degenerates into a single point, rendering Average Precision nonsensical.
 However many models provide predictions without confidence scores.
 Beyond this, mAP treats all predictions that meet the minimum IoU threshold as equally valid, regardless of how precisely they overlap with the ground truth.
@@ -89,8 +89,8 @@ Finally, the confusion matrix and its derived recall and precision matrices can 
 ## 3. Building the Confusion Matrix
 
 Document layout analysis is a multi-class and multi-label task as it involves multiple classes and the prediction can assign multiple labels at the same pixel due to bounding box overlaps.
-We can compute the confusion matrix per page by applying the approach of [[3]](https://csitcp.org/paper/10/108csit01.pdf) for each pixel.
-The main idea of [[3]](https://csitcp.org/paper/10/108csit01.pdf) is the _"Algorithm 1"_ listed on page 9, which distinguishes 4 cases and assigns fractional _"Gains"_ and _"Penalties"_ for each sample of the dataset.
+We can compute the confusion matrix per page by applying the approach of [[3]][3] for each pixel.
+The main idea of [[3]][3] is the _"Algorithm 1"_ listed on page 9, which distinguishes 4 cases and assigns fractional _"Gains"_ and _"Penalties"_ for each sample of the dataset.
 These 4 cases are:
 
 - Case 1: The prediction has assigned to the sample the same label as in ground-truth (perfect match).
@@ -106,7 +106,7 @@ First we compute the confusion matrix for all pixels of a page and then we sum u
 ## 4. Example 2: TORE with a single Taxonomy
 
 In the next example we will show how the confusion, recall and precision matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
-([[1] "Advanced Layout Analysis Models for Docling"](https://arxiv.org/abs/2509.11720), [[2] "Heron - Docling"](https://huggingface.co/docling-project/docling-layout-heron))
+([[1] "Advanced Layout Analysis Models for Docling"][1], [[2] "Heron - Docling"][2])
 
 The "Heron" model uses a taxonomy of 17 classes:
 
@@ -223,19 +223,19 @@ Figure 10 shows the full picture for the same class taxonomy and dual class taxo
 ## 7. Example 2: TORE with Dual Taxonomies
 
 In this example we want to demonstrate how TORE can be used to compare models with different class taxonomies.
-We will use "Heron" ([2](https://huggingface.co/docling-project/docling-layout-heron)) as the rerference and compare it to "nemotron-page-elements-v3" ([7](https://huggingface.co/nvidia/nemotron-page-elements-v3)).
+We will use "Heron" ([2][2]) as the rerference and compare it to "nemotron-page-elements-v3" ([7][7]).
 The "nemotron-page-elements-v3" model uses the following class taxonomy:
 
 ```python
 ["table", "chart", "title", "infographic", "text", "header_footer"]
 ```
 
-The input pages are taken from the test split of the "ViDoRe V3" dataset ([6](https://huggingface.co/collections/vidore/vidore-benchmark-v3)).
+The input pages are taken from the test split of the "ViDoRe V3" dataset ([6][6]).
 Notice that in this example we do not compare the models against any ground truth, but against each other.
 We have selected "Heron" as the reference and "nemotron-page-elements-v3" as the measured model, but it could be the other way around.
 
-In Figure 11 we illustrate the generated Confusion Matrix (click on the Figure to zoom in).
-This dual-taxonomy confusion matrix has the expected block shape as described in [Section 6](#6.-dual-taxonomies-confusion_matrix), where certain parts of the matrix are all-zeros:
+In Figure 11 we illustrate the full dual-taxonomy Confusion Matrix (click on the Figure to zoom in).
+The matrix has the expected block shape as described in [Section 6](#6.-dual-taxonomies-confusion_matrix), with the following all-zero regions:
 
 - The columns corresponding to the classes of the reference model ("Heron"). This happens because the measured model ("nemotron-page-elements-v3") is never going to predict such classes.
 - The rows corresponding to the classes of the measured model ("nemotron-page-elements-v3"). This happens because the evaluation is done only for the classes of the reference model.
@@ -246,7 +246,7 @@ This dual-taxonomy confusion matrix has the expected block shape as described in
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix_unhidden.png" alt="Heron - nemotron - Full Confusion Matrix" /></dialog>
 </figure>
 
-In order to improve the readability of the confusion matrix, we have redrawn it while hiding the all-zeros rows and columns in Figure 12.
+In order to improve the readability, we have redrawn the confusion matrix while hiding the all-zeros rows and columns in Figure 12.
 This allows to focus on the non-zero elements and make some semantic comparison across the predictions of the two models.
 
 <figure>
@@ -342,14 +342,34 @@ Together, these properties make it a practical and principled tool for anyone de
 
 ## 10. References
 
-- [1] "Advanced Layout Analysis Models for Docling" — [https://arxiv.org/abs/2509.11720](https://arxiv.org/abs/2509.11720)
-- [2] "Heron for Docling on Hugging Face" — [https://huggingface.co/docling-project/docling-layout-heron](https://huggingface.co/docling-project/docling-layout-heron)
-- [3] "Multi-Label Classifier Performance Evaluation with Confusion Matrix" — [https://csitcp.org/paper/10/108csit01.pdf](https://csitcp.org/paper/10/108csit01.pdf)
-- [4] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks" — [https://arxiv.org/abs/2011.10772](https://arxiv.org/abs/2011.10772)
-- [5] "mAP is wrong if all scores are equal" — [https://github.com/cocodataset/cocoapi/issues/678](https://github.com/cocodataset/cocoapi/issues/678)
-- [6] "ViDoRe V3" — [https://huggingface.co/collections/vidore/vidore-benchmark-v3](https://huggingface.co/collections/vidore/vidore-benchmark-v3)
-- [7] "nemotron-page-elements-v3" — [https://huggingface.co/nvidia/nemotron-page-elements-v3](https://huggingface.co/nvidia/nemotron-page-elements-v3)
+<!-- References with the text only in the visible link -->
+- [\[1\] Advanced Layout Analysis Models for Docling][1]
+- [\[2\] Heron for Docling on Hugging Face][2]
+- [\[3\] Multi-Label Classifier Performance Evaluation with Confusion Matrix][3]
+- [\[4\] One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks][4]
+- [\[5\] mAP is wrong if all scores are equal][5]
+- [\[6\] ViDoRe V3][6]
+- [\[7\] nemotron-page-elements-v3][7]
 
 
-<!-- - [[4] "MinerU2.5: A Decoupled Vision-Language Model for Efficient High-Resolution Document Parsing"](https://arxiv.org/abs/2509.22186)  -->
+<!-- References with the text and the URL in the visible link -->
+<!--
+- [\[1\] "Advanced Layout Analysis Models for Docling"][1] — [https://arxiv.org/abs/2509.11720][1]
+- [\[2\] "Heron for Docling on Hugging Face"][2] — [https://huggingface.co/docling-project/docling-layout-heron][2]
+- [\[3\] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"][3] — [https://csitcp.org/paper/10/108csit01.pdf][3]
+- [\[4\] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks"][4] — [https://arxiv.org/abs/2011.10772][4]
+- [\[5\] "mAP is wrong if all scores are equal"][5] — [https://github.com/cocodataset/cocoapi/issues/678][5]
+- [\[6\] "ViDoRe V3"][6] — [https://huggingface.co/collections/vidore/vidore-benchmark-v3][6]
+- [\[7\] "nemotron-page-elements-v3"][7] — [https://huggingface.co/nvidia/nemotron-page-elements-v3][7]
+-->
+
+
+<!-- DO NOT DELETE IT: Invisible ground truth of references with URLs-->
+[1]: https://arxiv.org/abs/2509.11720
+[2]: https://huggingface.co/docling-project/docling-layout-heron
+[3]: https://csitcp.org/paper/10/108csit01.pdf
+[4]: https://arxiv.org/abs/2011.10772
+[5]: https://github.com/cocodataset/cocoapi/issues/678
+[6]: https://huggingface.co/collections/vidore/vidore-benchmark-v3
+[7]: https://huggingface.co/nvidia/nemotron-page-elements-v3
 

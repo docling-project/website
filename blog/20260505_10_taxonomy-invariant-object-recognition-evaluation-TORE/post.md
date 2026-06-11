@@ -18,26 +18,27 @@ Yet evaluating how well a model performs this task turns out to be surprisingly 
 Three fundamental difficulties stand out immediately:
 
 - The most widely used metric, mean Average Precision (mAP), is known to have many limitations that make it inappropriate for evaluating document layout analysis.
-- Most evaluation methods only apply when both layout resolutions use the same class taxonomy. This excludes cases such as:
-    - Evaluating a model on an annotated dataset that uses a different class taxonomy.
-    - Evaluating two models against each other on a non-annotated dataset, where each model uses its own class taxonomy.
-- Efficiently computing the metric on the CPU, e.g. using Single Instruction Multiple Data (SIMD) operations.
+- Most evaluation methods only apply when both the reference layout resolution and the resolution under evaluation use the same class taxonomy. This excludes cases such as:
+    - Evaluating a model on an annotated dataset that uses a different taxonomy.
+    - Comparing directly two models against each other, where each model uses its own class taxonomy.
+- Efficiently computing the metric on the CPU using Single Instruction Multiple Data (SIMD) operations.
 
 In this article we will present the **"Taxonomy-invariant Object Recognition Evaluation (TORE)"** method, which overcomes all of the above limitations.
 
 In a typical TORE workflow the following steps take place:
+
 - Rasterize the reference and predicted layout resolutions (bounding boxes + labels).
-  - Each resolution is projected on top of the input image.
-  - Each rasterized pixel is assigned one or more labels.
-  - Assign the special class "Background" to the pixels without any annotation/detection.
-  - The reference resolution can be either ground-truth annotations or the detections of a "reference" model.
+    - Each resolution is projected on top of the input image.
+    - Each rasterized pixel is assigned one or more labels.
+    - Assign the special class "Background" to the pixels without any annotation/detection.
+    - The reference resolution can be either ground-truth annotations or the detections of a "reference" model.
 - Convert the rasterized layout resolutions into a compressed binary format.
-  - Each pixel is represented by a `uint64` number.
-  - Only unique combinations of `(reference, predicted)` pixel pairs take part in the computation.
+    - Each pixel is represented by a `uint64` number.
+    - Only unique combinations of `(reference, predicted)` pixel pairs take part in the computation.
 - Compute the Confusion Matrix and its derivatives Recall Matrix and Precision Matrix.
 - Reduce the matrices to their `2x2` variants by collapsing the non-background classes together.
 
-In the next sections we provide more insight.
+In the next sections we provide more details.
 
 
 ## 1. Evaluation Challenges in Layout Analysis
@@ -49,7 +50,7 @@ Beyond this, mAP treats all predictions that meet the minimum IoU threshold as e
 Implementation details such as PR curve interpolation, area computation methods, and caps on the number of predictions per image have also been shown to affect the evaluation results.
 Finally, mAP offers no diagnostic value: it provides no insight into which classes a model excels at or struggles with — information that would be invaluable during model development.
 
-A qualitative study of layout analysis in real-world documents reveals that the high complexity of documents often yields ambiguous annotations.
+A qualitative study of layout analysis in real-world documents ([[1]][1]), reveals that the high complexity of documents often yields ambiguous annotations.
 As shown in Figure 1, it is not clear whether the ground-truth data (left) or the model predictions (right) are correct — or whether both are valid layout resolutions.
 In this example, the main body of the page is annotated as one large `Picture`. The model, however, predicts a more detailed layout: textual elements are identified as `Section-Header`, `Text`, and `List-Item`, and the picture bounding boxes are reduced to cover only the visual content.
 
@@ -359,7 +360,8 @@ Finally we parallelize the computation of the page-level confusion matrices.
 
 In this article we presented the "Taxonomy-invariant Object Recognition Evaluation" (TORE) metric and explained why it is well suited to evaluate the layout analysis of documents.
 We showed that the mean Average-Precision metric suffers from many limitations that make it unsuitable and even nonsensical when a model does not produce confidence scores.
-TORE overcomes these limitations and provides insight into a model's performance through standard mathematical tools such as the confusion matrix and its derivatives.
+TORE overcomes these limitations through standard mathematical tools such as the confusion matrix and its derivatives,
+which provide not only evaluation measurements but also insights that help diagnose a model's mispredictions.
 One of TORE's major strengths is its ability to evaluate across heterogeneous classification taxonomies.
 This allows a model to be evaluated on a dataset that uses different classes, as well as direct model-to-model comparisons regardless of the underlying taxonomies.
 Via concrete examples we showcased how to use the confusion, recall and precision matrices and understand where the predictions of two models match and where they differ.
@@ -376,18 +378,6 @@ Lastly we showed an efficient TORE implementation that accelerates the runtime p
 - [\[5\] mAP is wrong if all scores are equal][5]
 - [\[6\] ViDoRe V3][6]
 - [\[7\] nemotron-page-elements-v3][7]
-
-
-<!-- References with the text and the URL in the visible link -->
-<!--
-- [\[1\] "Advanced Layout Analysis Models for Docling"][1] — [https://arxiv.org/abs/2509.11720][1]
-- [\[2\] "Heron for Docling on Hugging Face"][2] — [https://huggingface.co/docling-project/docling-layout-heron][2]
-- [\[3\] "Multi-Label Classifier Performance Evaluation with Confusion Matrix"][3] — [https://csitcp.org/paper/10/108csit01.pdf][3]
-- [\[4\] "One Metric to Measure them All: Localisation Recall Precision (LRP) for Evaluating Visual Detection Tasks"][4] — [https://arxiv.org/abs/2011.10772][4]
-- [\[5\] "mAP is wrong if all scores are equal"][5] — [https://github.com/cocodataset/cocoapi/issues/678][5]
-- [\[6\] "ViDoRe V3"][6] — [https://huggingface.co/collections/vidore/vidore-benchmark-v3][6]
-- [\[7\] "nemotron-page-elements-v3"][7] — [https://huggingface.co/nvidia/nemotron-page-elements-v3][7]
--->
 
 
 <!-- DO NOT DELETE IT: Invisible ground truth of references with URLs-->

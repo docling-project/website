@@ -180,8 +180,8 @@ For Heron, [Figure 6](#figure-6) shows the reduced Recall and Precision matrices
 
 <figure id="figure-6">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 6. Reduced Recall & Precision Matrices of Heron model on the DocLayNet v2 dataset</em></figcaption>
-  <img src="images/heron_DLNv2_reduced_Recall_Precision.png" alt="Heron - Reduced Recall & Precision Matrices" onclick="this.nextElementSibling.showModal()" />
-  <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_reduced_Recall_Precision.png" alt="Heron - Reduced Recall & Precision Matrices" /></dialog>
+  <img src="images/heron_DLNv2_reduced_Recall_Precision2.png" alt="Heron - Reduced Recall & Precision Matrices" onclick="this.nextElementSibling.showModal()" />
+  <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_reduced_Recall_Precision2.png" alt="Heron - Reduced Recall & Precision Matrices" /></dialog>
 </figure>
 
 

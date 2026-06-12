@@ -387,6 +387,8 @@ This allows a model to be evaluated on a dataset that uses different classes, as
 Via concrete examples we showcased how to use the confusion, recall and precision matrices and understand where the predictions of two models match and where they differ.
 Lastly we showed an efficient TORE implementation that accelerates the runtime performance of the metric via SIMD operations and parallelism.
 
+TORE has been open sourced as part of the [docling-metrics package][1].
+
 
 ## 10. References
 

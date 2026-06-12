@@ -169,8 +169,8 @@ For example we see a high off-diagonal value for the cell `["Background", "Key-V
 
 ## 5. Reduced Matrices
 
-As we saw in the previous section the Confusion, Recall and Precision matrices are an invaluable source of information for the performance of a classifier.
-At the same time, this information can be overwhelming. In Heron's case, it means analyzing three matrices (Confusion, Recall, Precision), each of dimension `18x18`.
+As we saw in the previous sections the Confusion, Recall and Precision matrices are an invaluable source of information.
+At the same time, this information can be overwhelming. In Heron's case, it means analyzing three `18x18` matrices.
 One way to condense this information is to sum the cell values of all "non-background" classes into one class.
 This way we produce reduced `2x2` matrices for the "Background" class and the "non-Background" super-class.
 This abstraction allows us to quickly check if the classifier can detect the elements of the page correctly, regardless of the type of document element.

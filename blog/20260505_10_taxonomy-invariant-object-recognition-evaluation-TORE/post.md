@@ -140,7 +140,7 @@ In [Figure 4](#figure-4) we can see the Recall matrix.
 Remember that a perfect classifier should have red cells on the diagonal and black elsewhere.
 
 As we can see in the example of "Heron" the recall matrix provides significant insight into the performance of the model.
-We can immediately see for which classes the model performs well or poorly, and, in case of mis-classifications, which classes the model confuses.
+We can immediately see for which classes the model performs well, and, in case of mis-classifications, which classes the model confuses.
 For example we can see that "Heron" performs excellently on `Background` and quite well for the classes: `Picture`, `Table`, `Text`, `Document Index`, `Code` and `Form`.
 The recall for `Checkbox-Selected` and `Checkbox-Unselected` is still high but a bit lower.
 The model lacks recall mostly for the classes `Key-Value Region` and `Title`.
@@ -190,14 +190,14 @@ For Heron, [Figure 6](#figure-6) shows the reduced Recall and Precision matrices
 
 So far we have built confusion matrices where both the reference (rows) and the predictions (columns) use the same classes.
 However, very often we need to compare model predictions against datasets or other models that use different class taxonomies.
-Assuming that the ground truth uses the classes `BG, GT1, ..., GTn` and the predictions use the classes `BG, P1, ... , Pm`,
+Assuming that the reference uses the classes `BG, GT1, ..., GTn` and the predictions use the classes `BG, P1, ... , Pm`,
 we can create a confusion matrix based on the union-taxonomy `BG, GT1, ..., GTn, P1, ... Pm`.
 
 This extended matrix will be sparse and have the block structure shown in [Figure 7](#figure-7) where the non-zero values are:
 - First column (Background) for the rows: `[BG, GT1, ..., GTn]`
 - Top left block, for the rows: `[BG, GT1, ..., GTn]` and columns: `[BG, P1, ..., Pm]`.
 
-All other values are zero as the model never predicts on the ground truth taxonomy and the evaluation is never done against the model's taxonomy.
+All other values are zero as the model never predicts on the reference taxonomy and the evaluation is never done against the prediction's taxonomy.
 
 <figure id="figure-7">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 7. Dual class taxonomies matrices</em></figcaption>
@@ -210,9 +210,11 @@ Notice that the classic recall and precision vectors per class can no longer be 
 as the diagonals of the recall and precision matrices are no longer meaningful.
 
 What can be extracted, however, is highly informative.
-From the **Recall matrix**, one can start from a prediction class (column) and trace which ground truth classes (rows) it maps to most strongly — revealing the semantic relationship between the two taxonomies.
-From the **Precision matrix**, one starts from a ground truth class (row) and identifies which prediction classes correspond to it.
-In practice this helps a researcher to see, for instance, that prediction class `P1` is strongly related to ground truth class `GTn`, or that prediction class `Pm` cannot be easily mapped to any ground truth class at all.
+Reading the Recall Matrix row-by-row reveals how each reference class maps to the prediction classes.
+A "bright" column (many large values) flags a prediction class that systematically absorbs many reference classes — the classifier's "default" choice when it cannot assign the proper class.
+
+Conversely, reading the Precision Matrix column-by-column reveals how each prediction class maps to the reference classes.
+A "bright" row flags a reference class that suffers "systematic leakage", with many prediction classes mapping into it.
 
 Additionally, similarly to what happens with the same class taxonomy matrices, it is possible to reduce the matrix by collapsing all non-background classes into one class.
 
@@ -280,7 +282,9 @@ Additionally, visualizations of the predictions from selected pages can help to 
 All pages are taken from the [ViDoRe V3][7] dataset and the actual `doc_id` and `page_no` are shown in the figure caption.
 On the left side are the predictions of Nvidia's "nemotron-page-elements-v3" and on the right side is "Heron".
 
+
 <!-- TODO: Validate the way to read the matrices -->
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 First we can examine the Recall matrix column-by-column for all classes of "nemotron-page-elements-v3":
 
 - The `nvidia_table` class maps mainly to the `heron_Table` class.
@@ -308,6 +312,8 @@ The example in [Figure 15](#figure-15) shows how both models correctly identifie
 Examining the Precision matrix, we can see that the `Background` row has a non-negligible mapping to columns other than the `Background`.
 This indicates that "nemotron-page-elements-v3" tends to produce larger bounding boxes, in comparison to "Heron", that extend over the actual document element and cover much of the page background.
 The example in [Figure 16](#figure-16) shows how a single `Infographic` box covers the entire page.
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
 
 
 <!-- Page visualisations of the predictions of the 2 models -->

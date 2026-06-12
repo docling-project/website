@@ -54,7 +54,7 @@ In this example, the main body of the page is annotated as one large `Picture`. 
 </figure>
 
 
-## 2. Single Taxonomy Confusion Matrix and Derivatives
+## 2. Single Taxonomy Confusion Matrix and its Derivatives
 
 A confusion matrix is a tabular representation of a classifier’s predictions, where each row corresponds to the reference class (e.g. ground truth) and each column to the predicted class.
 The matrix cell `c[i,j]` denotes the number of samples belonging to class `i` that were predicted as class `j`.
@@ -73,9 +73,9 @@ In [Figure 2](#figure-2) we can see a Confusion Matrix built for the classes `C1
 
 Several performance measures can be derived from the confusion matrix:
 
-- **Recall matrix**: A row-wise normalized confusion matrix that provides an overview of the recall per class in the scope of the entire matrix.
-- **Precision matrix**: A column-wise normalized confusion matrix that provides an overview of the precision per class in the scope of the entire matrix.
-- **Recall and precision vectors:** The diagonals of the corresponding Recall and Precision matrices that contain the recall/precision values for each class individually.
+- **Recall matrix**: A row-wise normalized confusion matrix, produced by dividing each cell over the sum of its row. The Recall Matrix provides a two dimensional break-down of the recall across the reference and predicted classes.
+- **Precision matrix**: A column-wise normalized confusion matrix, produced by dividing each cell over the sum of its column. The Precision Matrix provides a two dimensional break-down of the precision across the reference and predicted classes.
+- **Recall and precision vectors:** If we extract the diagonals of the corresponding Recall and Precision matrices we get the recall/precision values for each class individually.
 
 Finally, the confusion matrix and its derived recall and precision matrices can be visualized effectively using heatmaps,
 enabling intuitive inspection of prediction patterns and systematic errors.
@@ -111,8 +111,8 @@ TORE computes the Confusion Matrix and its Recall/Precision matrices for a colle
 
 ## 4. Example 1: TORE with a Single Taxonomy
 
-In the next example we will show what the confusion, recall and precision matrices look like when we apply the TORE metric on the "Heron" model for document layout analysis
-([\[2\]][2], [\[3\]][3]).
+In the next example we will show what the confusion, recall and precision matrices look like
+when we apply the TORE metric on the "Heron" model for document layout analysis [\[2\]][2], [\[3\]][3].
 
 The "Heron" model uses a taxonomy of 17 classes:
 
@@ -124,12 +124,11 @@ The "Heron" model uses a taxonomy of 17 classes:
 ]
 ```
 
-Additionally, the class `"Background"` has been added as the first row/column.
-
 [Figure 3](#figure-3) shows the "Confusion Matrix" of the model against the DocLayNet-v2 dataset, which uses the same class taxonomy.
+Additionally, the class `"Background"` has been added as the first row/column.
 The rows correspond to the ground-truth, the columns to the predictions and each `cell(i,j)` shows the number of pixels that belong to `class-i` but have been predicted as `class-j`.
-Notice that the pixel counts are fractional, due to the way the algorithm distributes "gains" and "penalties" for each predicted label.
-We use a color code to indicate the magnitude of the cell counts and highlight the main diagonal with pink.
+Notice that the pixel counts are fractional, due to the way "Algorithm 1" distributes "Gains" and "Penalties".
+We use a color code to indicate the magnitude of the cell counts and highlight the main diagonal with pink border.
 
 <figure id="figure-3">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 3. The Confusion Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
@@ -137,10 +136,10 @@ We use a color code to indicate the magnitude of the cell counts and highlight t
   <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_confusion_matrix.png" alt="Heron - Confusion Matrix" /></dialog>
 </figure>
 
-If we normalize the confusion matrix row-wise (dividing each cell by the sum of its row), we get the "Recall Matrix", as shown in [Figure 4](#figure-4).
-Given that an ideal recall matrix has values only on the main diagonal, the perfect predictor should have red cells on the diagonal and black elsewhere.
+In [Figure 4](#figure-4) we can see the Recall matrix.
+Remember that a perfect classifier should have red cells on the diagonal and black elsewhere.
 
-As we can see in the example of "Heron" the recall matrix provides invaluable insight into the performance of the model.
+As we can see in the example of "Heron" the recall matrix provides significant insight into the performance of the model.
 We can immediately see for which classes the model performs well or poorly, and, in case of mis-classifications, which classes the model confuses.
 For example we can see that "Heron" performs excellently on "Background" and quite well for the classes: "Picture", "Table", "Text", "Document Index", "Code" and "Form".
 The recall for "Checkbox-Selected" and "Checkbox-Unselected" is still high but a bit lower.
@@ -155,8 +154,7 @@ If we extract the main diagonal elements we get the _Recall Vector_.
   <dialog class="lb" onclick="this.close()"><img src="images/heron_DLNv2_recall_matrix.png" alt="Heron - Recall Matrix" /></dialog>
 </figure>
 
-The Precision Matrix is the normalization of the confusion matrix column-wise (dividing each cell by the sum of its column).
-This is shown in [Figure 5](#figure-5).
+In [Figure 5](#figure-5) we can see the Precision Matrix.
 The precision matrix can also help to derive interesting conclusions about the performance of a model.
 For example we see a high off-diagonal value for the cell `["Background", "Key-Value Region"]`, which indicates that Heron misses key-value bounding boxes and mis-classifies them as "Background".
 
@@ -368,6 +366,7 @@ In this article we presented the "Taxonomy-invariant Object Recognition Evaluati
 We showed that the mean Average-Precision metric suffers from many limitations that make it unsuitable and even nonsensical when a model does not produce confidence scores.
 TORE overcomes these limitations through standard mathematical tools such as the confusion matrix and its derivatives,
 which provide not only evaluation measurements but also insights that help diagnose a model's mis-predictions.
+
 One of TORE's major strengths is its ability to evaluate across heterogeneous classification taxonomies.
 This allows a model to be evaluated on a dataset that uses different classes, as well as direct model-to-model comparisons regardless of the underlying taxonomies.
 Via concrete examples we showcased how to use the confusion, recall and precision matrices and understand where the predictions of two models match and where they differ.

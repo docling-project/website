@@ -283,40 +283,6 @@ All pages are taken from the [ViDoRe V3][7] dataset and the actual `doc_id` and 
 On the left side are the predictions of Nvidia's "nemotron-page-elements-v3" and on the right side is "Heron".
 
 
-<!-- TODO: Validate the way to read the matrices -->
-<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-<!--
-First we can examine the Recall matrix column-by-column for all classes of "nemotron-page-elements-v3":
-
-- The `nvidia_table` class maps mainly to the `heron_Table` class.
-This is expected as both classes describe the same document item (table) and demonstrates how TORE can reveal semantic connections between classes from different taxonomies.
-The example in [Figure 13](#figure-13) shows such a case.
-However the Recall matrix reveals also some mappings of the `nvidia_table` class to `heron_Document Index` and `heron_Form`.
-This is most likely because `Document Indices` and `Forms` look similar to a `Table`.
-
-- The `nvidia_chart` and `nvidia_infographic` classes map mainly to `heron_Picture`.
-This most likely happens because "Heron" has no `chart` or `infographic` classes, so its `Picture` class is semantically the closest to Nemotron's `chart` and `infographic`.
-The example in [Figure 16](#figure-16) demonstrates this case.
-
-- The `nvidia_title` class maps to `heron_page_header`, `heron_Section-header` and `heron_Title`.
-These 3 Heron classes essentially refer to title-like document elements, so it is no surprise that TORE connects them to the `nvidia_title` class.
-All examples in Figures [13](#figure-13)-[16](#figure-16) demonstrate such cases.
-
-- The `nvidia_text` class is spread over multiple classes of Heron.
-This happens because Heron has a more fine-grained taxonomy where different types of text-like document elements are mapped into specialized classes (e.g. `List-item`, `Checkbox-Selected`, `Footnote`, etc.).
-As Nemotron's taxonomy lacks such specialized text classes the model overuses its `text` class.
-[Figure 15](#figure-15) demonstrates a characteristic case where a list is classified as `text` by Nemotron and `List-Item` by Heron.
-
-- The `nvidia_header_footer` class maps mainly to `heron_Page-footer`, as was expected.
-The example in [Figure 15](#figure-15) shows how both models correctly identified the page footer using their corresponding classes.
-
-Examining the Precision matrix, we can see that the `Background` row has a non-negligible mapping to columns other than the `Background`.
-This indicates that "nemotron-page-elements-v3" tends to produce larger bounding boxes, in comparison to "Heron", that extend over the actual document element and cover much of the page background.
-The example in [Figure 16](#figure-16) shows how a single `Infographic` box covers the entire page.
--->
-<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-
-
 First we can examine the Recall matrix row-by-row and see how the Heron classes map to Nemotron based on their semantic similarity.
 Here are some interesting observations:
 
@@ -324,10 +290,12 @@ Here are some interesting observations:
 The example in [Figure 13](#figure-13) shows such a case.
 
 - **Strong similarity:** `heron_Page-header` maps 78% of the samples to `nvidia-title`.
+All examples in Figures [13](#figure-13)-[16](#figure-16) demonstrate such cases.
 
 - **Weak similarity:** `heron_Section-header` maps to `nvidia_title` in 64% of the cases and to `nvidia_text` in 21% of the cases.
 Similarly `heron_Document Index` and `heron_Form` map around 2/3 of the cases to `nvidia_table` and 30% - 20% to `nvidia_text`.
 Also the `heron_Picture` maps equaly to `nvidia_chart` and to `nvidia_infographic`.
+The example in [Figure 16](#figure-16) demonstrates this case.
 
 - **Very week similarity:** A wide range of Heron classes (`heron_Caption`, `heron_Footnote`, `heron_Formula`, `heron_List-Item`, `heron_Text`, `heron_Code`, `heron_Checkbox-Selected`, `heron_Checkbox-Unselected`, `heron_Key-Value Region`)
 map to `nvidia_text`.
@@ -340,10 +308,12 @@ Moving to the Precicion matrix, we can inspect it column-by-column and see how t
 For this matrix the semantic mapping is more evident as we examine it in the direction from the more generic (Nemotron's taxonomy) to the more specific (Heron's taxonomy).
 
 - **Very strong similarity:** `nvidia_table` maps mostly to `heron_Table`, `nvidia_header_footer` mainly to `heron_Page-footer` and `nvidia_text` maps strongly to `heron_Text`.
+The example in [Figure 15](#figure-15) shows how both models correctly identified the page footer using their corresponding classes.
 
 - **Outliers**: The `nvidia_title` class maps in 52% of the cases to `heron_Section-header` despite the fact that the `heron_Title` class exists too.
 Also the class `nvidia_text` maps 22% of the cases to `heron_List-item`.
 This is an indication that the Nemotron model is not trained to distinguish "section header" and "list" document elements.
+[Figure 15](#figure-15) demonstrates a characteristic case where a list is classified as `text` by Nemotron and `List-Item` by Heron.
 
 - **Leakage to the Background:** We notice that almost all non-background Nemotron classes map to heron's `Background` class.
 This indicates that Nemotron produces too large bounding boxes that leak into the background of the page.

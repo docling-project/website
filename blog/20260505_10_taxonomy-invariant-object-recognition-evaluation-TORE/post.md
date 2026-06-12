@@ -43,7 +43,7 @@ Beyond this, mAP treats all predictions that meet the minimum IoU threshold as e
 Implementation details such as PR curve interpolation, area computation methods, and caps on the number of predictions per image have also been shown to affect the evaluation results.
 Finally, mAP offers no diagnostic value: it provides no insight into which classes a model excels at or struggles with — information that would be invaluable during model development.
 
-A qualitative study of layout analysis in real-world documents [\[2\]][2], reveals that the high complexity of documents often yields ambiguous annotations.
+A qualitative [study][2] of layout analysis in real-world documents, reveals that the high complexity of documents often yields ambiguous annotations.
 As shown in [Figure 1](#figure-1), it is not clear whether the ground-truth data (left) or the model predictions (right) are correct — or whether both are valid layout resolutions.
 In this example, the main body of the page is annotated as one large `Picture`. The model, however, predicts a more detailed layout: textual elements are identified as `Section-Header`, `Text`, and `List-Item`, and the picture bounding boxes are reduced to cover only the visual content.
 
@@ -146,7 +146,7 @@ The recall for "Checkbox-Selected" and "Checkbox-Unselected" is still high but a
 The model lacks recall mostly for the classes "Key-Value Region" and "Title".
 Also the recall reveals that "Heron" tends to mis-classify "Title" as "Section-Header".
 
-If we extract the main diagonal elements we get the _Recall Vector_.
+If we extract the cells of the main diagonal we get the _Recall Vector_.
 
 <figure id="figure-4">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 4. The Recall Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
@@ -157,6 +157,8 @@ If we extract the main diagonal elements we get the _Recall Vector_.
 In [Figure 5](#figure-5) we can see the Precision Matrix.
 The precision matrix can also help to derive interesting conclusions about the performance of a model.
 For example we see a high off-diagonal value for the cell `["Background", "Key-Value Region"]`, which indicates that Heron misses key-value bounding boxes and mis-classifies them as "Background".
+
+If we extract the cells of the main diagonal we get the _Precision Vector_.
 
 <figure id="figure-5">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 5. The Precision Matrix of Heron model on the DocLayNet v2 dataset</em></figcaption>
@@ -186,14 +188,14 @@ For Heron, [Figure 6](#figure-6) shows the reduced Recall and Precision matrices
 <a id="6-dual-taxonomies-confusion-matrix"></a>
 ## 6. Dual Taxonomies Confusion Matrix
 
-So far we have constructed confusion matrices where both the ground truth (rows) and the model predictions (columns) use the same classes.
+So far we have built confusion matrices where both the reference (rows) and the predictions (columns) use the same classes.
 However, very often we need to compare model predictions against datasets or other models that use different class taxonomies.
-Assuming that the ground truth uses the classes `BG, GT1, ..., GTn` and a model uses the classes `BG, P1, ... , Pm`,
-we can create a confusion matrix on top of the union-taxonomy with the classes `BG, GT1, ..., GTn, P1, ... Pm`.
+Assuming that the ground truth uses the classes `BG, GT1, ..., GTn` and the predictions use the classes `BG, P1, ... , Pm`,
+we can create a confusion matrix based on the union-taxonomy `BG, GT1, ..., GTn, P1, ... Pm`.
 
 This extended matrix will be sparse and have the block structure shown in [Figure 7](#figure-7) where the non-zero values are:
 - First column (Background) for the rows: `[BG, GT1, ..., GTn]`
-- Top left block, for the rows `[BG, GT1, ..., GTn]` and columns: `[BG, P1, ..., Pm]`.
+- Top left block, for the rows: `[BG, GT1, ..., GTn]` and columns: `[BG, P1, ..., Pm]`.
 
 All other values are zero as the model never predicts on the ground truth taxonomy and the evaluation is never done against the model's taxonomy.
 
@@ -203,14 +205,14 @@ All other values are zero as the model never predicts on the ground truth taxono
   <dialog class="lb" onclick="this.close()"><img src="images/scaled_dual_taxonomy_confusion_matrix.png" alt="Dual taxonomy confusion matrix" /></dialog>
 </figure>
 
-As shown in [Figure 7](#figure-7) we can derive Recall and Precision matrices by dividing each value by its row/column sum.
+As shown in [Figure 7](#figure-7) we can derive the Recall and Precision matrices by dividing each value by its row/column sum.
 Notice that the classic recall and precision vectors per class can no longer be computed,
 as the diagonals of the recall and precision matrices are no longer meaningful.
 
 What can be extracted, however, is highly informative.
-From the **Recall matrix**, one can start from a prediction class (column) and trace which ground truth classes (rows) it maps to most strongly — revealing the semantic relationship between the two vocabularies.
+From the **Recall matrix**, one can start from a prediction class (column) and trace which ground truth classes (rows) it maps to most strongly — revealing the semantic relationship between the two taxonomies.
 From the **Precision matrix**, one starts from a ground truth class (row) and identifies which prediction classes correspond to it.
-In practice this allows a researcher to see, for instance, that prediction class `P1` is strongly related to ground truth class `GTn`, or that prediction class `Pm` cannot be easily mapped to any ground truth class at all.
+In practice this helps a researcher to see, for instance, that prediction class `P1` is strongly related to ground truth class `GTn`, or that prediction class `Pm` cannot be easily mapped to any ground truth class at all.
 
 Additionally, similarly to what happens with the same class taxonomy matrices, it is possible to reduce the matrix by collapsing all non-background classes into one class.
 
@@ -226,22 +228,22 @@ Additionally, similarly to what happens with the same class taxonomy matrices, i
 ## 7. Example 2: TORE with Dual Taxonomies
 
 In this example we want to demonstrate how TORE can be used to compare models with different class taxonomies.
-We will use "Heron" [\[3\]][3] as the reference and compare it to "nemotron-page-elements-v3" [\[8\]][8].
+We will use ["Heron"][3] as the reference and compare it to ["nemotron-page-elements-v3"][8].
 The "nemotron-page-elements-v3" model uses the following class taxonomy:
 
 ```python
 ["table", "chart", "title", "infographic", "text", "header_footer"]
 ```
 
-The input pages are taken from the test split of the "ViDoRe V3" dataset [\[7\]][7].
+The input pages are taken from the test split of the ["ViDoRe V3" dataset][7].
 Notice that in this example we do not compare the models against any ground truth, but against each other.
 We have selected "Heron" as the reference and "nemotron-page-elements-v3" as the measured model, but it could be the other way around.
 
 In [Figure 9](#figure-9) we illustrate the full dual-taxonomy Confusion Matrix (click on the Figure to zoom in).
 The matrix has the expected block shape as described in [Section 6](#6-dual-taxonomies-confusion-matrix), with the following all-zero regions:
 
-- The columns corresponding to the classes of the reference model ("Heron"). This happens because the measured model ("nemotron-page-elements-v3") is never going to predict such classes.
-- The rows corresponding to the classes of the measured model ("nemotron-page-elements-v3"). This happens because the evaluation is done only for the classes of the reference model.
+- The columns corresponding to the classes of the reference model ("Heron"). This happens because the measured model "nemotron-page-elements-v3" is never going to predict the classes of "Heron".
+- The rows corresponding to the classes of the measured model ("nemotron-page-elements-v3"). This happens because the evaluation is done only for the classes of the reference model ("Heron").
 
 <figure id="figure-9">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 9. The full Confusion Matrix of Heron vs nemotron-page-elements-v3 over the ViDoRe V3 dataset</em></figcaption>
@@ -250,7 +252,7 @@ The matrix has the expected block shape as described in [Section 6](#6-dual-taxo
 </figure>
 
 In order to improve the readability, we have redrawn the confusion matrix while hiding the all-zeros rows and columns in [Figure 10](#figure-10).
-This allows to focus on the non-zero elements and make some semantic comparison across the predictions of the two models.
+This helps to focus on the non-zero cells and make some semantic comparison across the predictions of the two models.
 
 <figure id="figure-10">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 10. The Confusion Matrix of Heron vs nemotron-page-elements-v3 without the zero rows/columns</em></figcaption>
@@ -258,7 +260,7 @@ This allows to focus on the non-zero elements and make some semantic comparison 
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_confusion_matrix.png" alt="Heron - nemotron - Confusion Matrix" /></dialog>
 </figure>
 
-Similarly we provide illustrations while hiding the all-zero rows/columns of the Recall and Precision matrices in Figures [11](#figure-11) and [12](#figure-12) respectively.
+Similarly we provide illustrations of the Recall and Precision matrices while hiding the all-zero rows/columns in Figures [11](#figure-11) and [12](#figure-12) respectively.
 
 <figure id="figure-11">
   <figcaption style="font-size: 1.1em; font-weight: 600; font-style: italic; margin-bottom: 0.5em;"><em>Figure 11. The Recall Matrix of Heron vs nemotron-page-elements-v3 over ViDoRe V3</em></figcaption>
@@ -273,11 +275,12 @@ Similarly we provide illustrations while hiding the all-zero rows/columns of the
   <dialog class="lb" onclick="this.close()"><img src="images/heron_vs_nemotron_page_elements_vidore_precision_matrix.png" alt="Heron - nemotron - Precision Matrix" /></dialog>
 </figure>
 
-We can use the Recall and Precision matrices to gain insight into how the two models' predictions compare.
-Additionally, the visualizations shown in Figures [13](#figure-13), [14](#figure-14), [15](#figure-15), [16](#figure-16) can help to see in practice the differences in the behavior of the two models.
-All pages are taken from the [ViDoReV3][7] dataset and the actual document id and page number are shown in the caption.
+We can use the Recall and Precision matrices to gain insight into how the two models' predictions compare to each other.
+Additionally, visualizations of the predictions from selected pages can help to see in practice the differences in the behavior of the two models (see Figures [13](#figure-13), [14](#figure-14), [15](#figure-15), [16](#figure-16)).
+All pages are taken from the [ViDoRe V3][7] dataset and the actual `doc_id` and `page_no` are shown in the figure caption.
 On the left side are the predictions of Nvidia's "nemotron-page-elements-v3" and on the right side is "Heron".
 
+<!-- TODO: Validate the way to read the matrices -->
 First we can examine the Recall matrix column-by-column for all classes of "nemotron-page-elements-v3":
 
 - The `nvidia_table` class maps mainly to the `heron_Table` class.

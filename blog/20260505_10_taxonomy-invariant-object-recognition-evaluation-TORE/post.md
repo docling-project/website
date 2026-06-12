@@ -15,7 +15,7 @@ figure img { cursor: zoom-in; }
 
 Document layout analysis is a cornerstone of modern document AI pipelines.
 The task consists of locating and classifying the elements of a document.
-The location of each document element is described by a bounding polygon (e.g. bounding box) and a label is assigned to designate its class (e.g. "Title", "Table", "Figure", etc.).
+The location of each document element is described by a bounding polygon (e.g. bounding box) and a label is assigned to designate its class (e.g. `Title`, `Table`, `Figure`, etc.).
 The label is selected out of a taxonomy of pre-defined classes which is specific to the dataset or the model.
 Throughout this article we call the outcome of the layout analysis task for a single page as _Layout Resolution_.
 Essentially the layout resolution defines the location and label for the detected elements of one page.
@@ -62,7 +62,7 @@ For a perfect classifier, the confusion matrix is diagonal.
 In real-life classifications, the diagonal entries quantify correct predictions and count as "Gains",
 while the off-diagonal entries correspond to mis-predictions and count as "Penalties".
 
-In [Figure 2](#figure-2) we can see a Confusion Matrix built for the classes `C1, C2, ... , Cn` and the special "Background" class `BG`
+In [Figure 2](#figure-2) we can see a Confusion Matrix built for the classes `C1, C2, ... , Cn` and the special `Background` class `BG`
 (in TORE each sample is a pixel of the rasterized layout resolution - more details below).
 
 <figure id="figure-2">
@@ -101,7 +101,7 @@ TORE computes the Confusion Matrix and its Recall/Precision matrices for a colle
     - Each resolution is projected on top of the input page.
     - As a result, the rasterized pixels corresponding to annotations/detections are assigned one or more labels.
     - Multiple labels for the same pixel may occur due to overlapping predictions.
-    - Assign the special class "Background" to the pixels without any annotations/detections.
+    - Assign the special class `Background` to the pixels without any annotations/detections.
     - The "reference" resolution can be either ground-truth annotations or detections of a "reference" model.
 - Compute the confusion matrix and its derivatives Recall- and Precision Matrix using Algorithm 1 for each page:
     - Each rasterized pixel becomes a sample input for Algorithm 1.
@@ -125,7 +125,7 @@ The "Heron" model uses a taxonomy of 17 classes:
 ```
 
 [Figure 3](#figure-3) shows the "Confusion Matrix" of the model against the DocLayNet-v2 dataset, which uses the same class taxonomy.
-Additionally, the class `"Background"` has been added as the first row/column.
+Additionally, the class `Background` has been added as the first row/column.
 The rows correspond to the ground-truth, the columns to the predictions and each `cell(i,j)` shows the number of pixels that belong to `class-i` but have been predicted as `class-j`.
 Notice that the pixel counts are fractional, due to the way "Algorithm 1" distributes "Gains" and "Penalties".
 We use a color code to indicate the magnitude of the cell counts and highlight the main diagonal with pink border.
@@ -141,10 +141,10 @@ Remember that a perfect classifier should have red cells on the diagonal and bla
 
 As we can see in the example of "Heron" the recall matrix provides significant insight into the performance of the model.
 We can immediately see for which classes the model performs well or poorly, and, in case of mis-classifications, which classes the model confuses.
-For example we can see that "Heron" performs excellently on "Background" and quite well for the classes: "Picture", "Table", "Text", "Document Index", "Code" and "Form".
-The recall for "Checkbox-Selected" and "Checkbox-Unselected" is still high but a bit lower.
-The model lacks recall mostly for the classes "Key-Value Region" and "Title".
-Also the recall reveals that "Heron" tends to mis-classify "Title" as "Section-Header".
+For example we can see that "Heron" performs excellently on `Background` and quite well for the classes: `Picture`, `Table`, `Text`, `Document Index`, `Code` and `Form`.
+The recall for `Checkbox-Selected` and `Checkbox-Unselected` is still high but a bit lower.
+The model lacks recall mostly for the classes `Key-Value Region` and `Title`.
+Also the recall reveals that "Heron" tends to mis-classify `Title` as `Section-Header`.
 
 If we extract the cells of the main diagonal we get the _Recall Vector_.
 
@@ -156,7 +156,7 @@ If we extract the cells of the main diagonal we get the _Recall Vector_.
 
 In [Figure 5](#figure-5) we can see the Precision Matrix.
 The precision matrix can also help to derive interesting conclusions about the performance of a model.
-For example we see a high off-diagonal value for the cell `["Background", "Key-Value Region"]`, which indicates that Heron misses key-value bounding boxes and mis-classifies them as "Background".
+For example we see a high off-diagonal value for the cell `[Background, Key-Value Region]`, which indicates that Heron misses key-value bounding boxes and mis-classifies them as `Background`.
 
 If we extract the cells of the main diagonal we get the _Precision Vector_.
 
@@ -171,8 +171,8 @@ If we extract the cells of the main diagonal we get the _Precision Vector_.
 
 As we saw in the previous sections the Confusion, Recall and Precision matrices are an invaluable source of information.
 At the same time, this information can be overwhelming. In Heron's case, it means analyzing three `18x18` matrices.
-One way to condense this information is to sum the cell values of all "non-background" classes into one class.
-This way we produce reduced `2x2` matrices for the "Background" class and the "non-Background" super-class.
+One way to condense this information is to sum the cell values of all `non-background` classes into one class.
+This way we produce reduced `2x2` matrices for the `Background` class and the `non-Background` super-class.
 This abstraction allows us to quickly check if the classifier can detect the elements of the page correctly, regardless of the type of document element.
 
 For Heron, [Figure 6](#figure-6) shows the reduced Recall and Precision matrices:
@@ -287,10 +287,10 @@ First we can examine the Recall matrix column-by-column for all classes of "nemo
 This is expected as both classes describe the same document item (table) and demonstrates how TORE can reveal semantic connections between classes from different taxonomies.
 The example in [Figure 13](#figure-13) shows such a case.
 However the Recall matrix reveals also some mappings of the `nvidia_table` class to `heron_Document Index` and `heron_Form`.
-This is most likely because "Document Indices" and "Forms" look similar to a "Table".
+This is most likely because `Document Indices` and `Forms` look similar to a `Table`.
 
 - The `nvidia_chart` and `nvidia_infographic` classes map mainly to `heron_Picture`.
-This most likely happens because "Heron" has no "chart" or "infographic" classes, so its "Picture" class is semantically the closest to Nemotron's "chart" and "infographic".
+This most likely happens because "Heron" has no `chart` or `infographic` classes, so its `Picture` class is semantically the closest to Nemotron's `chart` and `infographic`.
 The example in [Figure 16](#figure-16) demonstrates this case.
 
 - The `nvidia_title` class maps to `heron_page_header`, `heron_Section-header` and `heron_Title`.
@@ -300,7 +300,7 @@ All examples in Figures [13](#figure-13)-[16](#figure-16) demonstrate such cases
 - The `nvidia_text` class is spread over multiple classes of Heron.
 This happens because Heron has a more fine-grained taxonomy where different types of text-like document elements are mapped into specialized classes (e.g. `List-item`, `Checkbox-Selected`, `Footnote`, etc.).
 As Nemotron's taxonomy lacks such specialized text classes the model overuses its `text` class.
-[Figure 15](#figure-15) demonstrates a characteristic case where a list is classified as "text" by Nemotron and "List-Item" by Heron.
+[Figure 15](#figure-15) demonstrates a characteristic case where a list is classified as `text` by Nemotron and `List-Item` by Heron.
 
 - The `nvidia_header_footer` class maps mainly to `heron_Page-footer`, as was expected.
 The example in [Figure 15](#figure-15) shows how both models correctly identified the page footer using their corresponding classes.

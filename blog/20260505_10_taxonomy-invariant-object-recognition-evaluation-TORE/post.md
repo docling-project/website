@@ -211,10 +211,10 @@ as the diagonals of the recall and precision matrices are no longer meaningful.
 
 What can be extracted, however, is highly informative.
 Reading the Recall Matrix row-by-row reveals how each reference class maps to the prediction classes.
-A "bright" column (many large values) flags a prediction class that systematically absorbs many reference classes — the classifier's "default" choice when it cannot assign the proper class.
+A "bright" column (many large values) flags a prediction class that systematically absorbs many reference classes — the classifier's "_default_" choice when it cannot assign the proper class.
 
 Conversely, reading the Precision Matrix column-by-column reveals how each prediction class maps to the reference classes.
-A "bright" row flags a reference class that suffers "systematic leakage", with many prediction classes mapping into it.
+A "bright" row indicates a reference class that suffers "_systematic leakage_", with many prediction classes mapping into it.
 
 Additionally, similarly to what happens with the same class taxonomy matrices, it is possible to reduce the matrix by collapsing all non-background classes into one class.
 
@@ -285,6 +285,7 @@ On the left side are the predictions of Nvidia's "nemotron-page-elements-v3" and
 
 <!-- TODO: Validate the way to read the matrices -->
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<!--
 First we can examine the Recall matrix column-by-column for all classes of "nemotron-page-elements-v3":
 
 - The `nvidia_table` class maps mainly to the `heron_Table` class.
@@ -312,8 +313,43 @@ The example in [Figure 15](#figure-15) shows how both models correctly identifie
 Examining the Precision matrix, we can see that the `Background` row has a non-negligible mapping to columns other than the `Background`.
 This indicates that "nemotron-page-elements-v3" tends to produce larger bounding boxes, in comparison to "Heron", that extend over the actual document element and cover much of the page background.
 The example in [Figure 16](#figure-16) shows how a single `Infographic` box covers the entire page.
+-->
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------- -->
 
+
+First we can examine the Recall matrix row-by-row and see how the Heron classes map to Nemotron based on their semantic similarity.
+Here are some interesting observations:
+
+- **Very strong similarity:** `heron_Table` almost always maps to its semantic counterpart `nvidia_table`.
+The example in [Figure 13](#figure-13) shows such a case.
+
+- **Strong similarity:** `heron_Page-header` maps 78% of the samples to `nvidia-title`.
+
+- **Weak similarity:** `heron_Section-header` maps to `nvidia_title` in 64% of the cases and to `nvidia_text` in 21% of the cases.
+Similarly `heron_Document Index` and `heron_Form` map around 2/3 of the cases to `nvidia_table` and 30% - 20% to `nvidia_text`.
+Also the `heron_Picture` maps equaly to `nvidia_chart` and to `nvidia_infographic`.
+
+- **Very week similarity:** A wide range of Heron classes (`heron_Caption`, `heron_Footnote`, `heron_Formula`, `heron_List-Item`, `heron_Text`, `heron_Code`, `heron_Checkbox-Selected`, `heron_Checkbox-Unselected`, `heron_Key-Value Region`)
+map to `nvidia_text`.
+This is a very strong indication that Nemotron uses its "text" class as the _"default"_ class for many Heron classes.
+However this is expected given that Nemotron has a much narrower taxonomy than Heron (6 vs 17 classes) and the broad scope of the "Text" class.
+Nemotron has simply no better class to map all those Heron classes but use its `Text` class.
+
+
+Moving to the Precicion matrix, we can inspect it column-by-column and see how the Nemotron classes map to the Heron classes.
+For this matrix the semantic mapping is more evident as we examine it in the direction from the more generic (Nemotron's taxonomy) to the more specific (Heron's taxonomy).
+
+- **Very strong similarity:** `nvidia_table` maps mostly to `heron_Table`, `nvidia_header_footer` mainly to `heron_Page-footer` and `nvidia_text` maps strongly to `heron_Text`.
+
+- **Outliers**: The `nvidia_title` class maps in 52% of the cases to `heron_Section-header` despite the fact that the `heron_Title` class exists too.
+Also the class `nvidia_text` maps 22% of the cases to `heron_List-item`.
+This is an indication that the Nemotron model is not trained to distinguish "section header" and "list" document elements.
+
+- **Leakage to the Background:** We notice that almost all non-background Nemotron classes map to heron's `Background` class.
+This indicates that Nemotron produces too large bounding boxes that leak into the background of the page.
+This can be easily confirmed by checking actual prediction samples like the one shown in [Figure 16](#figure-16),
+where a single `Infographic` box covers the entire page.
+On the other hand Heron tends to detect the position of the document elements more accurately.
 
 
 <!-- Page visualisations of the predictions of the 2 models -->

@@ -8,7 +8,7 @@ def AnnouncementBanner(children=None) -> JSX:
     return (
         <div class="announcement-banner">
             <p>
-                IBM announced a managed SaaS - <a href="https://www.ibm.com/products/docling" target="_blank" rel="noopener noreferrer">try Docling for IBM watsonx for free!</a>
+                IBM announced a managed SaaS - <a href="https://www.ibm.com/account/reg/us-en/signup?formid=urx-54322&utm_source=docling.ai&utm_medium=banner&utm_campaign=free_trial&utm_content=site_banner" target="_blank" rel="noopener noreferrer">try Docling for IBM watsonx for free!</a>
             </p>
         </div>
     )

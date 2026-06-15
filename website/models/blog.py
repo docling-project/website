@@ -48,6 +48,7 @@ def _stabilize_code_newlines(html: str) -> str:
 class BlogFilter(str, Enum):
     """Blog post filter categories."""
     ALL = "all"
+    ANNOUNCEMENT = "announcement"
     TECHNICAL = "technical"
     EVENT = "event"
     FEATURE = "feature"
@@ -57,6 +58,7 @@ class BlogFilter(str, Enum):
         """Get the display label for this filter."""
         labels = {
             BlogFilter.ALL: "All",
+            BlogFilter.ANNOUNCEMENT: "Announcement",
             BlogFilter.TECHNICAL: "Technical",
             BlogFilter.EVENT: "Event",
             BlogFilter.FEATURE: "New feature",

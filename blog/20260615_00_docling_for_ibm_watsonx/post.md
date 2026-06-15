@@ -19,6 +19,8 @@ themselves. It is designed for a quicker path to value: out-of-the-box
 configuration, automatic scaling based on workload demand, and high-throughput
 processing without having to plan and manage dedicated capacity.
 
+![](images/demonow.gif)
+
 You can use it through a simple user interface for experimentation, inspection,
 and quick document processing. At scale, the same capabilities embed directly
 into production applications, automation pipelines, and enterprise AI workflows
@@ -51,22 +53,21 @@ The largest single investment has been in `docling-parse`, the C++/Python PDF
 engine at the bottom of the stack. Its 2026 releases read almost like a
 hardening checklist.
 
-Early in the year the work was about not crashing: `v5.3.3` replaced
-fixed-size buffers with a safer append strategy to prevent segfaults, and
-`v5.3.4` robustified parsing of broken PDFs. Then it was about not hanging:
-`v5.6.2` fixed an infinite loop in table-of-contents extraction triggered by
-circular references inside a PDF. Then it was about doing more at once, safely:
-`v5.6.0` made the parser thread-safe by default and added a regexp fast path
-for stream decoding, and `v5.10.1` shipped memory-management improvements
-coordinated with the upstream `docling` library.
+Early in the year the work was about not crashing: replacing fixed-size buffers
+with a safer append strategy to prevent segfaults, and robustifying parsing of
+broken PDFs. Then it was about not hanging: fixing an infinite loop in
+table-of-contents extraction triggered by circular references inside a PDF.
+Then it was about doing more at once, safely: making the parser thread-safe by
+default, adding a regexp fast path for stream decoding, and shipping
+memory-management improvements coordinated with the upstream `docling` library.
 
-That arc culminated in the `v6.0.0` major release: a public threaded PDF parser
-with a worker thread pool and a `max_concurrent_results` cap that explicitly
-bounds how many results are buffered in order to limit memory. Results stream
-out one at a time, each carrying its own success flag, error message, and
-timing information, so a single bad page no longer takes down a whole batch.
-The same release upgraded `pillow`, `requests`, `pygments`, and `cryptography`
-to close known vulnerabilities, and `v6.2.0` added a flag to skip bitmap byte
+That arc culminated in the v6 major release: a public threaded PDF parser with
+a worker thread pool and a `max_concurrent_results` cap that explicitly bounds
+how many results are buffered in order to limit memory. Results stream out one
+at a time, each carrying its own success flag, error message, and timing
+information, so a single bad page no longer takes down a whole batch. The same
+release upgraded `pillow`, `requests`, `pygments`, and `cryptography` to close
+known vulnerabilities, and later updates added a flag to skip bitmap byte
 extraction entirely when a caller does not need it, trimming memory further.
 
 This work targets a problem the community knew well. The older v4 parser could
@@ -84,9 +85,8 @@ the backends. PPTX conversion now skips malformed shapes instead of aborting
 the whole file. The Markdown backend gained a fix that prevents a
 `RecursionError` on certain inputs. The LaTeX handler added path-traversal
 prevention, and input validation was strengthened for METS-GBS and USPTO XML
-sources. The library adopted the threaded `docling-parse` v6 backend in
-`v2.96.0`, and introduced a modular `docling-slim` package for a lighter
-dependency footprint.
+sources. The library adopted the threaded `docling-parse` v6 backend and
+introduced a modular `docling-slim` package for a lighter dependency footprint.
 
 In `docling-core`, the focus was data-model integrity: validation to catch
 duplicate references, repair of table hierarchies when rich cells break the
@@ -145,19 +145,34 @@ The same client works against either backend. You can prototype against a local
 `docling-serve`, then point the exact same code at Docling for IBM watsonx when
 you are ready to scale, with no rewrite required.
 
+```py
+from pathlib import Path
+from docling.service_client import DoclingServiceClient
+import os
+
+# Setup required endpoint details
+SERVICE_URL = os.getenv("DOCLING_SERVICE_URL")
+API_KEY = os.getenv("DOCLING_API_KEY")
+
+# Initialize the client
+with DoclingServiceClient(url=SERVICE_URL, api_key=API_KEY) as client:
+    # Convert a document as you usually do
+    result = client.convert(
+        source=Path("path/to/doc.pdf")
+    )
+    
+    markdown = result.document.export_to_markdown()
+    print(markdown)
+```
+
 ## Getting started with Docling for IBM watsonx
 
-Docling for IBM watsonx is generally available now as a SaaS offering hosted on
-AWS. You can try it for free and start processing documents through an
+Docling for IBM watsonx is generally available now as a SaaS offering. You can try it for free and start processing documents through an
 easy-to-use interface, then move to API-based integration when you are ready to
 embed document intelligence into production workflows.
 
 The service is available through the IBM Marketplace or the AWS Marketplace with
-pay-as-you-go pricing at $4 per 1,000 pages. Compared to similar offerings,
-Docling for IBM watsonx can lower document conversion costs by at least 20%. At
-scale, that means saving at least $1,000 per million pages converted. Annual
-subscriptions are also available, starting at 1 million pages per year, and
-include support and premium processing throughput.
+a pay-as-you-go pricing.
 
 The result is a practical and cost-effective way to turn complex documents into
 reusable, AI-ready data, while reducing the manual effort, cost, and

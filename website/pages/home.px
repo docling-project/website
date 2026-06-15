@@ -1,6 +1,6 @@
 from pyjsx import jsx, JSX
 
-from .components import Code
+from .components import AnnouncementBanner, Code
 from .blog import LastBlogPostPreview
 from .page import Page
 from .papers import LastPaperPreview
@@ -21,6 +21,7 @@ _conversion_code = (
 def HomePage() -> JSX:
     return (
         <Page>
+            <AnnouncementBanner />
             <main>
                 <article>
                     <h3>

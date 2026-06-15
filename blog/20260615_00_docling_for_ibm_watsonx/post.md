@@ -12,7 +12,7 @@ capacity, and keep it all healthy under load. That is very doable, but it is
 work that sits between a team and the actual goal of turning documents into
 AI-ready data.
 
-**Docling for IBM watsonx** removes that step. It is a managed
+**[Docling for IBM watsonx](https://ibm.com/products/docling)** removes that step. It is a managed
 Docling-as-a-Service offering that lets teams put Docling into production
 without deploying, configuring, and maintaining the underlying infrastructure
 themselves. It is designed for a quicker path to value: out-of-the-box
@@ -177,6 +177,11 @@ a pay-as-you-go pricing.
 The result is a practical and cost-effective way to turn complex documents into
 reusable, AI-ready data, while reducing the manual effort, cost, and
 operational complexity that can slow AI initiatives down.
+
+<div style="display: flex; gap: 1rem; margin-top: 2rem;">
+  <a href="https://www.ibm.com/account/reg/us-en/signup?formid=urx-54322&utm_source=docling.ai&utm_medium=referral&utm_campaign=free_trial&utm_content=blog_post" class="button primary" target="_blank">Start a free trial</a>
+  <a href="https://www.ibm.com/products/docling" class="button" style="background: transparent; color: var(--accent);" target="_blank">Learn more</a>
+</div>
 
 ## Recap
 

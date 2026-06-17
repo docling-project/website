@@ -145,6 +145,25 @@ The same client works against either backend. You can prototype against a local
 `docling-serve`, then point the exact same code at Docling for IBM watsonx when
 you are ready to scale, with no rewrite required.
 
+### Installation
+
+The Service Client is available in two ways. If you already have the full
+Docling package installed, the client is included and ready to use. If you want
+to keep your environment minimal, you can install just the client through the
+slim package with the `service-client` extra:
+
+```bash
+# option 1) included in the full Docling install
+pip install docling
+
+# option 2) slim/modular install with minimal dependencies
+pip install "docling-slim[service-client]"
+```
+
+### Usage
+
+Here is a simple example showing how to use the Service Client:
+
 ```py
 from pathlib import Path
 from docling.service_client import DoclingServiceClient
@@ -164,6 +183,10 @@ with DoclingServiceClient(url=SERVICE_URL, api_key=API_KEY) as client:
     markdown = result.document.export_to_markdown()
     print(markdown)
 ```
+
+For more examples including batch processing, custom export formats, and advanced
+configuration options, see the [Service Client examples](https://github.com/docling-project/docling/tree/main/docs/examples/service_client)
+in the Docling repository.
 
 ## Getting started with Docling for IBM watsonx
 

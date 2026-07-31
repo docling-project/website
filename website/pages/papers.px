@@ -21,7 +21,7 @@ def Paper(children, paper) -> JSX:
         filename = paper.title.lower().replace(' ', '_')[:50] + '.bib'
     
     return (
-        <div id={paper.title} class="paper">
+        <div id={paper.title} class="paper" data-category={paper.category.value}>
             <div class="header">
                 <button class="category">{paper.category.label}</button>
 

@@ -22,6 +22,50 @@ uv run website/main.py
 When you make changes to your project, the server will automatically reload.
 
 
+## Building the Static Site
+
+The site is fully static — every page is pre-rendered to HTML — so it can be
+published on GitHub Pages (or any static host). Build it with:
+
+```bash
+uv run website/build.py
+```
+
+This renders all pages and copies the assets into `dist/`. Useful options:
+
+- `--out <dir>`: output directory (default `dist`).
+- `--base-path <prefix>`: URL prefix for root-relative links, needed when the
+  site is served from a sub-path. For the GitHub project page at
+  `docling-project.github.io/website`, build with `--base-path /website`
+  (the repository name). Leave empty for a root/custom-domain deploy.
+- `--cname <domain>`: write a `CNAME` file for a custom domain (e.g. `docling.ai`).
+
+To preview a sub-path build locally:
+
+```bash
+uv run website/build.py --base-path /website
+mkdir -p /tmp/site/website && cp -r dist/. /tmp/site/website/
+python3 -m http.server 5055 --directory /tmp/site
+# open http://localhost:5055/website/
+```
+
+## Deployment
+
+Pushes to `main` are built and deployed to GitHub Pages automatically by
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). Enable it once
+under **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+### Moving to the `docling.ai` custom domain
+
+No code change is required — set two repository variables under
+**Settings → Secrets and variables → Actions → Variables**:
+
+- `BASE_PATH` = `/` (serve at the root instead of `/website`)
+- `CNAME` = `docling.ai`
+
+Then add the domain under **Settings → Pages → Custom domain**.
+
+
 ## Contributing
 This website is part of the [Docling project](https://github.com/docling-project/docling). Your feedback and contributions are welcome!
 

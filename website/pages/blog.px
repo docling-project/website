@@ -30,7 +30,7 @@ def BlogPage(filter: BlogFilter) -> JSX:
                 <div class="posts">
                     {
                         [
-                            <a class="post" href={f"{post.id}/?filter={filter.value}"} data-category={post.category.value}>
+                            <a class="post" href={f"{post.id}/"} data-category={post.category.value}>
                                 {<img src={f"/blog/{post.id}/{post.thumbnail}"} alt={post.title} /> if post.thumbnail else <></>}
                                 <div>
                                     <button class="category">{post.category.label}</button>

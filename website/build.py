@@ -1,0 +1,146 @@
+"""Static site generator for the Docling website.
+
+Renders every route of the FastAPI app (``website/main.py``) to a plain HTML
+file and copies the static assets, producing a fully static site that can be
+published on GitHub Pages (or any static host).
+
+Usage::
+
+    uv run website/build.py                       # build into ./dist
+    uv run website/build.py --out _site            # custom output dir
+    uv run website/build.py --base-path /docling-website
+
+The ``--base-path`` prefix (also read from the ``BASE_PATH`` env var) is
+prepended to every root-relative link (``/style.css``, ``/blog/`` ...) so the
+same build works both on a project page served under a sub-path
+(``docling-project.github.io/docling-website``) and later on a custom domain
+served at the root (``docling.ai``, where the base path is empty).
+"""
+
+from __future__ import annotations
+
+import argparse
+import os
+import re
+import shutil
+from pathlib import Path
+
+from pyjsx import auto_setup  # type: ignore  # noqa: F401  (registers the .px import hook)
+
+from website.models.blog import BlogFilter, blog_posts
+from website.pages.blog import BlogPostPage  # type: ignore
+from website.pages.blog import BlogPage  # type: ignore
+from website.pages.components import ComingSoonPage, CommunityPage  # type: ignore
+from website.pages.home import HomePage  # type: ignore
+from website.pages.papers import PapersPage  # type: ignore
+
+
+# Matches root-relative URLs in href/src attributes, e.g. href="/style.css".
+# Protocol-relative ("//cdn...") and absolute ("https://...") URLs are skipped.
+_ROOT_LINK_RE = re.compile(r'\b(href|src)=(["\'])(/(?!/)[^"\']*)\2')
+
+
+def _apply_base_path(html: str, base_path: str) -> str:
+    """Prefix every root-relative href/src with ``base_path``."""
+    if not base_path:
+        return html
+    return _ROOT_LINK_RE.sub(
+        lambda m: f'{m.group(1)}={m.group(2)}{base_path}{m.group(3)}{m.group(2)}',
+        html,
+    )
+
+
+def _write_page(out_dir: Path, route: str, html: str, base_path: str) -> None:
+    """Write ``html`` for ``route`` as ``<route>/index.html`` under ``out_dir``."""
+    rel = route.strip("/")
+    target_dir = out_dir / rel if rel else out_dir
+    target_dir.mkdir(parents=True, exist_ok=True)
+    target = target_dir / "index.html"
+    target.write_text(_apply_base_path(html, base_path), encoding="utf-8")
+    print(f"  {route:<40} -> {target.relative_to(out_dir)}")
+
+
+def _copy_assets(src: Path, dst: Path, *, ignore_suffixes: tuple[str, ...] = ()) -> None:
+    """Copy a directory tree, skipping the template folder, markdown/bibtex sources
+    and hidden files. ``dst`` is created if missing."""
+
+    def _ignore(dir_path: str, names: list[str]) -> set[str]:
+        ignored: set[str] = set()
+        for name in names:
+            if name.startswith(".") or name == "template" or name == "__pycache__":
+                ignored.add(name)
+            elif ignore_suffixes and name.endswith(ignore_suffixes):
+                ignored.add(name)
+        return ignored
+
+    shutil.copytree(src, dst, dirs_exist_ok=True, ignore=_ignore)
+
+
+def build(out_dir: Path, base_path: str, cname: str | None = None) -> None:
+    root = Path.cwd()
+
+    if out_dir.exists():
+        shutil.rmtree(out_dir)
+    out_dir.mkdir(parents=True)
+
+    print(f"Building static site into {out_dir}/ (base_path={base_path or '/'})")
+
+    # 1. Copy static assets. ``public`` maps to the site root; ``blog`` and
+    #    ``papers`` keep their asset trees (images, thumbnails, figures) but the
+    #    markdown/bibtex sources are rendered into HTML below, not served raw.
+    print("Copying assets...")
+    _copy_assets(root / "public", out_dir)
+    _copy_assets(root / "blog", out_dir / "blog", ignore_suffixes=(".md",))
+    _copy_assets(root / "papers", out_dir / "papers", ignore_suffixes=(".md", ".bib"))
+
+    # 2. Render pages.
+    print("Rendering pages...")
+    _write_page(out_dir, "/", str(HomePage()), base_path)
+    _write_page(out_dir, "/blog/", str(BlogPage(filter=BlogFilter.ALL)), base_path)
+    for post in blog_posts(BlogFilter.ALL):
+        _write_page(out_dir, f"/blog/{post.id}/", str(BlogPostPage(id=post.id)), base_path)
+    _write_page(out_dir, "/papers/", str(PapersPage()), base_path)
+    _write_page(out_dir, "/community/", str(CommunityPage()), base_path)
+    _write_page(out_dir, "/faq/", str(ComingSoonPage("FAQ")), base_path)
+    _write_page(out_dir, "/releases/", str(ComingSoonPage("Releases")), base_path)
+
+    # 3. GitHub Pages housekeeping: ``.nojekyll`` disables Jekyll processing so
+    #    files/folders are served exactly as generated.
+    (out_dir / ".nojekyll").write_text("", encoding="utf-8")
+
+    # 4. Optional custom domain (e.g. docling.ai). When set, GitHub Pages serves
+    #    at the root, so build with an empty base path.
+    if cname:
+        (out_dir / "CNAME").write_text(cname + "\n", encoding="utf-8")
+        print(f"Wrote CNAME -> {cname}")
+
+    print("Done.")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Build the static Docling website.")
+    parser.add_argument(
+        "--out",
+        default="dist",
+        type=Path,
+        help="Output directory (default: dist).",
+    )
+    parser.add_argument(
+        "--base-path",
+        default=os.environ.get("BASE_PATH", ""),
+        help="URL prefix for root-relative links, e.g. /docling-website. "
+        "Leave empty for a custom-domain / root deployment.",
+    )
+    parser.add_argument(
+        "--cname",
+        default=os.environ.get("CNAME"),
+        help="Custom domain to write into a CNAME file (e.g. docling.ai).",
+    )
+    args = parser.parse_args()
+
+    base_path = "/" + args.base_path.strip("/") if args.base_path.strip("/") else ""
+    build(args.out, base_path, args.cname)
+
+
+if __name__ == "__main__":
+    main()

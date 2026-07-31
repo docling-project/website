@@ -1,0 +1,63 @@
+name: Deploy static site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Allow manual runs (e.g. to test from a feature branch before merging).
+  workflow_dispatch:
+
+# Permissions required by the GitHub Pages deployment.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; a newer run cancels an in-progress one.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Sub-path the site is served from. The GitHub project page lives at
+      # docling-project.github.io/docling-website, so the default is
+      # "/docling-website".
+      #
+      # When the docling.ai custom domain is connected, override this by setting
+      # the repository variable BASE_PATH to "/" (root) and CNAME to "docling.ai"
+      # under Settings -> Secrets and variables -> Actions -> Variables. No code
+      # change is needed.
+      BASE_PATH: ${{ vars.BASE_PATH || '/docling-website' }}
+      CNAME: ${{ vars.CNAME || '' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Build static site
+        run: uv run website/build.py --out dist --base-path "$BASE_PATH" --cname "$CNAME"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

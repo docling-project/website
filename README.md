@@ -52,18 +52,21 @@ python3 -m http.server 5055 --directory /tmp/site
 ## Deployment
 
 Pushes to `main` are built and deployed to GitHub Pages automatically by
-[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). Enable it once
-under **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) and served at
+[docling.ai](https://docling.ai). The workflow builds at the root (`BASE_PATH=/`)
+and writes a `CNAME` for the custom domain.
 
-### Moving to the `docling.ai` custom domain
+Requires, once: **Settings → Pages → Build and deployment → Source: GitHub Actions**,
+and the custom domain configured under **Settings → Pages → Custom domain**.
 
-No code change is required — set two repository variables under
+### Serving from the GitHub project sub-path instead
+
+To serve from `docling-project.github.io/website` rather than the custom domain,
+override the defaults via repository variables under
 **Settings → Secrets and variables → Actions → Variables**:
 
-- `BASE_PATH` = `/` (serve at the root instead of `/website`)
-- `CNAME` = `docling.ai`
-
-Then add the domain under **Settings → Pages → Custom domain**.
+- `BASE_PATH` = `/website`
+- `CNAME` = *(empty)*
 
 
 ## Contributing

@@ -21,16 +21,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Sub-path the site is served from. The GitHub project page lives at
-      # docling-project.github.io/website, so the default is "/website"
-      # (the repository name).
+      # The site is served from the docling.ai custom domain at the root, so the
+      # base path is empty ("/") and a CNAME file pins the domain.
       #
-      # When the docling.ai custom domain is connected, override this by setting
-      # the repository variable BASE_PATH to "/" (root) and CNAME to "docling.ai"
-      # under Settings -> Secrets and variables -> Actions -> Variables. No code
-      # change is needed.
-      BASE_PATH: ${{ vars.BASE_PATH || '/website' }}
-      CNAME: ${{ vars.CNAME || '' }}
+      # To instead serve from the GitHub project sub-path
+      # (docling-project.github.io/website), override via repository variables
+      # under Settings -> Secrets and variables -> Actions -> Variables:
+      # set BASE_PATH to "/website" and CNAME to "" (empty). No code change needed.
+      BASE_PATH: ${{ vars.BASE_PATH || '/' }}
+      CNAME: ${{ vars.CNAME || 'docling.ai' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

@@ -12,6 +12,10 @@
 # production
 /build
 
+# static site build output
+/dist
+/_site
+
 # misc
 .DS_Store
 *.pem

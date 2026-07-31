@@ -100,4 +100,85 @@ async function load() {
     .forEach((el) =>
       el.addEventListener("click", (e) => window.scrollTo(0, window.scrollY)),
     );
+
+  // Client-side filtering for the blog and papers listings (the static site
+  // has no server to handle the `?filter=` query param).
+  setupFilters();
+}
+
+function setupFilters() {
+  document.querySelectorAll("form.filters").forEach((form) => {
+    const container = form.parentElement;
+    const buttons = Array.from(form.querySelectorAll("button"));
+
+    // Don't navigate away — filter in place instead.
+    form.addEventListener("submit", (e) => e.preventDefault());
+
+    function select(value) {
+      buttons.forEach((b) => b.classList.toggle("active", b.value === value));
+      applyFilter(container, value);
+
+      const url = new URL(window.location);
+      if (value && value !== "all") {
+        url.searchParams.set("filter", value);
+      } else {
+        url.searchParams.delete("filter");
+      }
+      history.replaceState(null, "", url);
+    }
+
+    buttons.forEach((btn) =>
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        select(btn.value);
+      }),
+    );
+
+    // Apply the filter requested via the URL on first load.
+    const initial = new URL(window.location).searchParams.get("filter") || "all";
+    select(buttons.some((b) => b.value === initial) ? initial : "all");
+  });
+}
+
+function applyFilter(container, value) {
+  const items = container.querySelectorAll("[data-category]");
+  items.forEach((el) => {
+    const show = value === "all" || el.dataset.category === value;
+    el.style.display = show ? "" : "none";
+  });
+
+  // Papers are grouped under <h3> year headings; hide a heading when none of
+  // its papers are visible.
+  container.querySelectorAll("h3").forEach((heading) => {
+    let visible = false;
+    let node = heading.nextElementSibling;
+    while (node && node.tagName !== "H3") {
+      if (node.dataset.category !== undefined && node.style.display !== "none") {
+        visible = true;
+        break;
+      }
+      node = node.nextElementSibling;
+    }
+    heading.style.display = visible ? "" : "none";
+  });
+
+  // Show a placeholder when a blog filter matches nothing.
+  const posts = container.querySelector(".posts");
+  if (posts) {
+    let empty = posts.querySelector(".no-match");
+    const anyVisible = Array.from(posts.querySelectorAll(".post")).some(
+      (el) => el.style.display !== "none",
+    );
+    if (!anyVisible) {
+      if (!empty) {
+        empty = document.createElement("div");
+        empty.className = "no-match";
+        empty.textContent = "No matching posts";
+        posts.appendChild(empty);
+      }
+      empty.style.display = "";
+    } else if (empty) {
+      empty.style.display = "none";
+    }
+  }
 }

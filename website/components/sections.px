@@ -1,0 +1,129 @@
+"""Remaining homepage sections: run routes, project momentum, final call to action."""
+
+from babel.dates import format_date
+from pyjsx import jsx, JSX
+
+from website.models.blog import blog_posts, BlogFilter
+from website.models.papers import last_paper
+from website.data.product import (
+    FINAL_CTA_BODY,
+    FINAL_CTA_TITLE,
+    INSTALL_COMMAND,
+    ROUTES,
+)
+from website.data.navigation import GITHUB_URL
+from .icons import arrow_right, github_icon
+from .ui import InstallCommand, SectionHeader
+
+
+def RunRoutes(children) -> JSX:
+    return (
+        <section class="section" id="routes">
+            <div class="container">
+                <SectionHeader
+                    label="Deployment"
+                    title="Choose how you run it"
+                    display={True}
+                    href="/deployments/"
+                    link="Deployment detail"
+                />
+
+                <div class="routes">
+                    {[
+                        <div class="route">
+                            <h3 class="route-name">{route.name}</h3>
+                            <p class="route-best">{route.best_for}</p>
+                            <a
+                                class="route-cta"
+                                href={route.cta_href}
+                                target={"_blank" if route.external else None}
+                                rel={"noopener noreferrer" if route.external else None}
+                            >
+                                {route.cta_label} {arrow_right()}
+                            </a>
+                        </div>
+                        for route in ROUTES
+                    ]}
+                </div>
+            </div>
+        </section>
+    )
+
+
+def Latest(children) -> JSX:
+    """Project momentum: the most recent writing and the most recent paper.
+
+    Deliberately placed low on the page — community and news come after the
+    visitor has seen the product work.
+    """
+    posts = blog_posts(BlogFilter.ALL)[:2]
+    paper = last_paper()
+
+    return (
+        <section class="section" id="latest">
+            <div class="container">
+                <SectionHeader
+                    label="Momentum"
+                    title="What the project is doing"
+                    href="/blog/"
+                    link="All posts"
+                />
+
+                <div class="grid grid--3 latest-grid">
+                    {[
+                        <a class="card" href={f"/blog/{post.id}/"}>
+                            <div class="card-meta">
+                                <span class="tag">{post.category.label}</span>
+                                <span class="card-meta-dot"></span>
+                                <time datetime={post.date.isoformat()}>
+                                    {format_date(post.date, "MMM d, yyyy")}
+                                </time>
+                            </div>
+                            <h3 class="card-title">{post.title}</h3>
+                            <p class="card-body">{post.summary}</p>
+                            <span class="card-arrow" aria-hidden="true">→</span>
+                        </a>
+                        for post in posts
+                    ]}
+
+                    {
+                        <a class="card" href={paper.url} target="_blank" rel="noopener noreferrer">
+                            <div class="card-meta">
+                                <span class="tag tag--purple">Paper</span>
+                                {<span class="card-meta-dot"></span> if paper.venue else <></>}
+                                {<span>{paper.venue}</span> if paper.venue else <></>}
+                            </div>
+                            <h3 class="card-title">{paper.title}</h3>
+                            <p class="card-body">{(paper.abstract or "")[:180]}</p>
+                            <span class="card-arrow" aria-hidden="true">→</span>
+                        </a>
+                        if paper
+                        else <></>
+                    }
+                </div>
+            </div>
+        </section>
+    )
+
+
+def FinalCTA(children) -> JSX:
+    return (
+        <section class="section section--band final-cta">
+            <div class="container final-cta-inner">
+                <h2 class="final-cta-title">{FINAL_CTA_TITLE}</h2>
+                <p class="final-cta-body">{FINAL_CTA_BODY}</p>
+
+                <InstallCommand command={INSTALL_COMMAND} />
+
+                <div class="btn-row final-cta-actions">
+                    <a class="btn btn--primary" href="#quickstart">
+                        Run Docling locally {arrow_right()}
+                    </a>
+                    <a class="btn btn--secondary" href="/deployments/">Scale this workflow</a>
+                    <a class="btn btn--secondary" href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+                        {github_icon()} View on GitHub
+                    </a>
+                </div>
+            </div>
+        </section>
+    )

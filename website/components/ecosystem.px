@@ -1,0 +1,58 @@
+"""Ecosystem, grouped by the job each integration does.
+
+Every entry links to its integration page rather than sitting in a logo wall.
+"""
+
+from pyjsx import jsx, JSX
+
+from website.data.integrations import INTEGRATION_GROUPS
+from .icons import arrow_right
+from .ui import SectionHeader
+
+
+def EcosystemGroups(children) -> JSX:
+    return (
+        <div class="grid grid--auto ecosystem-grid">
+            {[
+                <div class="card ecosystem-group" id={group.id}>
+                    <h3 class="card-title">{group.name}</h3>
+                    <p class="card-body">{group.blurb}</p>
+                    <ul class="ecosystem-list">
+                        {[
+                            <li>
+                                <a href={item.href} target="_blank" rel="noopener noreferrer">
+                                    {item.name}
+                                </a>
+                            </li>
+                            for item in group.items
+                        ]}
+                    </ul>
+                </div>
+                for group in INTEGRATION_GROUPS
+            ]}
+        </div>
+    )
+
+
+def Ecosystem(children) -> JSX:
+    return (
+        <section class="section" id="ecosystem">
+            <div class="container">
+                <SectionHeader
+                    label="Ecosystem"
+                    title="It already fits your stack"
+                    display={True}
+                    href="/ecosystem/"
+                    link="All integrations"
+                />
+
+                <p class="section-lede">
+                    Docling is a library, not a platform you have to move into. It plugs
+                    into the frameworks, agents, pipelines and infrastructure you are
+                    already running.
+                </p>
+
+                <EcosystemGroups />
+            </div>
+        </section>
+    )

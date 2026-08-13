@@ -1,0 +1,93 @@
+"""Real workflows.
+
+Each case states the problem before the capability, carries a runnable recipe,
+and names the path to production — rather than being a generic feature card.
+"""
+
+from pyjsx import jsx, JSX
+
+from website.data.use_cases import USE_CASES
+from .icons import external_icon
+from .ui import Code, SectionHeader
+
+
+def UseCaseBlock(children, case, index: int = 0) -> JSX:
+    return (
+        <article class="usecase" id={case.id}>
+            <div class="usecase-head">
+                <span class="usecase-index" aria-hidden="true">{f"{index + 1:02d}"}</span>
+                <div>
+                    <h3 class="usecase-name">{case.name}</h3>
+                    <p class="usecase-headline">{case.headline}</p>
+                </div>
+            </div>
+
+            <div class="usecase-body">
+                <div class="usecase-text">
+                    <div class="usecase-block">
+                        <h4 class="usecase-label">The problem</h4>
+                        <p>{case.problem}</p>
+                    </div>
+
+                    <div class="usecase-block">
+                        <h4 class="usecase-label">Why Docling</h4>
+                        <p>{case.why_docling}</p>
+                    </div>
+
+                    <div class="usecase-block">
+                        <h4 class="usecase-label">What it uses</h4>
+                        <ul class="chip-row">
+                            {[<li class="tag tag--muted">{item}</li> for item in case.evidence]}
+                        </ul>
+                    </div>
+
+                    <div class="usecase-block">
+                        <h4 class="usecase-label">Path to production</h4>
+                        <ul class="chip-row">
+                            {[<li class="tag">{item}</li> for item in case.scale_bridge]}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="usecase-recipe">
+                    <Code
+                        text={case.recipe}
+                        language={case.recipe_language}
+                        filename={"recipe." + ("py" if case.recipe_language == "python" else case.recipe_language)}
+                    />
+                    {
+                        <a class="card-link" href={case.doc_href} target="_blank" rel="noopener noreferrer">
+                            {case.doc_label} {external_icon()}
+                        </a>
+                        if case.doc_href
+                        else <></>
+                    }
+                </div>
+            </div>
+        </article>
+    )
+
+
+def UseCaseGrid(children, limit: int | None = None) -> JSX:
+    cases = USE_CASES[:limit] if limit else USE_CASES
+
+    return (
+        <section class="section section--lg" id="use-cases">
+            <div class="container">
+                <SectionHeader
+                    label="Real workflows"
+                    title="What people actually build with it"
+                    display={True}
+                    href="/use-cases/"
+                    link="All use cases"
+                />
+
+                <div class="usecases">
+                    {[
+                        <UseCaseBlock case={case} index={index} />
+                        for index, case in enumerate(cases)
+                    ]}
+                </div>
+            </div>
+        </section>
+    )

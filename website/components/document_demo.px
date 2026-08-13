@@ -1,0 +1,143 @@
+"""The signature product section: "See what survives conversion".
+
+One real page, six facets of what Docling recovers from it, each with the
+annotation drawn over the page and the corresponding output beside it. Tabs are
+a real ARIA tablist so the section is keyboard-operable.
+"""
+
+from pyjsx import jsx, JSX
+
+from website.data.samples import CANONICAL_SAMPLE, LAYERS
+from .document_svg import annotated_page
+from .icons import arrow_right, external_icon
+from .ui import Code, SectionHeader
+
+
+def _Tab(layer, index: int) -> JSX:
+    selected = index == 0
+    return (
+        <button
+            type="button"
+            class="tab"
+            id={f"demotab-{layer.id}"}
+            role="tab"
+            aria-selected={"true" if selected else "false"}
+            aria-controls={f"demopanel-{layer.id}"}
+            tabindex={None if selected else "-1"}
+        >
+            {layer.label}
+        </button>
+    )
+
+
+def _Panel(layer, index: int) -> JSX:
+    return (
+        <div
+            class="demo-panel"
+            id={f"demopanel-{layer.id}"}
+            role="tabpanel"
+            aria-labelledby={f"demotab-{layer.id}"}
+            tabindex="0"
+            hidden={None if index == 0 else "hidden"}
+        >
+            <div class="demo-body">
+                <figure class="demo-page">
+                    {annotated_page(
+                        layer.page,
+                        layer.shapes,
+                        alt=f"{layer.title} — annotations drawn over the source page",
+                        lazy=index != 0,
+                        group_id=layer.id,
+                    )}
+                </figure>
+
+                <div class="demo-side">
+                    <h3 class="demo-title">{layer.title}</h3>
+                    <p class="demo-text">{layer.body}</p>
+
+                    <Code
+                        text={layer.output}
+                        language={layer.output_label.lower()}
+                        filename={layer.output_label}
+                    />
+
+                    {
+                        <a class="card-link" href={layer.doc_link} target="_blank" rel="noopener noreferrer">
+                            Documentation {external_icon()}
+                        </a>
+                        if layer.doc_link
+                        else <></>
+                    }
+                </div>
+            </div>
+        </div>
+    )
+
+
+def Provenance(children) -> JSX:
+    """States exactly where the sample came from and whether the output on this
+    page has been regenerated. Unverified is said out loud, not implied."""
+    sample = CANONICAL_SAMPLE
+    return (
+        <dl class="provenance">
+            <div>
+                <dt>Source</dt>
+                <dd>
+                    <a href={sample.source_url} target="_blank" rel="noopener noreferrer">
+                        {sample.title}
+                    </a>
+                </dd>
+            </div>
+            <div>
+                <dt>Licence</dt>
+                <dd>{sample.license}</dd>
+            </div>
+            <div>
+                <dt>Regenerate</dt>
+                <dd><code>{sample.regenerate}</code></dd>
+            </div>
+            <div>
+                <dt>Status</dt>
+                <dd>
+                    {
+                        <span class="tag tag--green">Reproduced</span>
+                        if sample.verified
+                        else <span class="tag tag--muted">Not yet reproduced</span>
+                    }
+                    {<span class="provenance-note">{sample.note}</span> if sample.note else <></>}
+                </dd>
+            </div>
+        </dl>
+    )
+
+
+def DocumentDemo(children) -> JSX:
+    return (
+        <section class="section section--lg" id="proof">
+            <div class="container">
+                <SectionHeader
+                    label="Product proof"
+                    title="See what survives conversion"
+                    display={True}
+                    href="/formats/"
+                    link="All supported formats"
+                />
+
+                <p class="section-lede">
+                    One page of a real academic paper: two columns, a complex table, a
+                    figure with its caption, and a running page header. Switch layers to
+                    see what Docling recovers — and what it would cost you to lose.
+                </p>
+
+                <div class="demo" data-demo="document">
+                    <div class="tablist" role="tablist" aria-label="Document structure layers">
+                        {[_Tab(layer, index) for index, layer in enumerate(LAYERS)]}
+                    </div>
+
+                    {[_Panel(layer, index) for index, layer in enumerate(LAYERS)]}
+                </div>
+
+                <Provenance />
+            </div>
+        </section>
+    )

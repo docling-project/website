@@ -1,0 +1,84 @@
+"""Supported formats and extractable components.
+
+The large matrix that used to dominate the homepage now lives here, where a
+reader looking for compatibility can find it without it standing between a new
+visitor and the product proof.
+"""
+
+from pyjsx import jsx, JSX
+
+from website.components.ui import SectionHeader  # type: ignore
+from website.data.formats import EXPORT_GROUPS, EXTRACT_GROUPS, IMPORT_GROUPS
+
+from .page import Page
+
+
+def _Group(group) -> JSX:
+    return (
+        <div class="format-group">
+            <h3 class="card-title">{group.name}</h3>
+            <p class="card-body">{group.blurb}</p>
+            <ul class="format-list">
+                {[<li>{item}</li> for item in group.formats]}
+            </ul>
+        </div>
+    )
+
+
+def FormatsPage() -> JSX:
+    return (
+        <Page
+            title="Supported formats — Docling"
+            description={(
+                "Every input format Docling reads, every format it exports, and every "
+                "component it extracts from a document."
+            )}
+            path="/formats/"
+            active="/formats/"
+        >
+            <div class="container page-header">
+                <p class="section-label">Reference</p>
+                <h1 class="page-title">Formats and components</h1>
+                <p class="page-subtitle">
+                    Many input formats converge on one document model, which serializes
+                    to a handful of output formats. This page is the compatibility
+                    reference behind that claim.
+                </p>
+            </div>
+
+            <div class="container section">
+                <SectionHeader label="Input" title="What Docling reads" display={True} />
+                <div class="grid grid--auto">
+                    {[_Group(group) for group in IMPORT_GROUPS]}
+                </div>
+            </div>
+
+            <div class="container section">
+                <SectionHeader label="Output" title="What Docling writes" display={True} />
+                <div class="grid grid--auto">
+                    {[_Group(group) for group in EXPORT_GROUPS]}
+                </div>
+            </div>
+
+            <div class="container section">
+                <SectionHeader
+                    label="Components"
+                    title="What Docling extracts"
+                    display={True}
+                    href="/#proof"
+                    link="See it on a real page"
+                />
+                <div class="grid grid--auto">
+                    {[
+                        <div class="format-group">
+                            <h3 class="card-title">{group.name}</h3>
+                            <ul class="format-list">
+                                {[<li>{item}</li> for item in group.items]}
+                            </ul>
+                        </div>
+                        for group in EXTRACT_GROUPS
+                    ]}
+                </div>
+            </div>
+        </Page>
+    )

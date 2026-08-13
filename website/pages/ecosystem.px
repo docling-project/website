@@ -1,0 +1,40 @@
+"""The full ecosystem listing."""
+
+from pyjsx import jsx, JSX
+
+from website.components.ecosystem import EcosystemGroups  # type: ignore
+from website.components.ui import SectionHeader  # type: ignore
+
+from .page import Page
+
+
+def EcosystemPage() -> JSX:
+    return (
+        <Page
+            title="Ecosystem — Docling"
+            description={(
+                "Docling integrations across frameworks, agents, data pipelines, "
+                "infrastructure and retrieval — each linking to its documentation."
+            )}
+            path="/ecosystem/"
+            active="/ecosystem/"
+        >
+            <div class="container page-header">
+                <p class="section-label">Ecosystem</p>
+                <h1 class="page-title">It already fits your stack</h1>
+                <p class="page-subtitle">
+                    Docling is a library, not a platform you have to move into. Every
+                    entry below links to its integration documentation.
+                </p>
+            </div>
+
+            <div class="container section">
+                <SectionHeader
+                    label="Integrations"
+                    title="Grouped by the job they do"
+                    display={True}
+                />
+                <EcosystemGroups />
+            </div>
+        </Page>
+    )

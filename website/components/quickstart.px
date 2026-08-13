@@ -1,0 +1,89 @@
+"""Start in under a minute: Python, CLI, API and MCP against the same pipeline."""
+
+from pyjsx import jsx, JSX
+
+from website.data.product import INSTALL_COMMAND, QUICKSTART
+from .icons import external_icon
+from .ui import Code, InstallCommand, SectionHeader
+
+
+def Quickstart(children) -> JSX:
+    return (
+        <section class="section section--band" id="quickstart">
+            <div class="container">
+                <SectionHeader
+                    label="Quickstart"
+                    title="Start in under a minute"
+                    display={True}
+                    href="https://docling-project.github.io/docling"
+                    link="Full documentation"
+                />
+
+                <div class="quickstart">
+                    <div class="quickstart-intro">
+                        <p class="section-lede">
+                            No account, no upload, no proprietary SDK. Install the package
+                            and convert a document on the machine in front of you.
+                        </p>
+                        <InstallCommand command={INSTALL_COMMAND} />
+                        <p class="quickstart-note">
+                            Requires Python 3.10 or newer. Models are downloaded once and
+                            cached, after which conversion runs fully offline.
+                        </p>
+                    </div>
+
+                    <div class="quickstart-demo" data-demo="quickstart">
+                        <div class="tablist" role="tablist" aria-label="Ways to call Docling">
+                            {[
+                                <button
+                                    type="button"
+                                    class="tab"
+                                    id={f"qstab-{tab.id}"}
+                                    role="tab"
+                                    aria-selected={"true" if index == 0 else "false"}
+                                    aria-controls={f"qspanel-{tab.id}"}
+                                    tabindex={None if index == 0 else "-1"}
+                                >
+                                    {tab.label}
+                                </button>
+                                for index, tab in enumerate(QUICKSTART)
+                            ]}
+                        </div>
+
+                        {[
+                            <div
+                                class="quickstart-panel"
+                                id={f"qspanel-{tab.id}"}
+                                role="tabpanel"
+                                aria-labelledby={f"qstab-{tab.id}"}
+                                tabindex="0"
+                                hidden={None if index == 0 else "hidden"}
+                            >
+                                <Code
+                                    text={tab.code}
+                                    language={tab.language}
+                                    filename={tab.filename}
+                                />
+                                <div class="quickstart-foot">
+                                    {<span class="quickstart-hint">{tab.note}</span> if tab.note else <></>}
+                                    {
+                                        <a
+                                            class="card-link"
+                                            href={tab.link_href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {tab.link_label} {external_icon()}
+                                        </a>
+                                        if tab.link_href
+                                        else <></>
+                                    }
+                                </div>
+                            </div>
+                            for index, tab in enumerate(QUICKSTART)
+                        ]}
+                    </div>
+                </div>
+            </div>
+        </section>
+    )

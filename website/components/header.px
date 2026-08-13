@@ -1,0 +1,82 @@
+"""Site header: logo, primary navigation, GitHub star count, primary CTA.
+
+Every important destination is top level. The strategy explicitly rejects
+collapsing them behind a single "Resources" dropdown.
+"""
+
+from pyjsx import jsx, JSX
+
+from website.data.navigation import GITHUB_URL, PRIMARY_NAV
+from .icons import close_icon, github_icon, menu_icon
+
+
+def _is_active(item_href: str, active: str) -> bool:
+    if not active:
+        return False
+    # Section anchors on the homepage should not light up on other pages.
+    if item_href.startswith("/#"):
+        return active == "/"
+    return active.startswith(item_href) and item_href != "/"
+
+
+def NavLinks(children, active: str = "") -> JSX:
+    return [
+        <a
+            class="nav-link"
+            href={item.href}
+            target={"_blank" if item.external else None}
+            rel={"noopener noreferrer" if item.external else None}
+            aria-current={"page" if _is_active(item.href, active) else None}
+        >
+            {item.label}
+        </a>
+        for item in PRIMARY_NAV
+    ]
+
+
+def Header(children, active: str = "") -> JSX:
+    return (
+        <header class="header">
+            <div class="header-inner">
+                <a class="header-logo" href="/" aria-label="Docling home">
+                    <img src="/img/logo.svg" alt="" width="20" height="20" />
+                    <span>DOCLING</span>
+                </a>
+
+                <nav class="header-nav" aria-label="Primary">
+                    <NavLinks active={active} />
+
+                    <a
+                        class="nav-link nav-external"
+                        href={GITHUB_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Docling on GitHub"
+                    >
+                        {github_icon()}
+                        <span class="nav-stars" data-github="stars"></span>
+                    </a>
+
+                    <a class="nav-cta" href="/#quickstart">Get started</a>
+                </nav>
+
+                <button
+                    type="button"
+                    class="menu-toggle"
+                    aria-label="Open menu"
+                    aria-expanded="false"
+                    aria-controls="mobile-nav"
+                    data-menu-toggle
+                >
+                    <span class="icon-menu">{menu_icon()}</span>
+                    <span class="icon-close">{close_icon()}</span>
+                </button>
+            </div>
+
+            <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile" data-open="false">
+                <NavLinks active={active} />
+                <a class="nav-link" href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="nav-cta" href="/#quickstart">Get started</a>
+            </nav>
+        </header>
+    )

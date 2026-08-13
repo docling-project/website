@@ -1,0 +1,45 @@
+"""The four core value propositions."""
+
+from pyjsx import jsx, JSX
+
+from website.data.product import VALUES
+from .icons import icon_ai, icon_model, icon_private, icon_structure
+from .ui import SectionHeader
+
+
+_ICONS = {
+    "structure": icon_structure,
+    "model": icon_model,
+    "private": icon_private,
+    "ai": icon_ai,
+}
+
+
+def CapabilityGrid(children) -> JSX:
+    return (
+        <section class="section" id="product">
+            <div class="container">
+                <SectionHeader
+                    label="Why Docling"
+                    title="What you get that a text extractor cannot give you"
+                    display={True}
+                />
+
+                <div class="grid grid--4 capability-grid">
+                    {[
+                        <div class="card">
+                            <span class="card-icon">{_ICONS[value.id]()}</span>
+                            <h3 class="card-title">{value.title}</h3>
+                            <p class="card-body">{value.body}</p>
+                            {
+                                <a class="card-link" href={value.link_href}>{value.link_label} →</a>
+                                if value.link_href
+                                else <></>
+                            }
+                        </div>
+                        for value in VALUES
+                    ]}
+                </div>
+            </div>
+        </section>
+    )

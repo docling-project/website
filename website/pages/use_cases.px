@@ -1,0 +1,49 @@
+"""All four workflows in full."""
+
+from pyjsx import jsx, JSX
+
+from website.components.ui import SectionHeader  # type: ignore
+from website.components.use_case_grid import UseCaseBlock  # type: ignore
+from website.data.use_cases import USE_CASES
+
+from .page import Page
+
+
+def UseCasesPage() -> JSX:
+    return (
+        <Page
+            title="Use cases — Docling"
+            description={(
+                "RAG and enterprise search, agents and automation, research and "
+                "technical documents, and enterprise archives — with the recipe and "
+                "the production path for each."
+            )}
+            path="/use-cases/"
+            active="/use-cases/"
+        >
+            <div class="container page-header">
+                <p class="section-label">Use cases</p>
+                <h1 class="page-title">What people actually build with it</h1>
+                <p class="page-subtitle">
+                    Four workflows, each stated as the problem first, then the part of
+                    the document model that solves it, then how the same code reaches
+                    production.
+                </p>
+            </div>
+
+            <div class="container section">
+                <SectionHeader
+                    label="Workflows"
+                    title="Four jobs, in full"
+                    display={True}
+                />
+
+                <div class="usecases">
+                    {[
+                        <UseCaseBlock case={case} index={index} />
+                        for index, case in enumerate(USE_CASES)
+                    ]}
+                </div>
+            </div>
+        </Page>
+    )

@@ -1124,6 +1124,10 @@ section.bar {
 
     /* Page overlay. */
     svg {
+      display: block;
+      width: 100%;
+      height: auto;
+
       polyline,
       rect {
         fill: none;

@@ -266,7 +266,7 @@ def HomePage() -> JSX:
                     </div>
 
                     <svg viewBox="0 0 914 1184" width="100%">
-                        <image href="img/features-1.png" />
+                        <image href="img/features-1.png" x="0" y="0" width="914" height="1184" />
 
                         <g data-id="chunks">
                         <polyline points="70,1080 70,875 445,875 445,1080" vector-effect="non-scaling-stroke" />
@@ -293,7 +293,7 @@ def HomePage() -> JSX:
                         </marker>
                         </defs>
 
-                        <image href="img/features-1.png" />
+                        <image href="img/features-1.png" x="0" y="0" width="914" height="1184" />
 
                         <g data-id="order">
                         <polyline class="halo"
@@ -310,7 +310,7 @@ def HomePage() -> JSX:
                     </div>
 
                     <svg viewBox="0 0 914 1184" width="100%">
-                        <image href="img/features-1.png" />
+                        <image href="img/features-1.png" x="0" y="0" width="914" height="1184" />
 
                         <g data-id="layout">
                         <rect x="70" y="910" width="375" height="160" vector-effect="non-scaling-stroke" />
@@ -325,7 +325,7 @@ def HomePage() -> JSX:
                     </div>
 
                     <svg viewBox="0 0 914 1184" width="100%">
-                        <image href="img/features-1.png" />
+                        <image href="img/features-1.png" x="0" y="0" width="914" height="1184" />
 
                         <g data-id="furniture">
                         <rect x="70" y="80" width="775" height="30" vector-effect="non-scaling-stroke" />
@@ -342,7 +342,7 @@ def HomePage() -> JSX:
                     </div>
 
                     <svg viewBox="0 0 914 1184" width="100%">
-                        <image href="img/features-1.png" />
+                        <image href="img/features-1.png" x="0" y="0" width="914" height="1184" />
 
                         <g data-id="table-structure">
                         <rect x="85" y="286" width="348" height="246" vector-effect="non-scaling-stroke" />
@@ -373,7 +373,7 @@ def HomePage() -> JSX:
                     </div>
 
                     <svg viewBox="0 0 914 1184" width="100%">
-                        <image href="img/features-1.png" />
+                        <image href="img/features-1.png" x="0" y="0" width="914" height="1184" />
 
                         <g data-id="picture-image">
                         <rect x="475" y="120" width="365" height="280" vector-effect="non-scaling-stroke" />
@@ -397,7 +397,7 @@ def HomePage() -> JSX:
                     </div>
 
                     <svg viewBox="0 0 914 1184" width="100%">
-                        <image href="img/features-3.png" />
+                        <image href="img/features-3.png" x="0" y="0" width="914" height="1184" />
 
                         <g data-id="formula">
                         <rect x="530" y="218" width="250" height="42" vector-effect="non-scaling-stroke" />
@@ -415,7 +415,7 @@ def HomePage() -> JSX:
                     </div>
 
                     <svg viewBox="0 0 914 1184" width="100%">
-                        <image href="img/features-2.png" />
+                        <image href="img/features-2.png" x="0" y="0" width="914" height="1184" />
 
                         <g data-id="seq-code">
                         <rect x="152" y="505" width="590" height="115" vector-effect="non-scaling-stroke" />
@@ -439,7 +439,7 @@ def HomePage() -> JSX:
                     </div>
 
                     <svg viewBox="0 0 914 1184" width="100%">
-                        <image href="img/features-1.png" />
+                        <image href="img/features-1.png" x="0" y="0" width="914" height="1184" />
 
                         <g data-id="text-header">
                         <rect x="70" y="875" width="160" height="25" vector-effect="non-scaling-stroke" />

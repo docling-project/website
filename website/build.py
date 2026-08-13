@@ -56,6 +56,30 @@ def _apply_base_path(html: str, base_path: str) -> str:
     )
 
 
+# Root-relative url() inside a stylesheet, e.g. url(/font/plex.woff2).
+_CSS_ROOT_URL_RE = re.compile(r'url\(\s*["\']?(/(?!/)[^"\')]*)')
+
+
+def _check_css_urls(css_dir: Path) -> None:
+    """Fail on root-relative url() in stylesheets.
+
+    ``_apply_base_path`` only rewrites href/src attributes in HTML, so a
+    root-relative URL inside CSS silently 404s on a sub-path deploy. Stylesheet
+    URLs must be relative to the stylesheet (``../font/...``) instead.
+    """
+    offenders: list[str] = []
+    for css in sorted(css_dir.glob("*.css")):
+        for match in _CSS_ROOT_URL_RE.finditer(css.read_text(encoding="utf-8")):
+            offenders.append(f"{css.name}: url({match.group(1)})")
+
+    if offenders:
+        raise SystemExit(
+            "Root-relative url() found in CSS; these break sub-path deploys.\n"
+            "Use a path relative to the stylesheet instead (e.g. ../font/x.woff2):\n  "
+            + "\n  ".join(offenders)
+        )
+
+
 def _write_page(out_dir: Path, route: str, html: str, base_path: str) -> None:
     """Write ``html`` for ``route`` as ``<route>/index.html`` under ``out_dir``."""
     rel = route.strip("/")
@@ -98,6 +122,7 @@ def build(out_dir: Path, base_path: str, cname: str | None = None) -> None:
     _copy_assets(root / "public", out_dir)
     _copy_assets(root / "blog", out_dir / "blog", ignore_suffixes=(".md",))
     _copy_assets(root / "papers", out_dir / "papers", ignore_suffixes=(".md", ".bib"))
+    _check_css_urls(out_dir / "css")
 
     # 2. Render pages.
     print("Rendering pages...")

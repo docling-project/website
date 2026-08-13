@@ -9,12 +9,17 @@
 @layer reset, tokens, base, layout, components, pages, utilities;
 
 @layer tokens {
-  /* -- Typefaces ---------------------------------------------------------- */
+  /* -- Typefaces ----------------------------------------------------------
+     Font URLs are relative to this stylesheet, not root-relative. The static
+     build rewrites root-relative links in HTML attributes only, so a `/font/...`
+     URL here would 404 on a sub-path deploy; `../font/...` resolves correctly
+     whether the site is served from the root or from a prefix.
+     ------------------------------------------------------------------------ */
 
   /* Variable font: one 69 KB file covers weights 100-700. */
   @font-face {
     font-family: "IBM Plex Sans";
-    src: url("/font/plex.woff2") format("woff2");
+    src: url("../font/plex.woff2") format("woff2");
     font-weight: 100 700;
     font-style: normal;
     font-display: swap;
@@ -22,7 +27,7 @@
 
   @font-face {
     font-family: "IBM Plex Mono";
-    src: url("/font/plex-mono-400.woff2") format("woff2");
+    src: url("../font/plex-mono-400.woff2") format("woff2");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -30,7 +35,7 @@
 
   @font-face {
     font-family: "IBM Plex Mono";
-    src: url("/font/plex-mono-600.woff2") format("woff2");
+    src: url("../font/plex-mono-600.woff2") format("woff2");
     font-weight: 600;
     font-style: normal;
     font-display: swap;

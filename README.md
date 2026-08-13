@@ -31,7 +31,18 @@ published on GitHub Pages (or any static host). Build it with:
 uv run website/build.py
 ```
 
-This renders all pages and copies the assets into `dist/`. Useful options:
+This renders all pages and copies the assets into `dist/`. To serve that build
+locally:
+
+```bash
+python3 -m http.server 8000 --directory dist
+# open http://localhost:8000
+```
+
+Any static file server works. Clean URLs such as `/deployments/` resolve because
+each route is written as `<route>/index.html`.
+
+Useful options:
 
 - `--out <dir>`: output directory (default `dist`).
 - `--base-path <prefix>`: URL prefix for root-relative links, needed when the
@@ -40,14 +51,28 @@ This renders all pages and copies the assets into `dist/`. Useful options:
   (the repository name). Leave empty for a root/custom-domain deploy.
 - `--cname <domain>`: write a `CNAME` file for a custom domain (e.g. `docling.ai`).
 
-To preview a sub-path build locally:
+To preview a sub-path build locally, build straight into a directory whose name
+matches the prefix — `--base-path` rewrites the links but does not nest the
+files:
 
 ```bash
-uv run website/build.py --base-path /website
-mkdir -p /tmp/site/website && cp -r dist/. /tmp/site/website/
+uv run website/build.py --out /tmp/site/website --base-path /website
 python3 -m http.server 5055 --directory /tmp/site
 # open http://localhost:5055/website/
 ```
+
+### Asset URLs in CSS
+
+`--base-path` rewrites root-relative `href`/`src` attributes in HTML only, so a
+root-relative `url()` inside a stylesheet would 404 on a sub-path deploy. Write
+stylesheet asset URLs relative to the stylesheet instead:
+
+```css
+src: url("../font/plex.woff2"); /* not url("/font/plex.woff2") */
+```
+
+The build enforces this: it exits with an error naming the file and URL if a
+root-relative `url()` appears in any stylesheet.
 
 ## Site architecture
 

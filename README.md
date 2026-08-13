@@ -49,6 +49,47 @@ python3 -m http.server 5055 --directory /tmp/site
 # open http://localhost:5055/website/
 ```
 
+## Site architecture
+
+Pages are composed from reusable components; content lives in plain Python data
+modules so copy can be edited without touching markup.
+
+```
+website/
+  pages/          one module per route — section composition only
+  components/     reusable product components (hero, document demo, ...)
+  data/           site content: navigation, samples, product copy, integrations
+  highlight.py    build-time Pygments highlighting (no client-side highlighter)
+  seo.py          sitemap.xml and robots.txt, generated from one route list
+
+public/
+  css/            cascade layers: tokens, reset, base, layout, components, pages
+  js/             ES modules, one per concern, loaded via js/main.js
+  font/           self-hosted IBM Plex Sans (variable) and Plex Mono
+```
+
+**CSS** uses cascade layers, declared once at the top of `css/tokens.css`:
+
+```css
+@layer reset, tokens, base, layout, components, pages, utilities;
+```
+
+Because the order is declared there, the `<link>` tags can be reordered without
+changing which rules win. Colour, spacing, typography and motion are all tokens
+in `tokens.css`; the theme is dark by default with a full light variant under
+`prefers-color-scheme: light`.
+
+**Adding a route** means adding it in three places: a page module under
+`website/pages/`, a handler in `website/main.py`, and a `_write_page` call in
+`website/build.py`. Add it to `STATIC_ROUTES` in `website/seo.py` so it reaches
+the sitemap.
+
+**Sample output** shown on the site carries provenance metadata in
+`website/data/samples.py`, including whether it has been regenerated against a
+pinned Docling release. Anything not yet reproduced is labelled as such on the
+page rather than presented as a verified result.
+
+
 ## Deployment
 
 Pushes to `main` are built and deployed to GitHub Pages automatically by

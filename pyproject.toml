@@ -10,6 +10,7 @@ dependencies = [
   "pydantic>=2.12.5",
   "pymdown-extensions>=10.21",
   "babel>=2.18.0",
+  "pygments>=2.20.0",
 ]
 
 [tool.setuptools.packages.find]

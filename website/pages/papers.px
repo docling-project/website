@@ -1,75 +1,66 @@
-from babel.dates import format_date
-from pyjsx import HTMLDontEscape, jsx, JSX
-from website.models.papers import last_paper, Paper, PaperYear, paper_index, PublicationCategory
 import base64
+
+from pyjsx import jsx, JSX
+
+from website.models.papers import last_paper, paper_index, PublicationCategory
 
 from .page import Page
 
 
-            # {paper.thumbnail and (
-            #     <img src={paper.thumbnail} alt={paper.title} class="paper-thumbnail" loading="lazy" />
-            # )}
-
-
 def Paper(children, paper) -> JSX:
-    # Generate BibTeX data URL for download
     cite_link = None
+    filename = None
     if paper.bibtex:
-        bibtex_encoded = base64.b64encode(paper.bibtex.encode('utf-8')).decode('utf-8')
-        cite_link = f"data:text/plain;base64,{bibtex_encoded}"
-        # Generate filename from title
-        filename = paper.title.lower().replace(' ', '_')[:50] + '.bib'
-    
+        encoded = base64.b64encode(paper.bibtex.encode("utf-8")).decode("utf-8")
+        cite_link = f"data:text/plain;base64,{encoded}"
+        filename = paper.title.lower().replace(" ", "_")[:50] + ".bib"
+
     return (
-        <div id={paper.title} class="paper" data-category={paper.category.value}>
-            <div class="header">
-                <button class="category">{paper.category.label}</button>
-
-                <h4>{paper.title}</h4>
-                
-                <div class="actions">
-                    <label>{paper.venue}</label>
-
-                    {paper.arxiv_id and (
-                        <a href={f"https://arxiv.org/abs/{paper.arxiv_id}"} target="_blank" rel="noopener noreferrer">
-                            arXiv
-                        </a>
-                    )}
-                    {paper.google_scholar and (
-                        <a href={paper.google_scholar} target="_blank" rel="noopener noreferrer">
-                            scholar
-                        </a>
-                    )}
-                    {cite_link and (
-                        <a href={cite_link} download={filename}>
-                            cite
-                        </a>
-                    )}
-                    {paper.url and (
-                        <a href={paper.url} target="_blank" rel="noopener noreferrer">
-                            view →
-                        </a>
-                    )}
-                </div>
+        <div class="paper" data-category={paper.category.value}>
+            <div class="card-meta">
+                <span class="tag tag--muted">{paper.category.label}</span>
+                {<span class="card-meta-dot"></span> if paper.venue else <></>}
+                {<span class="paper-venue">{paper.venue}</span> if paper.venue else <></>}
             </div>
-            
-            {paper.abstract and (
-                <a class="abstract" href={f"#{paper.title}"}>
-                    {paper.thumbnail and (
-                        <img src={paper.thumbnail} alt={paper.title} class="thumbnail" loading="lazy" />
-                    )}
 
-                    {paper.abstract}
-                </a>
-            )}
+            <h3 class="paper-title">{paper.title}</h3>
+
+            {
+                <p class="paper-abstract">{paper.abstract}</p>
+                if paper.abstract
+                else <></>
+            }
+
+            <div class="paper-actions">
+                {
+                    <a href={f"https://arxiv.org/abs/{paper.arxiv_id}"} target="_blank" rel="noopener noreferrer">
+                        arXiv
+                    </a>
+                    if paper.arxiv_id
+                    else <></>
+                }
+                {
+                    <a href={paper.google_scholar} target="_blank" rel="noopener noreferrer">
+                        Scholar
+                    </a>
+                    if paper.google_scholar
+                    else <></>
+                }
+                {<a href={cite_link} download={filename}>Cite</a> if cite_link else <></>}
+                {
+                    <a href={paper.url} target="_blank" rel="noopener noreferrer">View →</a>
+                    if paper.url
+                    else <></>
+                }
+            </div>
         </div>
     )
 
 
-def PaperYear(children, paper_year: PaperYear) -> JSX:
+def PaperYear(children, paper_year) -> JSX:
     return (
-        [<h3>{paper_year.year}</h3>] +
-        [<Paper paper={paper} /> for paper in paper_year.papers]
+        [<h2 class="paper-year" data-year={str(paper_year.year)}>{paper_year.year}</h2>]
+        + [<Paper paper={paper} /> for paper in paper_year.papers]
     )
 
 
@@ -77,46 +68,57 @@ def PapersPage(filter: PublicationCategory = PublicationCategory.ALL) -> JSX:
     index = paper_index(filter)
 
     return (
-        <Page>
-            <main class="papers">
-                <h1>Papers</h1>
-                
+        <Page
+            title="Papers — Docling"
+            description="Peer-reviewed publications and technical reports from the Docling team."
+            path="/papers/"
+            active="/papers/"
+        >
+            <div class="container page-header">
+                <p class="section-label">Papers</p>
+                <h1 class="page-title">Published work</h1>
+                <p class="page-subtitle">
+                    The peer-reviewed research behind Docling's layout, table and
+                    conversion models.
+                </p>
+            </div>
+
+            <div class="container section">
                 <form class="filters" method="get">
                     {[
                         <button
                             type="submit"
                             name="filter"
-                            value={filter_option.value}
-                            class={"active" if filter_option == filter else ""}
+                            value={option.value}
+                            class={"active" if option == filter else ""}
+                            aria-pressed={"true" if option == filter else "false"}
                         >
-                            {filter_option.label}
+                            {option.label}
                         </button>
-                        for filter_option in PublicationCategory
+                        for option in PublicationCategory
                     ]}
                 </form>
-                
+
                 {[<PaperYear paper_year={year} /> for year in index.years]}
-            </main>
+            </div>
         </Page>
     )
 
 
 def LastPaperPreview(children) -> JSX:
     paper = last_paper()
+    if not paper:
+        return <></>
 
-    if paper:
-        return (
-            <div class="preview">
-                <a class="card" href={paper.url}>
-                    {paper.thumbnail and (
-                        <img src={paper.thumbnail} alt={paper.title} loading="lazy" />
-                    )}
-                    <div class="content">
-                        <h5>{paper.title}</h5>
-                    </div>
-                </a>
-                <a class="all" href="papers/">All papers</a>
+    return (
+        <a class="card" href={paper.url} target="_blank" rel="noopener noreferrer">
+            <div class="card-meta">
+                <span class="tag tag--purple">Paper</span>
+                {<span class="card-meta-dot"></span> if paper.venue else <></>}
+                {<span>{paper.venue}</span> if paper.venue else <></>}
             </div>
-        )
-    else:
-        return None
+            <h3 class="card-title">{paper.title}</h3>
+            <p class="card-body">{(paper.abstract or "")[:180]}</p>
+            <span class="card-arrow" aria-hidden="true">→</span>
+        </a>
+    )

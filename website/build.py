@@ -11,7 +11,7 @@ Usage::
     uv run website/build.py --base-path /docling-website
 
 The ``--base-path`` prefix (also read from the ``BASE_PATH`` env var) is
-prepended to every root-relative link (``/style.css``, ``/blog/`` ...) so the
+prepended to every root-relative link (``/css/base.css``, ``/blog/`` ...) so the
 same build works both on a project page served under a sub-path
 (``docling-project.github.io/docling-website``) and later on a custom domain
 served at the root (``docling.ai``, where the base path is empty).
@@ -28,11 +28,17 @@ from pathlib import Path
 from pyjsx import auto_setup  # type: ignore  # noqa: F401  (registers the .px import hook)
 
 from website.models.blog import BlogFilter, blog_posts
+from website.pages.benchmarks import BenchmarksPage  # type: ignore
 from website.pages.blog import BlogPostPage  # type: ignore
 from website.pages.blog import BlogPage  # type: ignore
 from website.pages.components import ComingSoonPage, CommunityPage  # type: ignore
+from website.pages.deployments import DeploymentsPage  # type: ignore
+from website.pages.ecosystem import EcosystemPage  # type: ignore
+from website.pages.formats import FormatsPage  # type: ignore
 from website.pages.home import HomePage  # type: ignore
 from website.pages.papers import PapersPage  # type: ignore
+from website.pages.use_cases import UseCasesPage  # type: ignore
+from website.seo import robots_txt, sitemap_xml
 
 
 # Matches root-relative URLs in href/src attributes, e.g. href="/style.css".
@@ -96,19 +102,30 @@ def build(out_dir: Path, base_path: str, cname: str | None = None) -> None:
     # 2. Render pages.
     print("Rendering pages...")
     _write_page(out_dir, "/", str(HomePage()), base_path)
+    _write_page(out_dir, "/use-cases/", str(UseCasesPage()), base_path)
+    _write_page(out_dir, "/deployments/", str(DeploymentsPage()), base_path)
+    _write_page(out_dir, "/benchmarks/", str(BenchmarksPage()), base_path)
+    _write_page(out_dir, "/ecosystem/", str(EcosystemPage()), base_path)
+    _write_page(out_dir, "/formats/", str(FormatsPage()), base_path)
     _write_page(out_dir, "/blog/", str(BlogPage(filter=BlogFilter.ALL)), base_path)
     for post in blog_posts(BlogFilter.ALL):
         _write_page(out_dir, f"/blog/{post.id}/", str(BlogPostPage(id=post.id)), base_path)
     _write_page(out_dir, "/papers/", str(PapersPage()), base_path)
     _write_page(out_dir, "/community/", str(CommunityPage()), base_path)
-    _write_page(out_dir, "/faq/", str(ComingSoonPage("FAQ")), base_path)
-    _write_page(out_dir, "/releases/", str(ComingSoonPage("Releases")), base_path)
+    _write_page(out_dir, "/faq/", str(ComingSoonPage("FAQ", path="/faq/")), base_path)
+    _write_page(out_dir, "/releases/", str(ComingSoonPage("Releases", path="/releases/")), base_path)
 
-    # 3. GitHub Pages housekeeping: ``.nojekyll`` disables Jekyll processing so
+    # 3. Crawl metadata. Both are absolute-URL documents, so the base path does
+    #    not apply to them.
+    print("Writing sitemap.xml and robots.txt...")
+    (out_dir / "sitemap.xml").write_text(sitemap_xml(), encoding="utf-8")
+    (out_dir / "robots.txt").write_text(robots_txt(), encoding="utf-8")
+
+    # 4. GitHub Pages housekeeping: ``.nojekyll`` disables Jekyll processing so
     #    files/folders are served exactly as generated.
     (out_dir / ".nojekyll").write_text("", encoding="utf-8")
 
-    # 4. Optional custom domain (e.g. docling.ai). When set, GitHub Pages serves
+    # 5. Optional custom domain (e.g. docling.ai). When set, GitHub Pages serves
     #    at the root, so build with an empty base path.
     if cname:
         (out_dir / "CNAME").write_text(cname + "\n", encoding="utf-8")

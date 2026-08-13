@@ -1,50 +1,80 @@
 from babel.dates import format_date
 from pyjsx import HTMLDontEscape, jsx, JSX
+
 from website.models.blog import blog_post, blog_posts, last_blog_post, BlogFilter
 
 from .page import Page
 
 
-def BlogPage(filter: BlogFilter) -> JSX:
+def BlogPage(filter: BlogFilter = BlogFilter.ALL) -> JSX:
     posts = blog_posts(filter)
 
     return (
-        <Page>
-            <main class="blogs">
-                <h1>Blog</h1>
-                
+        <Page
+            title="Blog — Docling"
+            description="Releases, technical write-ups and events from the Docling project."
+            path="/blog/"
+            active="/blog/"
+        >
+            <div class="container page-header">
+                <p class="section-label">Blog</p>
+                <h1 class="page-title">Read all about it</h1>
+                <p class="page-subtitle">
+                    Releases, technical write-ups and events from the people building
+                    Docling.
+                </p>
+            </div>
+
+            <div class="container section">
                 <form class="filters" method="get">
                     {[
                         <button
                             type="submit"
                             name="filter"
-                            value={filter_option.value}
-                            class={"active" if filter_option == filter else ""}
+                            value={option.value}
+                            class={"active" if option == filter else ""}
+                            aria-pressed={"true" if option == filter else "false"}
                         >
-                            {filter_option.label}
+                            {option.label}
                         </button>
-                        for filter_option in BlogFilter
+                        for option in BlogFilter
                     ]}
                 </form>
-                
+
                 <div class="posts">
                     {
                         [
-                            <a class="post" href={f"{post.id}/"} data-category={post.category.value}>
-                                {<img src={f"/blog/{post.id}/{post.thumbnail}"} alt={post.title} /> if post.thumbnail else <></>}
-                                <div>
-                                    <button class="category">{post.category.label}</button>
-                                    <h4>{post.title}</h4>
-                                    <p><time>{format_date(post.date, "MMM d, yyyy")}</time> {post.summary}</p>
+                            <a class="post" href={f"/blog/{post.id}/"} data-category={post.category.value}>
+                                {
+                                    <img
+                                        class="card-thumb"
+                                        src={f"/blog/{post.id}/{post.thumbnail}"}
+                                        alt=""
+                                        loading="lazy"
+                                    />
+                                    if post.thumbnail
+                                    else <></>
+                                }
+                                <div class="post-content">
+                                    <div class="card-meta">
+                                        <span class="tag">{post.category.label}</span>
+                                        <span class="card-meta-dot"></span>
+                                        <time datetime={post.date.isoformat()}>
+                                            {format_date(post.date, "MMM d, yyyy")}
+                                        </time>
+                                    </div>
+                                    <h2 class="post-title">{post.title}</h2>
+                                    <p class="post-summary">{post.summary}</p>
+                                    <span class="card-arrow" aria-hidden="true">→</span>
                                 </div>
                             </a>
                             for post in posts
                         ]
                         if posts
-                        else (<div class="no-match">No matching posts</div>)
+                        else (<p class="no-match">No matching posts</p>)
                     }
                 </div>
-            </main>
+            </div>
         </Page>
     )
 
@@ -53,36 +83,72 @@ def BlogPostPage(id: str, filter: BlogFilter | None = None) -> JSX:
     post = blog_post(id)
     back_url = f"/blog/?filter={filter}" if filter else "/blog/"
 
+    schema = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "datePublished": post.date.isoformat(),
+        "description": post.summary or "",
+        "url": f"https://docling.ai/blog/{id}/",
+    }
+
     return (
-        <Page>
-            <main class="blog-posts">
-                {post.thumbnail and (
-                    <img src={f"/blog/{id}/{post.thumbnail}"} alt={post.title} class="banner" />
-                )}
-                <h1>{post.title}</h1>
-                <h4><time>{format_date(post.date, "MMM d, yyyy")}</time></h4>
-                {HTMLDontEscape(post.html)}
-            </main>
+        <Page
+            title={f"{post.title} — Docling"}
+            description={post.summary or None}
+            path={f"/blog/{id}/"}
+            active="/blog/"
+            image={f"/blog/{id}/{post.thumbnail}" if post.thumbnail else None}
+            schema={schema}
+        >
+            <div class="container">
+                <article class="blog-post">
+                    <a class="back-link" href={back_url}>← All posts</a>
+
+                    {
+                        <img
+                            class="blog-post-banner"
+                            src={f"/blog/{id}/{post.thumbnail}"}
+                            alt=""
+                        />
+                        if post.thumbnail
+                        else <></>
+                    }
+
+                    <header class="blog-post-header">
+                        <div class="card-meta">
+                            <span class="tag">{post.category.label}</span>
+                            <span class="card-meta-dot"></span>
+                            <time datetime={post.date.isoformat()}>
+                                {format_date(post.date, "MMM d, yyyy")}
+                            </time>
+                        </div>
+                        <h1 class="blog-post-title">{post.title}</h1>
+                    </header>
+
+                    <div class="prose">{HTMLDontEscape(post.html)}</div>
+                </article>
+            </div>
         </Page>
     )
 
+
 def LastBlogPostPreview(children) -> JSX:
     post = last_blog_post()
-
-    if post:
-        return (
-            <div class="preview">
-                <a class="card" href={f"blog/{post.id}/"}>
-                    {post.thumbnail and (
-                        <img src={f"/blog/{post.id}/{post.thumbnail}"} alt={post.title} loading="lazy" />
-                    )}
-                    <div class="content">
-                        <h5>{post.title}</h5>
-                        <time>{format_date(post.date, "MMM d, yyyy")}</time>
-                    </div>
-                </a>
-                <a class="all" href="blog/">All blog posts</a>
-            </div>
-        )
-    else:
+    if not post:
         return <></>
+
+    return (
+        <a class="card" href={f"/blog/{post.id}/"}>
+            <div class="card-meta">
+                <span class="tag">{post.category.label}</span>
+                <span class="card-meta-dot"></span>
+                <time datetime={post.date.isoformat()}>
+                    {format_date(post.date, "MMM d, yyyy")}
+                </time>
+            </div>
+            <h3 class="card-title">{post.title}</h3>
+            <p class="card-body">{post.summary}</p>
+            <span class="card-arrow" aria-hidden="true">→</span>
+        </a>
+    )

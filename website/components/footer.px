@@ -23,7 +23,7 @@ def Footer(children) -> JSX:
                     <div class="footer-brand-block">
                         <a class="header-logo" href="/" aria-label="Docling home">
                             <img src="/img/logo.svg" alt="" width="20" height="20" />
-                            <span>DOCLING</span>
+                            <span>Docling</span>
                         </a>
                         <p class="footer-tagline">
                             Open-source document intelligence. Turn complex documents

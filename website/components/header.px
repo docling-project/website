@@ -40,7 +40,7 @@ def Header(children, active: str = "") -> JSX:
             <div class="header-inner">
                 <a class="header-logo" href="/" aria-label="Docling home">
                     <img src="/img/logo.svg" alt="" width="20" height="20" />
-                    <span>DOCLING</span>
+                    <span>Docling</span>
                 </a>
 
                 <nav class="header-nav" aria-label="Primary">

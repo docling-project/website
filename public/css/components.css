@@ -28,10 +28,10 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     color: var(--text-primary);
     transition: color var(--dur-fast);
     flex-shrink: 0;

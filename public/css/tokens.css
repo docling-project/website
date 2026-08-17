@@ -92,6 +92,12 @@
     --sheet-ink: #1a1a1a;
     --sheet-shadow: 0 8px 32px #00000066;
 
+    /* Ambient elevation. Dark ground already reads as "close to black", so
+       depth comes mostly from a faint hairline highlight plus a soft drop,
+       not from a darker shadow alone. */
+    --shadow-sm: 0 1px 2px #00000080, 0 0 0 1px #ffffff0d;
+    --shadow-md: 0 16px 40px -12px #000000b3, 0 0 0 1px #ffffff0f;
+
     --hero-glow: #ff832b1f;
 
     /* Some supplied marks (the Linux Foundation logo) are white-only artwork,
@@ -142,6 +148,9 @@
       --sheet-ink: #111111;
       --sheet-shadow: 0 8px 32px #0000001f;
 
+      --shadow-sm: 0 1px 2px #0000000f;
+      --shadow-md: 0 16px 40px -12px #00000026;
+
       --hero-glow: #ba4e000f;
 
       --mono-logo-filter: invert(1);
@@ -163,9 +172,9 @@
     --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
       monospace;
 
-    /* Carbon's 2px corner. Anything larger reads as a different product. */
-    --radius: 2px;
-    --radius-lg: 4px;
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-lg: 18px;
 
     --max-width: 1200px;
     --gutter: 2rem;

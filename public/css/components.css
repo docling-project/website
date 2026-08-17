@@ -28,10 +28,10 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
     color: var(--text-primary);
     transition: color var(--dur-fast);
     flex-shrink: 0;
@@ -109,6 +109,7 @@
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.04em;
+    border-radius: var(--radius-sm);
     transition: background var(--dur-fast);
     white-space: nowrap;
   }
@@ -228,11 +229,13 @@
     font-size: 0.9rem;
     font-weight: 600;
     letter-spacing: 0.02em;
-    border-radius: 0;
+    border-radius: var(--radius);
     transition:
       background var(--dur-fast),
       border-color var(--dur-fast),
-      color var(--dur-fast);
+      color var(--dur-fast),
+      box-shadow var(--dur-fast),
+      transform var(--dur-fast);
   }
 
   .btn svg {
@@ -244,11 +247,14 @@
   .btn--primary {
     background: var(--accent);
     color: var(--accent-contrast);
+    box-shadow: var(--shadow-sm);
   }
 
   .btn--primary:hover {
     background: var(--accent-hover);
     color: var(--accent-contrast);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
   }
 
   .btn--secondary {
@@ -260,6 +266,7 @@
 
   .btn--secondary:hover {
     border-color: var(--text-secondary);
+    transform: translateY(-1px);
   }
 
   .btn--ghost {
@@ -292,6 +299,7 @@
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     max-width: 100%;
   }
 
@@ -319,7 +327,7 @@
     width: 1.75rem;
     height: 1.75rem;
     color: var(--text-tertiary);
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     transition:
       color var(--dur-fast),
       background var(--dur-fast);
@@ -561,7 +569,7 @@
     color: var(--accent);
     background: var(--accent-soft);
     border: 1px solid var(--accent-line);
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
   }
 
   .tag--cyan {

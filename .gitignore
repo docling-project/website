@@ -8,6 +8,8 @@
 # next.js
 /.next/
 /out/
+next-env.d.ts
+/node_modules/
 
 # production
 /build

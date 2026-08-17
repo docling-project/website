@@ -417,6 +417,7 @@
 
   .demo-page .page-svg {
     border: 1px solid var(--border-accent);
+    border-radius: var(--radius);
     box-shadow: var(--sheet-shadow);
   }
 
@@ -456,8 +457,10 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     margin-top: 1.5rem;
-    border-top: 1px solid var(--border);
-    border-left: 1px solid var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
   }
 
   .provenance > div {
@@ -519,6 +522,9 @@
     margin-top: 2.5rem;
     background: var(--border);
     border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
   }
 
   .matrix > * {
@@ -573,7 +579,7 @@
     font-size: 0.72rem;
     color: var(--accent);
     background: var(--accent-soft);
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     max-width: 100%;
     overflow-x: auto;
   }
@@ -686,6 +692,7 @@
     color: var(--accent);
     border: 1px solid var(--accent-line);
     background: var(--accent-soft);
+    border-radius: 50%;
   }
 
   .continuum-line {
@@ -761,6 +768,8 @@
   .table-scroll {
     overflow-x: auto;
     border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
   }
 
   .data-table {
@@ -918,8 +927,10 @@
   .routes {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    border-top: 1px solid var(--border);
-    border-left: 1px solid var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
   }
 
   .route {
@@ -983,7 +994,7 @@
     font-size: 0.78rem;
     color: var(--text-secondary);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     transition:
       color var(--dur-fast),
       border-color var(--dur-fast);

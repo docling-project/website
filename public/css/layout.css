@@ -96,27 +96,30 @@
     }
   }
 
-  /* -- Hairline grid -------------------------------------------------------
-     Cells are separated by a single shared 1px rule rather than by gaps, so
-     the grid reads as ruled paper.
-
-     The rules live on the cells, not as a gap over a coloured ground: a
-     coloured ground shows through any empty trailing slot when the item count
-     does not fill the last row. Each cell draws its own right and bottom edge
-     and the container draws the top and left, so a ragged last row simply
-     stops rather than leaving a painted gap.
+  /* -- Card grid -------------------------------------------------------------
+     Each cell is its own soft-edged surface with a gap between, rather than a
+     shared hairline rule — cards, not a ruled table.
      ------------------------------------------------------------------------ */
 
   .grid {
     display: grid;
-    border-top: 1px solid var(--border);
-    border-left: 1px solid var(--border);
+    gap: 1.25rem;
   }
 
   .grid > * {
-    background: var(--bg-primary);
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition:
+      border-color var(--dur-fast),
+      box-shadow var(--dur-fast),
+      transform var(--dur-fast);
+  }
+
+  .grid > *:hover {
+    border-color: var(--border-accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
   }
 
   .grid--2 {

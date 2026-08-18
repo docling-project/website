@@ -8,7 +8,7 @@ for each stage differs by roughly one line, which is the point.
 from pyjsx import jsx, JSX
 
 from website.data.product import CONTINUUM, CONTINUUM_PROMISE
-from .icons import arrow_down, arrow_right
+from .icons import arrow_down, arrow_right, external_icon
 from .ui import Code, SectionHeader
 
 
@@ -38,8 +38,14 @@ def DeploymentContinuum(children) -> JSX:
                                 <h3 class="continuum-name">{stage.name}</h3>
                                 <p class="continuum-goal">{stage.goal}</p>
                                 <p class="continuum-experience">{stage.experience}</p>
-                                <a class="card-link" href={stage.cta_href}>
-                                    {stage.cta_label} →
+                                <a
+                                    class="card-link"
+                                    href={stage.cta_href}
+                                    target={"_blank" if stage.cta_href.startswith("http") else None}
+                                    rel={"noopener noreferrer" if stage.cta_href.startswith("http") else None}
+                                >
+                                    {stage.cta_label}
+                                    {external_icon() if stage.cta_href.startswith("http") else arrow_right()}
                                 </a>
                             </div>
 

@@ -17,6 +17,7 @@ def Quickstart(children) -> JSX:
                     display={True}
                     href="https://docling-project.github.io/docling"
                     link="Full documentation"
+                    external={True}
                 />
 
                 <div class="quickstart">

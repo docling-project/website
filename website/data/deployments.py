@@ -120,35 +120,3 @@ DEPLOYMENT_MODES: list[DeploymentMode] = [
         cta_href="https://www.ibm.com/products/watsonx-ai",
     ),
 ]
-
-
-# Which call to action fits the state a visitor arrives in.
-@dataclass(frozen=True)
-class VisitorState:
-    state: str
-    cta: str
-    href: str
-    support: str
-
-
-VISITOR_STATES: list[VisitorState] = [
-    VisitorState("Has not run Docling", "Run locally", "/#quickstart", "Prove output quality first."),
-    VisitorState(
-        "Has a working local pipeline",
-        "Scale this pipeline",
-        "/deployments/#saas",
-        "Add managed capacity without changing the application model.",
-    ),
-    VisitorState(
-        "Has privacy constraints",
-        "Deploy privately",
-        "/deployments/#on-prem",
-        "Run entirely inside your environment.",
-    ),
-    VisitorState(
-        "Needs an architecture review",
-        "Compare deployments",
-        "/deployments/",
-        "Compare operations, security, limits and support.",
-    ),
-]

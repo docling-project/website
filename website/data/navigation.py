@@ -25,7 +25,7 @@ class NavItem:
 # Primary desktop navigation. The strategy explicitly rejects hiding
 # destinations behind a single "Resources" dropdown, so these are all top level.
 PRIMARY_NAV: list[NavItem] = [
-    NavItem("Overview", "/#product"),
+    NavItem("Overview", "/#overview"),
     NavItem("Use cases", "/use-cases/"),
     NavItem("Deployments", "/deployments/"),
     NavItem("Ecosystem", "/ecosystem/"),
@@ -45,7 +45,7 @@ FOOTER_COLUMNS: list[FooterColumn] = [
         "Overview",
         [
             NavItem("Quickstart", "/#quickstart"),
-            NavItem("Capabilities", "/#product"),
+            NavItem("Capabilities", "/#overview"),
             NavItem("Supported formats", "/formats/"),
             NavItem("Use cases", "/use-cases/"),
             NavItem("Deployments", "/deployments/"),
@@ -72,7 +72,7 @@ FOOTER_COLUMNS: list[FooterColumn] = [
             NavItem("LinkedIn", "https://linkedin.com/company/docling", external=True),
             NavItem(
                 "YouTube",
-                "https://www.youtube.com/playlist?list=PLt0drfpBaTa1ywCtPwJGLYg-t0UmxhQP4",
+                "https://www.youtube.com/@Docling-AI",
                 external=True,
             ),
         ],
@@ -94,7 +94,7 @@ SOCIAL_LINKS: list[SocialLink] = [
     SocialLink("LinkedIn", "https://linkedin.com/company/docling", "/img/community/linkedin.svg"),
     SocialLink(
         "YouTube",
-        "https://www.youtube.com/playlist?list=PLt0drfpBaTa1ywCtPwJGLYg-t0UmxhQP4",
+        "https://www.youtube.com/@Docling-AI",
         "/img/community/youtube.svg",
     ),
 ]

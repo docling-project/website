@@ -79,7 +79,7 @@ def UseCaseGrid(children, limit: int | None = None) -> JSX:
                     title="What people build with it"
                     display={True}
                     href="/use-cases/"
-                    link="All use cases"
+                    link="More use cases"
                 />
 
                 <div class="usecases">

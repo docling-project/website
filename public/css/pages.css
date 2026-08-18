@@ -212,6 +212,10 @@
     transition: background var(--dur-fast);
   }
 
+  .post[hidden] {
+    display: none;
+  }
+
   .post:hover {
     background: var(--bg-card-hover);
   }

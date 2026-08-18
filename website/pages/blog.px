@@ -35,7 +35,7 @@ def BlogPage(filter: BlogFilter = BlogFilter.ALL) -> JSX:
                             class={"active" if option == filter else ""}
                             aria-pressed={"true" if option == filter else "false"}
                         >
-                            {option.label}
+                            {option.plural_label}
                         </button>
                         for option in available_filters()
                     ]}

@@ -3,7 +3,7 @@
 from pyjsx import jsx, JSX
 
 from website.data.product import VALUES
-from .icons import icon_ai, icon_model, icon_private, icon_structure
+from .icons import arrow_right, external_icon, icon_ai, icon_model, icon_private, icon_structure
 from .ui import SectionHeader
 
 
@@ -17,7 +17,7 @@ _ICONS = {
 
 def CapabilityGrid(children) -> JSX:
     return (
-        <section class="section" id="product">
+        <section class="section" id="overview">
             <div class="container">
                 <SectionHeader
                     label="Why Docling"
@@ -32,7 +32,15 @@ def CapabilityGrid(children) -> JSX:
                             <h3 class="card-title">{value.title}</h3>
                             <p class="card-body">{value.body}</p>
                             {
-                                <a class="card-link" href={value.link_href}>{value.link_label} →</a>
+                                <a
+                                    class="card-link"
+                                    href={value.link_href}
+                                    target={"_blank" if value.link_href.startswith("http") else None}
+                                    rel={"noopener noreferrer" if value.link_href.startswith("http") else None}
+                                >
+                                    {value.link_label}
+                                    {external_icon() if value.link_href.startswith("http") else arrow_right()}
+                                </a>
                                 if value.link_href
                                 else <></>
                             }

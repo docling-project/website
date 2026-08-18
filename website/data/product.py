@@ -58,6 +58,13 @@ class MatrixCell:
 MATRIX_MODES = ["One at a time", "In bulk"]
 MATRIX_APPLICATIONS = ["Conversion for search", "Extraction for databases"]
 
+# The plain row label kept beside the performance property it stands for, so the
+# axis reads as "one at a time → instant" / "in bulk → high throughput".
+MODE_TAGLINES = {
+    "One at a time": "instant result",
+    "In bulk": "high throughput",
+}
+
 MATRIX: list[MatrixCell] = [
     MatrixCell(
         mode="One at a time",

@@ -7,7 +7,7 @@ not an exhaustive list of what Docling can do.
 
 from pyjsx import jsx, JSX
 
-from website.data.product import MATRIX, MATRIX_APPLICATIONS, MATRIX_MODES
+from website.data.product import MATRIX, MATRIX_APPLICATIONS, MATRIX_MODES, MODE_TAGLINES
 from .ui import SectionHeader
 
 
@@ -23,19 +23,15 @@ def Matrix(children) -> JSX:
         <section class="section" id="modes">
             <div class="container">
                 <SectionHeader
-                    label="Ad-hoc to bulk"
-                    title="One document or a whole corpus — you're covered"
+                    label="Different jobs, familiar API"
+                    title="One document or a million, in the shape you need"
                     display={True}
                 />
 
                 <p class="section-lede">
-                    Two questions decide how you call Docling: do you need one document
-                    right now or a whole corpus, and do you want the whole document
-                    converted or just specific fields pulled against your own schema?
-                    Conversion hands back a DoclingDocument (Markdown, JSON, HTML or
-                    DocLang); extraction hands back records shaped like the schema you
-                    define. And this grid isn't the limit — any converted document can
-                    also be chunked, enriched or re-serialized downstream.
+                    Whether it's one document right now or all of them at once, a
+                    standard format or fields extracted into your own schema — Docling
+                    is ready for it.
                 </p>
 
                 <div class="matrix">
@@ -49,7 +45,10 @@ def Matrix(children) -> JSX:
                         row
                         for mode in MATRIX_MODES
                         for row in [
-                            <div class="matrix-row-head">{mode}</div>,
+                            <div class="matrix-row-head">
+                                <span class="matrix-row-head-title">{mode}</span>
+                                <span class="matrix-row-head-sub">{MODE_TAGLINES[mode]}</span>
+                            </div>,
                             *[
                                 <div class="matrix-cell">
                                     <h3 class="matrix-cell-title">{_cell(mode, application).title}</h3>

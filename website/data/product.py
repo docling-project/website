@@ -81,10 +81,10 @@ MATRIX: list[MatrixCell] = [
         application="Extraction for databases",
         title="On-demand extraction",
         body=(
-            "Pull a defined set of fields out of one document against a schema, "
+            "Pull a defined set of fields out of one PDF or image against a schema, "
             "in time to answer a request or drive an agent step."
         ),
-        example="extractor.extract(source, schema=Invoice)",
+        example="extractor.extract(source, template=Invoice)",
     ),
     MatrixCell(
         mode="In bulk",
@@ -101,10 +101,10 @@ MATRIX: list[MatrixCell] = [
         application="Extraction for databases",
         title="Batch structuring",
         body=(
-            "Run a fixed schema across a whole document population and land typed "
+            "Run a fixed schema across a population of PDFs or images and land typed "
             "rows in a warehouse rather than blobs of text."
         ),
-        example="for r in extractor.extract_all(sources): ...",
+        example="for r in extractor.extract_all(sources, template=Invoice): ...",
     ),
 ]
 
@@ -221,7 +221,7 @@ docker run -p 5001:5001 quay.io/docling-project/docling-serve
 
 curl -X POST http://localhost:5001/v1/convert/source \\
   -H 'Content-Type: application/json' \\
-  -d '{"http_sources": [{"url": "https://arxiv.org/pdf/2206.01062"}]}'""",
+  -d '{"sources": [{"kind": "http", "url": "https://arxiv.org/pdf/2206.01062"}]}'""",
         note="Same document model, different transport.",
         link_label="Docling Serve",
         link_href="https://github.com/docling-project/docling-serve",
@@ -279,7 +279,7 @@ CONTINUUM: list[Stage] = [
         experience="Containers, an HTTP API and an optional UI, running inside your network.",
         cta_label="Deploy a local service",
         cta_href="https://github.com/docling-project/docling-serve",
-        code="client = DoclingClient(base_url='http://docling.internal:5001')\nresult = client.convert(source)",
+        code="client = DoclingServiceClient(url='http://docling.internal:5001')\nresult = client.convert(source)",
     ),
     Stage(
         id="commercial",
@@ -289,7 +289,7 @@ CONTINUUM: list[Stage] = [
         experience="IBM's commercial offering: managed SaaS or private / on-prem deployment, with the same document model and API.",
         cta_label="Docling for IBM watsonx",
         cta_href="https://www.ibm.com/products/watsonx-ai",
-        code="client = DoclingClient(base_url=MANAGED_ENDPOINT, api_key=KEY)\nresult = client.convert(source)",
+        code="client = DoclingServiceClient(url=MANAGED_ENDPOINT, api_key=KEY)\nresult = client.convert(source)",
     ),
 ]
 

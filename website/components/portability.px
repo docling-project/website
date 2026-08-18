@@ -1,0 +1,76 @@
+"""Convert once, reuse forever — input breadth + DocLang portability.
+
+Two halves of one arc (feedback items 2.1 + 2.2): PDFs and every other input
+are normalized into DocLang, an open, high-fidelity standard that keeps each
+format's own detail; Markdown, HTML and JSON are produced from it later, without
+converting the original file again.
+"""
+
+from pyjsx import jsx, JSX
+
+from website.data.formats import HOME_INPUTS, HOME_OUTPUTS
+from .ui import SectionHeader
+
+
+def Portability(children) -> JSX:
+    return (
+        <section class="section" id="portability">
+            <div class="container">
+                <SectionHeader
+                    label="Formats & portability"
+                    title="Convert once, reuse forever"
+                    display={True}
+                    href="/formats/"
+                    link="All formats"
+                />
+
+                <p class="section-lede">
+                    PDFs run the world. They also lock away your knowledge in a printer
+                    language. Layout, tables, reading order and scanned pages — Docling gets
+                    those right where most tools give up and hand back a wall of text.
+                </p>
+                <p class="section-lede">
+                    It also reads websites, Office files, images and audio the same way.
+                    Everything lands in DocLang, one open, high-fidelity document format, and
+                    the detail that lives in each original file — a Word file's section
+                    structure or review comments, a diagram in your Excel spreadsheet — comes
+                    across intact instead of being flattened or dropped.
+                </p>
+
+                <div class="grid grid--3" style="margin-top:2rem">
+                    <div class="card">
+                        <h3 class="card-title">Any format in</h3>
+                        <p class="card-body">
+                            PDFs, websites, Office formats, scanned images and audio —
+                            including all the hard parts, not just the easy ones.
+                        </p>
+                        <ul class="chip-row">
+                            {[<li class="tag">{fmt}</li> for fmt in HOME_INPUTS]}
+                        </ul>
+                    </div>
+
+                    <a class="card card--anchor" href="https://doclang.ai" target="_blank" rel="noopener noreferrer">
+                        <h3 class="card-title">DocLang</h3>
+                        <p class="card-body">
+                            One open, standardized form for every document. Everything the
+                            conversion found — structure, tables, reading order and each
+                            format's own detail — kept together in one place.
+                        </p>
+                        <span class="card-link">doclang.ai →</span>
+                    </a>
+
+                    <div class="card">
+                        <h3 class="card-title">Any format out, anytime</h3>
+                        <p class="card-body">
+                            Turn a document into Markdown, HTML, JSON or context-informed
+                            chunks whenever a later step needs it — produced from DocLang,
+                            without converting the original file again.
+                        </p>
+                        <ul class="chip-row">
+                            {[<li class="tag tag--muted">{fmt}</li> for fmt in HOME_OUTPUTS]}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )

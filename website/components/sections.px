@@ -64,7 +64,7 @@ def Latest(children) -> JSX:
             <div class="container">
                 <SectionHeader
                     label="Momentum"
-                    title="What the project is doing"
+                    title="Latest activities"
                     href="/blog/"
                     link="All posts"
                 />

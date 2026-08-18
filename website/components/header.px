@@ -7,7 +7,7 @@ collapsing them behind a single "Resources" dropdown.
 from pyjsx import jsx, JSX
 
 from website.data.navigation import GITHUB_URL, PRIMARY_NAV
-from .icons import close_icon, github_icon, menu_icon
+from .icons import close_icon, external_icon, github_icon, menu_icon
 
 
 def _is_active(item_href: str, active: str) -> bool:
@@ -29,6 +29,7 @@ def NavLinks(children, active: str = "") -> JSX:
             aria-current={"page" if _is_active(item.href, active) else None}
         >
             {item.label}
+            {external_icon() if item.external else None}
         </a>
         for item in PRIMARY_NAV
     ]

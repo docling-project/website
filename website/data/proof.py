@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from .navigation import GITHUB_URL, PYPI_URL
+from .navigation import GITHUB_URL
 
 
 @dataclass(frozen=True)
@@ -23,16 +23,12 @@ class ProofItem:
 
 PROOF_ITEMS: list[ProofItem] = [
     ProofItem(value="—", label="GitHub stars", href=GITHUB_URL, live_key="stars"),
-    ProofItem(value="—", label="Forks", href=f"{GITHUB_URL}/forks", live_key="forks"),
     ProofItem(value="—", label="Contributors", href=f"{GITHUB_URL}/graphs/contributors", live_key="contributors"),
     ProofItem(value="MIT", label="Licence", href=f"{GITHUB_URL}/blob/main/LICENSE"),
 ]
 
 
-# Short, checkable statements that sit beside the counts.
-PROOF_FACTS: list[ProofItem] = [
-    ProofItem(value="Runs locally", label="No account or upload required to evaluate"),
-    ProofItem(value="Python · CLI · API · MCP", label="Four ways to call the same pipeline", href="/#quickstart"),
-    ProofItem(value="LF AI & Data", label="Hosted as a Linux Foundation project", href="https://lfaidata.foundation/projects/"),
-    ProofItem(value="PyPI", label="Released as a standard Python package", href=PYPI_URL),
-]
+# Deliberately empty: the strip is just the counts + licence now. The old facts
+# ("Runs locally", "LF AI & Data", "PyPI") duplicated the hero chips / footer.
+# ponytail: keep the list + render guard so a fact can be re-added without churn.
+PROOF_FACTS: list[ProofItem] = []

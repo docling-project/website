@@ -76,7 +76,7 @@ def UseCaseGrid(children, limit: int | None = None) -> JSX:
             <div class="container">
                 <SectionHeader
                     label="Real workflows"
-                    title="What people actually build with it"
+                    title="What people build with it"
                     display={True}
                     href="/use-cases/"
                     link="All use cases"

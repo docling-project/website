@@ -273,6 +273,11 @@
     height: 3px;
     background: var(--border-accent);
     transition: background var(--dur-fast);
+    cursor: pointer;
+  }
+
+  .stage-dot:hover {
+    background: var(--accent);
   }
 
   .stage-dot[aria-current="true"] {

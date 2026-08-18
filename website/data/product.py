@@ -14,14 +14,13 @@ HERO_EYEBROW = "Open-source document intelligence"
 HERO_TITLE_LEAD = "Your documents are"
 HERO_TITLE_ACCENT = "more than text."
 HERO_SUBTITLE = (
-    "Docling preserves the structure that ordinary preprocessing flattens — "
-    "layout, reading order, tables, formulas, pictures and provenance, in one "
-    "document model."
+    "Docling converts messy documents — PDFs, Office files, HTML, images and "
+    "audio — into structured data, detecting tables, formulas, reading order, "
+    "OCR and much more."
 )
 HERO_SUBTITLE_2 = (
-    "Install it locally and prove it on your own documents. Move the same "
-    "workflow to a service, managed SaaS or private on-prem capacity when you "
-    "are ready."
+    "Install it locally and try it on your own documents. Move the same "
+    "workflow to a service or private on-prem capacity when you are ready."
 )
 
 INSTALL_COMMAND = "pip install docling"
@@ -43,8 +42,9 @@ HERO_CHIPS: list[Chip] = [
 
 # --- Mode x application matrix ---------------------------------------------
 #
-# Requested explicitly by the strategy: two modes (low-latency, high-throughput)
-# against two applications (content-preserving conversion, schema extraction).
+# Two axes: scale (one document at a time vs. in bulk) against what you want back
+# (content-preserving conversion vs. schema extraction). Common jobs, not a limit:
+# chunking, enrichment and re-serialization all live outside this grid.
 
 @dataclass(frozen=True)
 class MatrixCell:
@@ -55,12 +55,12 @@ class MatrixCell:
     example: str
 
 
-MATRIX_MODES = ["Low latency", "High throughput"]
+MATRIX_MODES = ["One at a time", "In bulk"]
 MATRIX_APPLICATIONS = ["Conversion for search", "Extraction for databases"]
 
 MATRIX: list[MatrixCell] = [
     MatrixCell(
-        mode="Low latency",
+        mode="One at a time",
         application="Conversion for search",
         title="Interactive conversion",
         body=(
@@ -70,7 +70,7 @@ MATRIX: list[MatrixCell] = [
         example="converter.convert(source)",
     ),
     MatrixCell(
-        mode="Low latency",
+        mode="One at a time",
         application="Extraction for databases",
         title="On-demand extraction",
         body=(
@@ -80,17 +80,17 @@ MATRIX: list[MatrixCell] = [
         example="extractor.extract(source, schema=Invoice)",
     ),
     MatrixCell(
-        mode="High throughput",
+        mode="In bulk",
         application="Conversion for search",
         title="Corpus ingestion",
         body=(
             "Convert an archive once, chunk it, embed it, and keep provenance so "
-            "retrieved passages can be cited back to the page."
+            "retrieved passages trace back to the exact region on the page."
         ),
         example="converter.convert_all(sources)",
     ),
     MatrixCell(
-        mode="High throughput",
+        mode="In bulk",
         application="Extraction for databases",
         title="Batch structuring",
         body=(
@@ -130,7 +130,7 @@ VALUES: list[Value] = [
         title="One document model",
         body=(
             "Many input formats converge on the same expressive DoclingDocument, "
-            "serializable to Markdown, JSON, HTML and DocTags. One shape to write "
+            "serializable to Markdown, JSON, HTML and DocLang. One shape to write "
             "your application against."
         ),
         link_label="DoclingDocument",

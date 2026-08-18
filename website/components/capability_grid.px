@@ -21,7 +21,7 @@ def CapabilityGrid(children) -> JSX:
             <div class="container">
                 <SectionHeader
                     label="Why Docling"
-                    title="What you get that a text extractor cannot give you"
+                    title="Built for structure, not just text"
                     display={True}
                 />
 

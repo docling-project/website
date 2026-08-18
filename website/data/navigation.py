@@ -25,13 +25,12 @@ class NavItem:
 # Primary desktop navigation. The strategy explicitly rejects hiding
 # destinations behind a single "Resources" dropdown, so these are all top level.
 PRIMARY_NAV: list[NavItem] = [
-    NavItem("Product", "/#product"),
+    NavItem("Overview", "/#product"),
     NavItem("Use cases", "/use-cases/"),
     NavItem("Deployments", "/deployments/"),
     NavItem("Ecosystem", "/ecosystem/"),
-    NavItem("Benchmarks", "/benchmarks/"),
-    NavItem("Docs", DOCS_URL, external=True),
     NavItem("Blog", "/blog/"),
+    NavItem("Docs", DOCS_URL, external=True),
 ]
 
 
@@ -43,14 +42,13 @@ class FooterColumn:
 
 FOOTER_COLUMNS: list[FooterColumn] = [
     FooterColumn(
-        "Product",
+        "Overview",
         [
             NavItem("Quickstart", "/#quickstart"),
             NavItem("Capabilities", "/#product"),
             NavItem("Supported formats", "/formats/"),
             NavItem("Use cases", "/use-cases/"),
             NavItem("Deployments", "/deployments/"),
-            NavItem("Benchmarks", "/benchmarks/"),
         ],
     ),
     FooterColumn(

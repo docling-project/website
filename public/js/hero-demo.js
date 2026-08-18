@@ -5,13 +5,11 @@
  *   - play only while visible (IntersectionObserver)
  *   - pause when the tab is hidden (visibilitychange)
  *   - respect prefers-reduced-motion (settles on the final stage, no cycling)
- *   - provide a pause control
- *   - stop once the meaning is clear, rather than looping forever
+ *   - provide a pause control (always visible)
+ *   - loop indefinitely; the reader can pause or jump between stages
  */
 
 const STAGE_MS = 2200;
-// Stop after this many full passes: the sequence has made its point by then.
-const MAX_LOOPS = 3;
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -22,11 +20,9 @@ function createSequence(root) {
   const pauseLabel = root.querySelector("[data-pause-label]");
 
   let index = 0;
-  let loops = 0;
   let timer = null;
   let visible = false;
   let paused = false;
-  let finished = false;
 
   function render() {
     layers.forEach((layer, i) => {
@@ -48,57 +44,59 @@ function createSequence(root) {
   }
 
   function tick() {
-    index += 1;
-
-    if (index >= layers.length) {
-      loops += 1;
-      if (loops >= MAX_LOOPS) {
-        // Settle on the finished state: annotations plus output, inspectable.
-        index = layers.length - 1;
-        finished = true;
-        render();
-        stop();
-        setPauseVisible(false);
-        return;
-      }
-      index = 0;
-    }
-
+    index = (index + 1) % layers.length;
     render();
     schedule();
   }
 
   function schedule() {
     stop();
-    if (!visible || paused || finished) return;
+    if (!visible || paused) return;
     timer = setTimeout(tick, STAGE_MS);
   }
 
-  function setPauseVisible(show) {
-    if (pauseButton) pauseButton.hidden = !show;
+  function setPaused(next) {
+    paused = next;
+    if (pauseButton) {
+      pauseButton.setAttribute(
+        "aria-label",
+        paused ? "Play the conversion animation" : "Pause the conversion animation",
+      );
+    }
+    if (pauseLabel) pauseLabel.textContent = paused ? "Play" : "Pause";
+    schedule();
   }
 
   function settleFinal() {
     index = layers.length - 1;
-    finished = true;
-    render();
-    stop();
-    setPauseVisible(false);
+    setPaused(true);
   }
 
   // --- Controls ------------------------------------------------------------
 
   if (pauseButton) {
-    pauseButton.addEventListener("click", () => {
-      paused = !paused;
-      pauseButton.setAttribute(
-        "aria-label",
-        paused ? "Play the conversion animation" : "Pause the conversion animation",
-      );
-      if (pauseLabel) pauseLabel.textContent = paused ? "Play" : "Pause";
-      schedule();
-    });
+    pauseButton.addEventListener("click", () => setPaused(!paused));
   }
+
+  // Clicking a stage dot jumps to that stage and pauses, so the reader can
+  // inspect it without the sequence advancing under them. Attributes are set
+  // here rather than in markup because the dots do nothing without this JS.
+  dots.forEach((dot, i) => {
+    dot.setAttribute("role", "button");
+    dot.setAttribute("tabindex", "0");
+    const jump = () => {
+      index = i;
+      render();
+      setPaused(true);
+    };
+    dot.addEventListener("click", jump);
+    dot.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        jump();
+      }
+    });
+  });
 
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) stop();
@@ -117,9 +115,7 @@ function createSequence(root) {
   // --- Reduced motion ------------------------------------------------------
 
   function applyMotionPreference() {
-    if (reduceMotion.matches) {
-      settleFinal();
-    }
+    if (reduceMotion.matches) settleFinal();
   }
 
   reduceMotion.addEventListener("change", applyMotionPreference);

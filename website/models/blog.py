@@ -61,7 +61,7 @@ class BlogFilter(str, Enum):
         labels = {
             BlogFilter.ALL: "All",
             BlogFilter.ANNOUNCEMENT: "Announcement",
-            BlogFilter.TECHNICAL: "Technical",
+            BlogFilter.TECHNICAL: "Deep dives",
             BlogFilter.EVENT: "Event",
             BlogFilter.FEATURE: "New feature",
         }
@@ -130,6 +130,15 @@ def blog_posts(filter: BlogFilter) -> list[Post]:
     posts.sort(key=lambda post: post.date, reverse=True)
 
     return posts
+
+
+def available_filters() -> list[BlogFilter]:
+    """Filters worth showing: ALL, plus only categories that have posts.
+
+    Avoids rendering an empty tag (e.g. "New feature" when no post uses it).
+    """
+    present = {post.category for post in blog_posts(BlogFilter.ALL)}
+    return [BlogFilter.ALL] + [f for f in BlogFilter if f != BlogFilter.ALL and f in present]
 
 
 def last_blog_post() -> Post | None:

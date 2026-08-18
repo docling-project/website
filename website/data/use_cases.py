@@ -26,7 +26,7 @@ USE_CASES: list[UseCase] = [
     UseCase(
         id="rag",
         name="RAG and enterprise search",
-        headline="Retrieval that can cite the page it came from",
+        headline="Retrieval with visual grounding",
         problem=(
             "Flat text extraction destroys the two things retrieval depends on: "
             "where a passage sits in the document, and where it came from on the "
@@ -35,9 +35,9 @@ USE_CASES: list[UseCase] = [
         evidence=["Reading order", "Structure-aware chunks", "Tables", "Figures", "Provenance"],
         scale_bridge=["Batch processing", "Concurrency", "Managed queues", "Private deployment"],
         why_docling=(
-            "Chunks are cut on real structural boundaries and every chunk keeps a "
-            "back-reference to its page and bounding box, so a citation is a "
-            "coordinate, not a guess."
+            "Every element and chunk keeps its page and bounding-box coordinates, "
+            "so a retrieved passage points at the exact region on the page. You can "
+            "highlight where an answer came from, not just cite a page number."
         ),
         recipe_language="python",
         recipe="""from docling.document_converter import DocumentConverter

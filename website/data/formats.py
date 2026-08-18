@@ -45,6 +45,13 @@ IMPORT_GROUPS: list[FormatGroup] = [
 ]
 
 
+# Homepage "convert once, re-serialize forever" section — a curated arc, not the
+# full matrix (that stays on /formats/). Story: any input in -> DocLang (faithful,
+# standard) -> any format out later, without reconverting.
+HOME_INPUTS: list[str] = ["PDF", "DOCX", "PPTX", "XLSX", "HTML", "Images", "Audio"]
+HOME_OUTPUTS: list[str] = ["Markdown", "HTML", "JSON", "Text"]
+
+
 EXPORT_GROUPS: list[FormatGroup] = [
     FormatGroup(
         "Structured",

@@ -7,7 +7,7 @@ for each stage differs by roughly one line, which is the point.
 
 from pyjsx import jsx, JSX
 
-from website.data.product import CONTINUUM, CONTINUUM_PROMISE, PARITY
+from website.data.product import CONTINUUM, CONTINUUM_PROMISE
 from .icons import arrow_down, arrow_right
 from .ui import Code, SectionHeader
 
@@ -50,35 +50,6 @@ def DeploymentContinuum(children) -> JSX:
                         for stage in CONTINUUM
                     ]}
                 </ol>
-
-                <div class="parity">
-                    <h3 class="parity-title">What stays the same</h3>
-                    <div class="table-scroll">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Area</th>
-                                    <th scope="col">Local</th>
-                                    <th scope="col">SaaS</th>
-                                    <th scope="col">On-prem</th>
-                                    <th scope="col">Promise</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {[
-                                    <tr>
-                                        <th scope="row">{row.area}</th>
-                                        <td>{row.local}</td>
-                                        <td>{row.saas}</td>
-                                        <td>{row.on_prem}</td>
-                                        <td class="parity-promise">{row.promise}</td>
-                                    </tr>
-                                    for row in PARITY
-                                ]}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
         </section>
     )

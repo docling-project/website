@@ -512,6 +512,16 @@
     text-underline-offset: 3px;
   }
 
+  /* The DocLang anchor card sits at the centre of the "convert once" arc. */
+  .card--anchor {
+    background: var(--accent-soft);
+    align-items: flex-start;
+  }
+
+  .grid > .card--anchor {
+    border-color: var(--accent-line);
+  }
+
   .card-meta {
     display: flex;
     align-items: center;

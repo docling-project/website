@@ -13,6 +13,7 @@ from website.components.document_demo import DocumentDemo  # type: ignore
 from website.components.ecosystem import Ecosystem  # type: ignore
 from website.components.hero import Hero  # type: ignore
 from website.components.matrix import Matrix  # type: ignore
+from website.components.portability import Portability  # type: ignore
 from website.components.proof_strip import ProofStrip  # type: ignore
 from website.components.quickstart import Quickstart  # type: ignore
 from website.components.sections import FinalCTA, Latest, RunRoutes  # type: ignore
@@ -33,6 +34,7 @@ def HomePage() -> JSX:
             <ProofStrip />
             <Quickstart />
             <DocumentDemo />
+            <Portability />
             <CapabilityGrid />
             <Matrix />
             <DeploymentContinuum />

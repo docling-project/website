@@ -116,8 +116,8 @@ DEPLOYMENT_MODES: list[DeploymentMode] = [
             "Requires infrastructure and operational ownership",
             "Accelerator availability shapes achievable throughput",
         ],
-        cta_label="Review deployment options",
-        cta_href="/deployments/#compare",
+        cta_label="Docling for IBM watsonx",
+        cta_href="https://www.ibm.com/products/watsonx-ai",
     ),
 ]
 
@@ -148,7 +148,7 @@ VISITOR_STATES: list[VisitorState] = [
     VisitorState(
         "Needs an architecture review",
         "Compare deployments",
-        "/deployments/#compare",
+        "/deployments/",
         "Compare operations, security, limits and support.",
     ),
 ]

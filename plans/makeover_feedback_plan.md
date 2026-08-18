@@ -171,17 +171,56 @@ Confirmed decisions (2026-08-18):
 
 ## Iteration 2 — content additions & refocus (medium)
 
+_Validated 2026-08-18 (post-iteration-1). All four items still target real, unaddressed
+work; iteration 1 did not do any of them. Line refs re-anchored below; one caveat on 2.4._
+
+**Decision 2026-08-18 — merge 2.1 + 2.2 into ONE homepage section.** Background from
+maintainer: DocLang is an open, standardized export format Docling produces; it is *the*
+format that preserves full-fidelity conversion (vs. lossy Markdown/HTML/text). Convert once
+from any input → keep everything in DocLang → re-serialize to other formats later without
+reconverting. Do **not** explain DoclingDocument-vs-DocLang internals — just "Docling
+produces DocLang". The two items are the two halves of one arc (breadth in → faithful
+standard format out), so they ship as a single narrative section: **"Convert once,
+re-serialize forever."** Input breadth (2.2, incl. the Office-richness-others-drop point)
+is the "in" side; DocLang portability (2.1) is the "out" side; lossy Markdown/HTML are
+regenerable views, not the stored artifact.
+
+### 2.1 + 2.2 shipped as one section — ✅ DONE (2026-08-18)
+- **New component:** `components/portability.px` (`Portability`), placed on the homepage
+  after `DocumentDemo`, before `CapabilityGrid` (`pages/home.px`). Section id `#portability`,
+  title **"Convert once, reuse forever"**. Copy leads on PDF (the hard case), avoids jargon
+  ("re-serialize"/"views" cut), and states that inputs normalize into DocLang while each
+  format's own detail (PDF tables/reading order, Word structure/comments) is preserved.
+- **Shape:** section lede (breadth + Office-richness-others-drop + DocLang) over a 3-card
+  arc — **Any format in** (input chips) → **DocLang** (accent anchor card, links
+  https://doclang.ai) → **Any format out, anytime** (output chips). Chip lists in
+  `data/formats.py` (`HOME_INPUTS`, `HOME_OUTPUTS`); full matrix still lives on `/formats/`
+  (linked via the section header "All formats").
+- **CSS:** one new rule `.card--anchor` (accent-soft bg + accent-line border) in
+  `components.css`; everything else reuses existing `.grid grid--3`, `.card`, `.tag`,
+  `.chip-row`, `.section-lede`.
+- **Deliberately left alone:** the `CapabilityGrid` "One document model" value card — it is
+  complementary (1 line in a 4-grid) and does not conflict; DoclingDocument-vs-DocLang
+  internals intentionally not explained.
+
 ### 2.1 Feature DocLang as the portability story — CONTENT
-- **Where:** homepage "One document model" value (`data/product.py:128-138`); consider a
-  dedicated callout/section; `/formats/` export section (`data/formats.py:48-59`).
+- **Where:** homepage "One document model" value (`data/product.py:135-145`, the `id="model"`
+  `Value`); consider a dedicated callout/section; `/formats/` export section
+  (`data/formats.py:48-59`, `EXPORT_GROUPS` "Structured" already lists `["JSON", "DocLang"]`).
+- **Validated:** DocLang is now *named* (word-swap from 1.6) in that value body and in
+  `EXPORT_GROUPS`, but the **doclang.ai link is still absent everywhere** and DocLang is not
+  yet *featured* as a differentiator. Task stands as written.
 - **Do:** present DocLang (https://doclang.ai) as a key differentiator — a unified,
   portable document representation that travels across the ecosystem. Link doclang.ai.
   (Builds on the DocTags removal in 1.6.)
 
 ### 2.2 Input-format breadth story — CONTENT
-- **Where:** data exists in `data/formats.py:19-45` but only on `/formats/`; not surfaced
-  on the homepage. Reference: `docling_release/README.md:35,52` (PDF, DOCX, PPTX, XLSX,
-  HTML, EPUB, WAV, MP3, WebVTT, EML/MSG, images, ODF, LaTeX, …).
+- **Where:** data exists in `data/formats.py:19-45` (`IMPORT_GROUPS`) but only on
+  `/formats/`; not surfaced on the homepage. Reference: `docling_release/README.md:35,52`
+  (PDF, DOCX, PPTX, XLSX, HTML, EPUB, WAV, MP3, WebVTT, EML/MSG, images, ODF, LaTeX, …).
+- **Validated:** unchanged and still homepage-absent. `IMPORT_GROUPS` "Rich" group already
+  frames PDF/DOCX/PPTX as "layout carries meaning" — a ready hook for the Office-conversion
+  angle. Task stands.
 - **Do:** add a homepage section/narrative that Docling **unifies a wide range of input
   formats**. PDF stays the primary hero story; explicitly call out that *rich* conversion
   of Office formats (Word/PowerPoint — graphics, shapes, charts, embedded tabular data)
@@ -190,19 +229,48 @@ Confirmed decisions (2026-08-18):
 
 ### 2.3 Refocus Deployments on docling-serve — CONTENT/IA
 - **Where:** `pages/deployments.px`, `data/deployments.py`; homepage `DeploymentContinuum`
-  (`components/deployment_continuum.px`, stages in `data/product.py:256-297`).
+  (`components/deployment_continuum.px`, stages in `data/product.py:263-304` `CONTINUUM`).
 - **Problem:** current Deployments reads as commercial product-page material (managed
   SaaS / on-prem framed as offerings).
-- **Do:** make **docling-serve** the primary deployment story for the OSS site. Keep
-  scale/managed/private as secondary "where it can go" context; de-emphasise anything that
-  reads like a sales page. Keep the IBM watsonx commercial version off this site.
+- **Update 2026-08-18 — partial, per maintainer direction (middle-ground, not full de-IBM).**
+  - **Homepage continuum** (`product.py` `CONTINUUM`): collapsed the `saas` + `private`
+    stages into ONE commercial item — id `commercial`, name "Managed & private — commercial",
+    experience names it as IBM's commercial offering (managed SaaS **or** private/on-prem),
+    CTA "Docling for IBM watsonx" → `ibm.com/products/watsonx-ai`. Continuum is now 3 stages:
+    Local library → Docling Serve → commercial.
+  - **Deployments page** (`data/deployments.py`): `on-prem` mode CTA repointed to the IBM
+    product page (label "Docling for IBM watsonx"), matching the `saas` mode — private/on-prem
+    is now presented as available through the IBM commercial offering "for now".
+  - Removed the **"Pick the path that matches where you are"** section from `deployments.px`
+    (+ its `VISITOR_STATES` / `SectionHeader` imports; `VISITOR_STATES` data def left in place,
+    unused).
+- **Homepage parity table removed (2026-08-18).** `deployment_continuum.px` "What stays the
+  same" table pulled entirely (maintainer: "too much vague or half-truth information"). Dropped
+  the `PARITY` import/usage; `PARITY` / `ParityRow` data defs left in `product.py` (unused,
+  reversible). Homepage continuum is now just the three stages. Both parity tables (this one +
+  the deployments-page one from 2.4) are now gone.
+- **Still deferred (not done):** making docling-serve the *primary* narrative and de-emphasising
+  the remaining sales-page tone across `deployments.px` copy. This edit was the middle-ground
+  IBM-consolidation only.
 
 ### 2.4 "Feature parity across modes" + note — COPY
-- **Where:** `pages/deployments.px:74-115` (title + `Notice`); homepage parity table
-  `data/product.py:314-321` (e.g. "More operations, same parser").
-- **Do:** replace the abstract "Feature parity across modes" title with something
-  concrete; rewrite the `Notice` so it ends on a clear reader takeaway (what to ask a
-  vendor / what to expect), not a hedge.
+- **Where:** `pages/deployments.px` — title at `:77`, `Notice` at `:106-115`; homepage
+  parity table `data/product.py:321-328` (`PARITY`, incl. "More operations, same parser"
+  at `:327`).
+- **Update 2026-08-18 — table removed.** Maintainer: the parity table is "not ready and even
+  factually wrong". Removed the whole `#compare` section from `deployments.px` (SectionHeader
+  "Feature parity across modes" + table + Notice — the Notice referenced "specifics that this
+  table cannot carry", so it went too). Dropped now-unused imports (`MODE_COLUMNS`,
+  `PARITY_MATRIX`, `Notice`). Repointed the two `/deployments/#compare` anchors in
+  `data/deployments.py` → `/deployments/` so nothing links into the deleted section.
+  `PARITY_MATRIX` / `MODE_COLUMNS` **data definitions kept** in `data/deployments.py` (unused,
+  reversible — "for now").
+- **Still open:** (a) the two CTAs that used to point at the table — on-prem card "Review
+  deployment options" and VISITOR "Needs an architecture review → Compare deployments" — now
+  land on the page top; their labels over-promise a comparison that no longer exists (fold
+  into 2.3). (b) homepage `deployment_continuum.px` "What stays the same" table (`product.py`
+  `PARITY`, incl. "More operations, same parser") is a *separate* table, left untouched —
+  revisit whether it has the same accuracy problem.
 
 ---
 

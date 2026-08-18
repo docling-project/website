@@ -1,78 +1,114 @@
-from pyjsx import jsx, JSX
+"""The page shell.
 
-_description = "Docling converts messy documents into structured data and simplifies downstream document and AI processing by detecting tables, formulas, reading order, OCR, and much more."
+Carries per-page title, description, canonical URL and social image, preloads
+the critical font, and wraps every page in the shared header/footer with a skip
+link ahead of both.
+"""
+
+import json
+
+from pyjsx import HTMLDontEscape, jsx, JSX
+
+from website.components.footer import Footer  # type: ignore
+from website.components.header import Header  # type: ignore
 
 
-def Page(children) -> JSX:
+SITE_NAME = "Docling"
+SITE_URL = "https://docling.ai"
+
+DEFAULT_TITLE = "Docling — Turn complex documents into structured data your AI can use"
+DEFAULT_DESCRIPTION = (
+    "Docling is open-source document intelligence. Preserve layout, reading "
+    "order, tables, formulas, pictures and provenance in one document model — "
+    "locally, as a service, or on private infrastructure."
+)
+DEFAULT_IMAGE = "/img/og.png"
+
+
+def _organization_schema() -> dict:
+    return {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Docling",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Linux, macOS, Windows",
+        "url": SITE_URL,
+        "license": "https://github.com/docling-project/docling/blob/main/LICENSE",
+        "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+        "description": DEFAULT_DESCRIPTION,
+    }
+
+
+def Page(
+    children,
+    title: str | None = None,
+    description: str | None = None,
+    path: str = "/",
+    image: str | None = None,
+    active: str = "",
+    schema: dict | None = None,
+    banner=None,
+) -> JSX:
+    page_title = title or DEFAULT_TITLE
+    page_description = description or DEFAULT_DESCRIPTION
+    canonical = SITE_URL + (path if path.startswith("/") else "/" + path)
+    social_image = SITE_URL + (image or DEFAULT_IMAGE)
+    structured = json.dumps(schema or _organization_schema())
+
     return (
         <html lang="en" id="root">
             <head>
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/vs2015.min.css" />
-                <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/languages/python.min.js"></script>
-
-                <script async src="https://www.googletagmanager.com/gtag/js?id=G-MP75NXFDH4"></script>
-
-                <link rel="stylesheet" href="/style.css" />
-                <link rel="icon" href="https://www.docling.ai/img/logo.svg" />
-                <script src="/main.js"></script>
-
-                <title>Docling</title>
-                <meta name="description" content={_description} />
-                <meta name="keywords" content="Docling, document conversion, document chunking, document parsing, OCR, Python library, unstructured" />
+                <title>{page_title}</title>
+                <meta name="description" content={page_description} />
+                <link rel="canonical" href={canonical} />
                 <meta name="robots" content="index, follow" />
 
-                <meta property="og:title" content="Docling" />
-                <meta property="og:description" content={_description} />
-                <meta property="og:image" content="https://www.docling.ai/img/og.png" />
+                <meta property="og:type" content="website" />
+                <meta property="og:site_name" content={SITE_NAME} />
+                <meta property="og:title" content={page_title} />
+                <meta property="og:description" content={page_description} />
+                <meta property="og:url" content={canonical} />
+                <meta property="og:image" content={social_image} />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="675" />
+
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={page_title} />
+                <meta name="twitter:description" content={page_description} />
+                <meta name="twitter:image" content={social_image} />
+
+                <link rel="icon" href="/img/logo.svg" />
+
+                <link
+                    rel="preload"
+                    href="/font/plex.woff2"
+                    as="font"
+                    type="font/woff2"
+                    crossorigin="anonymous"
+                />
+
+                <link rel="stylesheet" href="/css/tokens.css" />
+                <link rel="stylesheet" href="/css/reset.css" />
+                <link rel="stylesheet" href="/css/base.css" />
+                <link rel="stylesheet" href="/css/layout.css" />
+                <link rel="stylesheet" href="/css/components.css" />
+                <link rel="stylesheet" href="/css/home.css" />
+                <link rel="stylesheet" href="/css/pages.css" />
+
+                <script type="application/ld+json">{HTMLDontEscape(structured)}</script>
+
+                <script type="module" src="/js/main.js"></script>
             </head>
 
-            <body onload="load()">
-              <header>
-                <nav>
-                    <a href="/">
-                        <h2>D</h2><img src="/img/logo.svg" />
-                        <h2>CLING</h2>
-                    </a>
-
-                    <ul>
-                        <li>
-                            <details>
-                                <summary>Resources</summary>
-                                <ul>
-                                    <li><a href="/#start">Start</a></li>
-                                    <li><a href="/#features">Features</a></li>
-                                    <li><a href="/papers/">Papers</a></li>
-                                    <li><a href="/blog/">Blog</a></li>
-                                    <li><a href="/community/">Community</a></li>
-                                </ul>
-                            </details>
-                        </li>
-
-                        <li>
-                            <a class="primary" title="Documentation" href="https://docling-project.github.io/docling">
-                                Docs
-                            </a>
-                            <a class="chat" title="Chat with Dosu"
-                            href="https://app.dosu.dev/097760a8-135e-4789-8234-90c8837d7f1c/ask?utm_source=github">
-                                Chat
-                            </a>
-                        </li>
-                    </ul>
-
-                    <a title="GitHub" href="https://github.com/docling-project/docling">
-                        <img src="/img/github.svg" />
-                        <span id="stars"></span>
-                    </a>
-                </nav>
-              </header>
-
-              {children}
+            <body>
+                <a class="skip-link" href="#main">Skip to content</a>
+                {banner if banner else <></>}
+                <Header active={active or path} />
+                <main id="main">{children}</main>
+                <Footer />
             </body>
         </html>
     )

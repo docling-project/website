@@ -1,0 +1,93 @@
+"""Shared UI primitives: buttons, copy affordances, code blocks, section headers."""
+
+from pyjsx import HTMLDontEscape, jsx, JSX
+
+from website.highlight import highlight_code
+from .icons import arrow_right, check_icon, copy_icon, info_icon
+
+
+def CopyButton(children, text: str = "", label: str = "Copy to clipboard") -> JSX:
+    """A clipboard button.
+
+    `text` is only used for single-line commands. Multi-line source is left out
+    of the attribute entirely — pyjsx's pretty-printer re-indents multi-line
+    attribute values, which would corrupt the copied text — so `js/clipboard.js`
+    falls back to reading the sibling <code> element instead.
+    """
+    return (
+        <button type="button" class="copy-btn" data-copy={text or None} aria-label={label}>
+            <span class="icon-copy">{copy_icon()}</span>
+            <span class="icon-check">{check_icon()}</span>
+        </button>
+    )
+
+
+def InstallCommand(children, command: str, prompt: str = "$") -> JSX:
+    return (
+        <div class="install">
+            <span class="install-prompt" aria-hidden="true">{prompt}</span>
+            <code class="install-text">{command}</code>
+            <CopyButton text={command} label={f"Copy '{command}' to clipboard"} />
+        </div>
+    )
+
+
+def Code(children, text: str, language: str = "", filename: str = "", copy: bool = True) -> JSX:
+    """A code block with an optional header strip.
+
+    Newlines inside <code> are encoded so pyjsx's pretty-printer cannot inject
+    indentation into the rendered source (same trick the blog renderer uses).
+    """
+    body = highlight_code(text, language)
+    pre = HTMLDontEscape(f'<pre><code class="language-{language or "text"}">{body}</code></pre>')
+
+    if not filename and not copy:
+        return <div class="code-block">{pre}</div>
+
+    return (
+        <div class="code-block">
+            <div class="code-head">
+                <span class="code-lang">{filename or language or "code"}</span>
+                {<CopyButton /> if copy else <></>}
+            </div>
+            {pre}
+        </div>
+    )
+
+
+def SectionHeader(children, label: str = "", title: str = "", href: str = "", link: str = "", display: bool = False) -> JSX:
+    title_class = "section-title--display" if display else "section-title"
+    return (
+        <div class="section-header">
+            <div class="section-heading">
+                {<span class="section-label">{label}</span> if label else <></>}
+                <h2 class={title_class}>{title}</h2>
+            </div>
+            {
+                <a class="section-link" href={href}>{link} {arrow_right()}</a>
+                if href and link
+                else <></>
+            }
+        </div>
+    )
+
+
+def Notice(children, accent: bool = False) -> JSX:
+    """Used to mark content that is not yet verifiable, in plain sight."""
+    return (
+        <div class={"notice notice--accent" if accent else "notice"}>
+            {info_icon()}
+            <div>{children}</div>
+        </div>
+    )
+
+
+def Button(children, href: str, variant: str = "primary", external: bool = False, arrow: bool = False) -> JSX:
+    rel = "noopener noreferrer" if external else None
+    target = "_blank" if external else None
+    return (
+        <a class={f"btn btn--{variant}"} href={href} target={target} rel={rel}>
+            {children}
+            {arrow_right() if arrow else <></>}
+        </a>
+    )

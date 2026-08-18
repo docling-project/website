@@ -1,0 +1,86 @@
+"""Site footer.
+
+Open source is treated as a primary destination rather than a footer detail:
+the repository, the package and the community all sit in the columns above the
+legal strip.
+"""
+
+from pyjsx import jsx, JSX
+
+from website.data.navigation import (
+    FOOTER_COLUMNS,
+    GITHUB_URL,
+    LEGAL_LINKS,
+    SOCIAL_LINKS,
+)
+
+
+def Footer(children) -> JSX:
+    return (
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-top">
+                    <div class="footer-brand-block">
+                        <a class="header-logo" href="/" aria-label="Docling home">
+                            <img src="/img/logo.svg" alt="" width="20" height="20" />
+                            <span>Docling</span>
+                        </a>
+                        <p class="footer-tagline">
+                            Open-source document intelligence. Turn complex documents
+                            into structured data your AI can use.
+                        </p>
+                        <div class="footer-social">
+                            {[
+                                <a
+                                    href={link.href}
+                                    aria-label={link.label}
+                                    target={"_blank" if link.href.startswith("http") else None}
+                                    rel={"noopener noreferrer" if link.href.startswith("http") else None}
+                                >
+                                    <img src={link.icon} alt="" width="20" height="20" loading="lazy" />
+                                </a>
+                                for link in SOCIAL_LINKS
+                            ]}
+                        </div>
+                    </div>
+
+                    {[
+                        <div class="footer-col">
+                            <h2 class="footer-col-title">{column.title}</h2>
+                            <ul>
+                                {[
+                                    <li>
+                                        <a
+                                            href={item.href}
+                                            target={"_blank" if item.external else None}
+                                            rel={"noopener noreferrer" if item.external else None}
+                                        >
+                                            {item.label}
+                                        </a>
+                                    </li>
+                                    for item in column.items
+                                ]}
+                            </ul>
+                        </div>
+                        for column in FOOTER_COLUMNS
+                    ]}
+                </div>
+
+                <div class="footer-bottom">
+                    <div class="footer-lf">
+                        <img src="/img/lf.svg" alt="Linux Foundation" loading="lazy" />
+                        <span>
+                            Copyright © Docling, a Series of LF Projects, LLC.
+                        </span>
+                    </div>
+
+                    <nav aria-label="Legal">
+                        {[
+                            <a href={item.href} target="_blank" rel="noopener noreferrer">{item.label}</a>
+                            for item in LEGAL_LINKS
+                        ]}
+                    </nav>
+                </div>
+            </div>
+        </footer>
+    )

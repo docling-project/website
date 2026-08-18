@@ -1,0 +1,205 @@
+/* ---------------------------------------------------------------------------
+   Docling design tokens.
+
+   Layer order is declared here because this is the first stylesheet loaded;
+   every other file opts into one of these layers, so source order between
+   <link> tags no longer decides the cascade.
+   --------------------------------------------------------------------------- */
+
+@layer reset, tokens, base, layout, components, pages, utilities;
+
+@layer tokens {
+  /* -- Typefaces ----------------------------------------------------------
+     Font URLs are relative to this stylesheet, not root-relative. The static
+     build rewrites root-relative links in HTML attributes only, so a `/font/...`
+     URL here would 404 on a sub-path deploy; `../font/...` resolves correctly
+     whether the site is served from the root or from a prefix.
+     ------------------------------------------------------------------------ */
+
+  /* Variable font: one 69 KB file covers weights 100-700. */
+  @font-face {
+    font-family: "IBM Plex Sans";
+    src: url("../font/plex.woff2") format("woff2");
+    font-weight: 100 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "IBM Plex Mono";
+    src: url("../font/plex-mono-400.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "IBM Plex Mono";
+    src: url("../font/plex-mono-600.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  /* -- Dark theme (default) ------------------------------------------------
+     Orange-tuned IBM Carbon. Docling's brand orange sits at the orange-40
+     end of the ramp, which carries 8:1 against the near-black ground.
+     ------------------------------------------------------------------------ */
+
+  :root {
+    color-scheme: dark;
+
+    /* Surfaces */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-card: #161616;
+    --bg-card-hover: #1e1e1e;
+    --header-bg: #0a0a0aeb;
+
+    /* Rules and edges */
+    --border: #2a2a2a;
+    --border-accent: #393939;
+
+    /* Type */
+    --text-primary: #f4f4f4;
+    --text-secondary: #a8a8a8;
+    /* gray-50, not gray-60: metadata is set small, and #6f6f6f only reaches
+       3.8:1 against this ground, which is below AA for text under 24px. */
+    --text-tertiary: #8d8d8d;
+
+    /* Accent — orange-40. Fills take dark labels, never white. */
+    --accent: #ff832b;
+    --accent-hover: #ff9d52;
+    --accent-contrast: #161616;
+    --accent-soft: #ff832b1a;
+    --accent-line: #ff832b59;
+
+    /* Brand orange, reserved for detection overlays and large display marks. */
+    --brand-orange: #ff8a00;
+
+    /* Support hues — provenance, status, taxonomy. */
+    --support-cyan: #33b1ff;
+    --support-cyan-soft: #33b1ff1a;
+    --support-green: #42be65;
+    --support-green-soft: #42be651a;
+    --support-purple: #a56eff;
+    --support-purple-soft: #a56eff1a;
+    --support-magenta: #ff7eb6;
+    --support-magenta-soft: #ff7eb61a;
+
+    /* Document sheet — the "paper" the demos render onto. */
+    --sheet-bg: #f7f6f2;
+    --sheet-ink: #1a1a1a;
+    --sheet-shadow: 0 8px 32px #00000066;
+
+    /* Ambient elevation. Dark ground already reads as "close to black", so
+       depth comes mostly from a faint hairline highlight plus a soft drop,
+       not from a darker shadow alone. */
+    --shadow-sm: 0 1px 2px #00000080, 0 0 0 1px #ffffff0d;
+    --shadow-md: 0 16px 40px -12px #000000b3, 0 0 0 1px #ffffff0f;
+
+    --hero-glow: #ff832b1f;
+
+    /* Some supplied marks (the Linux Foundation logo) are white-only artwork,
+       so they need flipping on a light ground. */
+    --mono-logo-filter: none;
+  }
+
+  /* -- Light theme ---------------------------------------------------------
+     Accent drops to orange-60 (#ba4e00, 5.9:1 on white) so links and small
+     text clear WCAG AA. Same hue family, so the brand still reads as one.
+     ------------------------------------------------------------------------ */
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      color-scheme: light;
+
+      --bg-primary: #ffffff;
+      --bg-secondary: #f4f4f4;
+      --bg-card: #f4f4f4;
+      --bg-card-hover: #e8e8e8;
+      --header-bg: #ffffffeb;
+
+      --border: #e0e0e0;
+      --border-accent: #c6c6c6;
+
+      --text-primary: #161616;
+      --text-secondary: #525252;
+      --text-tertiary: #6f6f6f;
+
+      --accent: #ba4e00;
+      --accent-hover: #8a3800;
+      --accent-contrast: #ffffff;
+      --accent-soft: #ba4e0014;
+      --accent-line: #ba4e004d;
+
+      --brand-orange: #ff8a00;
+
+      --support-cyan: #0072c3;
+      --support-cyan-soft: #0072c314;
+      --support-green: #198038;
+      --support-green-soft: #19803814;
+      --support-purple: #7c3aed;
+      --support-purple-soft: #7c3aed14;
+      --support-magenta: #d02670;
+      --support-magenta-soft: #d0267014;
+
+      --sheet-bg: #ffffff;
+      --sheet-ink: #111111;
+      --sheet-shadow: 0 8px 32px #0000001f;
+
+      --shadow-sm: 0 1px 2px #0000000f;
+      --shadow-md: 0 16px 40px -12px #00000026;
+
+      --hero-glow: #ba4e000f;
+
+      --mono-logo-filter: invert(1);
+    }
+  }
+
+  /* -- Non-themed primitives ----------------------------------------------- */
+
+  :root {
+    /* Code surfaces stay dark in both themes so one highlight.js theme
+       covers the whole site and code always reads as a terminal artifact. */
+    --code-bg: #0d1117;
+    --code-header-bg: #161b22;
+    --code-border: #21262d;
+    --code-color: #e6edf3;
+
+    --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+      Helvetica, Arial, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+      monospace;
+
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-lg: 18px;
+
+    --max-width: 1200px;
+    --gutter: 2rem;
+
+    /* Vertical rhythm */
+    --section-y: 5rem;
+    --section-y-lg: 7rem;
+
+    --dur-fast: 0.15s;
+    --dur-slow: 0.3s;
+  }
+
+  @media (max-width: 768px) {
+    :root {
+      --gutter: 1rem;
+      --section-y: 3.5rem;
+      --section-y-lg: 4.5rem;
+    }
+  }
+
+  /* Users who ask for less motion get none of the decorative kind. */
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --dur-fast: 0.01ms;
+      --dur-slow: 0.01ms;
+    }
+  }
+}

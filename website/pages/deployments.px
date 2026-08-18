@@ -1,0 +1,136 @@
+"""Deployment modes, side by side, including what each one costs you."""
+
+from pyjsx import jsx, JSX
+
+from website.components.ui import Button, Notice, SectionHeader  # type: ignore
+from website.data.deployments import (
+    DEPLOYMENT_MODES,
+    MODE_COLUMNS,
+    PARITY_MATRIX,
+    VISITOR_STATES,
+)
+
+from .page import Page
+
+
+def _Mode(mode) -> JSX:
+    return (
+        <section class="mode" id={mode.id}>
+            <div>
+                <h2 class="mode-name">{mode.name}</h2>
+                <p class="mode-tagline">{mode.tagline}</p>
+                <p class="mode-best">{mode.best_for}</p>
+                <p class="mode-best" style="margin-top:1.5rem">
+                    <Button href={mode.cta_href} variant="secondary" external={mode.cta_href.startswith("http")}>
+                        {mode.cta_label}
+                    </Button>
+                </p>
+            </div>
+
+            <div class="mode-lists">
+                <div>
+                    <h3 class="mode-list-title">What it adds</h3>
+                    <ul class="mode-list">
+                        {[<li>{item}</li> for item in mode.adds]}
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="mode-list-title">What it costs you</h3>
+                    <ul class="mode-list mode-list--caveat">
+                        {[<li>{item}</li> for item in mode.caveats]}
+                    </ul>
+                </div>
+            </div>
+        </section>
+    )
+
+
+def DeploymentsPage() -> JSX:
+    return (
+        <Page
+            title="Deployments — Docling"
+            description={(
+                "Run Docling as a local library, as a service you operate, through "
+                "managed SaaS, or inside private and air-gapped infrastructure — "
+                "with the same document model throughout."
+            )}
+            path="/deployments/"
+            active="/deployments/"
+        >
+            <div class="container page-header">
+                <p class="section-label">Deployments</p>
+                <h1 class="page-title">Change where it runs, not what it returns</h1>
+                <p class="page-subtitle">
+                    The same pipeline runs on a laptop, on a container in your network,
+                    on managed infrastructure, or inside an air-gapped data centre. What
+                    differs is operations — not the parser and not the output.
+                </p>
+            </div>
+
+            <div class="container">
+                {[_Mode(mode) for mode in DEPLOYMENT_MODES]}
+            </div>
+
+            <div class="container section" id="compare">
+                <SectionHeader
+                    label="Comparison"
+                    title="Feature parity across modes"
+                    display={True}
+                />
+
+                <div class="table-scroll">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Capability</th>
+                                {[<th scope="col">{column}</th> for column in MODE_COLUMNS]}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {[
+                                <tr>
+                                    <th scope="row">{row.name}</th>
+                                    {[
+                                        <td class={"cell-yes" if value else "cell-no"}>
+                                            {"Yes" if value else "No"}
+                                        </td>
+                                        for value in (row.local, row.serve, row.saas, row.on_prem)
+                                    ]}
+                                </tr>
+                                for row in PARITY_MATRIX
+                            ]}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top:1.5rem">
+                    <Notice>
+                        <strong>Before committing to a managed or private deployment,</strong>{" "}
+                        ask for the specifics that this table cannot carry: data retention,
+                        processing boundaries, authentication, request-size and rate limits,
+                        concurrency, versioning and compatibility policy, migration and
+                        rollback, and the pricing model. Those are properties of a specific
+                        offering, not of Docling itself.
+                    </Notice>
+                </div>
+            </div>
+
+            <div class="container section">
+                <SectionHeader
+                    label="Where to go next"
+                    title="Pick the path that matches where you are"
+                />
+
+                <div class="routes">
+                    {[
+                        <div class="route">
+                            <h3 class="route-name">{state.state}</h3>
+                            <p class="route-best">{state.support}</p>
+                            <a class="route-cta" href={state.href}>{state.cta} →</a>
+                        </div>
+                        for state in VISITOR_STATES
+                    ]}
+                </div>
+            </div>
+        </Page>
+    )

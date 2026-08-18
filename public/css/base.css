@@ -1,0 +1,116 @@
+@layer base {
+  html {
+    font-size: 16px;
+    /* Sticky 48px header must not cover anchor targets. */
+    scroll-padding-top: 4rem;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  /* -- Headings ------------------------------------------------------------
+     Sized by role in components rather than by tag, so the tag can stay
+     semantically correct without dragging a display size along with it.
+     ------------------------------------------------------------------------ */
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  strong,
+  b {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-mono);
+  }
+
+  /* -- Focus ---------------------------------------------------------------
+     One visible ring everywhere. Never removed, only restyled.
+     ------------------------------------------------------------------------ */
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 1px;
+  }
+
+  /* Elements that already sit flush against a rule get an inset ring so the
+     outline is not clipped by the neighbouring cell. */
+  .tab:focus-visible,
+  .demo-tab:focus-visible,
+  .grid-cell:focus-visible {
+    outline-offset: -2px;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-contrast);
+  }
+
+  /* -- Skip link ------------------------------------------------------------ */
+
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    z-index: 200;
+    padding: 0.5rem 1rem;
+    background: var(--accent);
+    color: var(--accent-contrast);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+
+  /* -- Shared inline atoms -------------------------------------------------- */
+
+  .mono {
+    font-family: var(--font-mono);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}

@@ -1,0 +1,129 @@
+"""Benchmarks.
+
+Publishes the methodology contract and the peer-reviewed work, and says plainly
+that reproducible figures are not up yet. The strategy lists "unsupported
+benchmark claims" among the things to avoid, so an empty-but-honest page is the
+correct state until a real run exists.
+"""
+
+from pyjsx import jsx, JSX
+
+from website.components.ui import Notice, SectionHeader  # type: ignore
+from website.data.benchmarks import (
+    PUBLISHED,
+    PUBLISHED_WORK,
+    REQUIRED_DISCLOSURES,
+    RESULTS,
+)
+
+from .page import Page
+
+
+def _Results() -> JSX:
+    return (
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Dataset</th>
+                        <th scope="col">Metric</th>
+                        <th scope="col">Docling</th>
+                        <th scope="col">Baseline</th>
+                        <th scope="col">Configuration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {[
+                        <tr>
+                            <th scope="row">{row.dataset}</th>
+                            <td>{row.metric}</td>
+                            <td>{row.value}</td>
+                            <td>{row.baseline}</td>
+                            <td>{row.config}</td>
+                        </tr>
+                        for row in RESULTS
+                    ]}
+                </tbody>
+            </table>
+        </div>
+    )
+
+
+def BenchmarksPage() -> JSX:
+    return (
+        <Page
+            title="Benchmarks — Docling"
+            description={(
+                "The disclosure standard every Docling benchmark must meet, and the "
+                "peer-reviewed work behind the layout and table models."
+            )}
+            path="/benchmarks/"
+            active="/benchmarks/"
+        >
+            <div class="container page-header">
+                <p class="section-label">Evidence</p>
+                <h1 class="page-title">Benchmarks, with the receipts</h1>
+                <p class="page-subtitle">
+                    A number without its configuration is not evidence. This page states
+                    what every figure published here has to carry before it goes up.
+                </p>
+            </div>
+
+            <div class="container section">
+                {
+                    _Results()
+                    if PUBLISHED and RESULTS
+                    else <Notice accent={True}>
+                        <strong>No benchmark table is published here yet.</strong>{" "}
+                        Rather than post figures that cannot be reproduced from this
+                        page, the peer-reviewed results below are linked directly, and
+                        the disclosure standard a future table has to meet is stated
+                        underneath. If you need comparative numbers now, run the
+                        evaluation yourself against your own documents — that is the
+                        measurement that should decide it anyway.
+                    </Notice>
+                }
+            </div>
+
+            <div class="container section">
+                <SectionHeader
+                    label="Standard"
+                    title="What every published figure must carry"
+                    display={True}
+                />
+
+                <dl class="disclosure-list">
+                    {[
+                        <div class="disclosure">
+                            <dt>{item.field_name}</dt>
+                            <dd>{item.why}</dd>
+                        </div>
+                        for item in REQUIRED_DISCLOSURES
+                    ]}
+                </dl>
+            </div>
+
+            <div class="container section">
+                <SectionHeader
+                    label="Published work"
+                    title="The peer-reviewed results behind the models"
+                    display={True}
+                    href="/papers/"
+                    link="All papers"
+                />
+
+                <div>
+                    {[
+                        <a class="reference" href={ref.href} target="_blank" rel="noopener noreferrer">
+                            <span class="card-meta">
+                                <span class="tag tag--purple">{ref.venue}</span>
+                            </span>
+                            <span class="reference-title">{ref.title}</span>
+                            <span class="reference-blurb">{ref.blurb}</span>
+                        </a>
+                        for ref in PUBLISHED_WORK
+                    ]}
+                </div>
+            </div>
+        </Page>
+    )

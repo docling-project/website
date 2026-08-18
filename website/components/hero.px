@@ -1,0 +1,156 @@
+"""The developer-first hero.
+
+Left: the promise, the install command and the two calls to action.
+Right: the transformation itself — a real page, progressively annotated, ending
+in structured output. The duck is not here; the strategy is explicit that the
+first visual should demonstrate the product, not the mascot.
+"""
+
+from pyjsx import HTMLDontEscape, jsx, JSX
+
+from website.data.product import (
+    HERO_CHIPS,
+    HERO_EYEBROW,
+    HERO_SUBTITLE,
+    HERO_SUBTITLE_2,
+    HERO_TITLE_ACCENT,
+    HERO_TITLE_LEAD,
+    INSTALL_COMMAND,
+)
+from website.data.samples import CANONICAL_SAMPLE, HERO_OUTPUT, LAYERS
+from .document_svg import annotated_page
+from website.highlight import highlight_code
+from .icons import arrow_right
+from .ui import InstallCommand
+
+
+def _hero_output_markup() -> HTMLDontEscape:
+    """Raw markup, because the encoded newlines must survive as entities — a
+    JSX expression child would escape the ampersand and print them literally."""
+    return HTMLDontEscape(
+        f'<pre><code class="language-markdown">'
+        f"{highlight_code(HERO_OUTPUT, 'markdown')}"
+        f"</code></pre>"
+    )
+
+
+# The hero sequence walks the same layers the proof section exposes as tabs,
+# so the animation is a preview of a real, inspectable thing rather than a
+# decorative loop.
+_STAGES = [
+    ("source", "Source page", []),
+    ("layout", "Layout detection", ["tables", "pictures"]),
+    ("order", "Reading order", ["reading-order"]),
+    ("output", "Structured output", ["reading-order"]),
+]
+
+
+def _shapes_for(layer_ids: list[str]):
+    by_id = {layer.id: layer for layer in LAYERS}
+    shapes = []
+    for layer_id in layer_ids:
+        layer = by_id.get(layer_id)
+        if layer:
+            shapes.extend(layer.shapes)
+    return shapes
+
+
+def HeroVisual(children) -> JSX:
+    stages = [
+        <li
+            class="stage-dot"
+            data-stage-index={str(index)}
+            aria-current={"true" if index == 0 else None}
+        >
+            <span class="visually-hidden">{title}</span>
+        </li>
+        for index, (_, title, _) in enumerate(_STAGES)
+    ]
+
+    layers = [
+        <div class="hero-layer" data-stage={name} data-active={"true" if index == 0 else "false"}>
+            {annotated_page(
+                CANONICAL_SAMPLE.page,
+                _shapes_for(layer_ids),
+                alt=(
+                    "A page of the DocLayNet paper with Docling's detected "
+                    "layout regions drawn over it"
+                ),
+                lazy=False,
+                group_id=name,
+            )}
+        </div>
+        for index, (name, _, layer_ids) in enumerate(_STAGES)
+    ]
+
+    return (
+        <div class="hero-visual" data-hero-demo data-stage-count={str(len(_STAGES))}>
+            <div class="hero-sheet">
+                {layers}
+
+                <div class="hero-output" data-stage="output">
+                    <div class="hero-output-head">
+                        <span class="code-lang">document.md</span>
+                    </div>
+                    {_hero_output_markup()}
+                </div>
+            </div>
+
+            <div class="hero-controls">
+                <ol class="stage-dots" aria-label="Conversion stage">{stages}</ol>
+                <button
+                    type="button"
+                    class="stage-pause"
+                    data-hero-pause
+                    aria-label="Pause the conversion animation"
+                >
+                    <span data-pause-label>Pause</span>
+                </button>
+            </div>
+        </div>
+    )
+
+
+def Hero(children) -> JSX:
+    return (
+        <section class="hero">
+            <div class="container hero-inner">
+                <div class="hero-text">
+                    <p class="hero-eyebrow">{HERO_EYEBROW}</p>
+
+                    <h1 class="hero-title">
+                        {HERO_TITLE_LEAD} <span class="hero-accent">{HERO_TITLE_ACCENT}</span>
+                    </h1>
+
+                    <p class="hero-subtitle">{HERO_SUBTITLE}</p>
+                    <p class="hero-subtitle hero-subtitle--muted">{HERO_SUBTITLE_2}</p>
+
+                    <div class="hero-install">
+                        <InstallCommand command={INSTALL_COMMAND} />
+                    </div>
+
+                    <div class="btn-row hero-actions">
+                        <a class="btn btn--primary" href="#quickstart">
+                            Run Docling locally {arrow_right()}
+                        </a>
+                        <a class="btn btn--secondary" href="#proof">See real output</a>
+                    </div>
+
+                    <ul class="hero-chips">
+                        {[
+                            <li>
+                                {
+                                    <a href={chip.href} class="hero-chip">{chip.label}</a>
+                                    if chip.href
+                                    else <span class="hero-chip">{chip.label}</span>
+                                }
+                            </li>
+                            for chip in HERO_CHIPS
+                        ]}
+                    </ul>
+                </div>
+
+                <HeroVisual />
+            </div>
+        </section>
+    )

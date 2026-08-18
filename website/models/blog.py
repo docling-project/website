@@ -6,6 +6,8 @@ import re
 from pydantic import BaseModel
 import markdown
 
+from website.highlight import highlight_markdown_html
+
 
 _blog_path = Path("blog")
 
@@ -20,16 +22,16 @@ _markdown_extensions = [
     "pymdownx.caret",
     "pymdownx.emoji",
     "pymdownx.mark",
-    "pymdownx.superfences",
     "pymdownx.tilde",
 ]
 
-_extension_configs = {
-    "pymdownx.superfences": {
-        "preserve_tabs": False,
-        "custom_fences": [],
-    }
-}
+# No extension config. `pymdownx.superfences` used to be listed here with
+# `custom_fences: []`, which overrode its defaults; because superfences also
+# supersedes markdown.extensions.fenced_code, the result was that no fenced
+# block parsed anywhere on the blog — ```bash blocks rendered as paragraphs and
+# their leading `#` comments became <h1>s. Nothing here needs nested or custom
+# fences, so stock fenced_code is used instead.
+_extension_configs: dict = {}
 
 
 _code_tag_re = re.compile(r"(<code\b[^>]*>)(.*?)(</code>)", re.DOTALL)
@@ -93,7 +95,7 @@ def _blog_post(path: Path, mtime_ns: int) -> Post:
      
         return Post(
             id=path.parts[1],
-            html=_stabilize_code_newlines(html),
+            html=_stabilize_code_newlines(highlight_markdown_html(html)),
             date=datetime.strptime(md.Meta.get("date", ["01-01-0001"])[0], "%d-%m-%Y"), # type: ignore
             title=md.Meta.get("title", ["Missing Title"])[0], # type: ignore
             summary=md.Meta.get("summary", [""])[0], # type: ignore

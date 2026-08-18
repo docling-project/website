@@ -1,0 +1,84 @@
+"""From laptop to production.
+
+The continuum is the whole argument of the redesign: the same document model and
+configuration, with only the location of the processing changing. The code shown
+for each stage differs by roughly one line, which is the point.
+"""
+
+from pyjsx import jsx, JSX
+
+from website.data.product import CONTINUUM, CONTINUUM_PROMISE, PARITY
+from .icons import arrow_down, arrow_right
+from .ui import Code, SectionHeader
+
+
+def DeploymentContinuum(children) -> JSX:
+    return (
+        <section class="section section--lg" id="continuum">
+            <div class="container">
+                <SectionHeader
+                    label="Local to production"
+                    title="From laptop to production, without a rewrite"
+                    display={True}
+                    href="/deployments/"
+                    link="Compare deployments"
+                />
+
+                <p class="section-lede">{CONTINUUM_PROMISE}</p>
+
+                <ol class="continuum">
+                    {[
+                        <li class="continuum-stage" id={stage.id}>
+                            <div class="continuum-marker" aria-hidden="true">
+                                <span class="continuum-index">{stage.index}</span>
+                                <span class="continuum-line"></span>
+                            </div>
+
+                            <div class="continuum-content">
+                                <h3 class="continuum-name">{stage.name}</h3>
+                                <p class="continuum-goal">{stage.goal}</p>
+                                <p class="continuum-experience">{stage.experience}</p>
+                                <a class="card-link" href={stage.cta_href}>
+                                    {stage.cta_label} →
+                                </a>
+                            </div>
+
+                            <div class="continuum-code">
+                                <Code text={stage.code} language="python" copy={False} filename="" />
+                            </div>
+                        </li>
+                        for stage in CONTINUUM
+                    ]}
+                </ol>
+
+                <div class="parity">
+                    <h3 class="parity-title">What stays the same</h3>
+                    <div class="table-scroll">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Area</th>
+                                    <th scope="col">Local</th>
+                                    <th scope="col">SaaS</th>
+                                    <th scope="col">On-prem</th>
+                                    <th scope="col">Promise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {[
+                                    <tr>
+                                        <th scope="row">{row.area}</th>
+                                        <td>{row.local}</td>
+                                        <td>{row.saas}</td>
+                                        <td>{row.on_prem}</td>
+                                        <td class="parity-promise">{row.promise}</td>
+                                    </tr>
+                                    for row in PARITY
+                                ]}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    )

@@ -1,0 +1,62 @@
+"""The mode/application matrix.
+
+Two processing modes against two application shapes. Asked for explicitly by the
+strategy: it is what turns "Docling converts documents" into "here is which of
+these four jobs you are doing".
+"""
+
+from pyjsx import jsx, JSX
+
+from website.data.product import MATRIX, MATRIX_APPLICATIONS, MATRIX_MODES
+from .ui import SectionHeader
+
+
+def _cell(mode: str, application: str):
+    for cell in MATRIX:
+        if cell.mode == mode and cell.application == application:
+            return cell
+    return None
+
+
+def Matrix(children) -> JSX:
+    return (
+        <section class="section" id="modes">
+            <div class="container">
+                <SectionHeader
+                    label="One pipeline"
+                    title="Four jobs, one document model"
+                    display={True}
+                />
+
+                <p class="section-lede">
+                    Most document work is one of four things. Docling covers all four
+                    with the same converter and the same output shape — what changes is
+                    how you call it, not what you get back.
+                </p>
+
+                <div class="matrix">
+                    <div class="matrix-corner" aria-hidden="true"></div>
+                    {[
+                        <div class="matrix-col-head">{application}</div>
+                        for application in MATRIX_APPLICATIONS
+                    ]}
+
+                    {[
+                        row
+                        for mode in MATRIX_MODES
+                        for row in [
+                            <div class="matrix-row-head">{mode}</div>,
+                            *[
+                                <div class="matrix-cell">
+                                    <h3 class="matrix-cell-title">{_cell(mode, application).title}</h3>
+                                    <p class="matrix-cell-body">{_cell(mode, application).body}</p>
+                                    <code class="matrix-cell-code">{_cell(mode, application).example}</code>
+                                </div>
+                                for application in MATRIX_APPLICATIONS
+                            ],
+                        ]
+                    ]}
+                </div>
+            </div>
+        </section>
+    )

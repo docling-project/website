@@ -31,7 +31,18 @@ published on GitHub Pages (or any static host). Build it with:
 uv run website/build.py
 ```
 
-This renders all pages and copies the assets into `dist/`. Useful options:
+This renders all pages and copies the assets into `dist/`. To serve that build
+locally:
+
+```bash
+python3 -m http.server 8000 --directory dist
+# open http://localhost:8000
+```
+
+Any static file server works. Clean URLs such as `/deployments/` resolve because
+each route is written as `<route>/index.html`.
+
+Useful options:
 
 - `--out <dir>`: output directory (default `dist`).
 - `--base-path <prefix>`: URL prefix for root-relative links, needed when the
@@ -40,14 +51,69 @@ This renders all pages and copies the assets into `dist/`. Useful options:
   (the repository name). Leave empty for a root/custom-domain deploy.
 - `--cname <domain>`: write a `CNAME` file for a custom domain (e.g. `docling.ai`).
 
-To preview a sub-path build locally:
+To preview a sub-path build locally, build straight into a directory whose name
+matches the prefix — `--base-path` rewrites the links but does not nest the
+files:
 
 ```bash
-uv run website/build.py --base-path /website
-mkdir -p /tmp/site/website && cp -r dist/. /tmp/site/website/
+uv run website/build.py --out /tmp/site/website --base-path /website
 python3 -m http.server 5055 --directory /tmp/site
 # open http://localhost:5055/website/
 ```
+
+### Asset URLs in CSS
+
+`--base-path` rewrites root-relative `href`/`src` attributes in HTML only, so a
+root-relative `url()` inside a stylesheet would 404 on a sub-path deploy. Write
+stylesheet asset URLs relative to the stylesheet instead:
+
+```css
+src: url("../font/plex.woff2"); /* not url("/font/plex.woff2") */
+```
+
+The build enforces this: it exits with an error naming the file and URL if a
+root-relative `url()` appears in any stylesheet.
+
+## Site architecture
+
+Pages are composed from reusable components; content lives in plain Python data
+modules so copy can be edited without touching markup.
+
+```
+website/
+  pages/          one module per route — section composition only
+  components/     reusable product components (hero, document demo, ...)
+  data/           site content: navigation, samples, product copy, integrations
+  highlight.py    build-time Pygments highlighting (no client-side highlighter)
+  seo.py          sitemap.xml and robots.txt, generated from one route list
+
+public/
+  css/            cascade layers: tokens, reset, base, layout, components, pages
+  js/             ES modules, one per concern, loaded via js/main.js
+  font/           self-hosted IBM Plex Sans (variable) and Plex Mono
+```
+
+**CSS** uses cascade layers, declared once at the top of `css/tokens.css`:
+
+```css
+@layer reset, tokens, base, layout, components, pages, utilities;
+```
+
+Because the order is declared there, the `<link>` tags can be reordered without
+changing which rules win. Colour, spacing, typography and motion are all tokens
+in `tokens.css`; the theme is dark by default with a full light variant under
+`prefers-color-scheme: light`.
+
+**Adding a route** means adding it in three places: a page module under
+`website/pages/`, a handler in `website/main.py`, and a `_write_page` call in
+`website/build.py`. Add it to `STATIC_ROUTES` in `website/seo.py` so it reaches
+the sitemap.
+
+**Sample output** shown on the site carries provenance metadata in
+`website/data/samples.py`, including whether it has been regenerated against a
+pinned Docling release. Anything not yet reproduced is labelled as such on the
+page rather than presented as a verified result.
+
 
 ## Deployment
 

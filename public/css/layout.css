@@ -1,0 +1,182 @@
+@layer layout {
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* -- Sections ------------------------------------------------------------ */
+
+  .section {
+    padding: var(--section-y) 0;
+  }
+
+  .section--lg {
+    padding: var(--section-y-lg) 0;
+  }
+
+  .section--tight {
+    padding: 2.5rem 0;
+  }
+
+  /* A banded section, edge to edge, delimited by hairlines. */
+  .section--band {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  /* Sections that carry the narrative get a display-sized title. */
+  .section-title--display {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .section-lede {
+    max-width: 62ch;
+    margin-top: 1rem;
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  .section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+    color: var(--accent);
+    white-space: nowrap;
+    transition: gap var(--dur-fast);
+  }
+
+  .section-link:hover {
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+
+  /* -- Card grid -------------------------------------------------------------
+     Each cell is its own soft-edged surface with a gap between, rather than a
+     shared hairline rule — cards, not a ruled table.
+     ------------------------------------------------------------------------ */
+
+  .grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .grid > * {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition:
+      border-color var(--dur-fast),
+      box-shadow var(--dur-fast),
+      transform var(--dur-fast);
+  }
+
+  .grid > *:hover {
+    border-color: var(--border-accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid--4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .grid--auto {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  @media (max-width: 900px) {
+    .grid--3,
+    .grid--4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .grid--2,
+    .grid--3,
+    .grid--4 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* -- Split ---------------------------------------------------------------- */
+
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .split--wide-right {
+    grid-template-columns: 1fr 1.4fr;
+  }
+
+  @media (max-width: 900px) {
+    .split,
+    .split--wide-right {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  /* -- Prose column --------------------------------------------------------- */
+
+  .measure {
+    max-width: 68ch;
+  }
+}

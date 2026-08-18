@@ -2,7 +2,6 @@
 
 from pyjsx import jsx, JSX
 
-from website.components.ui import SectionHeader  # type: ignore
 from website.components.use_case_grid import UseCaseBlock  # type: ignore
 from website.data.use_cases import USE_CASES
 
@@ -23,21 +22,15 @@ def UseCasesPage() -> JSX:
         >
             <div class="container page-header">
                 <p class="section-label">Use cases</p>
-                <h1 class="page-title">What people actually build with it</h1>
+                <h1 class="page-title">What people build with it</h1>
                 <p class="page-subtitle">
-                    Four workflows, each stated as the problem first, then the part of
-                    the document model that solves it, then how the same code reaches
+                    Document intelligence workflows come in different shapes and sizes —
+                    the problem each one solves, why Docling fits, and how it reaches
                     production.
                 </p>
             </div>
 
             <div class="container section">
-                <SectionHeader
-                    label="Workflows"
-                    title="Four jobs, in full"
-                    display={True}
-                />
-
                 <div class="usecases">
                     {[
                         <UseCaseBlock case={case} index={index} />

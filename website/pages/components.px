@@ -11,7 +11,7 @@ def AnnouncementBanner(children=None) -> JSX:
     return (
         <div class="announcement">
             <p>
-                IBM announced a managed SaaS —{" "}
+                Managed Docling SaaS announced by IBM —{" "}
                 <a
                     href="https://www.ibm.com/account/reg/us-en/signup?formid=urx-54322&utm_source=docling.ai&utm_medium=banner&utm_campaign=free_trial&utm_content=site_banner"
                     target="_blank"
@@ -70,7 +70,11 @@ def CommunityPage() -> JSX:
                 <p>Once you are in the workspace, find us in:</p>
                 <ul>
                     <li>
-                        <a href="https://lfaifoundation.slack.com/archives/docling-technical-discuss/">
+                        <a
+                            href="https://lfaifoundation.slack.com/archives/docling-technical-discuss/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             #docling-technical-discuss
                         </a>
                     </li>
@@ -79,13 +83,25 @@ def CommunityPage() -> JSX:
                 <h2>GitHub</h2>
                 <p>
                     Issues, discussions and pull requests all live in the{" "}
-                    <a href="https://github.com/docling-project/docling">main repository</a>.
+                    <a
+                        href="https://github.com/docling-project/docling"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        main repository
+                    </a>.
                 </p>
 
                 <h2>Hugging Face</h2>
                 <p>
                     Models and datasets are published under the{" "}
-                    <a href="https://huggingface.co/docling-project">docling-project</a>{" "}
+                    <a
+                        href="https://huggingface.co/docling-project"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        docling-project
+                    </a>{" "}
                     organisation.
                 </p>
             </div>

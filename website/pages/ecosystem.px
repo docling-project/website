@@ -3,7 +3,6 @@
 from pyjsx import jsx, JSX
 
 from website.components.ecosystem import EcosystemGroups  # type: ignore
-from website.components.ui import SectionHeader  # type: ignore
 
 from .page import Page
 
@@ -23,17 +22,13 @@ def EcosystemPage() -> JSX:
                 <p class="section-label">Ecosystem</p>
                 <h1 class="page-title">It already fits your stack</h1>
                 <p class="page-subtitle">
-                    Docling is a library, not a platform you have to move into. Every
-                    entry below links to its integration documentation.
+                    Docling is a library, not a platform you have to move into. It plugs
+                    into the frameworks, agents, pipelines and infrastructure you are
+                    already running.
                 </p>
             </div>
 
             <div class="container section">
-                <SectionHeader
-                    label="Integrations"
-                    title="Grouped by the job they do"
-                    display={True}
-                />
                 <EcosystemGroups />
             </div>
         </Page>

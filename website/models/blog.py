@@ -57,13 +57,25 @@ class BlogFilter(str, Enum):
     
     @property
     def label(self) -> str:
-        """Get the display label for this filter."""
+        """Singular display label, shown on an individual post."""
         labels = {
             BlogFilter.ALL: "All",
             BlogFilter.ANNOUNCEMENT: "Announcement",
-            BlogFilter.TECHNICAL: "Deep dives",
+            BlogFilter.TECHNICAL: "Deep dive",
             BlogFilter.EVENT: "Event",
             BlogFilter.FEATURE: "New feature",
+        }
+        return labels[self]
+
+    @property
+    def plural_label(self) -> str:
+        """Plural display label, shown in the category selector."""
+        labels = {
+            BlogFilter.ALL: "All",
+            BlogFilter.ANNOUNCEMENT: "Announcements",
+            BlogFilter.TECHNICAL: "Deep dives",
+            BlogFilter.EVENT: "Events",
+            BlogFilter.FEATURE: "New features",
         }
         return labels[self]
 

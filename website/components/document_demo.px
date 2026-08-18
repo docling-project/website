@@ -101,7 +101,7 @@ def DocumentDemo(children) -> JSX:
             <div class="container">
                 <SectionHeader
                     label="See for yourself"
-                    title="See what survives conversion"
+                    title="Structure, carried through conversion"
                     display={True}
                     href="/formats/"
                     link="All supported formats"

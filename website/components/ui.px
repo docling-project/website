@@ -3,7 +3,7 @@
 from pyjsx import HTMLDontEscape, jsx, JSX
 
 from website.highlight import highlight_code
-from .icons import arrow_right, check_icon, copy_icon, info_icon
+from .icons import arrow_right, check_icon, copy_icon, external_icon, info_icon
 
 
 def CopyButton(children, text: str = "", label: str = "Copy to clipboard") -> JSX:
@@ -55,8 +55,18 @@ def Code(children, text: str, language: str = "", filename: str = "", copy: bool
     )
 
 
-def SectionHeader(children, label: str = "", title: str = "", href: str = "", link: str = "", display: bool = False) -> JSX:
+def SectionHeader(
+    children,
+    label: str = "",
+    title: str = "",
+    href: str = "",
+    link: str = "",
+    display: bool = False,
+    external: bool = False,
+) -> JSX:
     title_class = "section-title--display" if display else "section-title"
+    rel = "noopener noreferrer" if external else None
+    target = "_blank" if external else None
     return (
         <div class="section-header">
             <div class="section-heading">
@@ -64,7 +74,9 @@ def SectionHeader(children, label: str = "", title: str = "", href: str = "", li
                 <h2 class={title_class}>{title}</h2>
             </div>
             {
-                <a class="section-link" href={href}>{link} {arrow_right()}</a>
+                <a class="section-link" href={href} target={target} rel={rel}>
+                    {link} {external_icon() if external else arrow_right()}
+                </a>
                 if href and link
                 else <></>
             }
@@ -85,9 +97,10 @@ def Notice(children, accent: bool = False) -> JSX:
 def Button(children, href: str, variant: str = "primary", external: bool = False, arrow: bool = False) -> JSX:
     rel = "noopener noreferrer" if external else None
     target = "_blank" if external else None
+    icon = external_icon() if external else (arrow_right() if arrow else <></>)
     return (
         <a class={f"btn btn--{variant}"} href={href} target={target} rel={rel}>
             {children}
-            {arrow_right() if arrow else <></>}
+            {icon}
         </a>
     )

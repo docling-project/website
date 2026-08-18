@@ -1,13 +1,13 @@
-"""The mode/application matrix.
+"""The scale/output matrix.
 
-Two processing modes against two application shapes. Asked for explicitly by the
-strategy: it is what turns "Docling converts documents" into "here is which of
-these four jobs you are doing".
+Scale (one document at a time vs. in bulk) against what you want back (full
+conversion vs. schema extraction). A navigation aid for "which call do I make",
+not an exhaustive list of what Docling can do.
 """
 
 from pyjsx import jsx, JSX
 
-from website.data.product import MATRIX, MATRIX_APPLICATIONS, MATRIX_MODES
+from website.data.product import MATRIX, MATRIX_APPLICATIONS, MATRIX_MODES, MODE_TAGLINES
 from .ui import SectionHeader
 
 
@@ -23,15 +23,15 @@ def Matrix(children) -> JSX:
         <section class="section" id="modes">
             <div class="container">
                 <SectionHeader
-                    label="One pipeline"
-                    title="Four jobs, one document model"
+                    label="Different jobs, familiar API"
+                    title="One document or a million, in the shape you need"
                     display={True}
                 />
 
                 <p class="section-lede">
-                    Most document work is one of four things. Docling covers all four
-                    with the same converter and the same output shape — what changes is
-                    how you call it, not what you get back.
+                    Whether it's one document right now or all of them at once, a
+                    standard format or fields extracted into your own schema — Docling
+                    is ready for it.
                 </p>
 
                 <div class="matrix">
@@ -45,7 +45,10 @@ def Matrix(children) -> JSX:
                         row
                         for mode in MATRIX_MODES
                         for row in [
-                            <div class="matrix-row-head">{mode}</div>,
+                            <div class="matrix-row-head">
+                                <span class="matrix-row-head-title">{mode}</span>
+                                <span class="matrix-row-head-sub">{MODE_TAGLINES[mode]}</span>
+                            </div>,
                             *[
                                 <div class="matrix-cell">
                                     <h3 class="matrix-cell-title">{_cell(mode, application).title}</h3>

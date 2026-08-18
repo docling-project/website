@@ -75,8 +75,7 @@ def _Panel(layer, index: int) -> JSX:
 
 
 def Provenance(children) -> JSX:
-    """States exactly where the sample came from and whether the output on this
-    page has been regenerated. Unverified is said out loud, not implied."""
+    """States exactly where the sample came from and how to regenerate it."""
     sample = CANONICAL_SAMPLE
     return (
         <dl class="provenance">
@@ -89,23 +88,8 @@ def Provenance(children) -> JSX:
                 </dd>
             </div>
             <div>
-                <dt>Licence</dt>
-                <dd>{sample.license}</dd>
-            </div>
-            <div>
                 <dt>Regenerate</dt>
                 <dd><code>{sample.regenerate}</code></dd>
-            </div>
-            <div>
-                <dt>Status</dt>
-                <dd>
-                    {
-                        <span class="tag tag--green">Reproduced</span>
-                        if sample.verified
-                        else <span class="tag tag--muted">Not yet reproduced</span>
-                    }
-                    {<span class="provenance-note">{sample.note}</span> if sample.note else <></>}
-                </dd>
             </div>
         </dl>
     )
@@ -116,7 +100,7 @@ def DocumentDemo(children) -> JSX:
         <section class="section section--lg" id="proof">
             <div class="container">
                 <SectionHeader
-                    label="Product proof"
+                    label="See for yourself"
                     title="See what survives conversion"
                     display={True}
                     href="/formats/"

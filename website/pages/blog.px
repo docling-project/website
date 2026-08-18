@@ -1,7 +1,7 @@
 from babel.dates import format_date
 from pyjsx import HTMLDontEscape, jsx, JSX
 
-from website.models.blog import blog_post, blog_posts, last_blog_post, BlogFilter
+from website.models.blog import available_filters, blog_post, blog_posts, last_blog_post, BlogFilter
 
 from .page import Page
 
@@ -37,7 +37,7 @@ def BlogPage(filter: BlogFilter = BlogFilter.ALL) -> JSX:
                         >
                             {option.label}
                         </button>
-                        for option in BlogFilter
+                        for option in available_filters()
                     ]}
                 </form>
 

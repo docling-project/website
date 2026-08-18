@@ -42,24 +42,28 @@ def ProofStrip(children) -> JSX:
                     {[_Stat(item) for item in PROOF_ITEMS]}
                 </div>
 
-                <ul class="proof-facts">
-                    {[
-                        <li>
-                            {
-                                <a href={fact.href}>
-                                    <strong>{fact.value}</strong>
-                                    <span>{fact.label}</span>
-                                </a>
-                                if fact.href
-                                else <div>
-                                    <strong>{fact.value}</strong>
-                                    <span>{fact.label}</span>
-                                </div>
-                            }
-                        </li>
-                        for fact in PROOF_FACTS
-                    ]}
-                </ul>
+                {
+                    <ul class="proof-facts">
+                        {[
+                            <li>
+                                {
+                                    <a href={fact.href}>
+                                        <strong>{fact.value}</strong>
+                                        <span>{fact.label}</span>
+                                    </a>
+                                    if fact.href
+                                    else <div>
+                                        <strong>{fact.value}</strong>
+                                        <span>{fact.label}</span>
+                                    </div>
+                                }
+                            </li>
+                            for fact in PROOF_FACTS
+                        ]}
+                    </ul>
+                    if PROOF_FACTS
+                    else <></>
+                }
             </div>
         </section>
     )

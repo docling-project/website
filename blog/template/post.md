@@ -8,8 +8,9 @@ category: technical
 
 **Available categories:**
 - `technical` - Technical guides, tutorials, and deep dives
+- `announcement` - Project announcements
 - `event` - Announcements about events, conferences, or community gatherings
-- `new-feature-alert` - Announcements of new features or releases
+- `feature` - Announcements of new features or releases
 
 **Thumbnail formats:**
 The thumbnail field accepts any image format (jpg, jpeg, png, webp, etc.). Just specify the relative path from the post folder.

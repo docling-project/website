@@ -49,7 +49,7 @@ EXPORT_GROUPS: list[FormatGroup] = [
     FormatGroup(
         "Structured",
         "Lossless representations of the full document model.",
-        ["JSON", "DocTags"],
+        ["JSON", "DocLang"],
     ),
     FormatGroup(
         "Markup",

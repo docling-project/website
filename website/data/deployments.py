@@ -19,7 +19,7 @@ class Capability:
 PARITY_MATRIX: list[Capability] = [
     Capability("Full document model", True, True, True, True),
     Capability("Same configuration vocabulary", True, True, True, True),
-    Capability("Markdown / JSON / DocTags export", True, True, True, True),
+    Capability("Markdown / JSON / DocLang export", True, True, True, True),
     Capability("Runs without network access", True, True, False, True),
     Capability("HTTP API", False, True, True, True),
     Capability("Horizontal scale-out", False, False, True, True),

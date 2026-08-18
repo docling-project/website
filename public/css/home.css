@@ -273,6 +273,11 @@
     height: 3px;
     background: var(--border-accent);
     transition: background var(--dur-fast);
+    cursor: pointer;
+  }
+
+  .stage-dot:hover {
+    background: var(--accent);
   }
 
   .stage-dot[aria-current="true"] {
@@ -547,6 +552,21 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-secondary);
+  }
+
+  .matrix-row-head {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.3rem;
+  }
+
+  .matrix-row-head-sub {
+    font-weight: 400;
+    font-size: 0.66rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--text-tertiary);
   }
 
   .matrix-cell {

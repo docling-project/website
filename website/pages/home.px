@@ -31,10 +31,10 @@ def HomePage() -> JSX:
         >
             <Hero />
             <ProofStrip />
+            <Quickstart />
             <DocumentDemo />
             <CapabilityGrid />
             <Matrix />
-            <Quickstart />
             <DeploymentContinuum />
             <UseCaseGrid limit={2} />
             <RunRoutes />

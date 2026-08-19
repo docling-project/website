@@ -26,7 +26,7 @@ USE_CASES: list[UseCase] = [
     UseCase(
         id="rag",
         name="RAG and enterprise search",
-        headline="Retrieval with visual grounding",
+        headline="RAG with visual grounding",
         problem=(
             "Flat text extraction destroys the two things retrieval depends on: "
             "where a passage sits in the document, and where it came from on the "
@@ -45,11 +45,12 @@ from docling.chunking import HybridChunker
 
 doc = DocumentConverter().convert("report.pdf").document
 
-for chunk in HybridChunker().chunk(doc):
-    embed(chunk.text, metadata={
-        "headings": chunk.meta.headings,
-        "page": chunk.meta.doc_items[0].prov[0].page_no,
-    })""",
+for chunk in (chunker := HybridChunker()).chunk(doc):
+    embed(
+        text=chunker.contextualize(chunk),
+        metadata={"doc_id": chunk.meta.origin.binary_hash},
+        # for resolving chunk.meta.doc_items page/bbox info
+    )""",
         doc_label="RAG examples",
         doc_href=f"{DOCS_URL}/examples/",
     ),

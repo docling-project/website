@@ -99,7 +99,7 @@ DEPLOYMENT_MODES: list[DeploymentMode] = [
             "Retention and processing boundaries are set by the provider's terms",
         ],
         cta_label="Docling for IBM watsonx",
-        cta_href="https://www.ibm.com/products/watsonx-ai",
+        cta_href="https://www.ibm.com/products/docling",
     ),
     DeploymentMode(
         id="on-prem",
@@ -117,6 +117,6 @@ DEPLOYMENT_MODES: list[DeploymentMode] = [
             "Accelerator availability shapes achievable throughput",
         ],
         cta_label="Docling for IBM watsonx",
-        cta_href="https://www.ibm.com/products/watsonx-ai",
+        cta_href="https://www.ibm.com/products/docling",
     ),
 ]

@@ -288,7 +288,7 @@ CONTINUUM: list[Stage] = [
         goal="Add managed capacity or run privately, operated for you.",
         experience="IBM's commercial offering: managed SaaS or private / on-prem deployment, with the same document model and API.",
         cta_label="Docling for IBM watsonx",
-        cta_href="https://www.ibm.com/products/watsonx-ai",
+        cta_href="https://www.ibm.com/products/docling",
         code="client = DoclingServiceClient(url=MANAGED_ENDPOINT, api_key=KEY)\nresult = client.convert(source)",
     ),
 ]

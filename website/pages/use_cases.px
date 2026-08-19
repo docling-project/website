@@ -24,9 +24,8 @@ def UseCasesPage() -> JSX:
                 <p class="section-label">Use cases</p>
                 <h1 class="page-title">What people build with it</h1>
                 <p class="page-subtitle">
-                    Document intelligence workflows come in different shapes and sizes —
-                    the problem each one solves, why Docling fits, and how it reaches
-                    production.
+                    Document intelligence workflows come in different shapes and sizes — no matter the challenge, Docling helps you makes the most out of
+                    your documents.
                 </p>
             </div>
 

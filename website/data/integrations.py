@@ -66,6 +66,7 @@ INTEGRATION_GROUPS: list[IntegrationGroup] = [
             Integration("Data Prep Kit", f"{_INTEGRATIONS}/data_prep_kit/"),
             Integration("DocETL", f"{_INTEGRATIONS}/docetl/"),
             Integration("Apify", f"{_INTEGRATIONS}/apify/"),
+            Integration("Label Studio", "https://www.labelstud.io/blog/docling-labelstudio"),
             Integration("Prodigy", f"{_INTEGRATIONS}/prodigy/"),
             Integration("InstructLab", f"{_INTEGRATIONS}/instructlab/"),
         ],

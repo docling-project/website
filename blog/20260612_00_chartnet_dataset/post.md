@@ -1,5 +1,5 @@
 ---
-title: "ChartNet: The Million-Scale Dataset Behind Robust Chart Understanding"
+title: ChartNet: The Million-Scale Dataset Behind Robust Chart Understanding
 date: 12-06-2026
 summary: Introducing ChartNet, a CVPR 2026 million-scale multimodal dataset of aligned chart images, code, tables, summaries, and reasoning traces — the kind of supervision that powers chart understanding in models like Granite-Docling and Granite Vision.
 thumbnail: images/chart_ducky.png

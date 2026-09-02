@@ -52,19 +52,19 @@ def CommunityPage() -> JSX:
                 <p class="section-label">Community</p>
                 <h1 class="page-title">Come and build with us</h1>
                 <p class="page-subtitle">
-                    Docling is developed in the open as an LF AI &amp; Data project.
+                    Docling is developed in the open as an LF AI & Data project.
                 </p>
             </div>
 
             <div class="container section prose" id="slack">
                 <h2>Slack</h2>
                 <p>
-                    The day-to-day technical conversation happens on the LF AI &amp; Data
+                    The day-to-day technical conversation happens on the LF AI & Data
                     Slack workspace.
                 </p>
                 <p>
                     <Button href="https://communityinviter.com/apps/lfaifoundation/join-lf-ai-and-data-foundation" external={True}>
-                        Join the LF AI &amp; Data Slack
+                        Join the LF AI & Data Slack
                     </Button>
                 </p>
                 <p>Once you are in the workspace, find us in:</p>

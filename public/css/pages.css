@@ -5,8 +5,14 @@
 
   .page-header {
     padding: 4rem 0 2.5rem;
-    margin-bottom: 2.5rem;
     border-bottom: 1px solid var(--border);
+  }
+
+  /* First content section sits directly below the page-header border — use
+     tight top padding so the gap feels consistent with the header's own
+     internal spacing rather than doubling the full section-y. */
+  .page-header + .section {
+    padding-top: 2.5rem;
   }
 
   .page-header .section-label {
@@ -60,6 +66,10 @@
     border-bottom: 1px solid var(--border);
   }
 
+  .prose h2:first-child {
+    margin-top: 0;
+  }
+
   .prose h3 {
     margin-top: 2.25rem;
     font-size: 1.2rem;
@@ -85,6 +95,16 @@
 
   .prose a:hover {
     text-decoration-color: var(--accent);
+  }
+
+  .prose a.btn {
+    color: var(--accent-contrast);
+    text-decoration: none;
+  }
+
+  .prose a.btn:hover {
+    color: var(--accent-contrast);
+    text-decoration: none;
   }
 
   .prose ul,

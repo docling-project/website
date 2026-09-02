@@ -80,8 +80,17 @@ INTEGRATION_GROUPS: list[IntegrationGroup] = [
             Integration("NVIDIA", f"{_INTEGRATIONS}/nvidia/"),
             Integration("RHEL AI", f"{_INTEGRATIONS}/rhel_ai/"),
             Integration("Cloudera", f"{_INTEGRATIONS}/cloudera/"),
+        ],
+    ),
+    IntegrationGroup(
+        id="clients",
+        name="Language clients",
+        blurb="Call the same pipeline from a JVM or JavaScript codebase.",
+        items=[
+            Integration("Docling Java", "https://docling-project.github.io/docling-java/"),
             Integration("Quarkus", f"{_INTEGRATIONS}/quarkus/"),
-            Integration("Arconia", f"{_INTEGRATIONS}/arconia/"),
+            Integration("Arconia (Spring Boot)", f"{_INTEGRATIONS}/arconia/"),
+            Integration("Docling TS", "https://github.com/docling-project/docling-ts"),
         ],
     ),
     IntegrationGroup(

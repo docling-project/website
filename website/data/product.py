@@ -227,6 +227,45 @@ curl -X POST http://localhost:5001/v1/convert/source \\
         link_href="https://github.com/docling-project/docling-serve",
     ),
     QuickstartTab(
+        id="java",
+        label="Java",
+        language="java",
+        filename="Convert.java",
+        code="""DoclingServeApi api = DoclingServeApi.builder()
+    .baseUrl("http://localhost:5001")
+    .build();
+
+ConvertDocumentRequest request = ConvertDocumentRequest.builder()
+    .source(HttpSource.builder().url(URI.create(url)).build())
+    .options(ConvertDocumentOptions.builder()
+        .toFormat(OutputFormat.MARKDOWN)
+        .build())
+    .target(InBodyTarget.builder().build())
+    .build();
+
+var response = (InBodyConvertDocumentResponse) api.convertSource(request);
+System.out.println(response.getDocument().getMarkdownContent());""",
+        note="ai.docling:docling-serve-client — also wired up by Quarkus and Spring Boot.",
+        link_label="Docling Java",
+        link_href="https://docling-project.github.io/docling-java/",
+    ),
+    QuickstartTab(
+        id="typescript",
+        label="TypeScript",
+        language="typescript",
+        filename="convert.ts",
+        code="""import { DoclingClient } from '@docling/docling-client';
+
+const client = new DoclingClient({ baseUrl: 'http://localhost:5001' });
+
+const result = await client.convert('https://arxiv.org/pdf/2206.01062');
+
+console.log(result.document);""",
+        note="npm install @docling/docling-client — typed against the same document model.",
+        link_label="Docling TS",
+        link_href="https://github.com/docling-project/docling-ts",
+    ),
+    QuickstartTab(
         id="mcp",
         label="MCP",
         language="json",

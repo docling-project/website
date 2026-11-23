@@ -15,8 +15,15 @@ To publish results:
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, field
 
+
+# The public benchmark explorer (HF Space, direct URL so no HF chrome). Override
+# with BENCHMARK_EXPLORER_URL, e.g. a local explorer while the Space is private.
+EXPLORER_URL = os.environ.get(
+    "BENCHMARK_EXPLORER_URL", "https://docling-project-benchmark-explorer-public.hf.space/"
+)
 
 PUBLISHED = False
 

@@ -8,6 +8,7 @@
 
 import { setupAnalytics, setupEvents } from "./analytics.js";
 import { setupClipboard } from "./clipboard.js";
+import { setupExplorerEmbed } from "./explorer-embed.js";
 import { setupFilters } from "./filters.js";
 import { setupGithubStats } from "./github.js";
 import { setupHeroDemo } from "./hero-demo.js";
@@ -17,6 +18,7 @@ import { setupTabs } from "./tabs.js";
 function init() {
   setupNavigation();
   setupClipboard();
+  setupExplorerEmbed();
   setupTabs();
   setupHeroDemo();
   setupFilters();

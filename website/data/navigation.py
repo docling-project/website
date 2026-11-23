@@ -29,6 +29,7 @@ PRIMARY_NAV: list[NavItem] = [
     NavItem("Use cases", "/use-cases/"),
     NavItem("Deployments", "/deployments/"),
     NavItem("Ecosystem", "/ecosystem/"),
+    NavItem("Benchmarks", "/benchmarks/"),
     NavItem("Blog", "/blog/"),
     NavItem("Docs", DOCS_URL, external=True),
 ]

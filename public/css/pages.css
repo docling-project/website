@@ -8,6 +8,16 @@
     border-bottom: 1px solid var(--border);
   }
 
+  /* Benchmark explorer: full width, fills the viewport below the sticky
+     48px header and its 1px border; the explorer scrolls inside. */
+  .explorer-frame {
+    display: block;
+    width: 100%;
+    height: calc(100dvh - 49px);
+    border: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
   /* First content section sits directly below the page-header border — use
      tight top padding so the gap feels consistent with the header's own
      internal spacing rather than doubling the full section-y. */

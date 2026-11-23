@@ -8,8 +8,9 @@ correct state until a real run exists.
 
 from pyjsx import jsx, JSX
 
-from website.components.ui import Notice, SectionHeader  # type: ignore
+from website.components.ui import SectionHeader  # type: ignore
 from website.data.benchmarks import (
+    EXPLORER_URL,
     PUBLISHED,
     PUBLISHED_WORK,
     REQUIRED_DISCLOSURES,
@@ -60,30 +61,17 @@ def BenchmarksPage() -> JSX:
             path="/benchmarks/"
             active="/benchmarks/"
         >
-            <div class="container page-header">
-                <p class="section-label">Evidence</p>
-                <h1 class="page-title">Benchmarks, with the receipts</h1>
-                <p class="page-subtitle">
-                    A number without its configuration is not evidence. This page states
-                    what every figure published here has to carry before it goes up.
-                </p>
-            </div>
-
-            <div class="container section">
-                {
-                    _Results()
-                    if PUBLISHED and RESULTS
-                    else <Notice accent={True}>
-                        <strong>No benchmark table is published here yet.</strong>{" "}
-                        Rather than post figures that cannot be reproduced from this
-                        page, the peer-reviewed results below are linked directly, and
-                        the disclosure standard a future table has to meet is stated
-                        underneath. If you need comparative numbers now, run the
-                        evaluation yourself against your own documents — that is the
-                        measurement that should decide it anyway.
-                    </Notice>
-                }
-            </div>
+            {
+                <div class="container section">{_Results()}</div>
+                if PUBLISHED and RESULTS
+                else <iframe
+                    class="explorer-frame"
+                    data-explorer-embed=""
+                    src={EXPLORER_URL}
+                    title="Docling benchmark explorer"
+                    allow="clipboard-write"
+                ></iframe>
+            }
 
             <div class="container section">
                 <SectionHeader
